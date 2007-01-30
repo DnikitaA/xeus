@@ -14,29 +14,24 @@
           Name="Border"
           Margin="1" 
           CornerRadius="2" 
+          Background="Red"
           BorderThickness="1">
           <Path 
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            
             Data="{Binding Path=Content,RelativeSource={RelativeSource TemplatedParent}}" />
         </Border>
-        <!--
         <ControlTemplate.Triggers>
           <Trigger Property="IsPressed" Value="true">
-            <Setter TargetName="Border" Property="Background" Value="{StaticResource PressedBrush}" />
+            <Setter TargetName="Border" Property="Background" Value="Red" />
           </Trigger>
           <Trigger Property="IsEnabled" Value="false">
-            <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+            <Setter Property="Foreground" Value="Red"/>
           </Trigger>
         </ControlTemplate.Triggers>
-        -->
       </ControlTemplate>
     </Setter.Value>
   </Setter>
-	<Setter Property="Foreground" Value="#FFCE2828"/>
-	<Setter Property="BorderBrush" Value="#FFE04141"/>
-	<Setter Property="Background" Value="#FFEE3131"/>
 </Style>
 
 <Style x:Key="ScrollBarPageButton" TargetType="{x:Type RepeatButton}">
@@ -51,9 +46,6 @@
       </ControlTemplate>
     </Setter.Value>
   </Setter>
-	<Setter Property="Background" Value="#FF2626AB"/>
-	<Setter Property="BorderBrush" Value="#FFB34040"/>
-	<Setter Property="Foreground" Value="#FFB73C3C"/>
 </Style>
 
 <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
@@ -65,14 +57,19 @@
     <Setter.Value>
       <ControlTemplate TargetType="{x:Type Thumb}">
         <Border 
-          CornerRadius="2" 
-          Background="{TemplateBinding Background}"
-          BorderBrush="{TemplateBinding BorderBrush}"
-          BorderThickness="1" />
+          CornerRadius="8,8,8,8"
+          BorderThickness="1" BorderBrush="#FF313131" >
+        	<Border.Background>
+        		<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+        			<GradientStop Color="#FF313131" Offset="0"/>
+        			<GradientStop Color="#FF282828" Offset="1"/>
+        		</LinearGradientBrush>
+        	</Border.Background>
+        	<Rectangle Fill="#FFFFFFFF" Stroke="#FF000000" Width="6" Height="16"/>
+        </Border>
       </ControlTemplate>
     </Setter.Value>
   </Setter>
-	<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
 </Style>
 
 <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
@@ -84,14 +81,14 @@
     </Grid.RowDefinitions>
     <Border
       Grid.RowSpan="3"
-      CornerRadius="2" 
-      Background="#F0F0F0" BorderBrush="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}" />
+      CornerRadius="5,5,5,5" 
+      BorderThickness="1,1,1,1" />
     <RepeatButton 
       Grid.Row="0"                           
       Style="{StaticResource ScrollBarLineButton}"
       Height="18"
       Command="ScrollBar.LineUpCommand"
-      Content="M 0 4 L 8 4 L 4 0 Z" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" />
+      Content="M 0 4 L 8 4 L 4 0 Z" />
     <Track 
       Name="PART_Track"
       Grid.Row="1"
@@ -99,19 +96,18 @@
       <Track.DecreaseRepeatButton>
         <RepeatButton 
           Style="{StaticResource ScrollBarPageButton}"
-          Command="ScrollBar.PageUpCommand" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" />
+          Command="ScrollBar.PageUpCommand" />
       </Track.DecreaseRepeatButton>
       <Track.Thumb>
         <Thumb 
           Style="{StaticResource ScrollBarThumb}" 
           Margin="1,0,1,0"  
-          
-           />
+		/>
       </Track.Thumb>
       <Track.IncreaseRepeatButton>
         <RepeatButton 
           Style="{StaticResource ScrollBarPageButton}"
-          Command="ScrollBar.PageDownCommand" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
+          Command="ScrollBar.PageDownCommand" />
       </Track.IncreaseRepeatButton>
     </Track>
     <RepeatButton 
@@ -119,7 +115,7 @@
       Style="{StaticResource ScrollBarLineButton}"
       Height="18"
       Command="ScrollBar.LineDownCommand"
-      Content="M 0 0 L 4 4 L 8 0 Z" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
+      Content="M 0 0 L 4 4 L 8 0 Z"/>
   </Grid>
 </ControlTemplate>
 
@@ -153,8 +149,7 @@
         <Thumb 
           Style="{StaticResource ScrollBarThumb}" 
           Margin="0,1,0,1"  
-          
-           />
+          Background="Red"/>
       </Track.Thumb>
       <Track.IncreaseRepeatButton>
         <RepeatButton 
@@ -187,9 +182,6 @@
     </Trigger>
   </Style.Triggers>
 </Style>
-	
-	<ControlTemplate TargetType="{x:Type Button}" x:Key="ButtonControlTemplateDeleteRosterItem">
-		<Rectangle Fill="#FFA42121" Stroke="#FF000000" StrokeThickness="1" SnapsToDevicePixels="True" RadiusX="3" RadiusY="3" HorizontalAlignment="Stretch" ToolTip="Delete Contact"/>
-	</ControlTemplate>
+
 	
 </ResourceDictionary>
