@@ -85,9 +85,9 @@
   		<Rectangle Fill="#FF97D9F8" StrokeStartLineCap="Square" StrokeThickness="0" HorizontalAlignment="Stretch" Margin="16.06,1.164,16.337,11.898" Width="Auto" Height="Auto" Grid.Row="1" Panel.ZIndex="-2"/>
 	    	
 	      <Image HorizontalAlignment="Stretch" Source="{Binding Path=Image}" Grid.Row="1" 
-	       VerticalAlignment="Stretch" Stretch="Uniform" Width="52" Height="50" Margin="19,5.423,19,15.352"/>
+	       VerticalAlignment="Stretch" Stretch="Uniform" Width="52" Height="50" Margin="20,5.423,18,15.352"/>
 	      
-  		<Grid SnapsToDevicePixels="False" d:IsLayer="True" x:Name="Frame" Grid.ColumnSpan="1" Grid.RowSpan="3">
+  		<Grid SnapsToDevicePixels="False" d:IsLayer="True" x:Name="_frame" Grid.ColumnSpan="1" Grid.RowSpan="3">
   			<Path Opacity="0.4" RenderTransformOrigin="0.5,0.5" SnapsToDevicePixels="False" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,9.636,0,0" VerticalAlignment="Top" Width="65" Height="32.197" Data="M10.742689,6.3567251 L77.701637,6.648848 77.701392,30.050624 C77.701392,30.050624 66.590322,39.411197 44.952975,39.703717 23.315629,39.996236 10.742576,31.220683 10.742576,31.220683 z">
   				<Path.Fill>
   					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
