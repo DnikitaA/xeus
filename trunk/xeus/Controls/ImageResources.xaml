@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic">
 
 <Storyboard x:Key="PumpStatus">
 	<ThicknessAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="viewbox" Storyboard.TargetProperty="(FrameworkElement.Margin)">
@@ -184,5 +184,64 @@
 		</Trigger>
 	</ControlTemplate.Triggers>
 </ControlTemplate>
+
+<Style TargetType="{x:Type Button}" x:Key="MessageButtonStyleNoMessage">
+	<Style.BasedOn>
+		<Style TargetType="{x:Type ButtonBase}">
+			<Setter Property="FocusVisualStyle">
+				<Setter.Value>
+					<Style>
+						<Setter Property="Control.Template">
+							<Setter.Value>
+								<ControlTemplate>
+									<Border>
+										<Rectangle SnapsToDevicePixels="True" Stroke="#FF000000" StrokeDashArray="1 2" StrokeThickness="1" Margin="4,4,4,4"/>
+									</Border>
+								</ControlTemplate>
+							</Setter.Value>
+						</Setter>
+					</Style>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+			<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+			<Setter Property="BorderBrush">
+				<Setter.Value>
+					<SolidColorBrush/>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="BorderThickness" Value="3,3,3,3"/>
+			<Setter Property="HorizontalContentAlignment" Value="Center"/>
+			<Setter Property="VerticalContentAlignment" Value="Center"/>
+			<Setter Property="Padding" Value="0,0,1,1"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type ButtonBase}">
+						<Microsoft_Windows_Themes:ClassicBorderDecorator SnapsToDevicePixels="True" x:Name="ContentContainer" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderStyle="Raised" BorderThickness="3,3,3,3">
+							<ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" RecognizesAccessKey="True"/>
+						</Microsoft_Windows_Themes:ClassicBorderDecorator>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsKeyboardFocused" Value="True">
+								<Setter Property="BorderStyle" TargetName="ContentContainer" Value="RaisedFocused"/>
+							</Trigger>
+							<Trigger Property="Button.IsDefaulted" Value="True">
+								<Setter Property="BorderStyle" TargetName="ContentContainer" Value="RaisedFocused"/>
+							</Trigger>
+							<Trigger Property="IsPressed" Value="True">
+								<Setter Property="BorderStyle" TargetName="ContentContainer" Value="RaisedPressed"/>
+							</Trigger>
+							<Trigger Property="ToggleButton.IsChecked" Value="True">
+								<Setter Property="BorderStyle" TargetName="ContentContainer" Value="RaisedPressed"/>
+							</Trigger>
+							<Trigger Property="IsEnabled" Value="False">
+								<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Style.BasedOn>
+</Style>
 
 </ResourceDictionary>
