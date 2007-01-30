@@ -18,17 +18,20 @@ namespace xeus.Core
 		private Services _services = new Services();
 		private Roster _roster = new Roster(); 
 		private Agent _agent = new Agent();
+		private MessageCenter _messageCenter = new MessageCenter();
 
 		#region delegates
 
 		public delegate void LoginHandler() ;
 		public delegate void DiscoFinishHandler() ;
+		public delegate void MessageHandler( Message msg ) ;
 
 		#endregion
 
 		#region events
 
 		public event LoginHandler LoggedIn ;
+		public event MessageHandler Message ;
 
 		#endregion
 
@@ -84,10 +87,25 @@ namespace xeus.Core
 			_xmppConnection.UseStartTLS = true ;
 			_xmppConnection.AutoRoster = true ;
 
-
 			_xmppConnection.OnRosterEnd += new ObjectHandler( _xmppConnection_OnRosterEnd );
+			_xmppConnection.OnMessage += new XmppClientConnection.MessageHandler( _xmppConnection_OnMessage );
+
+			_messageCenter.RegisterEvent( _instance );
 
 			Log( "Setup finished" ) ;
+		}
+
+		void _xmppConnection_OnMessage( object sender, Message msg )
+		{
+			OnMessage( msg ) ;
+		}
+
+		protected virtual void OnMessage( Message msg )
+		{
+			if ( Message != null )
+			{
+				Message( msg ) ;
+			}
 		}
 
 		void _xmppConnection_OnRosterEnd( object sender )
@@ -230,6 +248,14 @@ namespace xeus.Core
 			get
 			{
 				return _xmppConnection.RosterManager ;
+			}
+		}
+
+		public MessageCenter MessageCenter
+		{
+			get
+			{
+				return _messageCenter ;
 			}
 		}
 

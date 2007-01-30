@@ -1,20 +1,18 @@
-using System;
-using System.Collections.Generic;
+using System ;
 using System.Globalization ;
-using System.Text;
 using System.Windows.Data ;
 using agsXMPP.protocol.client ;
 
 namespace xeus.Core
 {
-	[ValueConversion( typeof( Presence ), typeof( double ) )]
-	class OpacityStatusConverter : IValueConverter
+	[ ValueConversion( typeof ( Presence ), typeof ( double ) ) ]
+	internal class OpacityStatusConverter : IValueConverter
 	{
 		public object Convert( object value, Type targetType, object parameter, CultureInfo culture )
 		{
 			if ( value != null )
 			{
-				Presence status = ( Presence )value ;
+				Presence status = ( Presence ) value ;
 
 				if ( status.Type == PresenceType.available )
 				{
@@ -22,11 +20,11 @@ namespace xeus.Core
 				}
 				else
 				{
-					return 0.9 ;
+					return 0.25 ;
 				}
 			}
 
-			return 0.9 ;
+			return 0.25 ;
 		}
 
 		public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
