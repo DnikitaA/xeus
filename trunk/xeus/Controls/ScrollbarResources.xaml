@@ -62,7 +62,7 @@
       <ControlTemplate TargetType="{x:Type Thumb}">
         <Border 
           CornerRadius="2,2,2,2"
-          BorderThickness="1" BorderBrush="#FF222222" >
+          BorderThickness="1" BorderBrush="#FF474747" >
         	<Border.Background>
         		<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
         			<GradientStop Color="#FF4D4D4D" Offset="0"/>
