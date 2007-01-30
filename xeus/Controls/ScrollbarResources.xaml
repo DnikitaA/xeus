@@ -58,14 +58,23 @@
       <ControlTemplate TargetType="{x:Type Thumb}">
         <Border 
           CornerRadius="8,8,8,8"
-          BorderThickness="1" BorderBrush="#FF313131" >
+          BorderThickness="1" BorderBrush="#FF3F3F3F" >
         	<Border.Background>
         		<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
         			<GradientStop Color="#FF313131" Offset="0"/>
-        			<GradientStop Color="#FF282828" Offset="1"/>
+        			<GradientStop Color="#FF2C2C2C" Offset="1"/>
         		</LinearGradientBrush>
         	</Border.Background>
-        	<Rectangle Fill="#FFFFFFFF" Stroke="#FF000000" Width="6" Height="16"/>
+        	<Ellipse Fill="#FF4B4B4B" Stroke="#FF6E6E6E" Width="5" Height="5" RenderTransformOrigin="0.5,0.5">
+        		<Ellipse.RenderTransform>
+        			<TransformGroup>
+        				<ScaleTransform ScaleX="1" ScaleY="-1"/>
+        				<SkewTransform AngleX="0" AngleY="0"/>
+        				<RotateTransform Angle="0"/>
+        				<TranslateTransform X="0" Y="0"/>
+        			</TransformGroup>
+        		</Ellipse.RenderTransform>
+        	</Ellipse>
         </Border>
       </ControlTemplate>
     </Setter.Value>
