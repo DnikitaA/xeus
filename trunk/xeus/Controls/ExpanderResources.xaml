@@ -1,0 +1,206 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic">
+	<!-- Resource dictionary entries should be defined here. -->
+
+<Style TargetType ="{x:Type Expander}">
+	<Setter Property="Template" Value="{DynamicResource ExpanderControlTemplate}"/>
+	<Setter Property="Foreground" Value="#FFD0D0D0"/>
+	<Setter Property="FontSize" Value="15"/>
+</Style>
+	
+	<ControlTemplate TargetType="{x:Type Expander}" x:Key="ExpanderControlTemplate">
+		<Border SnapsToDevicePixels="True" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3,3,3,3">
+			<DockPanel>
+				<ToggleButton Margin="1,1,1,1" MinHeight="0" MinWidth="0" x:Name="HeaderSite" FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" FontStretch="{TemplateBinding FontStretch}" FontStyle="{TemplateBinding FontStyle}" FontWeight="{TemplateBinding FontWeight}" Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" DockPanel.Dock="Top" IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent, AncestorType={x:Null}}}">
+					<ToggleButton.FocusVisualStyle>
+						<Style>
+							<Setter Property="Control.Template">
+								<Setter.Value>
+									<ControlTemplate>
+										<Border>
+											<Rectangle SnapsToDevicePixels="True" Stroke="#FF000000" StrokeDashArray="1 2" StrokeThickness="1" Margin="0,0,0,0"/>
+										</Border>
+									</ControlTemplate>
+								</Setter.Value>
+							</Setter>
+						</Style>
+					</ToggleButton.FocusVisualStyle>
+					<ToggleButton.Style>
+						<Style TargetType="{x:Type ToggleButton}">
+							<Setter Property="Template">
+								<Setter.Value>
+									<ControlTemplate TargetType="{x:Type ToggleButton}">
+										<Border Padding="{TemplateBinding Padding}">
+											<Grid SnapsToDevicePixels="False" Background="#00FFFFFF">
+												<Grid.ColumnDefinitions>
+													<ColumnDefinition Width="19"/>
+													<ColumnDefinition Width="*"/>
+												</Grid.ColumnDefinitions>
+												<Path SnapsToDevicePixels="False" StrokeThickness="1.5" HorizontalAlignment="Center" x:Name="arrow" VerticalAlignment="Center" Data="M1,1.5L4.5,5 8,1.5" Stroke="#FFAFAFAF"/>										
+												<ContentPresenter SnapsToDevicePixels="True" HorizontalAlignment="Left" Margin="4,0,0,0" VerticalAlignment="Center" Grid.Column="1" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" RecognizesAccessKey="True"/>
+											</Grid>
+										</Border>
+										<ControlTemplate.Triggers>
+											<Trigger Property="IsChecked" Value="True">
+												<Setter Property="Data" TargetName="arrow" Value="M1,4.5L4.5,1 8,4.5"/>
+											</Trigger>
+										</ControlTemplate.Triggers>
+									</ControlTemplate>
+								</Setter.Value>
+							</Setter>
+						</Style>
+					</ToggleButton.Style>
+				</ToggleButton>
+				<ContentPresenter Focusable="False" Visibility="Collapsed" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" x:Name="ExpandSite" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" DockPanel.Dock="Bottom" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"/>
+			</DockPanel>
+		</Border>
+		<ControlTemplate.Triggers>
+			<Trigger Property="IsExpanded" Value="True">
+				<Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
+			</Trigger>
+			<Trigger Property="ExpandDirection" Value="Right">
+				<Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Right"/>
+				<Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Left"/>
+				<Setter Property="Style" TargetName="HeaderSite">
+					<Setter.Value>
+						<Style TargetType="{x:Type ToggleButton}">
+							<Setter Property="Template">
+								<Setter.Value>
+									<ControlTemplate TargetType="{x:Type ToggleButton}">
+										<Border Padding="{TemplateBinding Padding}">
+											<Grid SnapsToDevicePixels="False" Background="#00FFFFFF">
+												<Grid.RowDefinitions>
+													<RowDefinition Height="19"/>
+													<RowDefinition Height="*"/>
+												</Grid.RowDefinitions>
+												<Microsoft_Windows_Themes:ClassicBorderDecorator SnapsToDevicePixels="True" x:Name="Bd" Width="19" Height="19" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderStyle="None" BorderThickness="1,1,1,1">
+													<Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
+														<SolidColorBrush/>
+													</Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
+													<Path SnapsToDevicePixels="False" Stroke="{TemplateBinding Foreground}" StrokeThickness="1.5" HorizontalAlignment="Center" x:Name="arrow" VerticalAlignment="Center" Data="M1,1.5L4.5,5 8,1.5">
+														<Path.LayoutTransform>
+															<RotateTransform Angle="-90"/>
+														</Path.LayoutTransform>
+													</Path>
+												</Microsoft_Windows_Themes:ClassicBorderDecorator>
+												<ContentPresenter SnapsToDevicePixels="True" HorizontalAlignment="Center" Margin="0,4,0,0" VerticalAlignment="Top" Grid.Row="1" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" RecognizesAccessKey="True"/>
+											</Grid>
+										</Border>
+										<ControlTemplate.Triggers>
+											<Trigger Property="IsChecked" Value="True">
+												<Setter Property="Data" TargetName="arrow" Value="M1,4.5L4.5,1 8,4.5"/>
+											</Trigger>
+											<Trigger Property="IsMouseOver" Value="True">
+												<Setter Property="BorderStyle" TargetName="Bd" Value="ThinRaised"/>
+											</Trigger>
+											<Trigger Property="IsPressed" Value="True">
+												<Setter Property="BorderStyle" TargetName="Bd" Value="ThinPressed"/>
+											</Trigger>
+										</ControlTemplate.Triggers>
+									</ControlTemplate>
+								</Setter.Value>
+							</Setter>
+						</Style>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+			<Trigger Property="ExpandDirection" Value="Up">
+				<Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Top"/>
+				<Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Bottom"/>
+				<Setter Property="Style" TargetName="HeaderSite">
+					<Setter.Value>
+						<Style TargetType="{x:Type ToggleButton}">
+							<Setter Property="Template">
+								<Setter.Value>
+									<ControlTemplate TargetType="{x:Type ToggleButton}">
+										<Border Padding="{TemplateBinding Padding}">
+											<Grid SnapsToDevicePixels="False" Background="#00FFFFFF">
+												<Grid.ColumnDefinitions>
+													<ColumnDefinition Width="19"/>
+													<ColumnDefinition Width="*"/>
+												</Grid.ColumnDefinitions>
+												<Microsoft_Windows_Themes:ClassicBorderDecorator SnapsToDevicePixels="True" x:Name="Bd" Width="19" Height="19" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderStyle="None" BorderThickness="1,1,1,1">
+													<Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
+														<SolidColorBrush/>
+													</Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
+													<Path SnapsToDevicePixels="False" Stroke="{TemplateBinding Foreground}" StrokeThickness="1.5" HorizontalAlignment="Center" x:Name="arrow" VerticalAlignment="Center" Data="M1,1.5L4.5,5 8,1.5">
+														<Path.LayoutTransform>
+															<RotateTransform Angle="180"/>
+														</Path.LayoutTransform>
+													</Path>
+												</Microsoft_Windows_Themes:ClassicBorderDecorator>
+												<ContentPresenter SnapsToDevicePixels="True" HorizontalAlignment="Left" Margin="4,0,0,0" VerticalAlignment="Center" Grid.Column="1" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" RecognizesAccessKey="True"/>
+											</Grid>
+										</Border>
+										<ControlTemplate.Triggers>
+											<Trigger Property="IsChecked" Value="True">
+												<Setter Property="Data" TargetName="arrow" Value="M1,4.5L4.5,1 8,4.5"/>
+											</Trigger>
+											<Trigger Property="IsMouseOver" Value="True">
+												<Setter Property="BorderStyle" TargetName="Bd" Value="ThinRaised"/>
+											</Trigger>
+											<Trigger Property="IsPressed" Value="True">
+												<Setter Property="BorderStyle" TargetName="Bd" Value="ThinPressed"/>
+											</Trigger>
+										</ControlTemplate.Triggers>
+									</ControlTemplate>
+								</Setter.Value>
+							</Setter>
+						</Style>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+			<Trigger Property="ExpandDirection" Value="Left">
+				<Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Left"/>
+				<Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Right"/>
+				<Setter Property="Style" TargetName="HeaderSite">
+					<Setter.Value>
+						<Style TargetType="{x:Type ToggleButton}">
+							<Setter Property="Template">
+								<Setter.Value>
+									<ControlTemplate TargetType="{x:Type ToggleButton}">
+										<Border Padding="{TemplateBinding Padding}">
+											<Grid SnapsToDevicePixels="False" Background="#00FFFFFF">
+												<Grid.RowDefinitions>
+													<RowDefinition Height="19"/>
+													<RowDefinition Height="*"/>
+												</Grid.RowDefinitions>
+												<Microsoft_Windows_Themes:ClassicBorderDecorator SnapsToDevicePixels="True" x:Name="Bd" Width="19" Height="19" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderStyle="None" BorderThickness="1,1,1,1">
+													<Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
+														<SolidColorBrush/>
+													</Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
+													<Path SnapsToDevicePixels="False" Stroke="{TemplateBinding Foreground}" StrokeThickness="1.5" HorizontalAlignment="Center" x:Name="arrow" VerticalAlignment="Center" Data="M1,1.5L4.5,5 8,1.5">
+														<Path.LayoutTransform>
+															<RotateTransform Angle="90"/>
+														</Path.LayoutTransform>
+													</Path>
+												</Microsoft_Windows_Themes:ClassicBorderDecorator>
+												<ContentPresenter SnapsToDevicePixels="True" HorizontalAlignment="Center" Margin="0,4,0,0" VerticalAlignment="Top" Grid.Row="1" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" RecognizesAccessKey="True"/>
+											</Grid>
+										</Border>
+										<ControlTemplate.Triggers>
+											<Trigger Property="IsChecked" Value="True">
+												<Setter Property="Data" TargetName="arrow" Value="M1,4.5L4.5,1 8,4.5"/>
+											</Trigger>
+											<Trigger Property="IsMouseOver" Value="True">
+												<Setter Property="BorderStyle" TargetName="Bd" Value="ThinRaised"/>
+											</Trigger>
+											<Trigger Property="IsPressed" Value="True">
+												<Setter Property="BorderStyle" TargetName="Bd" Value="ThinPressed"/>
+											</Trigger>
+										</ControlTemplate.Triggers>
+									</ControlTemplate>
+								</Setter.Value>
+							</Setter>
+						</Style>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+			<Trigger Property="IsEnabled" Value="False">
+				<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+	
+</ResourceDictionary>
