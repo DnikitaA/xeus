@@ -85,7 +85,7 @@
   		<Rectangle Fill="#FF97D9F8" StrokeStartLineCap="Square" StrokeThickness="0" HorizontalAlignment="Stretch" Margin="16.06,1.164,16.337,11.898" Width="Auto" Height="Auto" Grid.Row="1" Panel.ZIndex="-2"/>
 	    	
 	      <Image HorizontalAlignment="Stretch" Source="{Binding Path=Image}" Grid.Row="1" 
-	       VerticalAlignment="Stretch" Stretch="Uniform" Width="52" Height="50" Margin="19,4.423,19,16.352"/>
+	       VerticalAlignment="Stretch" Stretch="Uniform" Width="52" Height="50" Margin="19,5.423,19,15.352"/>
 	      
   		<Grid SnapsToDevicePixels="False" d:IsLayer="True" x:Name="Frame" Grid.ColumnSpan="1" Grid.RowSpan="3">
   			<Path Opacity="0.4" RenderTransformOrigin="0.5,0.5" SnapsToDevicePixels="False" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,9.636,0,0" VerticalAlignment="Top" Width="65" Height="32.197" Data="M10.742689,6.3567251 L77.701637,6.648848 77.701392,30.050624 C77.701392,30.050624 66.590322,39.411197 44.952975,39.703717 23.315629,39.996236 10.742576,31.220683 10.742576,31.220683 z">
@@ -95,6 +95,16 @@
   						<GradientStop Color="#FFE8E8E8" Offset="1"/>
   					</LinearGradientBrush>
   				</Path.Fill>
+  			</Path>
+  			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" Height="Auto" Data="F1 M15.6,9.75 C14.495431,9.75 13.6,10.645431 13.6,11.749999 L13.6,63.150002 C13.6,64.25457 14.495431,65.150002 15.6,65.150002 L62,65.150002 C63.104568,65.150002 64,64.25457 64,63.150002 L64,11.749999 C64,10.645431 63.104568,9.75 62,9.75 L15.6,9.75 M2.5,0.5 L71.5,0.5 C72.604568,0.5 73.5,1.3954304 73.5,2.5 L73.5,71.5 C73.5,72.604568 72.604568,73.5 71.5,73.5 L2.5,73.5 C1.3954304,73.5 0.5,72.604568 0.5,71.5 L0.5,2.5 C0.5,1.3954304 1.3954304,0.5 2.5,0.5 z" Fill="#5B000000" Margin="11,8.25,5,18.569">
+  				<Path.RenderTransform>
+  					<TransformGroup>
+  						<ScaleTransform ScaleX="1" ScaleY="1"/>
+  						<SkewTransform AngleX="0" AngleY="0"/>
+  						<RotateTransform Angle="-90"/>
+  						<TranslateTransform X="0" Y="0"/>
+  					</TransformGroup>
+  				</Path.RenderTransform>
   			</Path>
   			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill" Stroke="#FF666666" StrokeStartLineCap="Square" StrokeThickness="1" Margin="8,5.25,8,21.569" VerticalAlignment="Stretch" Height="Auto" Data="F1 M15.6,9.75 C14.495431,9.75 13.6,10.645431 13.6,11.749999 L13.6,63.150002 C13.6,64.25457 14.495431,65.150002 15.6,65.150002 L62,65.150002 C63.104568,65.150002 64,64.25457 64,63.150002 L64,11.749999 C64,10.645431 63.104568,9.75 62,9.75 L15.6,9.75 M2.5,0.5 L71.5,0.5 C72.604568,0.5 73.5,1.3954304 73.5,2.5 L73.5,71.5 C73.5,72.604568 72.604568,73.5 71.5,73.5 L2.5,73.5 C1.3954304,73.5 0.5,72.604568 0.5,71.5 L0.5,2.5 C0.5,1.3954304 1.3954304,0.5 2.5,0.5 z">
   				<Path.RenderTransform>
@@ -107,16 +117,11 @@
   				</Path.RenderTransform>
   				<Path.Fill>
   					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-  						<GradientStop Color="#FF787878" Offset="0"/>
-  						<GradientStop Color="#FFD8D8D8" Offset="1"/>
+  						<GradientStop Color="#FF5F5F5F" Offset="0"/>
+  						<GradientStop Color="#FFD6D6D6" Offset="1"/>
   					</LinearGradientBrush>
   				</Path.Fill>
   			</Path>
-  			<Rectangle Fill="#FFEAEAEA" StrokeStartLineCap="Square" StrokeThickness="1" RadiusX="2" RadiusY="2" Margin="11.144,7.986,10.25,0" VerticalAlignment="Top" Height="2.633">
-  				<Rectangle.BitmapEffect>
-  					<BlurBitmapEffect KernelType="Box" Radius="1"/>
-  				</Rectangle.BitmapEffect>
-  			</Rectangle>
   		</Grid>
   		<Grid d:IsLayer="True" x:Name="Status" Grid.ColumnSpan="1" Grid.RowSpan="3">
 			<Button Template="{Binding Path=StatusTemplate}" HorizontalAlignment="Right"

@@ -9,6 +9,7 @@
   			<ResourceDictionary Source="Controls\ScrollbarResources.xaml"/>
   			<ResourceDictionary Source="Controls\ImageResources.xaml"/>
   			<ResourceDictionary Source="Controls\ExpanderResources.xaml"/>
+  			<ResourceDictionary Source="StatusbarResources.xaml"/>
   		</ResourceDictionary.MergedDictionaries>
   	</ResourceDictionary>
   </Application.Resources>
