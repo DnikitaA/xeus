@@ -67,7 +67,8 @@
     <Page Include="Controls\ExpanderResources.xaml" />
     <Page Include="Controls\ImageResources.xaml" />
     <Page Include="Controls\ScrollbarResources.xaml" />
-    <Page Include="StatusbarResources.xaml" />
+    <Page Include="Controls\SliderRosterStyle.xaml" />
+    <Page Include="Controls\StatusbarResources.xaml" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />

@@ -12,7 +12,7 @@
   </UserControl.Resources>
 
   <Grid>
-  	<Slider Margin="8,0,8,0" x:Name="_sliderItemSize" VerticalAlignment="Bottom" Minimum="50.0" Maximum="200.0" Style="{DynamicResource SliderStyleRosteritemSize}" TickPlacement="TopLeft" LargeChange="10" SmallChange="1" IsSnapToTickEnabled="True"/>
+  	<Slider Margin="8,0,8,0" x:Name="_sliderItemSize" VerticalAlignment="Bottom" Minimum="50.0" Maximum="200.0" Style="{DynamicResource SliderStyleRoster}" TickPlacement="TopLeft" LargeChange="20" SmallChange="10" IsSnapToTickEnabled="True"/>
   	<ListBox x:Name="_roster" ItemsSource="{Binding Source={StaticResource _rosterView}}"
              Style="{DynamicResource ListBoxStyleRoster}" Margin="0,0,0,36"
              MouseDoubleClick="OnDoubleClickRosterItem" AllowDrop="True"
