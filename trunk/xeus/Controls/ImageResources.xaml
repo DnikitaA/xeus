@@ -122,13 +122,13 @@
 			</Path.RenderTransform>
 			<Path.Fill>
 				<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-					<GradientStop Color="#FF277014" Offset="0"/>
-					<GradientStop Color="#FF88B790" Offset="0.995"/>
+					<GradientStop Color="#FF7E96B7" Offset="0"/>
+					<GradientStop Color="#FFE1E7EE" Offset="0.995"/>
 				</LinearGradientBrush>
 			</Path.Fill>
 		</Path>
 		<TextBlock Margin="5.286,0.354,0,7.536" VerticalAlignment="Stretch" Height="Auto" HorizontalAlignment="Left" Width="6.172" Background="{x:Null}"
-			Text=";-)" IsEnabled="False" FontSize="6" FontWeight="Bold" Foreground="#FFFFFFFF"/>
+			Text=";-)" IsEnabled="False" FontSize="6" FontWeight="Bold" Foreground="#FF4F4F4F"/>
 	</Grid>
 </Viewbox>
 	<ControlTemplate.Triggers>
@@ -215,7 +215,7 @@
 		</TransformGroup>
 	</Viewbox.RenderTransform>
 	<Grid>
-		<Path Stretch="Fill" Stroke="#FF4D4D4D" StrokeLineJoin="Round" StrokeThickness="1" Margin="0.369,0,-0.193,-1.112" VerticalAlignment="Stretch" Data="F1 M-2.0429285,-7.757 L4.9570713,-7.757 C7.1662107,-7.757 8.9570713,-5.9661388 8.9570713,-3.757 L8.9570713,-1.3279999 C8.9570713,0.88113898 7.1662107,2.6719999 4.9570713,2.6719999 L4.5196333,2.6719999 4.771143,7.2860003 2.0030785,2.6719999 L-2.0429285,2.6719999 C-4.2520676,2.6719999 -6.0429287,0.88113898 -6.0429287,-1.3279999 L-6.0429287,-3.757 C-6.0429287,-5.9661388 -4.2520676,-7.757 -2.0429285,-7.757 z" x:Name="path" d:LayoutOverrides="HorizontalAlignment">
+		<Path Stretch="Fill" Stroke="#FF989898" StrokeLineJoin="Round" StrokeThickness="1" Margin="0.369,0,-0.193,-1.112" VerticalAlignment="Stretch" Data="F1 M-2.0429285,-7.757 L4.9570713,-7.757 C7.1662107,-7.757 8.9570713,-5.9661388 8.9570713,-3.757 L8.9570713,-1.3279999 C8.9570713,0.88113898 7.1662107,2.6719999 4.9570713,2.6719999 L4.5196333,2.6719999 4.771143,7.2860003 2.0030785,2.6719999 L-2.0429285,2.6719999 C-4.2520676,2.6719999 -6.0429287,0.88113898 -6.0429287,-1.3279999 L-6.0429287,-3.757 C-6.0429287,-5.9661388 -4.2520676,-7.757 -2.0429285,-7.757 z" x:Name="path" d:LayoutOverrides="HorizontalAlignment">
 			<Path.Fill>
 				<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 					<GradientStop Color="#FF619BAB" Offset="0"/>
