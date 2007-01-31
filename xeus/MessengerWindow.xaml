@@ -1,10 +1,11 @@
-﻿<Window x:Class="xeus.MessengerWindow"
+﻿<Window
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:xeus.Controls"
     xmlns:localcore="clr-namespace:xeus.Core"
-    Title="xeus" Height="461" Width="222"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    x:Class="xeus.MessengerWindow"
+    Title="xeus" Height="461" Width="222"
     AllowDrop="False"
     SnapsToDevicePixels="True"
     Margin="4,4,4,4"
@@ -14,9 +15,13 @@
     <localcore:CountToVisibilityConverter x:Key="_visibilityConverter" />
   </Window.Resources>
 
-  <Window.Background>
-    <SolidColorBrush Color="#FF1E1E1E"/>
-  </Window.Background>
+	<Window.Background>
+		<ImageBrush Viewport="0,0,10,10"
+      				ViewportUnits="Absolute"
+	   				TileMode="Tile" Stretch="None">
+			<ImageBrush.ImageSource>/Images/ximple.png</ImageBrush.ImageSource>
+		</ImageBrush>
+	</Window.Background>
 
       <Grid>
     <Grid.RowDefinitions>
