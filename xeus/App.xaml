@@ -9,7 +9,8 @@
   			<ResourceDictionary Source="Controls\ScrollbarResources.xaml"/>
   			<ResourceDictionary Source="Controls\ImageResources.xaml"/>
   			<ResourceDictionary Source="Controls\ExpanderResources.xaml"/>
-  			<ResourceDictionary Source="StatusbarResources.xaml"/>
+  			<ResourceDictionary Source="Controls\StatusbarResources.xaml"/>
+  			<ResourceDictionary Source="Controls\SliderRosterStyle.xaml"/>
   		</ResourceDictionary.MergedDictionaries>
   	</ResourceDictionary>
   </Application.Resources>
