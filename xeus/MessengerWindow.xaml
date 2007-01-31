@@ -26,21 +26,9 @@
 				  		<ColumnDefinition Width="15"/>
 				  		<ColumnDefinition Width="*"/>
 				  	</Grid.ColumnDefinitions>
-			  		<Button Grid.Column="0" Style="{DynamicResource MessageButtonStyleNoMessage}">
-			  			<Path Fill="#FFA5D5F0" Stretch="Fill"
-			  			Stroke="#FFCECECE" Width="14" Height="12.698" Data="F1 M-6,-6.8649998 L9,-6.8649998 C10.104569,-6.8649998 11,-5.9695697 11,-4.8649998 L11,1 C11,2.1045694 10.104569,3 9,3 L6.25,3 6.25,8.5 2.2968752,3 L-6,3 C-7.1045694,3 -8,2.1045694 -8,1 L-8,-4.8649998 C-8,-5.9695697 -7.1045694,-6.8649998 -6,-6.8649998 z" Margin="0,3,0,0" RenderTransformOrigin="0.5,0.5" Visibility="Visible" x:Name="path">
-   			  				<Path.RenderTransform>
-			  					<TransformGroup>
-			  						<ScaleTransform ScaleX="1" ScaleY="1"/>
-			  						<SkewTransform AngleX="0" AngleY="0"/>
-			  						<RotateTransform Angle="0"/>
-			  						<TranslateTransform X="0" Y="0"/>
-			  					</TransformGroup>
-			  				</Path.RenderTransform>
-			  			</Path>
-			  		</Button>
+			  		<Button Grid.Column="0" Margin="0,0,0,0" Template="{DynamicResource MessageIcon}"/>
 					<TextBlock Text="{Binding Path=MessageCenter.ChatMessages.Count}" 
-					Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Left" Foreground="#FFFFFFFF" Margin="4,0,0,0" />
+					Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Left" Foreground="#FFFFFFFF" Margin="6,0,0,4" />
 		 		</Grid>
   			 </StatusBarItem>
   		</StatusBar>
