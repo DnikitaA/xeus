@@ -10,6 +10,15 @@
 	</ThicknessAnimationUsingKeyFrames>
 </Storyboard>
 
+<Storyboard x:Key="BlinkMessage">
+	<ThicknessAnimationUsingKeyFrames RepeatBehavior="Forever" AutoReverse="True" 
+		BeginTime="00:00:00" Storyboard.TargetName="viewbox" Storyboard.TargetProperty="(FrameworkElement.Margin)">
+		<SplineThicknessKeyFrame KeyTime="00:00:00" Value="10,10,10,10"/>
+		<SplineThicknessKeyFrame KeyTime="00:00:00.2000000" Value="-2,-2,-2,-2"/>
+		<SplineThicknessKeyFrame KeyTime="00:00:00.4000000" Value="0,0,0,0"/>
+	</ThicknessAnimationUsingKeyFrames>
+</Storyboard>
+
 <ControlTemplate TargetType="{x:Type Button}" x:Key="StatusDnd">
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox">
 	<Grid>
@@ -186,17 +195,27 @@
 </ControlTemplate>
 
 <ControlTemplate TargetType="{x:Type Button}" x:Key="MessageIcon">
-<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox">
+	<ControlTemplate.Resources>
+		<Storyboard x:Key="PumpMessageForever">
+			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="viewbox" Storyboard.TargetProperty="(UIElement.Visibility)"
+				RepeatBehavior="Forever" AutoReverse="True" >
+				<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="00:00:00.3000000" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="00:00:00.6000000" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+	</ControlTemplate.Resources>
+<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+	<Viewbox.RenderTransform>
+		<TransformGroup>
+			<ScaleTransform ScaleX="1" ScaleY="1"/>
+			<SkewTransform AngleX="0" AngleY="0"/>
+			<RotateTransform Angle="0"/>
+			<TranslateTransform X="0" Y="0"/>
+		</TransformGroup>
+	</Viewbox.RenderTransform>
 	<Grid>
-		<Path Stretch="Fill" Stroke="#FF4D4D4D" StrokeLineJoin="Round" StrokeThickness="1" Margin="16.179,-0.5,-16.003,-0.543" VerticalAlignment="Stretch" Height="Auto" Data="F1 M-2.0429285,-7.757 L4.9570713,-7.757 C7.1662107,-7.757 8.9570713,-5.9661388 8.9570713,-3.757 L8.9570713,-1.3279999 C8.9570713,0.88113898 7.1662107,2.6719999 4.9570713,2.6719999 L4.5196333,2.6719999 4.771143,7.2860003 2.0030785,2.6719999 L-2.0429285,2.6719999 C-4.2520676,2.6719999 -6.0429287,0.88113898 -6.0429287,-1.3279999 L-6.0429287,-3.757 C-6.0429287,-5.9661388 -4.2520676,-7.757 -2.0429285,-7.757 z">
-			<Path.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform ScaleX="-1" ScaleY="1"/>
-					<SkewTransform AngleX="0" AngleY="0"/>
-					<RotateTransform Angle="0"/>
-					<TranslateTransform X="0" Y="0"/>
-				</TransformGroup>
-			</Path.RenderTransform>
+		<Path Stretch="Fill" Stroke="#FF4D4D4D" StrokeLineJoin="Round" StrokeThickness="1" Margin="0.369,0,-0.193,-1.112" VerticalAlignment="Stretch" Data="F1 M-2.0429285,-7.757 L4.9570713,-7.757 C7.1662107,-7.757 8.9570713,-5.9661388 8.9570713,-3.757 L8.9570713,-1.3279999 C8.9570713,0.88113898 7.1662107,2.6719999 4.9570713,2.6719999 L4.5196333,2.6719999 4.771143,7.2860003 2.0030785,2.6719999 L-2.0429285,2.6719999 C-4.2520676,2.6719999 -6.0429287,0.88113898 -6.0429287,-1.3279999 L-6.0429287,-3.757 C-6.0429287,-5.9661388 -4.2520676,-7.757 -2.0429285,-7.757 z" x:Name="path" d:LayoutOverrides="HorizontalAlignment">
 			<Path.Fill>
 				<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 					<GradientStop Color="#FF619BAB" Offset="0"/>
@@ -207,14 +226,9 @@
 	</Grid>
 </Viewbox>
 	<ControlTemplate.Triggers>
-		<Trigger Property="Background" Value="#FFFFFFFF">
-			<Trigger.EnterActions>
-				<BeginStoryboard Storyboard="{StaticResource PumpStatus}"/>
-			</Trigger.EnterActions>
-		</Trigger>
-		<DataTrigger Binding="{Binding Path=MessageCenter.ChatMessages.Count}" Value="1">
-			<Setter Property="Background" Value="#FFFFFFFF" />
-		</DataTrigger>
+		<EventTrigger RoutedEvent="FrameworkElement.Loaded">
+			<BeginStoryboard Storyboard="{StaticResource PumpMessageForever}"/>
+		</EventTrigger>
 	</ControlTemplate.Triggers>
 </ControlTemplate>
 

@@ -18,9 +18,6 @@ namespace xeus
 		{
 			base.OnInitialized( e ) ;
 
-			/*_services.DataContext = Client.Instance ;*/
-			/*_roster.DataContext = Client.Instance ;
-			_statusBar.DataContext = Client.Instance ;*/
 			DataContext = Client.Instance ;
 
 			Client.Instance.Setup() ;
