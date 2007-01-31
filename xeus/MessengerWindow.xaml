@@ -39,7 +39,7 @@
 				  		<ColumnDefinition Width="15"/>
 				  		<ColumnDefinition Width="*"/>
 				  	</Grid.ColumnDefinitions>
-			  		<Button Grid.Column="0" Margin="0,0,0,0" Template="{DynamicResource MessageIcon}"/>
+			  		<Button Grid.Column="0" Margin="0,0,0,0" Template="{DynamicResource MessageIcon}" x:Name="_buttonMessages"/>
 					<TextBlock Text="{Binding Path=MessageCenter.ChatMessages.Count}" 
 					Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Left" Foreground="#FFFFFFFF" Margin="5,0,0,0" />
 		 		</Grid>

@@ -4,13 +4,7 @@
     Title="xeus.Controls" Height="300" Width="300"
     >
     <Grid>
-    	<TabControl Margin="8,8,8,8" IsSynchronizedWithCurrentItem="True">
-    		<TabItem Header="TabItem">
-    			<Grid/>
-    		</TabItem>
-    		<TabItem Header="TabItem">
-    			<Grid/>
-    		</TabItem>
+    	<TabControl Margin="8,8,8,8" IsSynchronizedWithCurrentItem="True" x:Name="_tabs">
     	</TabControl>
 </Grid>
 </Window>

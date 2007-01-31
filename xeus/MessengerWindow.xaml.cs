@@ -1,5 +1,8 @@
 using System ;
 using System.Windows ;
+using System.Windows.Controls ;
+using System.Windows.Controls.Primitives ;
+using xeus.Controls ;
 using xeus.Core ;
 
 namespace xeus
@@ -22,6 +25,18 @@ namespace xeus
 
 			Client.Instance.Setup() ;
 			Client.Instance.Connect();
+
+			Button buttonMessages = _statusBar.FindName( "_buttonMessages" ) as Button  ;
+
+			if ( buttonMessages != null )
+			{
+				buttonMessages.Click += new RoutedEventHandler( buttonMessages_Click ) ;
+			}
+		}
+
+		void buttonMessages_Click( object sender, RoutedEventArgs e )
+		{
+			MessageWindow.Instance.DisplayAllChats();
 		}
 	}
 }
