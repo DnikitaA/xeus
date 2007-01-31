@@ -55,7 +55,7 @@ namespace xeus.Core
 			xmppConnection.OnPresence += new XmppClientConnection.PresenceHandler( xmppConnection_OnPresence ) ;
 		}
 
-		private RosterItem FindItem( string bare )
+		public RosterItem FindItem( string bare )
 		{
 			foreach ( RosterItem rosterItem in _items )
 			{

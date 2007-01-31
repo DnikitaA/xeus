@@ -46,6 +46,7 @@ namespace xeus.Controls
 			{
 				tab = new TabItem();
 				tab.Tag = jid ;
+				tab.DataContext = Client.Instance.Roster.FindItem( jid ) ;
 
 				_tabs.Items.Add( tab ) ;
 			}
