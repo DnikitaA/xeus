@@ -3,12 +3,12 @@
     xmlns:local="clr-namespace:xeus.Core"
     xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
-    x:Class="xeus.Controls.ControlResource"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
+    x:Class="xeus.Controls.ControlResource"
     >
 
   <!-- themes -->
-  <ControlTemplate TargetType="{x:Type ListBox}" x:Key="ListboxBlackTheme">
+  <ControlTemplate x:Key="ListboxBlackTheme" TargetType="{x:Type ListBox}">
     <Border Background="{x:Null}" BorderBrush="#FF2A2323" BorderThickness="3,3,3,3" CornerRadius="5,5,5,5">
       <ScrollViewer>
         <ScrollViewer.Background>
@@ -25,8 +25,9 @@
   <!-- data templates -->
   <!-- services -->
   <CollectionViewSource
+          x:Key="ServicesView"
           Source="{Binding Path=Services.Items}"
-          x:Key="ServicesView"/>
+          />
 
   <DataTemplate DataType="{x:Type local:ServiceItem}">
     <Grid>
@@ -35,8 +36,9 @@
   </DataTemplate>
  
  <!-- roster -->
-  <CollectionViewSource Source="{Binding Path=Roster.Items}"
-                        x:Key="_rosterView">
+  <CollectionViewSource
+                        x:Key="_rosterView" Source="{Binding Path=Roster.Items}"
+                        >
     <CollectionViewSource.SortDescriptions>
       <scm:SortDescription PropertyName="DisplayName" />
       <scm:SortDescription PropertyName="StatusText" />
@@ -125,7 +127,7 @@
   		</Grid>
   		<Grid d:IsLayer="True" x:Name="Status" Grid.ColumnSpan="1" Grid.RowSpan="3">
 			<Button Template="{Binding Path=StatusTemplate}" HorizontalAlignment="Right"
-			Margin="0,-2.172,0.549,0" VerticalAlignment="Top" Width="18" Height="18" ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" />
+			Margin="0,0.828,1.549,0" VerticalAlignment="Top" Width="22" Height="22" ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" />
  		</Grid>
 	</Grid>
 	<DataTemplate.Triggers>
@@ -151,7 +153,7 @@
 	  </Setter>
 	</Style>
  	
-	<Style TargetType="{x:Type ListBox}" x:Key="ListBoxStyleRoster" >
+	<Style x:Key="ListBoxStyleRoster" TargetType="{x:Type ListBox}" >
 	  <Setter Property="ItemsPanel">
 	    <Setter.Value>
 	      <ItemsPanelTemplate>
