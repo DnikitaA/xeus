@@ -6,10 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="xeus.MessengerWindow"
     Title="xeus" Height="461" Width="222"
-    AllowDrop="False"
     SnapsToDevicePixels="True"
-    Margin="4,4,4,4"
-    OverridesDefaultStyle="False" ResizeMode="CanResize" WindowStyle="SingleBorderWindow"
+    Margin="0,0,0,0"
+    OverridesDefaultStyle="False"
+	WindowStyle="None" AllowsTransparency="True"
+    ResizeMode="CanResizeWithGrip" BorderBrush="#FF1E1E1E" BorderThickness="2,2,2,2"
     >
 
   <Window.Resources>
@@ -29,23 +30,23 @@
       <RowDefinition Height="0.93*"/>
       <RowDefinition Height="0.07*"/>
     </Grid.RowDefinitions>
-    <local:RosterControl x:Name="_roster" Grid.Row="0" Width="Auto" Height="Auto"/>
-  		<StatusBar Grid.Row="1" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}">
-  			<StatusBarItem HorizontalAlignment="Stretch" Margin="0,0,0,0"
-    			x:Name="_statusUnreadMessages" VerticalAlignment="Stretch"
-          Grid.Row="1"
-          Visibility="{Binding Path=MessageCenter.ChatMessages.Count, Converter={StaticResource _visibilityConverter}}">
-		  		<Grid d:IsLayer="True" x:Name="Status" Grid.ColumnSpan="1" Grid.RowSpan="3" Width="Auto" Height="Auto">
-				  	<Grid.ColumnDefinitions>
-				  		<ColumnDefinition Width="15"/>
-				  		<ColumnDefinition Width="*"/>
-				  	</Grid.ColumnDefinitions>
-			  		<Button Grid.Column="0" Margin="0,0,0,0" Template="{DynamicResource MessageIcon}" x:Name="_buttonMessages"/>
-					<TextBlock Text="{Binding Path=MessageCenter.ChatMessages.Count}" 
+	<Rectangle Grid.Row="0" Fill="#FF484848" VerticalAlignment="Top" Height="32"/>
+    <local:RosterControl x:Name="_roster" Grid.Row="0" Width="Auto" Height="Auto" Margin="2,32,2,2"/>
+	<StatusBar Grid.Row="1" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}">
+		<StatusBarItem HorizontalAlignment="Stretch" Margin="0,0,0,0"
+		    	  x:Name="_statusUnreadMessages" VerticalAlignment="Stretch" Grid.Row="1"
+		          Visibility="{Binding Path=MessageCenter.ChatMessages.Count, Converter={StaticResource _visibilityConverter}}">
+	  		<Grid d:IsLayer="True" x:Name="Status" Grid.ColumnSpan="1" Grid.RowSpan="3" Width="Auto" Height="Auto">
+			  	<Grid.ColumnDefinitions>
+			  		<ColumnDefinition Width="15"/>
+			  		<ColumnDefinition Width="*"/>
+			  	</Grid.ColumnDefinitions>
+		  		<Button Grid.Column="0" Margin="0,0,0,0" Template="{DynamicResource MessageIcon}" x:Name="_buttonMessages"/>
+				<TextBlock Text="{Binding Path=MessageCenter.ChatMessages.Count}" 
 					Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Left" Foreground="#FFFFFFFF" Margin="5,0,0,0" />
-		 		</Grid>
-  			 </StatusBarItem>
-  		</StatusBar>
+			</Grid>
+		</StatusBarItem>
+	</StatusBar>
   </Grid>
 </Window>
 

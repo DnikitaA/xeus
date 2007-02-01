@@ -29,9 +29,7 @@ namespace xeus.Controls
 
 		private void OpenMessageWindow( RosterItem rosterItem )
 		{
-			( ( CollectionView ) _roster.ItemsSource ).Refresh() ;
-			/*MessageWindow messageWindow = new MessageWindow();
-			messageWindow.Show();*/
+			MessageWindow.Instance.DisplayChat( rosterItem.Key );
 		}
 
 		private void RosterControl_Drop( object sender, DragEventArgs e )
