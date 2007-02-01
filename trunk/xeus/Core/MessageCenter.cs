@@ -53,6 +53,18 @@ namespace xeus.Core
 			}
 		}
 
+		public void MoveUnreadMessagesToRosterItem( RosterItem rosterItem )
+		{
+			for ( int i = Client.Instance.MessageCenter.ChatMessages.Count; i >= 0 ; i--  )
+			{
+				Message message = Client.Instance.MessageCenter.ChatMessages[ i ] ;
+
+				rosterItem.Messages.Add( message ) ;
+
+				Client.Instance.MessageCenter.ChatMessages.Remove( message ) ;
+			}
+		}
+
 		private void client_Message( Message msg )
 		{
 			switch ( msg.Type )

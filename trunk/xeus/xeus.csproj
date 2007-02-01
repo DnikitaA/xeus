@@ -69,6 +69,7 @@
     <Page Include="Controls\ScrollbarResources.xaml" />
     <Page Include="Controls\SliderRosterStyle.xaml" />
     <Page Include="Controls\StatusbarResources.xaml" />
+    <Page Include="Controls\TabMessages.xaml" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
