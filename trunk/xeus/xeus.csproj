@@ -70,6 +70,7 @@
     <Page Include="Controls\SliderRosterStyle.xaml" />
     <Page Include="Controls\StatusbarResources.xaml" />
     <Page Include="Controls\TabMessages.xaml" />
+    <Page Include="ResizeGropResources.xaml" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />

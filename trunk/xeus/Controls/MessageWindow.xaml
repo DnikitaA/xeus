@@ -4,11 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Class="xeus.Controls.MessageWindow"
     Title="xeus.Controls" Height="300" Width="300"
+	WindowStyle="None" AllowsTransparency="True"
+    ResizeMode="CanResizeWithGrip" BorderBrush="#FF1E1E1E" BorderThickness="2,2,2,2"
     >
 
     <Grid>
-    	<TabControl x:Name="_tabs" ContentTemplate="{StaticResource RosterItemMessagesTemplate}" >
-		</TabControl>
-		<!-- Style="{DynamicResource TabMessages}" -->
+    	<Rectangle Fill="#FF484848" Stroke="#FF000000" VerticalAlignment="Top" Height="32"/>
+    	<TabControl x:Name="_tabs" ContentTemplate="{StaticResource RosterItemMessagesTemplate}" Margin="0,36,0,0" />
 	</Grid>
 </Window>
