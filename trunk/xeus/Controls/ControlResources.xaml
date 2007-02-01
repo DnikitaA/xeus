@@ -36,9 +36,7 @@
   </DataTemplate>
  
  <!-- roster -->
-  <CollectionViewSource
-                        x:Key="_rosterView" Source="{Binding Path=Roster.Items}"
-                        >
+  <CollectionViewSource x:Key="_rosterView" Source="{Binding Path=Roster.Items}">
     <CollectionViewSource.SortDescriptions>
       <scm:SortDescription PropertyName="DisplayName" />
       <scm:SortDescription PropertyName="StatusText" />
@@ -51,7 +49,10 @@
   <local:OpacityStatusConverter x:Key="_opacityStatusConverter" />
   <local:RosterItemVisibleConverter x:Key="_rosterItemVisibleConverter" />
 
-  <DataTemplate DataType="{x:Type local:RosterItem}">
+  <DataTemplate DataType="{x:Type local:RosterItem}" x:Key="RosterItemSmall">
+  </DataTemplate>
+  
+  <DataTemplate DataType="{x:Type local:RosterItem}" x:Key="RosterItemBig">
   	<Grid x:Name="_rosterItemGridOuter" RenderTransformOrigin="0.5,0.5"
 			Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}"
 			Visibility="{Binding Path=Presence, Converter={StaticResource _rosterItemVisibleConverter}}"
