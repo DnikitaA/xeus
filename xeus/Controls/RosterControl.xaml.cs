@@ -12,9 +12,36 @@ namespace xeus.Controls
 	/// </summary>
 	public partial class RosterControl : UserControl
 	{
+		private static DataTemplate _rosterItemBig ;
+		private static DataTemplate _rosterItemSmall ;
+
 		public RosterControl()
 		{
 			InitializeComponent() ;
+
+			_rosterItemBig = ( DataTemplate ) App.Current.FindResource( "RosterItemBig" ) ;
+			_rosterItemSmall = ( DataTemplate ) App.Current.FindResource( "RosterItemSmall" ) ;
+			_roster.ItemTemplate = _rosterItemSmall ;
+
+			_sliderItemSize.ValueChanged += new RoutedPropertyChangedEventHandler<double>( _sliderItemSize_ValueChanged );
+		}
+
+		void _sliderItemSize_ValueChanged( object sender, RoutedPropertyChangedEventArgs<double> e )
+		{
+			if ( e.NewValue > 100.0 )
+			{
+				if ( _roster.ItemTemplate != _rosterItemBig )
+				{
+					_roster.ItemTemplate = _rosterItemBig ;
+				}
+			}
+			else
+			{
+				if ( _roster.ItemTemplate != _rosterItemSmall )
+				{
+					_roster.ItemTemplate = _rosterItemSmall ;
+				}
+			}
 		}
 
 		private void OnDoubleClickRosterItem( object sender, MouseButtonEventArgs e )

@@ -6,7 +6,6 @@
 
   <UserControl.Resources>
     <ResourceDictionary>
-      <local:RosterItemSizeConverter x:Key="_rosterItemSizeConverter" />
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ControlResources.xaml" />
       </ResourceDictionary.MergedDictionaries>
@@ -21,8 +20,7 @@
              Style="{DynamicResource ListBoxStyleRoster}" Margin="0,0,0,36"
              MouseDoubleClick="OnDoubleClickRosterItem" AllowDrop="True"
              Drop="RosterControl_Drop" DragOver="RosterControl_DragOver"
-           	 PreviewMouseLeftButtonDown="RosterControl_PreviewMouseLeftButtonDown"
-		   	 ItemTemplate="{Binding Path=Value, Converter={StaticResource _rosterItemSizeConverter}, ElementName=_sliderItemSize}">
+           	 PreviewMouseLeftButtonDown="RosterControl_PreviewMouseLeftButtonDown">
       <ListBox.GroupStyle>
         <GroupStyle>
         <GroupStyle.ContainerStyle>
