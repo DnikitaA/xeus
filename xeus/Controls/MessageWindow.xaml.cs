@@ -41,15 +41,17 @@ namespace xeus.Controls
 		public void DisplayChat( string jid )
 		{
 			TabItem tab =  FindTab( jid ) ;
+			RosterItem rosterItem = Client.Instance.Roster.FindItem( jid ) ;
 
 			if ( tab == null )
 			{
 				tab = new TabItem();
-				tab.Tag = jid ;
-				tab.DataContext = Client.Instance.Roster.FindItem( jid ) ;
+				tab.DataContext = rosterItem ;
 
 				_tabs.Items.Add( tab ) ;
 			}
+
+			Client.Instance.MessageCenter.MoveUnreadMessagesToRosterItem( rosterItem );
 		}
 
 		public void DisplayAllChats()

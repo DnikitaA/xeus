@@ -9,6 +9,7 @@
     AllowDrop="False"
     SnapsToDevicePixels="True"
     Margin="4,4,4,4"
+    OverridesDefaultStyle="False" ResizeMode="CanResize" WindowStyle="SingleBorderWindow"
     >
 
   <Window.Resources>
