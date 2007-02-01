@@ -30,8 +30,8 @@
       <RowDefinition Height="0.93*"/>
       <RowDefinition Height="0.07*"/>
     </Grid.RowDefinitions>
-      	<TextBlock Margin="0,-33,0,0" VerticalAlignment="Top" Height="65" Panel.ZIndex="1" FontSize="58" FontStyle="Italic" FontWeight="Bold" Foreground="#FF414141" Text="xeus" TextWrapping="Wrap"/>
-	<Rectangle Grid.Row="0" Fill="#FF383838" VerticalAlignment="Top" Height="32"/>
+      	<TextBlock Margin="0,-33,0,0" VerticalAlignment="Top" Height="65" Panel.ZIndex="1" FontSize="58" FontStyle="Italic" FontWeight="Bold" Foreground="#FF323232" Text="xeus" TextWrapping="Wrap" Background="{x:Null}"/>
+	<Rectangle Grid.Row="0" Fill="#2D000000" VerticalAlignment="Top" Height="32"/>
     <local:RosterControl x:Name="_roster" Grid.Row="0" Width="Auto" Height="Auto" Margin="2,32,2,2"/>
 	<StatusBar Grid.Row="1" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}">
 		<StatusBarItem HorizontalAlignment="Stretch" Margin="0,0,0,0"
