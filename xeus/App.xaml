@@ -13,6 +13,7 @@
   			<ResourceDictionary Source="Controls\StatusbarResources.xaml"/>
   			<ResourceDictionary Source="Controls\SliderRosterStyle.xaml"/>
   			<ResourceDictionary Source="Controls\TabMessages.xaml"/>
+  			<ResourceDictionary Source="ResizeGropResources.xaml"/>
   		</ResourceDictionary.MergedDictionaries>
   	</ResourceDictionary>
   </Application.Resources>

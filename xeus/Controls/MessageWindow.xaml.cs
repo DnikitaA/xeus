@@ -18,11 +18,6 @@ namespace xeus.Controls
 			InitializeComponent() ;
 		}
 
-		protected override void OnClosing( System.ComponentModel.CancelEventArgs e )
-		{
-			Hide() ;
-			e.Cancel = true ;
-		}
 		public static MessageWindow Instance
 		{
 			get
