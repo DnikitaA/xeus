@@ -59,6 +59,11 @@ namespace xeus.Controls
 			}
 
 			Client.Instance.MessageCenter.MoveUnreadMessagesToRosterItem( rosterItem );
+
+			if ( !IsVisible )
+			{
+				Show();
+			}
 		}
 
 		public void DisplayAllChats()
@@ -73,11 +78,6 @@ namespace xeus.Controls
 			foreach ( string jid in recievers )
 			{
 				DisplayChat( jid ) ;
-			}
-
-			if ( !IsVisible )
-			{
-				Show();
 			}
 		}
 	}
