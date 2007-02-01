@@ -34,6 +34,7 @@ namespace xeus.Core
 		private ControlTemplate _templateAway ;
 		private ControlTemplate _templateFreeForChat ;
 		private ControlTemplate _templateXAway ;
+		private ControlTemplate _templateOnline ;
 
 		public event PropertyChangedEventHandler PropertyChanged ;
 
@@ -114,6 +115,15 @@ namespace xeus.Core
 								_templateXAway = ( ControlTemplate ) App.Instance.FindResource( "StatusXAway" ) ;
 							}
 							return _templateXAway ;
+						}
+
+					case ShowType.NONE:
+						{
+							if ( _templateOnline == null )
+							{
+								_templateOnline = ( ControlTemplate ) App.Instance.FindResource( "StatusOnline" ) ;
+							}
+							return _templateOnline ;
 						}
 
 					default:
