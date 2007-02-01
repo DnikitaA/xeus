@@ -19,7 +19,7 @@
 								<RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}"/>
 								<RowDefinition Height="Auto"/>
 							</Grid.RowDefinitions>
-							<TickBar Visibility="Collapsed" x:Name="TopTick" Height="4" TextElement.Foreground="#FF515151" Fill="#FF000000" Placement="Top" TickFrequency="5"/>
+							<TickBar Visibility="Collapsed" x:Name="TopTick" Height="4" TextElement.Foreground="#FF515151" Fill="#FF494949" Placement="Top" TickFrequency="5"/>
 							<Microsoft_Windows_Themes:ClassicBorderDecorator Margin="0,0,0,0" x:Name="TrackBackground" VerticalAlignment="Stretch" Grid.Row="1" BorderStyle="Sunken" BorderThickness="2,2,2,2">
 								<Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
 									<SolidColorBrush/>
@@ -99,8 +99,8 @@
 								</Track.Thumb>
 							</Track>
 							<TickBar Visibility="Collapsed" x:Name="BottomTick" Height="4" Grid.Row="2" Placement="Bottom"/>
-							<Path Stretch="Fill" Stroke="#FF202020" Margin="0,5.75,0,0" x:Name="path1" VerticalAlignment="Top" Height="1" Grid.Row="1" Panel.ZIndex="-1" Data="M0,10.25 L124.77505,10.25"/>
-							<Path Stretch="Fill" Stroke="#FF383838" Margin="0,7,0,0" x:Name="path" VerticalAlignment="Top" Height="1" Grid.Row="1" Panel.ZIndex="-1" Data="M0,11.5 L124.75401,11.5"/>
+							<Path Stretch="Fill" Stroke="#FF0F0F0F" Margin="0,5.75,0,0" x:Name="path1" VerticalAlignment="Top" Height="1" Grid.Row="1" Panel.ZIndex="-1" Data="M0,10.25 L124.77505,10.25"/>
+							<Path Stretch="Fill" Stroke="#FF444343" Margin="0,7,0,0" x:Name="path" VerticalAlignment="Top" Height="1" Grid.Row="1" Panel.ZIndex="-1" Data="M0,11.5 L124.75401,11.5"/>
 						</Grid>
 					</Border>
 					<ControlTemplate.Triggers>
