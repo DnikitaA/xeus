@@ -7,7 +7,7 @@
     >
 
     <Grid>
-    	<TabControl x:Name="_tabs" ContentTemplate="{StaticResource RosterItemMessagesTemplate}">
+    	<TabControl x:Name="_tabs" ContentTemplate="{StaticResource RosterItemMessagesTemplate}" >
 		</TabControl>
 		<!-- Style="{DynamicResource TabMessages}" -->
 	</Grid>

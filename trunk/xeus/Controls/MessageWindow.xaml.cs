@@ -1,3 +1,4 @@
+using System.Collections.Generic ;
 using System.Windows ;
 using System.Windows.Controls ;
 using agsXMPP.protocol.client ;
@@ -17,6 +18,11 @@ namespace xeus.Controls
 			InitializeComponent() ;
 		}
 
+		protected override void OnClosing( System.ComponentModel.CancelEventArgs e )
+		{
+			Hide() ;
+			e.Cancel = true ;
+		}
 		public static MessageWindow Instance
 		{
 			get
@@ -40,13 +46,14 @@ namespace xeus.Controls
 
 		public void DisplayChat( string jid )
 		{
-			TabItem tab =  FindTab( jid ) ;
+			TabItem tab = FindTab( jid ) ;
 			RosterItem rosterItem = Client.Instance.Roster.FindItem( jid ) ;
 
 			if ( tab == null )
 			{
 				tab = new TabItem();
-				tab.DataContext = rosterItem ;
+				tab.Content = rosterItem ;
+				tab.Tag = jid ;
 
 				_tabs.Items.Add( tab ) ;
 			}
@@ -56,9 +63,16 @@ namespace xeus.Controls
 
 		public void DisplayAllChats()
 		{
+			List< string > recievers = new List< string >( Client.Instance.MessageCenter.ChatMessages.Count );
+			
 			foreach ( Message message in Client.Instance.MessageCenter.ChatMessages )
 			{
-				DisplayChat( message.From.Bare ) ;
+				recievers.Add( message.From.Bare );
+			}
+
+			foreach ( string jid in recievers )
+			{
+				DisplayChat( jid ) ;
 			}
 
 			if ( !IsVisible )

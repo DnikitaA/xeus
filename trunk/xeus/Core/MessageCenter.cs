@@ -55,7 +55,7 @@ namespace xeus.Core
 
 		public void MoveUnreadMessagesToRosterItem( RosterItem rosterItem )
 		{
-			for ( int i = Client.Instance.MessageCenter.ChatMessages.Count; i >= 0 ; i--  )
+			for ( int i = Client.Instance.MessageCenter.ChatMessages.Count - 1; i >= 0 ; i--  )
 			{
 				Message message = Client.Instance.MessageCenter.ChatMessages[ i ] ;
 

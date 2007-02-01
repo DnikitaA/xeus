@@ -196,13 +196,12 @@
 
 <ControlTemplate x:Key="MessageIcon" TargetType="{x:Type Button}">
 	<ControlTemplate.Resources>
-		<Storyboard x:Key="PumpMessageForever">
-			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="viewbox" Storyboard.TargetProperty="(UIElement.Visibility)"
-				RepeatBehavior="Forever" AutoReverse="True" >
-				<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
-				<DiscreteObjectKeyFrame KeyTime="00:00:00.3000000" Value="{x:Static Visibility.Hidden}"/>
-				<DiscreteObjectKeyFrame KeyTime="00:00:00.6000000" Value="{x:Static Visibility.Visible}"/>
-			</ObjectAnimationUsingKeyFrames>
+		<Storyboard x:Key="PumpMessageForever" RepeatBehavior="Forever">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="viewbox" Storyboard.TargetProperty="(UIElement.Opacity)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0.11"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
 	</ControlTemplate.Resources>
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
