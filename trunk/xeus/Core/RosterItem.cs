@@ -83,7 +83,7 @@ namespace xeus.Core
 		{
 			get
 			{
-				if ( _presence == null )
+				if ( _presence == null || _presence.Type == PresenceType.unavailable )
 				{
 					if ( _templateOffline == null )
 					{
@@ -152,7 +152,7 @@ namespace xeus.Core
 		{
 			get
 			{
-				if ( _presence == null )
+				if ( _presence == null || _presence.Type == PresenceType.unavailable )
 				{
 					return "<offline>" ;
 				}
@@ -185,6 +185,8 @@ namespace xeus.Core
 
 			set
 			{
+				string group = Group ;
+
 				_presence = value ;
 
 				if ( _presence == null )
@@ -242,7 +244,11 @@ namespace xeus.Core
 				NotifyPropertyChanged( "StatusText" ) ;
 				NotifyPropertyChanged( "StatusTemplate" ) ;
 				NotifyPropertyChanged( "HasSpecialStatus" ) ;
-				NotifyPropertyChanged( "Group" ) ;
+
+				if ( group != Group )
+				{
+					NotifyPropertyChanged( "Group" ) ;
+				}
 			}
 		}
 
@@ -390,6 +396,12 @@ namespace xeus.Core
 			{
 				return _image ;
 			}
+
+			set
+			{
+				_image = value ;
+				NotifyPropertyChanged( "Image" ) ;
+			}
 		}
 
 		public ObservableCollectionDisp< Message > Messages
@@ -398,64 +410,6 @@ namespace xeus.Core
 			{
 				return _messages ;
 			}
-		}
-
-		public void SetPhoto( Photo photo )
-		{
-			if ( photo == null )
-			{
-				_image = null ;
-			}
-			else
-			{
-				try
-				{
-					if ( photo.HasTag( "BINVAL" ) )
-					{
-						byte[] pic = Convert.FromBase64String( photo.GetTag( "BINVAL" ) ) ;
-						MemoryStream memoryStream = new MemoryStream( pic, 0, pic.Length ) ;
-						BitmapImage bitmap = new BitmapImage() ;
-						bitmap.BeginInit() ;
-						bitmap.StreamSource = memoryStream ;
-						bitmap.EndInit() ;
-						_image = bitmap ;
-					}
-					else if ( photo.HasTag( "EXTVAL" ) )
-					{
-						WebRequest webRequest = WebRequest.Create( photo.GetTag( "EXTVAL" ) ) ;
-						WebResponse response = webRequest.GetResponse() ;
-
-						BitmapImage bitmap = new BitmapImage() ;
-						bitmap.BeginInit() ;
-						bitmap.StreamSource = response.GetResponseStream() ;
-						bitmap.EndInit() ;
-
-						response.Close();
-
-						_image = bitmap ;
-					}
-					else if ( photo.TextBase64.Length > 0 )
-					{
-						byte[] pic = Convert.FromBase64String( photo.Value ) ;
-						MemoryStream memoryStream = new MemoryStream( pic, 0, pic.Length ) ;
-						BitmapImage bitmap = new BitmapImage() ;
-						bitmap.BeginInit() ;
-						bitmap.StreamSource = memoryStream ;
-						bitmap.EndInit() ;
-						_image = bitmap ;
-					}
-					else
-					{
-						_image = null ;
-					}
-				}
-				catch
-				{
-					_image = null ;
-				}
-			}
-
-			NotifyPropertyChanged( "Image" ) ;
 		}
 
 		private void NotifyPropertyChanged( String info )

@@ -1,3 +1,4 @@
+using System ;
 using System.Collections ;
 using System.Collections.Specialized ;
 using System.ComponentModel ;
@@ -60,7 +61,9 @@ namespace xeus.Controls
 							_rosterView = CollectionViewSource.GetDefaultView( _roster.ItemsSource ) ;
 						}
 
-						_rosterView.Refresh() ;
+						//_rosterView.Refresh() ;
+						Client.Instance.Roster.Items.Remove( ( RosterItem ) sender ) ;
+						Client.Instance.Roster.Items.Add( ( RosterItem ) sender );
 						break ;
 					}
 			}
