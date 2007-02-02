@@ -35,6 +35,7 @@ namespace xeus.Core
 		private ControlTemplate _templateFreeForChat ;
 		private ControlTemplate _templateXAway ;
 		private ControlTemplate _templateOnline ;
+		private ControlTemplate _templateOffline ;
 
 		public event PropertyChangedEventHandler PropertyChanged ;
 
@@ -70,13 +71,26 @@ namespace xeus.Core
 			}
 		}
 
+		public bool HasSpecialStatus
+		{
+			get
+			{
+				return ( ( _presence != null ) && _presence.Show != ShowType.NONE ) ;
+			}
+		}
+
 		public ControlTemplate StatusTemplate
 		{
 			get
 			{
 				if ( _presence == null )
 				{
-					return null ;
+					if ( _templateOffline == null )
+					{
+						_templateOffline = ( ControlTemplate ) App.Instance.FindResource( "StatusOffline" ) ;
+					}
+
+					return _templateOffline ;
 				}
 
 				switch ( _presence.Show )
@@ -223,6 +237,7 @@ namespace xeus.Core
 				NotifyPropertyChanged( "Presence" ) ;
 				NotifyPropertyChanged( "StatusText" ) ;
 				NotifyPropertyChanged( "StatusTemplate" ) ;
+				NotifyPropertyChanged( "HasSpecialStatus" ) ;
 			}
 		}
 

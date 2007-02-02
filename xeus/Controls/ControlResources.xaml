@@ -53,7 +53,7 @@
   	<Grid x:Name="_rosterItemGridOuter" RenderTransformOrigin="0.5,0.5"
 			Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}"
 			Visibility="{Binding Path=Presence, Converter={StaticResource _rosterItemVisibleConverter}}"
-          Margin="3,3,3,3" Width="130" Height="26" SnapsToDevicePixels="True">
+          Margin="3,3,3,3" Width="130" Height="28" SnapsToDevicePixels="True">
   		<Grid.ColumnDefinitions>
   			<ColumnDefinition Width="0.163*"/>
   			<ColumnDefinition Width="0.837*"/>
@@ -63,16 +63,16 @@
   		<Border VerticalAlignment="Stretch" Width="Auto" Grid.Column="1"
   		 Height="Auto" Grid.Row="2" Grid.RowSpan="1"
   		 CornerRadius="3,3,3,3" x:Name="_displayNameLabel"
-  		 Visibility="Visible" BorderThickness="1,1,1,1">
-		<Grid Grid.Row="1" Margin="2,0,0,0" >     
-  			<TextBlock Text="{Binding Path=DisplayName}" HorizontalAlignment="Stretch" Margin="2,1,0,0"
+  		 Visibility="Visible" BorderThickness="1,1,1,1" Margin="2,0,0,0">
+		<Grid Grid.Row="1" Margin="2,0,1,1" >     
+  			<TextBlock Text="{Binding Path=DisplayName}" HorizontalAlignment="Stretch" Margin="2,0.5,0,0"
   				TextTrimming="CharacterEllipsis"
   				FontFamily="Calibri" SnapsToDevicePixels="False" Foreground="#FFDCDCDC"
-  				VerticalAlignment="Top" x:Name="_displayName" Height="12" FontSize="12"/>
+  				VerticalAlignment="Top" x:Name="_displayName" FontSize="12"/>
   			<TextBlock Text="{Binding Path=StatusText}" HorizontalAlignment="Stretch"
   				TextTrimming="CharacterEllipsis"
-  				FontFamily="Calibri" SnapsToDevicePixels="True" Foreground="#FF88B3D5"
-  				VerticalAlignment="Bottom" x:Name="_displayStatus" Height="11" Margin="2,0,0,0" FontSize="10"/>
+  				FontFamily="Calibri" SnapsToDevicePixels="True" Foreground="#FFB8D9F2"
+  				x:Name="_displayStatus" Margin="2,0,0,0" FontSize="10" VerticalAlignment="Bottom"/>
 	    </Grid>  
   		</Border>
 	</Grid>
@@ -106,6 +106,11 @@
   			<RowDefinition Height="0.185*"/>
   		</Grid.RowDefinitions>
 	    	
+  		<Grid d:IsLayer="True" x:Name="Status" Grid.ColumnSpan="1" Grid.RowSpan="3" Panel.ZIndex="2">
+			<Button Template="{Binding Path=StatusTemplate}" HorizontalAlignment="Right"
+			Margin="0,0.828,1.549,0" VerticalAlignment="Top" Width="22" Height="22" ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" />
+ 		</Grid>
+	    	
   		<Border Margin="0,1.585,0,-2.388" VerticalAlignment="Stretch" Width="Auto"
   		 Height="Auto" Grid.Row="2" Grid.RowSpan="1"
   		 CornerRadius="3,3,3,3" x:Name="_displayNameLabel"
@@ -121,19 +126,20 @@
 	    	
   		<Rectangle Fill="#FF97D9F8" StrokeStartLineCap="Square" StrokeThickness="0" HorizontalAlignment="Stretch" Margin="16.06,1.164,16.337,11.898" Width="Auto" Height="Auto" Grid.Row="1" Panel.ZIndex="-2"/>
 	    	
+  		<Path Opacity="0.19" RenderTransformOrigin="0.499999997872742,0.524966983478661" SnapsToDevicePixels="False" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" Margin="9.001,6.273,8.999,0" VerticalAlignment="Top" Width="Auto" Height="34.591" Grid.RowSpan="2" Panel.ZIndex="1" Data="F1 M2.050252,-1.7272823 L69.930183,-1.7272823 C71.016823,-1.7272825 71.89772,-1.0236186 71.89772,-0.15560764 L71.89772,0.28742129 72,0.28783017 71.999741,23.345715 C71.951302,23.383036 60.005066,32.569317 36.785892,32.856953 13.519601,33.145172 3.0632521E-07,24.498579 3.0632521E-07,24.498579 L0.00012261505,1.8544513E-07 0.082717486,0.00033037047 0.082717486,-0.15560764 C0.082717471,-1.0236186 0.96361244,-1.7272825 2.050252,-1.7272823 z">
+  			<Path.Fill>
+  				<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+  					<GradientStop Color="#FFFFFFFF" Offset="0"/>
+  					<GradientStop Color="#FFE8E8E8" Offset="1"/>
+  				</LinearGradientBrush>
+  			</Path.Fill>
+  		</Path>
+	    	
 	      <Image HorizontalAlignment="Stretch" Source="{Binding Path=Image}" Grid.Row="1" 
-	       VerticalAlignment="Stretch" Stretch="Uniform" Width="52" Height="50" Margin="20,5.423,18,15.352"/>
+	       VerticalAlignment="Stretch" Stretch="Uniform" Width="Auto" Height="Auto" Margin="16.337,3.238,16.337,13.168" Opacity="0.7" d:LayoutOverrides="Margin"/>
 	      
-  		<Grid SnapsToDevicePixels="False" d:IsLayer="True" x:Name="_frame" Grid.ColumnSpan="1" Grid.RowSpan="3">
-  			<Path Opacity="0.4" RenderTransformOrigin="0.5,0.5" SnapsToDevicePixels="False" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,9.636,0,0" VerticalAlignment="Top" Width="65" Height="32.197" Data="M10.742689,6.3567251 L77.701637,6.648848 77.701392,30.050624 C77.701392,30.050624 66.590322,39.411197 44.952975,39.703717 23.315629,39.996236 10.742576,31.220683 10.742576,31.220683 z">
-  				<Path.Fill>
-  					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-  						<GradientStop Color="#FFFFFFFF" Offset="0"/>
-  						<GradientStop Color="#FFE8E8E8" Offset="1"/>
-  					</LinearGradientBrush>
-  				</Path.Fill>
-  			</Path>
-  			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" Height="Auto" Data="F1 M15.6,9.75 C14.495431,9.75 13.6,10.645431 13.6,11.749999 L13.6,63.150002 C13.6,64.25457 14.495431,65.150002 15.6,65.150002 L62,65.150002 C63.104568,65.150002 64,64.25457 64,63.150002 L64,11.749999 C64,10.645431 63.104568,9.75 62,9.75 L15.6,9.75 M2.5,0.5 L71.5,0.5 C72.604568,0.5 73.5,1.3954304 73.5,2.5 L73.5,71.5 C73.5,72.604568 72.604568,73.5 71.5,73.5 L2.5,73.5 C1.3954304,73.5 0.5,72.604568 0.5,71.5 L0.5,2.5 C0.5,1.3954304 1.3954304,0.5 2.5,0.5 z" Fill="#5B000000" Margin="11,8.25,5,18.569">
+  		<Grid SnapsToDevicePixels="False" d:IsLayer="True" x:Name="_frame" Grid.ColumnSpan="1" Grid.RowSpan="3" Panel.ZIndex="-1">
+  			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" Height="Auto" Data="M2.5,0.5 L71.5,0.5 C72.604568,0.5 73.5,1.3954304 73.5,2.5 L73.5,71.5 C73.5,72.604568 72.604568,73.5 71.5,73.5 L2.5,73.5 C1.3954304,73.5 0.5,72.604568 0.5,71.5 L0.5,2.5 C0.5,1.3954304 1.3954304,0.5 2.5,0.5 z" Fill="#5B000000" Margin="11,8.25,5,18.569" d:LayoutOverrides="Margin">
   				<Path.RenderTransform>
   					<TransformGroup>
   						<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -143,12 +149,16 @@
   					</TransformGroup>
   				</Path.RenderTransform>
   			</Path>
-  			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill" Stroke="#FF666666" StrokeStartLineCap="Square" StrokeThickness="1" Margin="8,5.25,8,21.569" VerticalAlignment="Stretch" Height="Auto" Data="F1 M15.6,9.75 C14.495431,9.75 13.6,10.645431 13.6,11.749999 L13.6,63.150002 C13.6,64.25457 14.495431,65.150002 15.6,65.150002 L62,65.150002 C63.104568,65.150002 64,64.25457 64,63.150002 L64,11.749999 C64,10.645431 63.104568,9.75 62,9.75 L15.6,9.75 M2.5,0.5 L71.5,0.5 C72.604568,0.5 73.5,1.3954304 73.5,2.5 L73.5,71.5 C73.5,72.604568 72.604568,73.5 71.5,73.5 L2.5,73.5 C1.3954304,73.5 0.5,72.604568 0.5,71.5 L0.5,2.5 C0.5,1.3954304 1.3954304,0.5 2.5,0.5 z">
+  			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill"
+			 Stroke="#FF666666" StrokeStartLineCap="Square" StrokeThickness="1"
+			  Margin="8,5.25,8,21.569" VerticalAlignment="Stretch" Height="Auto"
+			   Data="M2.5,0.5 L71.5,0.5 C72.604568,0.5 73.5,1.3954304 73.5,2.5 L73.5,71.5 C73.5,72.604568 72.604568,73.5 71.5,73.5 L2.5,73.5 C1.3954304,73.5 0.5,72.604568 0.5,71.5 L0.5,2.5 C0.5,1.3954304 1.3954304,0.5 2.5,0.5 z"
+			    d:LayoutOverrides="Margin">
   				<Path.RenderTransform>
   					<TransformGroup>
   						<ScaleTransform ScaleX="1" ScaleY="1"/>
   						<SkewTransform AngleX="0" AngleY="0"/>
-  						<RotateTransform Angle="-90"/>
+  						<RotateTransform Angle="-270"/>
   						<TranslateTransform X="0" Y="0"/>
   					</TransformGroup>
   				</Path.RenderTransform>
@@ -160,16 +170,12 @@
   				</Path.Fill>
   			</Path>
   		</Grid>
-  		<Grid d:IsLayer="True" x:Name="Status" Grid.ColumnSpan="1" Grid.RowSpan="3">
-			<Button Template="{Binding Path=StatusTemplate}" HorizontalAlignment="Right"
-			Margin="0,0.828,1.549,0" VerticalAlignment="Top" Width="22" Height="22" ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" />
- 		</Grid>
 	</Grid>
 	<DataTemplate.Triggers>
 		<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}, AncestorLevel=1}, Path=IsSelected}" Value="True">
 			<Setter Property="Background" Value="#9CBAE8FF" TargetName="_displayNameLabel" />
 		</DataTrigger>
-		<DataTrigger Binding="{Binding Path=Presence}" Value="Null">
+		<DataTrigger Binding="{Binding Path=HasSpecialStatus}" Value="false">
 			<Setter Property="Visibility" Value="Hidden" TargetName="_statusButton" />
 		</DataTrigger>
 	</DataTemplate.Triggers>
