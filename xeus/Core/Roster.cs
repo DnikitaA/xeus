@@ -1,5 +1,6 @@
 using System.Collections.Generic ;
 using System.Timers ;
+using System.Windows.Media.Imaging ;
 using System.Windows.Threading ;
 using agsXMPP ;
 using agsXMPP.protocol.client ;
@@ -152,7 +153,19 @@ namespace xeus.Core
 						rosterItem.Role = vcard.Role ;
 						rosterItem.Title = vcard.Title ;
 						rosterItem.Url = vcard.Url ;
-						rosterItem.SetPhoto( vcard.Photo );
+
+						BitmapImage image = Storage.ImageFromPhoto( vcard.Photo ) ;
+
+						if ( image != null )
+						{
+							Storage.CacheAvatar( rosterItem.Key, vcard.Photo );
+						}
+						else
+						{
+							image = Storage.GetAvatar( rosterItem.Key ) ;
+						}
+
+						rosterItem.Image = image ;
 					}
 				}
 			}

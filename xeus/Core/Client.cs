@@ -274,7 +274,7 @@ namespace xeus.Core
 			}
 		}
 
-		private void Log( string text, params object [] parameters )
+		public void Log( string text, params object [] parameters )
 		{
 			Console.WriteLine( text, parameters );
 		}
