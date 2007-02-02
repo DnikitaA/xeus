@@ -47,15 +47,13 @@
 
   <local:SizeFromSliderConverterSmall x:Key="_sizeFromSliderConverterSmall" />
   <local:OpacityStatusConverter x:Key="_opacityStatusConverter" />
-  <local:RosterItemVisibleConverter x:Key="_rosterItemVisibleConverter" />
 
   <DataTemplate x:Key="RosterItemSmall" DataType="{x:Type local:RosterItem}">
     <Viewbox x:Name="_viewbox"
 		Width="{Binding Path=Value, Converter={StaticResource _sizeFromSliderConverterSmall}, ElementName=_sliderItemSize}">
   	<Grid x:Name="_rosterItemGridOuter" RenderTransformOrigin="0.5,0.5"
 			Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}"
-			Visibility="{Binding Path=Presence, Converter={StaticResource _rosterItemVisibleConverter}}"
-          Margin="3,3,3,3" Width="130" Height="28" >
+			Margin="3,3,3,3" Width="130" Height="28" >
   		<Grid.ColumnDefinitions>
   			<ColumnDefinition Width="0.163*"/>
   			<ColumnDefinition Width="0.837*"/>
@@ -94,8 +92,7 @@
 		Width="{Binding Path=Value, Converter={StaticResource _sizeFromSliderConverterSmall}, ElementName=_sliderItemSize}">
   	<Grid x:Name="_rosterItemGridOuter" RenderTransformOrigin="0.5,0.5"
 			Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}"
-			Visibility="{Binding Path=Presence, Converter={StaticResource _rosterItemVisibleConverter}}"
-          Margin="3,3,3,3" Width="90" Height="100.819" >
+			Margin="3,3,3,3" Width="90" Height="100.819" >
   		<Grid.RenderTransform>
   			<TransformGroup>
   				<ScaleTransform ScaleX="1" ScaleY="1"/>

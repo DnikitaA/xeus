@@ -152,7 +152,11 @@ namespace xeus.Core
 		{
 			get
 			{
-				if ( _rosterItem.GetGroups().Count > 0 )
+				if ( _presence == null )
+				{
+					return "<offline>" ;
+				}
+				else if ( _rosterItem.GetGroups().Count > 0 )
 				{
 					Group group = ( Group ) _rosterItem.GetGroups().Item( 0 ) ;
 					return group.Name ;
@@ -238,6 +242,7 @@ namespace xeus.Core
 				NotifyPropertyChanged( "StatusText" ) ;
 				NotifyPropertyChanged( "StatusTemplate" ) ;
 				NotifyPropertyChanged( "HasSpecialStatus" ) ;
+				NotifyPropertyChanged( "Group" ) ;
 			}
 		}
 
