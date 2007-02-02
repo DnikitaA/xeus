@@ -195,18 +195,37 @@
 <ControlTemplate x:Key="StatusOnline" TargetType="{x:Type Button}">
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox">
 	<Grid>
-	<Rectangle Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="20" Height="20" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0" RenderTransformOrigin="0.5,0.5" RadiusX="3" RadiusY="3">
-		<Rectangle.BitmapEffect>
+	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0">
+		<Ellipse.BitmapEffect>
 			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
-		</Rectangle.BitmapEffect>
-		<Rectangle.Fill>
+		</Ellipse.BitmapEffect>
+		<Ellipse.Fill>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-				<GradientStop Color="#FFD3D3D3" Offset="0.005"/>
-				<GradientStop Color="#FFACACAC" Offset="0.995"/>
+				<GradientStop Color="#FFD0F0D6" Offset="0"/>
+				<GradientStop Color="#FF6AB554" Offset="1"/>
 			</LinearGradientBrush>
-		</Rectangle.Fill>
-	</Rectangle>
+		</Ellipse.Fill>
+	</Ellipse>
+		<Path Fill="#3F000000" Stretch="Fill" StrokeThickness="1" Margin="1.564,1.153,1.408,0" VerticalAlignment="Stretch" Height="Auto" Data="F1 M7.3525,0.49999991 C9.4144554,0.5 11.086,2.1372948 11.086,4.1570001 11.086,5.7705994 10.019076,7.1401114 8.5243216,7.5822678 10.633841,7.8625236 12.405818,9.1447592 13.297972,10.980547 C12.063371,13.043333 9.7869291,14.347 7.2059999,14.347 C4.7266774,14.347 2.5283399,13.143958 1.2695609,11.211231 2.1425495,9.2605562 3.9775298,7.8749623 6.1806784,7.5822678 4.6859241,7.1401114 3.6190002,5.7705994 3.6190002,4.1570001 3.6190002,2.1372948 5.290545,0.5 7.3525,0.49999991 z"/>
+	<Path Fill="#96FFFFFF" Stretch="Fill" StrokeThickness="2" Width="6.798" Height="6.798" Data="F1 M8.29,-1.7763568E-15 L9.9230118,0.32968992 C5.1414447,1.3809938 1.3809938,5.1414447 0.32968992,9.9230118 C0.057662927,9.4178791 0,8.8606739 -1.7763568E-15,8.29 0,3.7115595 3.7115595,0 8.29,-1.7763568E-15 z" Canvas.Left="2.039" Canvas.Top="1.947" Margin="1.673,1.673,7.529,7.529"/>
+	</Grid>
+</Viewbox>
+	<ControlTemplate.Triggers>
+		<Trigger Property="Visibility" Value="Visible">
+			<Trigger.EnterActions>
+				<BeginStoryboard Storyboard="{StaticResource PumpStatus}"/>
+			</Trigger.EnterActions>
+		</Trigger>
+	</ControlTemplate.Triggers>
+</ControlTemplate>
+
+<ControlTemplate x:Key="StatusOffline" TargetType="{x:Type Button}">
+<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox">
+	<Grid>
+	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0" Fill="#FF3E3E3E"/>
+	<Path Fill="#FF595959" Stretch="Fill" StrokeThickness="2" Width="6.798" Height="6.798" Data="F1 M8.29,-1.7763568E-15 L9.9230118,0.32968992 C5.1414447,1.3809938 1.3809938,5.1414447 0.32968992,9.9230118 C0.057662927,9.4178791 0,8.8606739 -1.7763568E-15,8.29 0,3.7115595 3.7115595,0 8.29,-1.7763568E-15 z" Canvas.Left="2.039" Canvas.Top="1.947" Margin="1.673,1.673,7.529,7.529"/>
 	</Grid>
 </Viewbox>
 	<ControlTemplate.Triggers>
@@ -221,11 +240,11 @@
 <ControlTemplate x:Key="MessageIcon" TargetType="{x:Type Button}">
 	<ControlTemplate.Resources>
 		<Storyboard x:Key="PumpMessageForever" RepeatBehavior="Forever">
-			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="viewbox" Storyboard.TargetProperty="(UIElement.Opacity)">
-				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
-				<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0.11"/>
-				<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="1"/>
-			</DoubleAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="viewbox" Storyboard.TargetProperty="(UIElement.Visibility)">
+				<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="00:00:00.2000000" Value="{x:Static Visibility.Collapsed}"/>
+				<DiscreteObjectKeyFrame KeyTime="00:00:00.4000000" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
 		</Storyboard>
 	</ControlTemplate.Resources>
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -266,9 +285,14 @@
 		</Path>	</Grid>
 </Viewbox>
 	<ControlTemplate.Triggers>
-		<EventTrigger RoutedEvent="FrameworkElement.Loaded">
-			<BeginStoryboard Storyboard="{StaticResource PumpMessageForever}"/>
-		</EventTrigger>
+		<Trigger Property="Visibility" Value="Visible">
+			<Trigger.EnterActions>
+				<BeginStoryboard x:Name="PumpMessageForever_BeginStoryboard" Storyboard="{StaticResource PumpMessageForever}"/>
+			</Trigger.EnterActions>
+			<Trigger.ExitActions>
+				<StopStoryboard BeginStoryboardName="PumpMessageForever_BeginStoryboard"/>
+			</Trigger.ExitActions>
+		</Trigger>
 	</ControlTemplate.Triggers>
 </ControlTemplate>
 
