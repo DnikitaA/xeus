@@ -96,7 +96,6 @@
     </Compile>
     <Compile Include="Core\CountToVisibilityConverter.cs" />
     <Compile Include="Core\MessageCenter.cs" />
-    <Compile Include="Core\RosterItemVisibleConverter.cs" />
     <Compile Include="Controls\ServicesControl.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>ServicesControl.xaml</DependentUpon>

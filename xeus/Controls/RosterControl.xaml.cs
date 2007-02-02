@@ -1,4 +1,6 @@
-using System ;
+using System.Collections ;
+using System.Collections.Specialized ;
+using System.ComponentModel ;
 using System.Windows ;
 using System.Windows.Controls ;
 using System.Windows.Data ;
@@ -15,18 +17,83 @@ namespace xeus.Controls
 		private static DataTemplate _rosterItemBig ;
 		private static DataTemplate _rosterItemSmall ;
 
+		private ICollectionView _rosterView ;
+
 		public RosterControl()
 		{
 			InitializeComponent() ;
 
 			_rosterItemBig = ( DataTemplate ) App.Current.FindResource( "RosterItemBig" ) ;
 			_rosterItemSmall = ( DataTemplate ) App.Current.FindResource( "RosterItemSmall" ) ;
+
+			Client.Instance.Roster.Items.CollectionChanged += new NotifyCollectionChangedEventHandler( Items_CollectionChanged ) ;
+
 			_roster.ItemTemplate = _rosterItemSmall ;
 
-			_sliderItemSize.ValueChanged += new RoutedPropertyChangedEventHandler<double>( _sliderItemSize_ValueChanged );
+			_sliderItemSize.ValueChanged += new RoutedPropertyChangedEventHandler< double >( _sliderItemSize_ValueChanged ) ;
 		}
 
-		void _sliderItemSize_ValueChanged( object sender, RoutedPropertyChangedEventArgs<double> e )
+		private void SubscribeItems( IList items )
+		{
+			foreach ( RosterItem item in items )
+			{
+				item.PropertyChanged += new PropertyChangedEventHandler( item_PropertyChanged ) ;
+			}
+		}
+
+		private void UnsubscribeItems( IList items )
+		{
+			foreach ( RosterItem item in items )
+			{
+				item.PropertyChanged -= new PropertyChangedEventHandler( item_PropertyChanged ) ;
+			}
+		}
+
+		private void item_PropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch ( e.PropertyName )
+			{
+				case "Group":
+					{
+						if ( _rosterView == null )
+						{
+							_rosterView = CollectionViewSource.GetDefaultView( _roster.ItemsSource ) ;
+						}
+
+						_rosterView.Refresh() ;
+						break ;
+					}
+			}
+		}
+
+		private void Items_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
+		{
+			switch ( e.Action )
+			{
+				case NotifyCollectionChangedAction.Add:
+					{
+						SubscribeItems( e.NewItems ) ;
+						break ;
+					}
+				case NotifyCollectionChangedAction.Remove:
+					{
+						UnsubscribeItems( e.OldItems ) ;
+						break ;
+					}
+				case NotifyCollectionChangedAction.Replace:
+					{
+						UnsubscribeItems( e.OldItems ) ;
+						break ;
+					}
+				case NotifyCollectionChangedAction.Reset:
+					{
+						UnsubscribeItems( e.OldItems ) ;
+						break ;
+					}
+			}
+		}
+
+		private void _sliderItemSize_ValueChanged( object sender, RoutedPropertyChangedEventArgs< double > e )
 		{
 			if ( e.NewValue > 100.0 )
 			{
@@ -56,7 +123,7 @@ namespace xeus.Controls
 
 		private void OpenMessageWindow( RosterItem rosterItem )
 		{
-			MessageWindow.Instance.DisplayChat( rosterItem.Key );
+			MessageWindow.Instance.DisplayChat( rosterItem.Key ) ;
 		}
 
 		private void RosterControl_Drop( object sender, DragEventArgs e )
