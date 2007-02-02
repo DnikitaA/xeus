@@ -45,15 +45,17 @@
     </CollectionViewSource.GroupDescriptions>
   </CollectionViewSource>
 
-  <local:DisplayNameFontSizeConverter x:Key="_displayNameFontSizeConverter" />
+  <local:SizeFromSliderConverterSmall x:Key="_sizeFromSliderConverterSmall" />
   <local:OpacityStatusConverter x:Key="_opacityStatusConverter" />
   <local:RosterItemVisibleConverter x:Key="_rosterItemVisibleConverter" />
 
   <DataTemplate x:Key="RosterItemSmall" DataType="{x:Type local:RosterItem}">
+    <Viewbox x:Name="_viewbox"
+		Width="{Binding Path=Value, Converter={StaticResource _sizeFromSliderConverterSmall}, ElementName=_sliderItemSize}">
   	<Grid x:Name="_rosterItemGridOuter" RenderTransformOrigin="0.5,0.5"
 			Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}"
 			Visibility="{Binding Path=Presence, Converter={StaticResource _rosterItemVisibleConverter}}"
-          Margin="3,3,3,3" Width="130" Height="28" SnapsToDevicePixels="True">
+          Margin="3,3,3,3" Width="130" Height="28" >
   		<Grid.ColumnDefinitions>
   			<ColumnDefinition Width="0.163*"/>
   			<ColumnDefinition Width="0.837*"/>
@@ -67,15 +69,16 @@
 		<Grid Grid.Row="1" Margin="2,0,1,1" >     
   			<TextBlock Text="{Binding Path=DisplayName}" HorizontalAlignment="Stretch" Margin="2,0.5,0,0"
   				TextTrimming="CharacterEllipsis"
-  				FontFamily="Calibri" SnapsToDevicePixels="False" Foreground="#FFDCDCDC"
+  				FontFamily="Calibri" Foreground="#FFDCDCDC"
   				VerticalAlignment="Top" x:Name="_displayName" FontSize="12"/>
   			<TextBlock Text="{Binding Path=StatusText}" HorizontalAlignment="Stretch"
   				TextTrimming="CharacterEllipsis"
-  				FontFamily="Calibri" SnapsToDevicePixels="True" Foreground="#FFB8D9F2"
+  				FontFamily="Calibri" Foreground="#FFB8D9F2"
   				x:Name="_displayStatus" Margin="2,0,0,0" FontSize="10" VerticalAlignment="Bottom"/>
 	    </Grid>  
   		</Border>
 	</Grid>
+	</Viewbox>
 	<DataTemplate.Triggers>
 		<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}, AncestorLevel=1}, Path=IsSelected}" Value="True">
 			<Setter Property="Background" Value="#9CBAE8FF" TargetName="_displayNameLabel" />
@@ -87,10 +90,12 @@
   </DataTemplate>
   
   <DataTemplate x:Key="RosterItemBig" DataType="{x:Type local:RosterItem}">
+  	<Viewbox x:Name="_viewbox"
+		Width="{Binding Path=Value, Converter={StaticResource _sizeFromSliderConverterSmall}, ElementName=_sliderItemSize}">
   	<Grid x:Name="_rosterItemGridOuter" RenderTransformOrigin="0.5,0.5"
 			Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}"
 			Visibility="{Binding Path=Presence, Converter={StaticResource _rosterItemVisibleConverter}}"
-          Margin="3,3,3,3" Width="90" Height="100.819" SnapsToDevicePixels="True">
+          Margin="3,3,3,3" Width="90" Height="100.819" >
   		<Grid.RenderTransform>
   			<TransformGroup>
   				<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -117,9 +122,8 @@
   		 Visibility="Visible" BorderThickness="1,1,1,1">
 	      
   			<TextBlock Text="{Binding Path=DisplayName}" HorizontalAlignment="Stretch" Margin="0,0,0,0"
-  				TextTrimming="CharacterEllipsis"
-  				FontSize="{Binding Path=Value, Converter={StaticResource _displayNameFontSizeConverter}, ElementName=_sliderItemSize}"
-  				FontFamily="Calibri" SnapsToDevicePixels="False" Foreground="#FFDCDCDC"
+  				TextTrimming="CharacterEllipsis"  				
+  				FontFamily="Calibri" Foreground="#FFDCDCDC"
   				Grid.Row="2" VerticalAlignment="Stretch" TextAlignment="Center" x:Name="_displayName" Width="90"/>
 	      
   		</Border>
@@ -171,6 +175,7 @@
   			</Path>
   		</Grid>
 	</Grid>
+	</Viewbox>
 	<DataTemplate.Triggers>
 		<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}, AncestorLevel=1}, Path=IsSelected}" Value="True">
 			<Setter Property="Background" Value="#9CBAE8FF" TargetName="_displayNameLabel" />

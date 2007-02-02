@@ -284,16 +284,6 @@
 			</Path.RenderTransform>
 		</Path>	</Grid>
 </Viewbox>
-	<ControlTemplate.Triggers>
-		<Trigger Property="Visibility" Value="Visible">
-			<Trigger.EnterActions>
-				<BeginStoryboard x:Name="PumpMessageForever_BeginStoryboard" Storyboard="{StaticResource PumpMessageForever}"/>
-			</Trigger.EnterActions>
-			<Trigger.ExitActions>
-				<StopStoryboard BeginStoryboardName="PumpMessageForever_BeginStoryboard"/>
-			</Trigger.ExitActions>
-		</Trigger>
-	</ControlTemplate.Triggers>
 </ControlTemplate>
 
 </ResourceDictionary>
