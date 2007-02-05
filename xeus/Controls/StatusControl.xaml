@@ -1,0 +1,59 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="xeus.Controls.StatusControl"
+    >
+	<UserControl.Resources>
+		<Storyboard x:Key="Popup">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="viewbox" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.121"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="viewbox" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.122"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="viewbox" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="-0.25"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="viewbox" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="-90"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="viewbox" Storyboard.TargetProperty="(UIElement.Opacity)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.26"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+	</UserControl.Resources>
+	<UserControl.Triggers>
+		<EventTrigger RoutedEvent="FrameworkElement.Loaded">
+			<BeginStoryboard Storyboard="{StaticResource Popup}"/>
+		</EventTrigger>
+	</UserControl.Triggers>
+    <Viewbox RenderTransformOrigin="0.5,0.5" x:Name="viewbox">
+    	<Viewbox.RenderTransform>
+    		<TransformGroup>
+    			<ScaleTransform ScaleX="1" ScaleY="1"/>
+    			<SkewTransform AngleX="0" AngleY="0"/>
+    			<RotateTransform Angle="0"/>
+    			<TranslateTransform X="0" Y="0"/>
+    		</TransformGroup>
+    	</Viewbox.RenderTransform>
+	<Grid Width="40" Height="40">
+    	<Button x:Name="_offline" Content="Button" Template="{DynamicResource StatusOffline}" HorizontalAlignment="Right" Margin="0,0,5.875,8.75" Width="10"
+			Click="OnStatusOffline" d:LayoutOverrides="Height" VerticalAlignment="Bottom" Height="10"/>
+    	<Button d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" HorizontalAlignment="Left" Margin="5.25,10.875,0,0" x:Name="_online" VerticalAlignment="Top" Width="10" Height="10" Template="{DynamicResource StatusOnline}"
+			Click="OnStatusOnline" RenderTransformOrigin="0.525,-0.025"/>
+    	<Button d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" HorizontalAlignment="Left" Margin="14.5,26.5,0,0" x:Name="_dnd" VerticalAlignment="Top" Width="10" Height="10" Template="{DynamicResource StatusDnd}"
+			Click="OnStatusDnd"/>
+    	<Button x:Name="_away" Content="Button" Template="{DynamicResource StatusAway}" Margin="14.75,5.25,15.25,0" VerticalAlignment="Top" Height="10"
+			Click="OnStatusAway" Width="10"/>
+    	<Button x:Name="_xAway" Content="Button" Template="{DynamicResource StatusXAway}" Margin="5.375,0,0,8.375" HorizontalAlignment="Left" Width="10"
+			Click="OnStatusXAway" d:LayoutOverrides="Height" VerticalAlignment="Bottom" Height="10"/>
+    	<Button d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" HorizontalAlignment="Left" Margin="24.25,11.625,0,0" x:Name="_freeForChat" VerticalAlignment="Top" Width="10" Height="10" Template="{DynamicResource StatusFreeForChat}"
+			Click="OnStatusFreeForChat"/>
+    </Grid>
+	</Viewbox>
+</UserControl>

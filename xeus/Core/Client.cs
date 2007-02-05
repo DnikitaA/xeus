@@ -89,10 +89,22 @@ namespace xeus.Core
 
 			_xmppConnection.OnRosterEnd += new ObjectHandler( _xmppConnection_OnRosterEnd );
 			_xmppConnection.OnMessage += new XmppClientConnection.MessageHandler( _xmppConnection_OnMessage );
+			_xmppConnection.OnXmppError += new OnXmppErrorHandler( _xmppConnection_OnXmppError );
+			_xmppConnection.OnAuthError += new OnXmppErrorHandler( _xmppConnection_OnAuthError );
 
 			_messageCenter.RegisterEvent( _instance );
 
 			Log( "Setup finished" ) ;
+		}
+
+		void _xmppConnection_OnAuthError( object sender, Element e )
+		{
+			
+		}
+
+		void _xmppConnection_OnXmppError( object sender, Element e )
+		{
+			
 		}
 
 		void _xmppConnection_OnMessage( object sender, Message msg )
@@ -110,7 +122,7 @@ namespace xeus.Core
 
 		void _xmppConnection_OnRosterEnd( object sender )
 		{
-			Status = "online" ;
+			SetMyPresence( ShowType.NONE );
 		}
 
 		public void Connect()
@@ -133,25 +145,10 @@ namespace xeus.Core
 			}
 		}
 
-		public string Status
+		public void SetMyPresence( ShowType showType )
 		{
-			set
-			{
-				switch ( value )
-				{
-					case "online":
-						{
-							_xmppConnection.Show = ShowType.NONE ;
-							_xmppConnection.SendMyPresence();
-							break ;
-						}
-
-					default:
-						{
-							break ;
-						}
-				}
-			}
+			_xmppConnection.Show = showType ;
+			_xmppConnection.SendMyPresence();
 		}
 
 		public void SubscribePresence( Jid jid, bool approve )

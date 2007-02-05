@@ -77,6 +77,7 @@
     <Page Include="Controls\ControlResources.xaml" />
     <Page Include="Controls\MessageWindow.xaml" />
     <Page Include="Controls\ServicesControl.xaml" />
+    <Page Include="Controls\StatusControl.xaml" />
     <Page Include="MessengerWindow.xaml" />
     <Page Include="Controls\RosterControl.xaml" />
     <Compile Include="App.xaml.cs">
@@ -93,6 +94,10 @@
     <Compile Include="Controls\MessageWindow.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>MessageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StatusControl.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StatusControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\CountToVisibilityConverter.cs" />
     <Compile Include="Core\MessageCenter.cs" />

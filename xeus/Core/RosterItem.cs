@@ -43,7 +43,7 @@ namespace xeus.Core
 		public event PropertyChangedEventHandler PropertyChanged ;
 
 		public Presence _presence ;
-		private string _statusDescription = String.Empty ;
+		private string _statusDescription = "Not Available" ;
 
 		public RosterItem( agsXMPP.protocol.iq.roster.RosterItem rosterItem )
 		{
@@ -186,7 +186,7 @@ namespace xeus.Core
 				string group = Group ;
 
 				_presence = value ;
-				_statusDescription = String.Empty ;
+				_statusDescription = "Not Available" ;
 
 				if ( _presence == null )
 				{
