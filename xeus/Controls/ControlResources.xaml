@@ -128,14 +128,14 @@
   		<Path Opacity="0.435" RenderTransformOrigin="0.499999997872742,0.524966983478661" SnapsToDevicePixels="False" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" Margin="9.001,6.273,8.999,0" VerticalAlignment="Top" Width="Auto" Height="34.591" Grid.RowSpan="2" Panel.ZIndex="2" Data="F1 M2.050252,-1.7272823 L69.930183,-1.7272823 C71.016823,-1.7272825 71.89772,-1.0236186 71.89772,-0.15560764 L71.89772,0.28742129 72,0.28783017 71.999741,23.345715 C71.951302,23.383036 60.005066,32.569317 36.785892,32.856953 13.519601,33.145172 3.0632521E-07,24.498579 3.0632521E-07,24.498579 L0.00012261505,1.8544513E-07 0.082717486,0.00033037047 0.082717486,-0.15560764 C0.082717471,-1.0236186 0.96361244,-1.7272825 2.050252,-1.7272823 z">
   			<Path.Fill>
   				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-  					<GradientStop Color="#FF8391A4" Offset="0"/>
+  					<GradientStop Color="#FF6B7A8E" Offset="0"/>
   					<GradientStop Color="#FFD1D1D1" Offset="0.986"/>
   				</LinearGradientBrush>
   			</Path.Fill>
   		</Path>
 	    	
 	      <Image HorizontalAlignment="Stretch" Source="{Binding Path=Image}" Grid.Row="1" 
-	       VerticalAlignment="Stretch" Stretch="Uniform" Width="Auto" Height="Auto" Margin="16.337,3.238,16.337,13.168" Opacity="0.7" d:LayoutOverrides="Margin"/>
+	       VerticalAlignment="Stretch" Stretch="Uniform" Width="Auto" Height="Auto" Margin="16.337,3.238,16.337,13.168" d:LayoutOverrides="Margin"/>
 	      
   		<Grid SnapsToDevicePixels="False" d:IsLayer="True" x:Name="_frame" Grid.ColumnSpan="1" Grid.RowSpan="3" Panel.ZIndex="-1">
   			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" Height="Auto" Data="M2.5,0.5 L71.5,0.5 C72.604568,0.5 73.5,1.3954304 73.5,2.5 L73.5,71.5 C73.5,72.604568 72.604568,73.5 71.5,73.5 L2.5,73.5 C1.3954304,73.5 0.5,72.604568 0.5,71.5 L0.5,2.5 C0.5,1.3954304 1.3954304,0.5 2.5,0.5 z" Fill="#5B000000" Margin="11,8.25,5,18.569" d:LayoutOverrides="Margin">

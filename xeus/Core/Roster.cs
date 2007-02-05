@@ -14,8 +14,8 @@ namespace xeus.Core
 		private ObservableCollectionDisp< RosterItem > _items =
 			new ObservableCollectionDisp< RosterItem >( App.DispatcherThred ) ;
 
-		private Timer _rosterItemTimer = new Timer( 180 );
-		Stack< RosterItem > _rosterItemsToBeAdded = new Stack< RosterItem >( 128 );
+		private Timer _rosterItemTimer = new Timer( 220 );
+		Queue< RosterItem > _rosterItemsWithNoVCard = new Queue< RosterItem >( 128 );
 		object _lockRosterItems = new object();
 
 		private Dictionary< string, Presence > _presences = new Dictionary< string, Presence >( 128 ) ;
@@ -135,15 +135,24 @@ namespace xeus.Core
 		{
 			if ( App.DispatcherThred.CheckAccess() )
 			{
-				if ( iq.Type == IqType.result && iq.Vcard != null )
+				// if it is already in roster, change status property
+				RosterItem rosterItem = FindItem( ( string )data ) ;
+
+				if ( rosterItem != null && iq.Type == IqType.result )
 				{
-					Vcard vcard = iq.Vcard ;
-
-					// if it is already in roster, change status property
-					RosterItem rosterItem = FindItem( ( string )data ) ;
-
-					if ( rosterItem != null )
+					if ( iq.Error != null )
 					{
+						// push it back to get vcard next time
+						lock ( _lockRosterItems )
+						{
+							_rosterItemsWithNoVCard.Enqueue( rosterItem ) ;
+							_rosterItemTimer.Start() ;
+						}
+					}
+					else if ( iq.Vcard != null )
+					{
+						Vcard vcard = iq.Vcard ;
+
 						rosterItem.Birthday = vcard.Birthday ;
 						rosterItem.Description = vcard.Description ;
 						rosterItem.EmailPreferred = vcard.GetPreferedEmailAddress() ;
@@ -158,7 +167,7 @@ namespace xeus.Core
 
 						if ( image != null )
 						{
-							Storage.CacheAvatar( rosterItem.Key, vcard.Photo );
+							Storage.CacheAvatar( rosterItem.Key, vcard.Photo ) ;
 						}
 						else
 						{
@@ -192,7 +201,7 @@ namespace xeus.Core
 			else
 			{
 				// using timer frees the UI - on roster item are called synchronously for all items on startup
-				_rosterItemsToBeAdded.Push( rosterItem ) ;
+				_rosterItemsWithNoVCard.Enqueue( rosterItem ) ;
 				_rosterItemTimer.Start() ;
 			}
 		}
@@ -203,9 +212,9 @@ namespace xeus.Core
 
 			lock ( _lockRosterItems )
 			{
-				if ( _rosterItemsToBeAdded.Count > 0 )
+				if ( _rosterItemsWithNoVCard.Count > 0 )
 				{
-					rosterItem = _rosterItemsToBeAdded.Pop() ;
+					rosterItem = _rosterItemsWithNoVCard.Dequeue() ;
 				}
 				else
 				{
