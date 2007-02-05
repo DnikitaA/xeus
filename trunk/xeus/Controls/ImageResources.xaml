@@ -280,4 +280,34 @@
 </Viewbox>
 </ControlTemplate>
 
+<ControlTemplate x:Key="ErrorIcon" TargetType="{x:Type Button}">
+<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox">
+	<Grid>
+	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0">
+		<Ellipse.BitmapEffect>
+			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
+		</Ellipse.BitmapEffect>
+		<Ellipse.Fill>
+			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+				<GradientStop Color="#FFD0B87B" Offset="0"/>
+				<GradientStop Color="#FF7A600C" Offset="1"/>
+			</LinearGradientBrush>
+		</Ellipse.Fill>
+	</Ellipse>
+	<Path Fill="#96FFFFFF" Stretch="Fill" StrokeThickness="2" Width="6.798" Height="6.798" Data="F1 M8.29,-1.7763568E-15 L9.9230118,0.32968992 C5.1414447,1.3809938 1.3809938,5.1414447 0.32968992,9.9230118 C0.057662927,9.4178791 0,8.8606739 -1.7763568E-15,8.29 0,3.7115595 3.7115595,0 8.29,-1.7763568E-15 z" Canvas.Left="2.039" Canvas.Top="1.947" Margin="1.673,1.673,7.529,7.529"/>
+		<Path RenderTransformOrigin="0,0" Fill="#FFFFFFFF" Stretch="Fill" HorizontalAlignment="Center" Margin="0,0,0,3.757" VerticalAlignment="Bottom" Data="M1.8046875,10.220957 C2.0911458,10.220957 2.3256836,10.304209 2.5083008,10.470713 C2.690918,10.637217 2.7822266,10.847585 2.7822266,11.101816 C2.7822266,11.359629 2.6918132,11.572682 2.5109863,11.740976 C2.3301594,11.90927 2.0947266,11.993418 1.8046875,11.993418 C1.5182291,11.993418 1.281901,11.906585 1.0957031,11.73292 C0.90950519,11.559255 0.81640625,11.348886 0.81640625,11.101816 C0.81640625,10.844004 0.91040039,10.632741 1.0983887,10.468027 C1.286377,10.303313 1.5218099,10.220957 1.8046875,10.220957 z M0.90234381,4.1677341 L2.6855469,4.1677341 L2.4760742,9.4743748 L1.1010742,9.4743748 z">
+			<Path.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="1" ScaleY="1"/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="0"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</Path.RenderTransform>
+		</Path>
+	</Grid>
+</Viewbox>
+</ControlTemplate>
+
 </ResourceDictionary>
