@@ -1,6 +1,7 @@
 using System ;
 using System.Windows ;
 using System.Windows.Controls ;
+using System.Windows.Controls.Primitives ;
 using System.Windows.Input ;
 using xeus.Controls ;
 using xeus.Core ;
@@ -28,10 +29,12 @@ namespace xeus
 
 			Button buttonMessages = _statusBar.FindName( "_buttonMessages" ) as Button ;
 
-			if ( buttonMessages != null )
-			{
-				buttonMessages.Click += new RoutedEventHandler( buttonMessages_Click ) ;
-			}
+			buttonMessages.Click += new RoutedEventHandler( buttonMessages_Click ) ;
+		}
+
+		public void DisplayPopup( object sender, RoutedEventArgs e )
+		{
+			_statusPopup.IsOpen = true ;
 		}
 
 		private void buttonMessages_Click( object sender, RoutedEventArgs e )

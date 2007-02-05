@@ -16,4 +16,8 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
+	<ItemsPanelTemplate x:Key="StatusMenuItemTemplate">
+		<StackPanel IsItemsHost="True"/>
+	</ItemsPanelTemplate>
+
 </ResourceDictionary>

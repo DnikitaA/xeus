@@ -72,7 +72,7 @@
   				TextTrimming="CharacterEllipsis"
   				FontFamily="Calibri" Foreground="#FFDCDCDC"
   				VerticalAlignment="Top" x:Name="_displayName" FontSize="12"/>
-  			<TextBlock Text="{Binding Path=StatusText}" HorizontalAlignment="Stretch"
+  			<TextBlock Text="{Binding Path=StatusDescription}" HorizontalAlignment="Stretch"
   				TextTrimming="CharacterEllipsis"
   				FontFamily="Calibri" Foreground="#FFB8D9F2"
   				x:Name="_displayStatus" Margin="2,0,0,0" FontSize="10" VerticalAlignment="Bottom"/>
