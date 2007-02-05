@@ -19,7 +19,7 @@ namespace xeus.Core
 			new ObservableCollectionDisp< string >( App.dispatcherThread ) ;
 
 		private agsXMPP.protocol.iq.roster.RosterItem _rosterItem ;
-		private string _statusText = "Offline" ;
+		private string _statusText = "Not Available" ;
 
 		private DateTime _birthday = DateTime.MinValue ;
 		private string _url = String.Empty ;
@@ -44,7 +44,6 @@ namespace xeus.Core
 
 		public Presence _presence ;
 		private string _statusDescription = String.Empty ;
-		private bool _vcardError = false ;
 
 		public RosterItem( agsXMPP.protocol.iq.roster.RosterItem rosterItem )
 		{
@@ -135,18 +134,13 @@ namespace xeus.Core
 							return _templateXAway ;
 						}
 
-					case ShowType.NONE:
+					default:
 						{
 							if ( _templateOnline == null )
 							{
 								_templateOnline = ( ControlTemplate ) App.Instance.FindResource( "StatusOnline" ) ;
 							}
 							return _templateOnline ;
-						}
-
-					default:
-						{
-							return null ;
 						}
 				}
 			}
@@ -192,60 +186,63 @@ namespace xeus.Core
 				string group = Group ;
 
 				_presence = value ;
+				_statusDescription = String.Empty ;
 
 				if ( _presence == null )
 				{
-					_statusText = "<not available>" ;
-					_statusDescription = String.Empty ;
+					_statusText = "Not Available" ;
 				}
 				else
 				{
-					if ( _presence.Status != null )
+					if ( _presence.Type == PresenceType.error )
 					{
-						_statusDescription = _presence.Status ;
+						_statusText = "Error" ;
 					}
 					else
 					{
-						_statusDescription = String.Empty ;
-					}
+						switch ( _presence.Show )
+						{
+							case ShowType.away:
+								{
+									_statusText = "Away" ;
+									break ;
+								}
+							case ShowType.dnd:
+								{
+									_statusText = "Do not Disturb" ;
+									break ;
+								}
+							case ShowType.chat:
+								{
+									_statusText = "Free for Chat" ;
+									break ;
+								}
+							case ShowType.xa:
+								{
+									_statusText = "Extended Away" ;
+									break ;
+								}
+							default:
+								{
+									_statusText = "Online" ;
+									break ;
+								}
+						}
 
-					switch ( _presence.Show )
-					{
-						case ShowType.NONE:
-							{
-								_statusText = "Online" ;
-								break ;
-							}
-						case ShowType.away:
-							{
-								_statusText = "Away" ;
-								break ;
-							}
-						case ShowType.dnd:
-							{
-								_statusText = "Do not Disturb" ;
-								break ;
-							}
-						case ShowType.chat:
-							{
-								_statusText = "Free for Chat" ;
-								break ;
-							}
-						case ShowType.xa:
-							{
-								_statusText = "Extended Away" ;
-								break ;
-							}
-						default:
-							{
-								_statusText = "Unknown" ;
-								break ;
-							}
+						if ( _presence.Status != null && _presence.Status != String.Empty )
+						{
+							_statusDescription = _presence.Status ;
+						}
+						else
+						{
+							_statusDescription = _statusText ;
+						}
 					}
 				}
 
 				NotifyPropertyChanged( "Presence" ) ;
 				NotifyPropertyChanged( "StatusText" ) ;
+				NotifyPropertyChanged( "StatusDescription" ) ;
 				NotifyPropertyChanged( "StatusTemplate" ) ;
 				NotifyPropertyChanged( "HasSpecialStatus" ) ;
 

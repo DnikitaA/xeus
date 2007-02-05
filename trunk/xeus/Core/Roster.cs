@@ -14,7 +14,7 @@ namespace xeus.Core
 		private ObservableCollectionDisp< RosterItem > _items =
 			new ObservableCollectionDisp< RosterItem >( App.dispatcherThread ) ;
 
-		private Timer _rosterItemTimer = new Timer( 220 );
+		private Timer _rosterItemTimer = new Timer( 250 );
 		Queue< RosterItem > _rosterItemsWithNoVCard = new Queue< RosterItem >( 128 );
 		object _lockRosterItems = new object();
 
