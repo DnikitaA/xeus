@@ -1,6 +1,7 @@
 using System ;
 using System.IO ;
 using System.Reflection ;
+using System.Windows ;
 using System.Windows.Media.Imaging ;
 using agsXMPP.protocol.iq.vcard ;
 
@@ -9,6 +10,7 @@ namespace xeus.Core
 	internal static class Storage
 	{
 		private static string _folder ;
+		private static BitmapImage _defaultAvatar ;
 
 		static Storage()
 		{
@@ -28,23 +30,6 @@ namespace xeus.Core
 			}
 
 			return directoryInfo ;
-		}
-
-		static byte[] ReadFully( Stream stream )
-		{
-			byte[] buffer = new byte[32768] ;
-			using ( MemoryStream ms = new MemoryStream() )
-			{
-				while ( true )
-				{
-					int read = stream.Read( buffer, 0, buffer.Length ) ;
-					if ( read <= 0 )
-					{
-						return ms.ToArray() ;
-					}
-					ms.Write( buffer, 0, read ) ;
-				}
-			}
 		}
 
 		public static void CacheAvatar( string jid, Photo photo )
@@ -86,10 +71,42 @@ namespace xeus.Core
 
 			catch ( Exception e )
 			{
-				Client.Instance.Log( e.Message ) ; 
-				return null ;
+				Client.Instance.Log( e.Message ) ;
+				
+				return GetDefaultAvatar() ;
 			}
 		}
+
+		public static BitmapImage GetDefaultAvatar()
+		{
+			if ( _defaultAvatar != null )
+			{
+				return _defaultAvatar ;
+
+			}
+
+			try
+			{
+				Uri uri = new Uri("pack://application:,,,/Images/Avatar.png", UriKind.Absolute);
+				
+				using ( Stream stream = Application.GetResourceStream( uri ).Stream )
+				{
+					_defaultAvatar = new BitmapImage() ;
+					_defaultAvatar.BeginInit() ;
+					_defaultAvatar.StreamSource = stream ;
+					_defaultAvatar.EndInit() ;
+				}
+
+				return _defaultAvatar ;
+			}
+
+			catch ( Exception e )
+			{
+				Client.Instance.Log( e.Message ) ;
+				return null ; 
+			}
+		}
+
 
 		public static BitmapImage ImageFromPhoto( Photo photo )
 		{
