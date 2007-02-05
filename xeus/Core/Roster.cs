@@ -12,7 +12,7 @@ namespace xeus.Core
 	internal class Roster
 	{
 		private ObservableCollectionDisp< RosterItem > _items =
-			new ObservableCollectionDisp< RosterItem >( App.DispatcherThred ) ;
+			new ObservableCollectionDisp< RosterItem >( App.dispatcherThread ) ;
 
 		private Timer _rosterItemTimer = new Timer( 220 );
 		Queue< RosterItem > _rosterItemsWithNoVCard = new Queue< RosterItem >( 128 );
@@ -71,7 +71,7 @@ namespace xeus.Core
 
 		private void ChangePresence( Presence presence )
 		{
-			if ( App.DispatcherThred.CheckAccess() )
+			if ( App.dispatcherThread.CheckAccess() )
 			{
 				// presence info can arrive before the user item comes into the roster
 				// so presence info has to be kept separately
@@ -87,7 +87,7 @@ namespace xeus.Core
 			}
 			else
 			{
-				App.DispatcherThred.BeginInvoke( DispatcherPriority.Send,
+				App.dispatcherThread.BeginInvoke( DispatcherPriority.Send,
 				                                 new PresenceCallback( ChangePresence ), presence, new object[] { } ) ;
 			}
 		}
@@ -133,23 +133,18 @@ namespace xeus.Core
 
 		private void VcardResult( object sender, IQ iq, object data )
 		{
-			if ( App.DispatcherThred.CheckAccess() )
+			if ( App.dispatcherThread.CheckAccess() )
 			{
 				// if it is already in roster, change status property
 				RosterItem rosterItem = FindItem( ( string )data ) ;
 
-				if ( rosterItem != null && iq.Type == IqType.result )
+				if ( rosterItem != null )
 				{
-					if ( iq.Error != null )
+					if ( iq.Type == IqType.error || iq.Error != null )
 					{
-						// push it back to get vcard next time
-						lock ( _lockRosterItems )
-						{
-							_rosterItemsWithNoVCard.Enqueue( rosterItem ) ;
-							_rosterItemTimer.Start() ;
-						}
+						rosterItem.Errors.Add( iq.Error.Message );
 					}
-					else if ( iq.Vcard != null )
+					else if ( iq.Type == IqType.result && iq.Vcard != null )
 					{
 						Vcard vcard = iq.Vcard ;
 
@@ -180,7 +175,7 @@ namespace xeus.Core
 			}
 			else
 			{
-				App.DispatcherThred.BeginInvoke( DispatcherPriority.Send,
+				App.dispatcherThread.BeginInvoke( DispatcherPriority.Send,
 				                                 new VcardResultCallback( VcardResult ), sender, new object[] { iq, data } ) ;
 			}
 		}
@@ -233,7 +228,10 @@ namespace xeus.Core
 					rosterItem.Presence = presence ;
 				}
 
-				_items.Add( rosterItem ) ;
+				if ( !_items.Contains( rosterItem ) )
+				{
+					_items.Add( rosterItem ) ;
+				}
 
 				// ask for VCard
 				VcardIq viq = new VcardIq( IqType.get, new Jid( rosterItem.Key ) ) ;

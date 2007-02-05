@@ -13,7 +13,10 @@ namespace xeus.Core
 	internal class RosterItem : INotifyPropertyChanged
 	{
 		private ObservableCollectionDisp< Message > _messages =
-			new ObservableCollectionDisp< Message >( App.DispatcherThred ) ;
+			new ObservableCollectionDisp< Message >( App.dispatcherThread ) ;
+
+		private ObservableCollectionDisp< string > _errors =
+			new ObservableCollectionDisp< string >( App.dispatcherThread ) ;
 
 		private agsXMPP.protocol.iq.roster.RosterItem _rosterItem ;
 		private string _statusText = "Offline" ;
@@ -41,6 +44,7 @@ namespace xeus.Core
 
 		public Presence _presence ;
 		private string _statusDescription = String.Empty ;
+		private bool _vcardError = false ;
 
 		public RosterItem( agsXMPP.protocol.iq.roster.RosterItem rosterItem )
 		{
@@ -409,6 +413,14 @@ namespace xeus.Core
 			get
 			{
 				return _messages ;
+			}
+		}
+
+		public ObservableCollectionDisp< string > Errors
+		{
+			get
+			{
+				return _errors ;
 			}
 		}
 
