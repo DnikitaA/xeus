@@ -142,7 +142,7 @@ namespace xeus.Core
 				{
 					if ( iq.Type == IqType.error || iq.Error != null )
 					{
-						rosterItem.Errors.Add( iq.Error.Message );
+						rosterItem.Errors.Add( string.Format( "{0}: {1}", iq.Error.Code, iq.Error.Message ) );
 					}
 					else if ( iq.Type == IqType.result && iq.Vcard != null )
 					{

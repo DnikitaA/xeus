@@ -35,7 +35,15 @@
     <local:RosterControl x:Name="_roster" Grid.Row="0" Width="Auto" Height="Auto" Margin="2,32,2,2"/>
 	<StatusBar Grid.Row="1" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}">
 		<StatusBarItem HorizontalAlignment="Stretch" Margin="0,0,0,0"
-		    	  x:Name="_statusUnreadMessages" VerticalAlignment="Stretch" Grid.Row="1"
+		    	  x:Name="_statusMyStatus" VerticalAlignment="Stretch">
+		    <Button x:Name="_buttonmyStatus" Width="15" Height="15" Template="{Binding Path=StatusTemplate}"  Click="DisplayPopup">		
+			<Popup x:Name="_statusPopup" AllowsTransparency="True" Placement="MousePoint" StaysOpen="False" Width="85" Height="85">
+				<local:StatusControl x:Name="_statusControl"/>
+			</Popup>
+			</Button>
+		</StatusBarItem>
+		<StatusBarItem HorizontalAlignment="Stretch" Margin="0,0,0,0"
+		    	  x:Name="_statusUnreadMessages" VerticalAlignment="Stretch"
 		          Visibility="{Binding Path=MessageCenter.ChatMessages.Count, Converter={StaticResource _visibilityConverter}}">
 	  		<Grid d:IsLayer="True" x:Name="Status" Grid.ColumnSpan="1" Grid.RowSpan="3" Width="Auto" Height="Auto">
 			  	<Grid.ColumnDefinitions>
@@ -47,12 +55,6 @@
 					Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Left" Foreground="#FFFFFFFF" Margin="5,0,0,0" />
 			</Grid>
 		</StatusBarItem>
-			<Button x:Name="_buttonmyStatus" Width="15" Height="15" Template="{DynamicResource StatusOnline}" Click="DisplayPopup">		
-			<Popup x:Name="_statusPopup" AllowsTransparency="True" Placement="MousePoint" StaysOpen="False" Width="85" Height="85">
-				<local:StatusControl x:Name="_statusControl"/>
-			</Popup>
-			</Button>
-		<StatusBarItem/>
 	</StatusBar>
   </Grid>
 </Window>

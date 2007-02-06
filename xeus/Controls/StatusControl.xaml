@@ -41,18 +41,18 @@
     			<TranslateTransform X="0" Y="0"/>
     		</TransformGroup>
     	</Viewbox.RenderTransform>
-	<Grid Width="40" Height="40">
-    	<Button x:Name="_offline" Content="Button" Template="{DynamicResource StatusOffline}" HorizontalAlignment="Right" Margin="0,0,5.875,8.75" Width="10"
-			Click="OnStatusOffline" d:LayoutOverrides="Height" VerticalAlignment="Bottom" Height="10"/>
-    	<Button d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" HorizontalAlignment="Left" Margin="5.25,10.875,0,0" x:Name="_online" VerticalAlignment="Top" Width="10" Height="10" Template="{DynamicResource StatusOnline}"
+	<Grid Width="31" Height="35.75" Panel.ZIndex="9">
+    	<Button x:Name="_offline" Content="Button" Template="{DynamicResource StatusOffline}"
+			Click="OnStatusOffline" d:LayoutOverrides="Height" VerticalAlignment="Center" Height="10" HorizontalAlignment="Center"/>
+    	<Button d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" HorizontalAlignment="Left" Margin="0.875,9.25,0,0" x:Name="_online" VerticalAlignment="Top" Width="10" Height="10" Template="{DynamicResource StatusOnline}"
 			Click="OnStatusOnline" RenderTransformOrigin="0.525,-0.025"/>
-    	<Button d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" HorizontalAlignment="Left" Margin="14.5,26.5,0,0" x:Name="_dnd" VerticalAlignment="Top" Width="10" Height="10" Template="{DynamicResource StatusDnd}"
-			Click="OnStatusDnd"/>
-    	<Button x:Name="_away" Content="Button" Template="{DynamicResource StatusAway}" Margin="14.75,5.25,15.25,0" VerticalAlignment="Top" Height="10"
-			Click="OnStatusAway" Width="10"/>
-    	<Button x:Name="_xAway" Content="Button" Template="{DynamicResource StatusXAway}" Margin="5.375,0,0,8.375" HorizontalAlignment="Left" Width="10"
-			Click="OnStatusXAway" d:LayoutOverrides="Height" VerticalAlignment="Bottom" Height="10"/>
-    	<Button d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" HorizontalAlignment="Left" Margin="24.25,11.625,0,0" x:Name="_freeForChat" VerticalAlignment="Top" Width="10" Height="10" Template="{DynamicResource StatusFreeForChat}"
+    	<Button HorizontalAlignment="Right" x:Name="_dnd" Width="10" Template="{DynamicResource StatusDnd}"
+			Click="OnStatusDnd" d:LayoutOverrides="VerticalAlignment" Margin="0,0,3.75,5.25" VerticalAlignment="Bottom"/>
+    	<Button x:Name="_away" Content="Button" Template="{DynamicResource StatusAway}" VerticalAlignment="Top" Height="10"
+			Click="OnStatusAway" Width="10" HorizontalAlignment="Center" Margin="0,2.875,0,0"/>
+    	<Button x:Name="_xAway" Content="Button" Template="{DynamicResource StatusXAway}" Margin="3.75,0,0,5.25" HorizontalAlignment="Left" Width="10"
+			Click="OnStatusXAway" d:LayoutOverrides="VerticalAlignment, Height" VerticalAlignment="Bottom" Height="10"/>
+    	<Button d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Right" Margin="0,9.25,0.875,0" x:Name="_freeForChat" VerticalAlignment="Top" Width="10" Height="10" Template="{DynamicResource StatusFreeForChat}"
 			Click="OnStatusFreeForChat"/>
     </Grid>
 	</Viewbox>

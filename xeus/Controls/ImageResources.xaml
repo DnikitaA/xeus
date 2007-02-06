@@ -20,14 +20,18 @@
 </Storyboard>
 
 <ControlTemplate x:Key="StatusDnd" TargetType="{x:Type Button}">
-	<ControlTemplate.Resources>
-		<Storyboard x:Key="Timeline1"/>
-		<Storyboard x:Key="Timeline2"/>
-	</ControlTemplate.Resources>
-<Viewbox x:Name="viewbox" SnapsToDevicePixels="False">
-	<Grid>
+<Viewbox x:Name="viewbox" SnapsToDevicePixels="False" ToolTip="Do not Disturb">
+	<Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
+		<Grid.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="0"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Grid.RenderTransform>
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0">
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle" RenderTransformOrigin="0.5,0.5">
 		<Ellipse.Fill>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 				<GradientStop Color="#FFD07B7B" Offset="0"/>
@@ -37,6 +41,14 @@
 		<Ellipse.BitmapEffect>
 			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
 		</Ellipse.BitmapEffect>
+		<Ellipse.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="0"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Ellipse.RenderTransform>
 	</Ellipse>
 		<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
 		<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
@@ -58,14 +70,37 @@
 				<BeginStoryboard Storyboard="{StaticResource PumpStatus}"/>
 			</Trigger.EnterActions>
 		</Trigger>
+	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
+	  	<Setter Property="Stroke" TargetName="_circle" Value="#FF757575"/>
+	  	<Setter Property="Fill" TargetName="_circle">
+	  		<Setter.Value>
+	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+	  				<GradientStop Color="#FFF0B3B3" Offset="0"/>
+	  				<GradientStop Color="#FFA22B2B" Offset="1"/>
+	  			</LinearGradientBrush>
+	  		</Setter.Value>
+	  	</Setter>
+	  </Trigger>
+		<Trigger Property="IsPressed" Value="True">
+			<Setter Property="RenderTransform" TargetName="grid">
+				<Setter.Value>
+					<TransformGroup>
+						<ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+						<SkewTransform AngleX="0" AngleY="0"/>
+						<RotateTransform Angle="0"/>
+						<TranslateTransform X="0" Y="0"/>
+					</TransformGroup>
+				</Setter.Value>
+			</Setter>
+		</Trigger>
 	</ControlTemplate.Triggers>
 </ControlTemplate>
 
 <ControlTemplate x:Key="StatusAway" TargetType="{x:Type Button}">
-<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.498,0.51">
-<Grid>
+<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.498,0.51" ToolTip="Away">
+<Grid x:Name="grid">
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0">
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle">
 		<Ellipse.Fill>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 				<GradientStop Color="#FF7BA3D0" Offset="0"/>
@@ -97,14 +132,37 @@
 				<BeginStoryboard Storyboard="{StaticResource PumpStatus}"/>
 			</Trigger.EnterActions>
 		</Trigger>
+	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
+	  	<Setter Property="Stroke" TargetName="_circle" Value="#FF757575"/>
+	  	<Setter Property="Fill" TargetName="_circle">
+	  		<Setter.Value>
+	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+	  				<GradientStop Color="#FFB3D0F0" Offset="0"/>
+	  				<GradientStop Color="#FF2B5DA2" Offset="1"/>
+	  			</LinearGradientBrush>
+	  		</Setter.Value>
+	  	</Setter>
+	  </Trigger>
+		<Trigger Property="IsPressed" Value="True">
+			<Setter Property="RenderTransform" TargetName="grid">
+				<Setter.Value>
+					<TransformGroup>
+						<ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+						<SkewTransform AngleX="0" AngleY="0"/>
+						<RotateTransform Angle="0"/>
+						<TranslateTransform X="0" Y="0"/>
+					</TransformGroup>
+				</Setter.Value>
+			</Setter>
+		</Trigger>
 	</ControlTemplate.Triggers>
 </ControlTemplate>
 
 <ControlTemplate x:Key="StatusFreeForChat" TargetType="{x:Type Button}">
-<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.498,0.51">
-<Grid>
+<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.498,0.51" ToolTip="Free for Chat">
+<Grid x:Name="grid">
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0">
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle">
 		<Ellipse.Fill>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 				<GradientStop Color="#FF9CE582" Offset="0"/>
@@ -115,7 +173,7 @@
 			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
 		</Ellipse.BitmapEffect>
 	</Ellipse>
-	<Path SnapsToDevicePixels="False" Fill="#CCFFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Left" Margin="3.063,3.656,0,0" VerticalAlignment="Top" Width="9.932" Height="7.897" Data="F1 M5.0282145,-6.4830003 C8.1051111,-6.4830003 10.599428,-4.5002933 10.599428,-2.0545003 C10.599428,0.39129266 8.1051111,2.3739996 5.0282145,2.3739996 L4.1343474,2.2548513 0.49999991,4.5000005 1.4259897,1.2588339 C0.20860633,0.49111211 -0.54299998,-0.71192384 -0.54299998,-2.0545003 -0.54299998,-4.5002933 1.9513177,-6.4830003 5.0282145,-6.4830003 z"/>
+	<Path SnapsToDevicePixels="False" Fill="#CCFFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Left" Margin="3.23,3.656,0,0" VerticalAlignment="Top" Width="9.932" Height="7.897" Data="F1 M5.0282145,-6.4830003 C8.1051111,-6.4830003 10.599428,-4.5002933 10.599428,-2.0545003 C10.599428,0.39129266 8.1051111,2.3739996 5.0282145,2.3739996 L4.1343474,2.2548513 0.49999991,4.5000005 1.4259897,1.2588339 C0.20860633,0.49111211 -0.54299998,-0.71192384 -0.54299998,-2.0545003 -0.54299998,-4.5002933 1.9513177,-6.4830003 5.0282145,-6.4830003 z"/>
 <Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
 	<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
 	</Grid>
@@ -126,14 +184,37 @@
 				<BeginStoryboard Storyboard="{StaticResource PumpStatus}"/>
 			</Trigger.EnterActions>
 		</Trigger>
+	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
+	  	<Setter Property="Stroke" TargetName="_circle" Value="#FF757575"/>
+	  	<Setter Property="Fill" TargetName="_circle">
+	  		<Setter.Value>
+	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+	  				<GradientStop Color="#FFB8F0B3" Offset="0"/>
+	  				<GradientStop Color="#FF2BA247" Offset="1"/>
+	  			</LinearGradientBrush>
+	  		</Setter.Value>
+	  	</Setter>
+	  </Trigger>
+		<Trigger Property="IsPressed" Value="True">
+			<Setter Property="RenderTransform" TargetName="grid">
+				<Setter.Value>
+					<TransformGroup>
+						<ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+						<SkewTransform AngleX="0" AngleY="0"/>
+						<RotateTransform Angle="0"/>
+						<TranslateTransform X="0" Y="0"/>
+					</TransformGroup>
+				</Setter.Value>
+			</Setter>
+		</Trigger>
 	</ControlTemplate.Triggers>
 </ControlTemplate>
 
 <ControlTemplate x:Key="StatusXAway" TargetType="{x:Type Button}">
-<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox">
-	<Grid>
+<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" ToolTip="eXtended Away">
+	<Grid x:Name="grid">
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0">
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle">
 		<Ellipse.Fill>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 				<GradientStop Color="#FFE5B3E4" Offset="0"/>
@@ -165,14 +246,37 @@
 				<BeginStoryboard Storyboard="{StaticResource PumpStatus}"/>
 			</Trigger.EnterActions>
 		</Trigger>
+	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
+	  	<Setter Property="Stroke" TargetName="_circle" Value="#FF757575"/>
+	  	<Setter Property="Fill" TargetName="_circle">
+	  		<Setter.Value>
+	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+	  				<GradientStop Color="#FFDDB3F0" Offset="0"/>
+	  				<GradientStop Color="#FFA22BA1" Offset="1"/>
+	  			</LinearGradientBrush>
+	  		</Setter.Value>
+	  	</Setter>
+	  </Trigger>
+		<Trigger Property="IsPressed" Value="True">
+			<Setter Property="RenderTransform" TargetName="grid">
+				<Setter.Value>
+					<TransformGroup>
+						<ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+						<SkewTransform AngleX="0" AngleY="0"/>
+						<RotateTransform Angle="0"/>
+						<TranslateTransform X="0" Y="0"/>
+					</TransformGroup>
+				</Setter.Value>
+			</Setter>
+		</Trigger>
 	</ControlTemplate.Triggers>
 </ControlTemplate>
 
 <ControlTemplate x:Key="StatusOnline" TargetType="{x:Type Button}">
-<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox">
-	<Grid>
+<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" ToolTip="Online">
+	<Grid x:Name="grid">
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0">
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle">
 		<Ellipse.Fill>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 				<GradientStop Color="#FFB3E5C3" Offset="0"/>
@@ -183,6 +287,11 @@
 			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
 		</Ellipse.BitmapEffect>
 	</Ellipse>
+		<Path Fill="#A5FFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="7.965" Height="9.865" Data="F1 M2.8155,0 C4.3704576,0 5.631,1.2623332 5.631,2.8195 5.631,3.8548267 5.0737605,4.7598181 4.2193031,5.2095542 6.0439386,5.8137364 7.4298534,7.7533073 7.7589998,10.196696 6.480207,11.432182 4.7315388,12.151 2.8149738,12.151 0.93188268,12.151 -0.78912503,11.457072 -2.052,10.248644 -1.7384501,7.8079395 -0.3721537,5.8612647 1.4351363,5.2253799 C0.56834316,4.7777495 0,3.8650908 7.7043339E-08,2.8195 0,1.2623332 1.2605423,0 2.8155,0 z" Canvas.Left="0" Canvas.Top="0">
+			<Path.BitmapEffect>
+				<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
+			</Path.BitmapEffect>
+		</Path>
 	<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
 	
 <Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
@@ -194,29 +303,42 @@
 				<BeginStoryboard Storyboard="{StaticResource PumpStatus}"/>
 			</Trigger.EnterActions>
 		</Trigger>
+	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
+	  	<Setter Property="Stroke" TargetName="_circle" Value="#FF757575"/>
+	  	<Setter Property="Fill" TargetName="_circle">
+	  		<Setter.Value>
+	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+	  				<GradientStop Color="#FFB3F0C1" Offset="0"/>
+	  				<GradientStop Color="#FF2BA252" Offset="1"/>
+	  			</LinearGradientBrush>
+	  		</Setter.Value>
+	  	</Setter>
+	  </Trigger>
+		<Trigger Property="IsPressed" Value="True">
+			<Setter Property="RenderTransform" TargetName="grid">
+				<Setter.Value>
+					<TransformGroup>
+						<ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+						<SkewTransform AngleX="0" AngleY="0"/>
+						<RotateTransform Angle="0"/>
+						<TranslateTransform X="0" Y="0"/>
+					</TransformGroup>
+				</Setter.Value>
+			</Setter>
+		</Trigger>
 	</ControlTemplate.Triggers>
 </ControlTemplate>
 
 <ControlTemplate x:Key="StatusOffline" TargetType="{x:Type Button}">
-	<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox">
+	<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" ToolTip="Offline">
 		<Grid>
 		<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
 			Stretch="Fill" Canvas.Left="0" Fill="#FF3E3E3E"/>
-		<Path Fill="#FF595959" Stretch="Fill" StrokeThickness="2" Width="6.798" Height="6.798" Data="F1 M8.29,-1.7763568E-15 L9.9230118,0.32968992 C5.1414447,1.3809938 1.3809938,5.1414447 0.32968992,9.9230118 C0.057662927,9.4178791 0,8.8606739 -1.7763568E-15,8.29 0,3.7115595 3.7115595,0 8.29,-1.7763568E-15 z" Canvas.Left="2.039" Canvas.Top="1.947" Margin="1.673,1.673,7.529,7.529"/>
 		</Grid>
 	</Viewbox>
 </ControlTemplate>
 
 <ControlTemplate x:Key="MessageIcon" TargetType="{x:Type Button}">
-	<ControlTemplate.Resources>
-		<Storyboard x:Key="PumpMessageForever" RepeatBehavior="Forever">
-			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="viewbox" Storyboard.TargetProperty="(UIElement.Visibility)">
-				<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
-				<DiscreteObjectKeyFrame KeyTime="00:00:00.2000000" Value="{x:Static Visibility.Collapsed}"/>
-				<DiscreteObjectKeyFrame KeyTime="00:00:00.4000000" Value="{x:Static Visibility.Visible}"/>
-			</ObjectAnimationUsingKeyFrames>
-		</Storyboard>
-	</ControlTemplate.Resources>
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 	<Viewbox.RenderTransform>
 		<TransformGroup>
@@ -247,8 +369,7 @@
 			</LinearGradientBrush>
 		</Ellipse.Fill>
 	</Ellipse>
-	<Path Fill="#96FFFFFF" Stretch="Fill" StrokeThickness="2" Width="6.798" Height="6.798" Data="F1 M8.29,-1.7763568E-15 L9.9230118,0.32968992 C5.1414447,1.3809938 1.3809938,5.1414447 0.32968992,9.9230118 C0.057662927,9.4178791 0,8.8606739 -1.7763568E-15,8.29 0,3.7115595 3.7115595,0 8.29,-1.7763568E-15 z" Canvas.Left="2.039" Canvas.Top="1.947" Margin="1.673,1.673,7.529,7.529"/>
-		<Path RenderTransformOrigin="0,0" Fill="#FFFFFFFF" Stretch="Fill" HorizontalAlignment="Center" Margin="0,0,0,3.757" VerticalAlignment="Bottom" Data="M1.8046875,10.220957 C2.0911458,10.220957 2.3256836,10.304209 2.5083008,10.470713 C2.690918,10.637217 2.7822266,10.847585 2.7822266,11.101816 C2.7822266,11.359629 2.6918132,11.572682 2.5109863,11.740976 C2.3301594,11.90927 2.0947266,11.993418 1.8046875,11.993418 C1.5182291,11.993418 1.281901,11.906585 1.0957031,11.73292 C0.90950519,11.559255 0.81640625,11.348886 0.81640625,11.101816 C0.81640625,10.844004 0.91040039,10.632741 1.0983887,10.468027 C1.286377,10.303313 1.5218099,10.220957 1.8046875,10.220957 z M0.90234381,4.1677341 L2.6855469,4.1677341 L2.4760742,9.4743748 L1.1010742,9.4743748 z">
+		<Path RenderTransformOrigin="0,0" Fill="#FFD7D7D7" Stretch="Fill" HorizontalAlignment="Center" Margin="0,0,0,3.757" VerticalAlignment="Bottom" Data="M1.8046875,10.220957 C2.0911458,10.220957 2.3256836,10.304209 2.5083008,10.470713 C2.690918,10.637217 2.7822266,10.847585 2.7822266,11.101816 C2.7822266,11.359629 2.6918132,11.572682 2.5109863,11.740976 C2.3301594,11.90927 2.0947266,11.993418 1.8046875,11.993418 C1.5182291,11.993418 1.281901,11.906585 1.0957031,11.73292 C0.90950519,11.559255 0.81640625,11.348886 0.81640625,11.101816 C0.81640625,10.844004 0.91040039,10.632741 1.0983887,10.468027 C1.286377,10.303313 1.5218099,10.220957 1.8046875,10.220957 z M0.90234381,4.1677341 L2.6855469,4.1677341 L2.4760742,9.4743748 L1.1010742,9.4743748 z">
 			<Path.RenderTransform>
 				<TransformGroup>
 					<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -258,6 +379,8 @@
 				</TransformGroup>
 			</Path.RenderTransform>
 		</Path>
+	<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
+	<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
 	</Grid>
 </Viewbox>
 </ControlTemplate>

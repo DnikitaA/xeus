@@ -71,6 +71,7 @@
     <Page Include="Controls\StatusbarResources.xaml" />
     <Page Include="Controls\TabMessages.xaml" />
     <Page Include="Controls\ResizeGropResources.xaml" />
+    <Page Include="Controls\ToolTipsResourcexaml.xaml" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -110,6 +111,7 @@
     <Compile Include="Core\DisplayNameFontSizeConverter.cs" />
     <Compile Include="Core\ObservableCollectionDisp.cs" />
     <Compile Include="Core\OpacityStatusConverter.cs" />
+    <Compile Include="Core\PresenceTemplate.cs" />
     <Compile Include="Core\Roster.cs" />
     <Compile Include="Core\RosterItem.cs" />
     <Compile Include="Core\ServiceItem.cs" />
