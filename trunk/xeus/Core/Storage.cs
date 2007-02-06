@@ -38,7 +38,7 @@ namespace xeus.Core
 			{
 				DirectoryInfo directoryInfo = GetAvatarCacheFolder() ;
 
-				using ( FileStream fileStream = new FileStream( directoryInfo.FullName + "\\" + jid,
+				using ( FileStream fileStream = new FileStream( string.Format( "{0}\\{1:d}", directoryInfo.FullName, jid.GetHashCode() ),
 				                                                FileMode.Create, FileAccess.Write, FileShare.None ) )
 				{
 					byte[] photoSource = Convert.FromBase64String( photo.GetTag( "BINVAL" ) ) ;
@@ -58,7 +58,7 @@ namespace xeus.Core
 
 			try
 			{
-				using ( FileStream fileStream = new FileStream( directoryInfo.FullName + "\\" + jid,
+				using ( FileStream fileStream = new FileStream( string.Format( "{0}\\{1:d}", directoryInfo.FullName, jid.GetHashCode() ),
 				                                                FileMode.Open, FileAccess.Read, FileShare.Read ) )
 				{
 					BitmapImage bitmap = new BitmapImage() ;
