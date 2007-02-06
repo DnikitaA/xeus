@@ -64,10 +64,10 @@
 					 ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_errorButton"
 					 HorizontalAlignment="Left" Margin="13,0,0,-2.181" VerticalAlignment="Bottom" Grid.ColumnSpan="2" />
   		<Border VerticalAlignment="Stretch" Width="Auto" Grid.Column="1"
-  		 Height="Auto" Grid.Row="2" Grid.RowSpan="1"
+  		 Height="Auto" Grid.Row="0" Grid.RowSpan="1"
   		 CornerRadius="3,3,3,3" x:Name="_displayNameLabel"
-  		 Visibility="Visible" BorderThickness="1,1,1,1" Margin="2,0,0,0">
-		<Grid Grid.Row="1" Margin="2,0,1,1" >     
+  		 Visibility="Visible" BorderThickness="1,1,1,1" Margin="2,0,-3,0" d:LayoutOverrides="GridBox">
+		<Grid Grid.Row="1" Margin="2,0,1,1" HorizontalAlignment="Left" Width="104.31" >     
   			<TextBlock Text="{Binding Path=DisplayName}" HorizontalAlignment="Stretch" Margin="2,0.5,0,0"
   				TextTrimming="CharacterEllipsis"
   				FontFamily="Calibri" Foreground="#FFDCDCDC"
@@ -75,7 +75,7 @@
   			<TextBlock Text="{Binding Path=StatusDescription}" HorizontalAlignment="Stretch"
   				TextTrimming="CharacterEllipsis"
   				FontFamily="Calibri" Foreground="#FFB8D9F2"
-  				x:Name="_displayStatus" Margin="2,0,0,0" FontSize="10" VerticalAlignment="Bottom"/>
+  				x:Name="_displayStatus" Margin="2,0,0,0" FontSize="10" VerticalAlignment="Bottom"/>				
 	    </Grid>  
   		</Border>
 	</Grid>
@@ -157,6 +157,7 @@
   					</TransformGroup>
   				</Path.RenderTransform>
   			</Path>
+	      
   			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill"
 			 Stroke="#FF666666" StrokeStartLineCap="Square" StrokeThickness="1"
 			  Margin="8,5.25,8,21.569" VerticalAlignment="Stretch" Height="Auto"

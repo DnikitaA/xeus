@@ -70,6 +70,15 @@ namespace xeus.Core
 		{
 			get
 			{
+				if ( !String.IsNullOrEmpty( FullName ) )
+				{
+					return FullName ;
+				}
+				else if ( !String.IsNullOrEmpty( NickName ) )
+				{
+					return NickName ;
+				}
+
 				return ( _rosterItem.Name != null ) ? _rosterItem.Name : _rosterItem.Jid.ToString() ;
 			}
 		}
@@ -284,6 +293,7 @@ namespace xeus.Core
 			{
 				_fullName = value ;
 				NotifyPropertyChanged( "FullName" ) ;
+				NotifyPropertyChanged( "DisplayName" ) ;
 			}
 		}
 
@@ -297,6 +307,7 @@ namespace xeus.Core
 			{
 				_nickName = value ;
 				NotifyPropertyChanged( "NickName" ) ;
+				NotifyPropertyChanged( "DisplayName" ) ;
 			}
 		}
 
