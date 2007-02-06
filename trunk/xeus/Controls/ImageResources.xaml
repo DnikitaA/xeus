@@ -20,6 +20,10 @@
 </Storyboard>
 
 <ControlTemplate x:Key="StatusDnd" TargetType="{x:Type Button}">
+	<ControlTemplate.Resources>
+		<Storyboard x:Key="Timeline1"/>
+		<Storyboard x:Key="Timeline2"/>
+	</ControlTemplate.Resources>
 <Viewbox x:Name="viewbox" SnapsToDevicePixels="False">
 	<Grid>
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
