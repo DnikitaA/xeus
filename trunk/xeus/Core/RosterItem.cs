@@ -33,13 +33,6 @@ namespace xeus.Core
 		private Email _emailPreferred ;
 		private BitmapImage _image ;
 
-		private ControlTemplate _templateDnd ;
-		private ControlTemplate _templateAway ;
-		private ControlTemplate _templateFreeForChat ;
-		private ControlTemplate _templateXAway ;
-		private ControlTemplate _templateOnline ;
-		private ControlTemplate _templateOffline ;
-
 		public event PropertyChangedEventHandler PropertyChanged ;
 
 		public Presence _presence ;
@@ -95,63 +88,7 @@ namespace xeus.Core
 		{
 			get
 			{
-				if ( _presence == null || _presence.Type == PresenceType.unavailable )
-				{
-					if ( _templateOffline == null )
-					{
-						_templateOffline = ( ControlTemplate ) App.Instance.FindResource( "StatusOffline" ) ;
-					}
-
-					return _templateOffline ;
-				}
-
-				switch ( _presence.Show )
-				{
-					case ShowType.dnd:
-						{
-							if ( _templateDnd == null )
-							{
-								_templateDnd = ( ControlTemplate ) App.Instance.FindResource( "StatusDnd" ) ;
-							}
-							return _templateDnd ;
-						}
-
-					case ShowType.away:
-						{
-							if ( _templateAway == null )
-							{
-								_templateAway = ( ControlTemplate ) App.Instance.FindResource( "StatusAway" ) ;
-							}
-							return _templateAway ;
-						}
-
-					case ShowType.chat:
-						{
-							if ( _templateFreeForChat == null )
-							{
-								_templateFreeForChat = ( ControlTemplate ) App.Instance.FindResource( "StatusFreeForChat" ) ;
-							}
-							return _templateFreeForChat ;
-						}
-
-					case ShowType.xa:
-						{
-							if ( _templateXAway == null )
-							{
-								_templateXAway = ( ControlTemplate ) App.Instance.FindResource( "StatusXAway" ) ;
-							}
-							return _templateXAway ;
-						}
-
-					default:
-						{
-							if ( _templateOnline == null )
-							{
-								_templateOnline = ( ControlTemplate ) App.Instance.FindResource( "StatusOnline" ) ;
-							}
-							return _templateOnline ;
-						}
-				}
+				return PresenceTemplate.GetStatusTemplate( _presence ) ;
 			}
 		}
 
@@ -193,6 +130,12 @@ namespace xeus.Core
 			set
 			{
 				string group = Group ;
+
+				if ( ( _presence == null && value != null )
+					|| ( _presence != null && value == null ) )
+				{
+					_errors.Clear();
+				}
 
 				_presence = value ;
 				_statusDescription = "Not Available" ;

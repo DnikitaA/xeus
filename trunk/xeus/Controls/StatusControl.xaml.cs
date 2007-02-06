@@ -46,6 +46,7 @@ namespace xeus.Controls
 
 		public void OnStatusOffline( object sender, RoutedEventArgs e )
 		{
+			Client.Instance.Disconnect();
 			e.Handled = true ;
 			CloseParentPopup() ;
 		}

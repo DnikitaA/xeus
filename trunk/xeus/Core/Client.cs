@@ -1,4 +1,6 @@
 using System ;
+using System.ComponentModel ;
+using System.Windows.Controls ;
 using agsXMPP ;
 using agsXMPP.net ;
 using agsXMPP.protocol.client ;
@@ -9,9 +11,11 @@ using xeus.Core ;
 
 namespace xeus.Core
 {
-	internal class Client : IDisposable
+	internal class Client : IDisposable, INotifyPropertyChanged
 	{
 		private static Client _instance = new Client() ;
+
+		public event PropertyChangedEventHandler PropertyChanged ;
 
 		XmppClientConnection _xmppConnection = new XmppClientConnection() ;
 		
@@ -19,6 +23,7 @@ namespace xeus.Core
 		private Roster _roster = new Roster(); 
 		private Agent _agent = new Agent();
 		private MessageCenter _messageCenter = new MessageCenter();
+		private Presence _presence ;
 
 		#region delegates
 
@@ -70,6 +75,7 @@ namespace xeus.Core
 		private Client()
 		{
 			RegisterEvents() ;
+
 		}
 
 		public void Setup()
@@ -147,8 +153,15 @@ namespace xeus.Core
 
 		public void SetMyPresence( ShowType showType )
 		{
-			_xmppConnection.Show = showType ;
-			_xmppConnection.SendMyPresence();
+			Connect() ;
+
+			if ( _xmppConnection.Authenticated )
+			{
+				_xmppConnection.Show = showType ;
+				_xmppConnection.SendMyPresence();
+
+				MyPresence = new Presence( _xmppConnection.Show, _xmppConnection.Status, _xmppConnection.Priority );
+			}
 		}
 
 		public void SubscribePresence( Jid jid, bool approve )
@@ -279,6 +292,38 @@ namespace xeus.Core
 		public void Dispose()
 		{
 			Disconnect() ;
+		}
+
+		public ControlTemplate StatusTemplate
+		{
+			get
+			{
+				return PresenceTemplate.GetStatusTemplate( _presence ) ;
+			}
+		}
+
+		public Presence MyPresence
+		{
+			get
+			{
+				return _presence ;
+			}
+
+			set
+			{
+				_presence = value ;
+
+				NotifyPropertyChanged( "MyPresence" ) ;
+				NotifyPropertyChanged( "StatusTemplate" ) ;
+			}
+		}
+
+		private void NotifyPropertyChanged( String info )
+		{
+			if ( PropertyChanged != null )
+			{
+				PropertyChanged( this, new PropertyChangedEventArgs( info ) ) ;
+			}
 		}
 	}
 }
