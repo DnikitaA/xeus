@@ -59,7 +59,7 @@
   			<ColumnDefinition Width="0.837*"/>
   		</Grid.ColumnDefinitions>
 		<Button Template="{Binding Path=StatusTemplate}" HorizontalAlignment="Left"
-			Margin="0,0,0,0" VerticalAlignment="Center" Width="22" Height="22" ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" BorderThickness="0,0,0,0" />
+			Margin="0,0,0,0" VerticalAlignment="Center" Width="21" Height="22" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" BorderThickness="0,0,0,0" />
 		<Button Template="{DynamicResource ErrorIcon}" Width="12" Height="12"
 					 ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_errorButton"
 					 HorizontalAlignment="Left" Margin="13,0,0,-2.181" VerticalAlignment="Bottom" Grid.ColumnSpan="2" />
@@ -134,7 +134,7 @@
 	      
   		</Border>
 	    	
-  		<Path Opacity="0.435" RenderTransformOrigin="0.499999997872742,0.524966983478661" SnapsToDevicePixels="False" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" Margin="9.001,6.273,8.999,0" VerticalAlignment="Top" Width="Auto" Height="34.591" Grid.RowSpan="2" Panel.ZIndex="2" Data="F1 M2.050252,-1.7272823 L69.930183,-1.7272823 C71.016823,-1.7272825 71.89772,-1.0236186 71.89772,-0.15560764 L71.89772,0.28742129 72,0.28783017 71.999741,23.345715 C71.951302,23.383036 60.005066,32.569317 36.785892,32.856953 13.519601,33.145172 3.0632521E-07,24.498579 3.0632521E-07,24.498579 L0.00012261505,1.8544513E-07 0.082717486,0.00033037047 0.082717486,-0.15560764 C0.082717471,-1.0236186 0.96361244,-1.7272825 2.050252,-1.7272823 z">
+  		<Path Opacity="0.215" RenderTransformOrigin="0.499999997872742,0.524966983478661" SnapsToDevicePixels="False" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" Margin="9.001,6.273,8.999,0" VerticalAlignment="Top" Width="Auto" Height="26.765" Grid.RowSpan="2" Panel.ZIndex="2" Data="M2.050252,-1.7272823 L69.930183,-1.7272823 C71.016823,-1.7272825 71.89772,-1.0236186 71.89772,-0.15560764 L71.89772,0.28742129 72,0.28783017 71.999741,30.631169 C71.951302,30.66849 59.999,27.261103 35.785892,27.334388 11.998007,27.406386 3.0632521E-07,30.586258 3.0632521E-07,30.586258 L0.00012261505,1.8544513E-07 0.082717486,0.00033037047 0.082717486,-0.15560764 C0.082717471,-1.0236186 0.96361244,-1.7272825 2.050252,-1.7272823 z" d:LayoutOverrides="Margin">
   			<Path.Fill>
   				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
   					<GradientStop Color="#FF6B7A8E" Offset="0"/>

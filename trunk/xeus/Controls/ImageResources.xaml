@@ -20,21 +20,23 @@
 </Storyboard>
 
 <ControlTemplate x:Key="StatusDnd" TargetType="{x:Type Button}">
-<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox">
+<Viewbox x:Name="viewbox" SnapsToDevicePixels="False">
 	<Grid>
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
 		Stretch="Fill" Canvas.Left="0">
-		<Ellipse.BitmapEffect>
-			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
-		</Ellipse.BitmapEffect>
 		<Ellipse.Fill>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 				<GradientStop Color="#FFD07B7B" Offset="0"/>
 				<GradientStop Color="#FF7A0C0C" Offset="1"/>
 			</LinearGradientBrush>
 		</Ellipse.Fill>
+		<Ellipse.BitmapEffect>
+			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
+		</Ellipse.BitmapEffect>
 	</Ellipse>
-	<Path RenderTransformOrigin="0.5,0.5" Fill="#FFFFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="9.828" Height="9.828" Data="F1 M3.7715001,-2.7715001 L6.0565,-2.7715001 6.0565,0.50000006 9.3280001,0.50000006 9.3280001,2.7850001 6.0565,2.7850001 6.0565,6.0565 3.7715001,6.0565 3.7715001,2.7850001 0.5,2.7850001 0.5,0.50000006 3.7715001,0.50000006 3.7715001,-2.7715001 z" Canvas.Left="3.074" Canvas.Top="3.216">
+		<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
+		<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
+	<Path RenderTransformOrigin="0.5,0.5" Fill="#CCFFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="9.828" Height="9.828" Data="F1 M3.7715001,-2.7715001 L6.0565,-2.7715001 6.0565,0.50000006 9.3280001,0.50000006 9.3280001,2.7850001 6.0565,2.7850001 6.0565,6.0565 3.7715001,6.0565 3.7715001,2.7850001 0.5,2.7850001 0.5,0.50000006 3.7715001,0.50000006 3.7715001,-2.7715001 z" Canvas.Left="3.074" Canvas.Top="3.216">
 		<Path.RenderTransform>
 			<TransformGroup>
 				<ScaleTransform ScaleX="-1" ScaleY="1"/>
@@ -44,7 +46,6 @@
 			</TransformGroup>
 		</Path.RenderTransform>
 	</Path>
-	<Path Fill="#96FFFFFF" Stretch="Fill" StrokeThickness="2" Width="6.798" Height="6.798" Data="F1 M8.29,-1.7763568E-15 L9.9230118,0.32968992 C5.1414447,1.3809938 1.3809938,5.1414447 0.32968992,9.9230118 C0.057662927,9.4178791 0,8.8606739 -1.7763568E-15,8.29 0,3.7115595 3.7115595,0 8.29,-1.7763568E-15 z" Canvas.Left="2.039" Canvas.Top="1.947" Margin="1.673,1.673,7.529,7.529"/>
 	</Grid>
 </Viewbox>
 	<ControlTemplate.Triggers>
@@ -57,31 +58,33 @@
 </ControlTemplate>
 
 <ControlTemplate x:Key="StatusAway" TargetType="{x:Type Button}">
-<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox">
-	<Grid>
+<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.498,0.51">
+<Grid>
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
 		Stretch="Fill" Canvas.Left="0">
+		<Ellipse.Fill>
+			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+				<GradientStop Color="#FF7BA3D0" Offset="0"/>
+				<GradientStop Color="#FF19304F" Offset="1"/>
+			</LinearGradientBrush>
+		</Ellipse.Fill>
 		<Ellipse.BitmapEffect>
 			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
 		</Ellipse.BitmapEffect>
-		<Ellipse.Fill>
-			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-				<GradientStop Color="#FF97B4E6" Offset="0"/>
-				<GradientStop Color="#FF0F4A7C" Offset="1"/>
-			</LinearGradientBrush>
-		</Ellipse.Fill>
 	</Ellipse>
-	<Path Fill="#96FFFFFF" Stretch="Fill" StrokeThickness="2" Width="6.798" Height="6.798" Data="F1 M8.29,-1.7763568E-15 L9.9230118,0.32968992 C5.1414447,1.3809938 1.3809938,5.1414447 0.32968992,9.9230118 C0.057662927,9.4178791 0,8.8606739 -1.7763568E-15,8.29 0,3.7115595 3.7115595,0 8.29,-1.7763568E-15 z" Canvas.Left="2.039" Canvas.Top="1.947" Margin="1.673,1.673,7.529,7.529"/>
-		<Path RenderTransformOrigin="1.015,0.008" Fill="#60FFFFFF" Stretch="Fill" StrokeThickness="2" HorizontalAlignment="Right" Margin="0,6.559,-9.962,3.761" Width="7.14" Data="F1 M7.388926,5.9756112 C5.7453222,4.6666231 4.7070708,2.6769421 4.6616578,0.43913662 L11.80237,0.29572105 7.388926,5.9756112 z" Canvas.Left="2.039" Canvas.Top="1.947">
-			<Path.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform ScaleX="-1" ScaleY="-1"/>
-					<SkewTransform AngleX="0" AngleY="0"/>
-					<RotateTransform Angle="0"/>
-					<TranslateTransform X="-18.32844" Y="1.5107412015571597"/>
-				</TransformGroup>
-			</Path.RenderTransform>
-		</Path>
+<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="0" Height="0" Data="M22.628,30.472" Canvas.Left="0" Canvas.Top="0" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center" Fill="#FFFFFFFF"/>
+	<Path RenderTransformOrigin="-0.005,1" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" Fill="#77FFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Right" Margin="0,0.873,5.26,0" VerticalAlignment="Top" Width="4.953" Height="6.775" Data="M9.6690085,7.3294421 L7.5224369,1.111383 C9.407529,0.39091502 10.510661,0.30183072 12.012052,1.2959933 z">
+		<Path.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="20.592"/>
+				<TranslateTransform X="-0.19870997612926145" Y="-0.036135540717924131"/>
+			</TransformGroup>
+		</Path.RenderTransform>
+	</Path>
+<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
+	<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
 	</Grid>
 </Viewbox>
 	<ControlTemplate.Triggers>
@@ -94,38 +97,23 @@
 </ControlTemplate>
 
 <ControlTemplate x:Key="StatusFreeForChat" TargetType="{x:Type Button}">
-<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox">
-	<Grid>
-			<Path Stretch="Fill" Stroke="#FF4D4D4D" StrokeLineJoin="Round" StrokeThickness="1" Margin="18.179,-0.5,-18.003,-0.543" VerticalAlignment="Stretch" Height="Auto" Data="F1 M-2.0429285,-7.757 L4.9570713,-7.757 C7.1662107,-7.757 8.9570713,-5.9661388 8.9570713,-3.757 L8.9570713,-1.3279999 C8.9570713,0.88113898 7.1662107,2.6719999 4.9570713,2.6719999 L4.5196333,2.6719999 4.771143,7.2860003 2.0030785,2.6719999 L-2.0429285,2.6719999 C-4.2520676,2.6719999 -6.0429287,0.88113898 -6.0429287,-1.3279999 L-6.0429287,-3.757 C-6.0429287,-5.9661388 -4.2520676,-7.757 -2.0429285,-7.757 z">
-			<Path.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform ScaleX="-1" ScaleY="1"/>
-					<SkewTransform AngleX="0" AngleY="0"/>
-					<RotateTransform Angle="0"/>
-					<TranslateTransform X="0" Y="0"/>
-				</TransformGroup>
-			</Path.RenderTransform>
-			<Path.BitmapEffect>
-				<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
-			</Path.BitmapEffect>
-			<Path.Fill>
-				<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-					<GradientStop Color="#FF88A9D5" Offset="0"/>
-					<GradientStop Color="#FF80AADB" Offset="0.995"/>
-				</LinearGradientBrush>
-			</Path.Fill>
-		</Path>
-			<Path Fill="#FF638ABB" Stretch="Fill" StrokeThickness="1" Margin="5.609,1.319,0,0" VerticalAlignment="Top" Height="7.847" Data="F1 M7.3525,0.49999991 C9.4144554,0.5 11.086,2.1372948 11.086,4.1570001 11.086,5.7705994 10.019076,7.1401114 8.5243216,7.5822678 10.633841,7.8625236 12.405818,9.1447592 13.297972,10.980547 C12.063371,13.043333 9.7869291,14.347 7.2059999,14.347 C4.7266774,14.347 2.5283399,13.143958 1.2695609,11.211231 2.1425495,9.2605562 3.9775298,7.8749623 6.1806784,7.5822678 4.6859241,7.1401114 3.6190002,5.7705994 3.6190002,4.1570001 3.6190002,2.1372948 5.290545,0.5 7.3525,0.49999991 z" HorizontalAlignment="Left" Width="6.918"/>
-		<Path RenderTransformOrigin="-1.39915869650583,-3.2189042230412E-10" Fill="#FFFFFFFF" Stretch="Fill" StrokeLineJoin="Round" StrokeThickness="1" Margin="20.695,0.882,-7.521,0" VerticalAlignment="Top" Width="Auto" Height="5.255" Data="F1 M6.9982467,1.6915749E-09 L8.8000002,1.6915749E-09 C10.567311,1.8443416E-08 12,1.4285936 12,3.1908526 L12,5.1284986 11.974361,5.2551265 C11.778581,2.5197275 9.6931524,0.33104813 6.9982467,1.6915749E-09 z">
-			<Path.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform ScaleX="-1" ScaleY="1"/>
-					<SkewTransform AngleX="0" AngleY="0"/>
-					<RotateTransform Angle="0"/>
-					<TranslateTransform X="0" Y="0"/>
-				</TransformGroup>
-			</Path.RenderTransform>
-		</Path>
+<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.498,0.51">
+<Grid>
+	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0">
+		<Ellipse.Fill>
+			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+				<GradientStop Color="#FF9CE582" Offset="0"/>
+				<GradientStop Color="#FF2B5F18" Offset="1"/>
+			</LinearGradientBrush>
+		</Ellipse.Fill>
+		<Ellipse.BitmapEffect>
+			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
+		</Ellipse.BitmapEffect>
+	</Ellipse>
+	<Path SnapsToDevicePixels="False" Fill="#CCFFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Left" Margin="3.063,3.656,0,0" VerticalAlignment="Top" Width="9.932" Height="7.897" Data="F1 M5.0282145,-6.4830003 C8.1051111,-6.4830003 10.599428,-4.5002933 10.599428,-2.0545003 C10.599428,0.39129266 8.1051111,2.3739996 5.0282145,2.3739996 L4.1343474,2.2548513 0.49999991,4.5000005 1.4259897,1.2588339 C0.20860633,0.49111211 -0.54299998,-0.71192384 -0.54299998,-2.0545003 -0.54299998,-4.5002933 1.9513177,-6.4830003 5.0282145,-6.4830003 z"/>
+<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
+	<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
 	</Grid>
 </Viewbox>
 	<ControlTemplate.Triggers>
@@ -140,28 +128,19 @@
 <ControlTemplate x:Key="StatusXAway" TargetType="{x:Type Button}">
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox">
 	<Grid>
-	<Grid Margin="0,2,0,2">
-	<Rectangle Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="20" Height="20" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0" RenderTransformOrigin="0.5,0.5" RadiusX="3" RadiusY="3">
-		<Rectangle.BitmapEffect>
-			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
-		</Rectangle.BitmapEffect>
-		<Rectangle.Fill>
+	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0">
+		<Ellipse.Fill>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-				<GradientStop Color="#FFD874AE" Offset="0.019"/>
-				<GradientStop Color="#FF7C0F44" Offset="1"/>
+				<GradientStop Color="#FFE5B3E4" Offset="0"/>
+				<GradientStop Color="#FF711870" Offset="1"/>
 			</LinearGradientBrush>
-		</Rectangle.Fill>
-		<Rectangle.RenderTransform>
-			<TransformGroup>
-				<ScaleTransform ScaleX="1" ScaleY="1"/>
-				<SkewTransform AngleX="0" AngleY="0"/>
-				<RotateTransform Angle="45"/>
-				<TranslateTransform X="0" Y="0"/>
-			</TransformGroup>
-		</Rectangle.RenderTransform>
-	</Rectangle>
-		<Path RenderTransformOrigin="0,0" Fill="#FFFFFFFF" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" Width="Auto" Height="13" Data="M3.609375,20.441914 C4.1822915,20.441914 4.6513672,20.608418 5.0166016,20.941425 C5.3818359,21.274433 5.5644531,21.695169 5.5644531,22.203632 C5.5644531,22.719257 5.3836265,23.145365 5.0219727,23.481953 C4.6603189,23.818541 4.1894531,23.986835 3.609375,23.986835 C3.0364583,23.986835 2.563802,23.813169 2.1914063,23.465839 C1.8190104,23.118509 1.6328125,22.697773 1.6328125,22.203632 C1.6328125,21.688007 1.8208008,21.265482 2.1967773,20.936054 C2.5727539,20.606627 3.0436199,20.441914 3.609375,20.441914 z M1.8046876,8.3354683 L5.3710938,8.3354683 L4.9521484,18.94875 L2.2021484,18.94875 z">
+		</Ellipse.Fill>
+		<Ellipse.BitmapEffect>
+			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
+		</Ellipse.BitmapEffect>
+	</Ellipse>
+		<Path RenderTransformOrigin="0,0" Fill="#FFE7E7E7" Stretch="Fill" Height="9.123" Data="M3.609375,20.441914 C4.1822915,20.441914 4.6513672,20.608418 5.0166016,20.941425 C5.3818359,21.274433 5.5644531,21.695169 5.5644531,22.203632 C5.5644531,22.719257 5.3836265,23.145365 5.0219727,23.481953 C4.6603189,23.818541 4.1894531,23.986835 3.609375,23.986835 C3.0364583,23.986835 2.563802,23.813169 2.1914063,23.465839 C1.8190104,23.118509 1.6328125,22.697773 1.6328125,22.203632 C1.6328125,21.688007 1.8208008,21.265482 2.1967773,20.936054 C2.5727539,20.606627 3.0436199,20.441914 3.609375,20.441914 z M1.8046876,8.3354683 L5.3710938,8.3354683 L4.9521484,18.94875 L2.2021484,18.94875 z" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="3">
 			<Path.RenderTransform>
 				<TransformGroup>
 					<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -171,17 +150,9 @@
 				</TransformGroup>
 			</Path.RenderTransform>
 		</Path>
-		<Rectangle RenderTransformOrigin="0.5,0.5" Fill="#FFDD88B7" StrokeThickness="1" RadiusX="2" RadiusY="2" HorizontalAlignment="Left" Margin="3.683,-2.883,0,7.231" Width="2.473">
-			<Rectangle.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform ScaleX="1" ScaleY="1"/>
-					<SkewTransform AngleX="0" AngleY="0"/>
-					<RotateTransform Angle="45"/>
-					<TranslateTransform X="0" Y="0"/>
-				</TransformGroup>
-			</Rectangle.RenderTransform>
-		</Rectangle>
-		</Grid>
+	<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
+	
+<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
 	</Grid>
 </Viewbox>
 	<ControlTemplate.Triggers>
@@ -198,18 +169,19 @@
 	<Grid>
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
 		Stretch="Fill" Canvas.Left="0">
+		<Ellipse.Fill>
+			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+				<GradientStop Color="#FFB3E5C3" Offset="0"/>
+				<GradientStop Color="#FF046938" Offset="1"/>
+			</LinearGradientBrush>
+		</Ellipse.Fill>
 		<Ellipse.BitmapEffect>
 			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
 		</Ellipse.BitmapEffect>
-		<Ellipse.Fill>
-			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-				<GradientStop Color="#FFD0F0D6" Offset="0"/>
-				<GradientStop Color="#FF6AB554" Offset="1"/>
-			</LinearGradientBrush>
-		</Ellipse.Fill>
 	</Ellipse>
-		<Path Fill="#3F000000" Stretch="Fill" StrokeThickness="1" Margin="1.564,1.153,1.408,0" VerticalAlignment="Stretch" Height="Auto" Data="F1 M7.3525,0.49999991 C9.4144554,0.5 11.086,2.1372948 11.086,4.1570001 11.086,5.7705994 10.019076,7.1401114 8.5243216,7.5822678 10.633841,7.8625236 12.405818,9.1447592 13.297972,10.980547 C12.063371,13.043333 9.7869291,14.347 7.2059999,14.347 C4.7266774,14.347 2.5283399,13.143958 1.2695609,11.211231 2.1425495,9.2605562 3.9775298,7.8749623 6.1806784,7.5822678 4.6859241,7.1401114 3.6190002,5.7705994 3.6190002,4.1570001 3.6190002,2.1372948 5.290545,0.5 7.3525,0.49999991 z"/>
-	<Path Fill="#96FFFFFF" Stretch="Fill" StrokeThickness="2" Width="6.798" Height="6.798" Data="F1 M8.29,-1.7763568E-15 L9.9230118,0.32968992 C5.1414447,1.3809938 1.3809938,5.1414447 0.32968992,9.9230118 C0.057662927,9.4178791 0,8.8606739 -1.7763568E-15,8.29 0,3.7115595 3.7115595,0 8.29,-1.7763568E-15 z" Canvas.Left="2.039" Canvas.Top="1.947" Margin="1.673,1.673,7.529,7.529"/>
+	<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
+	
+<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
 	</Grid>
 </Viewbox>
 	<ControlTemplate.Triggers>
@@ -251,32 +223,8 @@
 		</TransformGroup>
 	</Viewbox.RenderTransform>
 	<Grid>
-<Path Stretch="Fill" Stroke="#FF4D4D4D" StrokeLineJoin="Round" StrokeThickness="1" Margin="18.179,-0.5,-18.003,-0.543" VerticalAlignment="Stretch" Height="Auto" Data="F1 M-2.0429285,-7.757 L4.9570713,-7.757 C7.1662107,-7.757 8.9570713,-5.9661388 8.9570713,-3.757 L8.9570713,-1.3279999 C8.9570713,0.88113898 7.1662107,2.6719999 4.9570713,2.6719999 L4.5196333,2.6719999 4.771143,7.2860003 2.0030785,2.6719999 L-2.0429285,2.6719999 C-4.2520676,2.6719999 -6.0429287,0.88113898 -6.0429287,-1.3279999 L-6.0429287,-3.757 C-6.0429287,-5.9661388 -4.2520676,-7.757 -2.0429285,-7.757 z">
-			<Path.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform ScaleX="-1" ScaleY="1"/>
-					<SkewTransform AngleX="0" AngleY="0"/>
-					<RotateTransform Angle="0"/>
-					<TranslateTransform X="0" Y="0"/>
-				</TransformGroup>
-			</Path.RenderTransform>
-			<Path.Fill>
-				<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-					<GradientStop Color="#FF88A9D5" Offset="0"/>
-					<GradientStop Color="#FF80AADB" Offset="0.995"/>
-				</LinearGradientBrush>
-			</Path.Fill>
-		</Path>
-		<Path RenderTransformOrigin="-1.39915869650583,-3.2189042230412E-10" Fill="#FFFFFFFF" Stretch="Fill" StrokeLineJoin="Round" StrokeThickness="1" Margin="20.695,0.882,-7.521,0" VerticalAlignment="Top" Width="Auto" Height="5.255" Data="F1 M6.9982467,1.6915749E-09 L8.8000002,1.6915749E-09 C10.567311,1.8443416E-08 12,1.4285936 12,3.1908526 L12,5.1284986 11.974361,5.2551265 C11.778581,2.5197275 9.6931524,0.33104813 6.9982467,1.6915749E-09 z">
-			<Path.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform ScaleX="-1" ScaleY="1"/>
-					<SkewTransform AngleX="0" AngleY="0"/>
-					<RotateTransform Angle="0"/>
-					<TranslateTransform X="0" Y="0"/>
-				</TransformGroup>
-			</Path.RenderTransform>
-		</Path>	</Grid>
+	<Path SnapsToDevicePixels="False" Fill="#CCFFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Stretch" Data="F1 M5.0282145,-6.4830003 C8.1051111,-6.4830003 10.599428,-4.5002933 10.599428,-2.0545003 C10.599428,0.39129266 8.1051111,2.3739996 5.0282145,2.3739996 L4.1343474,2.2548513 0.49999991,4.5000005 1.4259897,1.2588339 C0.20860633,0.49111211 -0.54299998,-0.71192384 -0.54299998,-2.0545003 -0.54299998,-4.5002933 1.9513177,-6.4830003 5.0282145,-6.4830003 z" Width="12"/>	
+	</Grid>
 </Viewbox>
 </ControlTemplate>
 
