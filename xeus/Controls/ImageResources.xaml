@@ -38,9 +38,6 @@
 				<GradientStop Color="#FF7A0C0C" Offset="1"/>
 			</LinearGradientBrush>
 		</Ellipse.Fill>
-		<Ellipse.BitmapEffect>
-			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
-		</Ellipse.BitmapEffect>
 		<Ellipse.RenderTransform>
 			<TransformGroup>
 				<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -107,9 +104,6 @@
 				<GradientStop Color="#FF19304F" Offset="1"/>
 			</LinearGradientBrush>
 		</Ellipse.Fill>
-		<Ellipse.BitmapEffect>
-			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
-		</Ellipse.BitmapEffect>
 	</Ellipse>
 <Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="0" Height="0" Data="M22.628,30.472" Canvas.Left="0" Canvas.Top="0" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center" Fill="#FFFFFFFF"/>
 	<Path RenderTransformOrigin="-0.005,1" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" Fill="#77FFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Right" Margin="0,0.873,5.26,0" VerticalAlignment="Top" Width="4.953" Height="6.775" Data="M9.6690085,7.3294421 L7.5224369,1.111383 C9.407529,0.39091502 10.510661,0.30183072 12.012052,1.2959933 z">
@@ -169,9 +163,6 @@
 				<GradientStop Color="#FF2B5F18" Offset="1"/>
 			</LinearGradientBrush>
 		</Ellipse.Fill>
-		<Ellipse.BitmapEffect>
-			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
-		</Ellipse.BitmapEffect>
 	</Ellipse>
 	<Path SnapsToDevicePixels="False" Fill="#CCFFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Left" Margin="3.23,3.656,0,0" VerticalAlignment="Top" Width="9.932" Height="7.897" Data="F1 M5.0282145,-6.4830003 C8.1051111,-6.4830003 10.599428,-4.5002933 10.599428,-2.0545003 C10.599428,0.39129266 8.1051111,2.3739996 5.0282145,2.3739996 L4.1343474,2.2548513 0.49999991,4.5000005 1.4259897,1.2588339 C0.20860633,0.49111211 -0.54299998,-0.71192384 -0.54299998,-2.0545003 -0.54299998,-4.5002933 1.9513177,-6.4830003 5.0282145,-6.4830003 z"/>
 <Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
@@ -214,7 +205,7 @@
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" >
 	<Grid x:Name="grid">
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0" x:Name="_circle">
+		Canvas.Left="0" x:Name="_circle">
 		<Ellipse.Fill>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 				<GradientStop Color="#FFE5B3E4" Offset="0"/>
@@ -283,9 +274,6 @@
 				<GradientStop Color="#FF046938" Offset="1"/>
 			</LinearGradientBrush>
 		</Ellipse.Fill>
-		<Ellipse.BitmapEffect>
-			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
-		</Ellipse.BitmapEffect>
 	</Ellipse>
 		<Path Fill="#A5FFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="7.965" Height="9.865" Data="F1 M2.8155,0 C4.3704576,0 5.631,1.2623332 5.631,2.8195 5.631,3.8548267 5.0737605,4.7598181 4.2193031,5.2095542 6.0439386,5.8137364 7.4298534,7.7533073 7.7589998,10.196696 6.480207,11.432182 4.7315388,12.151 2.8149738,12.151 0.93188268,12.151 -0.78912503,11.457072 -2.052,10.248644 -1.7384501,7.8079395 -0.3721537,5.8612647 1.4351363,5.2253799 C0.56834316,4.7777495 0,3.8650908 7.7043339E-08,2.8195 0,1.2623332 1.2605423,0 2.8155,0 z" Canvas.Left="0" Canvas.Top="0">
 			<Path.BitmapEffect>
@@ -359,9 +347,6 @@
 	<Grid>
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
 		Stretch="Fill" Canvas.Left="0">
-		<Ellipse.BitmapEffect>
-			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
-		</Ellipse.BitmapEffect>
 		<Ellipse.Fill>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 				<GradientStop Color="#FFD0B87B" Offset="0"/>
