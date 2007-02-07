@@ -119,7 +119,7 @@ namespace xeus.Core
 					MemoryStream memoryStream = new MemoryStream( pic, 0, pic.Length ) ;
 					BitmapImage bitmap = new BitmapImage() ;
 					bitmap.BeginInit() ;
-					//bitmap.CacheOption = BitmapCacheOption.OnLoad;
+					bitmap.CacheOption = BitmapCacheOption.OnLoad;
 					bitmap.StreamSource = memoryStream ;
 					bitmap.EndInit() ;
 					return bitmap ;
@@ -128,7 +128,7 @@ namespace xeus.Core
 				{
 					BitmapImage bitmap = new BitmapImage() ;
 					bitmap.BeginInit() ;
-					//bitmap.CacheOption = BitmapCacheOption.OnLoad;
+					bitmap.CacheOption = BitmapCacheOption.OnLoad;
 					bitmap.UriSource = new Uri( photo.GetTag( "EXTVAL" ) ) ;
 					bitmap.EndInit() ;
 
@@ -139,7 +139,7 @@ namespace xeus.Core
 					byte[] pic = Convert.FromBase64String( photo.Value ) ;
 					MemoryStream memoryStream = new MemoryStream( pic, 0, pic.Length ) ;
 					BitmapImage bitmap = new BitmapImage() ;
-					//bitmap.CacheOption = BitmapCacheOption.OnLoad;
+					bitmap.CacheOption = BitmapCacheOption.OnLoad;
 					bitmap.BeginInit() ;
 					bitmap.StreamSource = memoryStream ;
 					bitmap.EndInit() ;
