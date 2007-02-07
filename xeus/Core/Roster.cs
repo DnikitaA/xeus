@@ -12,11 +12,11 @@ namespace xeus.Core
 	internal class Roster
 	{
 		private ObservableCollectionDisp< RosterItem > _items =
-			new ObservableCollectionDisp< RosterItem >( App.dispatcherThread ) ;
+			new ObservableCollectionDisp< RosterItem >( App.DispatcherThread ) ;
 
-		private Timer _rosterItemTimer = new Timer( 250 );
-		Queue< RosterItem > _rosterItemsWithNoVCard = new Queue< RosterItem >( 128 );
-		object _lockRosterItems = new object();
+		private Timer _rosterItemTimer = new Timer( 100 ) ;
+		private Queue< RosterItem > _rosterItemsWithNoVCard = new Queue< RosterItem >( 128 ) ;
+		private object _lockRosterItems = new object() ;
 
 		private Dictionary< string, Presence > _presences = new Dictionary< string, Presence >( 128 ) ;
 
@@ -39,7 +39,8 @@ namespace xeus.Core
 		public Roster()
 		{
 			_rosterItemTimer.AutoReset = true ;
-			_rosterItemTimer.Elapsed += new ElapsedEventHandler( _rosterItemTimer_Elapsed );
+			_rosterItemTimer.Start() ;
+			_rosterItemTimer.Elapsed += new ElapsedEventHandler( _rosterItemTimer_Elapsed ) ;
 		}
 
 		public ObservableCollectionDisp< RosterItem > Items
@@ -71,7 +72,7 @@ namespace xeus.Core
 
 		private void ChangePresence( Presence presence )
 		{
-			if ( App.dispatcherThread.CheckAccess() )
+			if ( App.DispatcherThread.CheckAccess() )
 			{
 				// presence info can arrive before the user item comes into the roster
 				// so presence info has to be kept separately
@@ -87,8 +88,8 @@ namespace xeus.Core
 			}
 			else
 			{
-				App.dispatcherThread.BeginInvoke( DispatcherPriority.Send,
-				                                 new PresenceCallback( ChangePresence ), presence, new object[] { } ) ;
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new PresenceCallback( ChangePresence ), presence, new object[] { } ) ;
 			}
 		}
 
@@ -133,16 +134,18 @@ namespace xeus.Core
 
 		private void VcardResult( object sender, IQ iq, object data )
 		{
-			if ( App.dispatcherThread.CheckAccess() )
+			if ( App.DispatcherThread.CheckAccess() )
 			{
 				// if it is already in roster, change status property
-				RosterItem rosterItem = FindItem( ( string )data ) ;
+				RosterItem rosterItem = FindItem( ( string ) data ) ;
 
 				if ( rosterItem != null )
 				{
+					rosterItem.HasVCard = true ;
+
 					if ( iq.Type == IqType.error || iq.Error != null )
 					{
-						rosterItem.Errors.Add( string.Format( "{0}: {1}", iq.Error.Code, iq.Error.Message ) );
+						rosterItem.Errors.Add( string.Format( "{0}: {1}", iq.Error.Code, iq.Error.Message ) ) ;
 					}
 					else if ( iq.Type == IqType.result && iq.Vcard != null )
 					{
@@ -171,12 +174,17 @@ namespace xeus.Core
 
 						rosterItem.Image = image ;
 					}
+
+					if ( rosterItem.Image == null )
+					{
+						rosterItem.Image = Storage.GetAvatar( rosterItem.Key ) ;
+					}
 				}
 			}
 			else
 			{
-				App.dispatcherThread.BeginInvoke( DispatcherPriority.Send,
-				                                 new VcardResultCallback( VcardResult ), sender, new object[] { iq, data } ) ;
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.ApplicationIdle,
+				                                  new VcardResultCallback( VcardResult ), sender, new object[] { iq, data } ) ;
 			}
 		}
 
@@ -195,26 +203,41 @@ namespace xeus.Core
 			}
 			else
 			{
-				// using timer frees the UI - on roster item are called synchronously for all items on startup
-				_rosterItemsWithNoVCard.Enqueue( rosterItem ) ;
-				_rosterItemTimer.Start() ;
+				lock ( _lockRosterItems )
+				{
+					// using timer frees the UI - on roster item are called synchronously for all items on startup
+					_rosterItemsWithNoVCard.Enqueue( rosterItem ) ;
+				}
 			}
 		}
 
-		void _rosterItemTimer_Elapsed( object sender, ElapsedEventArgs e )
+		private void _rosterItemTimer_Elapsed( object sender, ElapsedEventArgs e )
 		{
-			RosterItem rosterItem = null ;
+			RosterItem rosterItem ;
 
-			lock ( _lockRosterItems )
+			if ( _rosterItemsWithNoVCard.Count > 0 )
 			{
-				if ( _rosterItemsWithNoVCard.Count > 0 )
+				rosterItem = _rosterItemsWithNoVCard.Dequeue() ;
+			}
+			else
+			{
+				foreach ( RosterItem item in _items )
 				{
-					rosterItem = _rosterItemsWithNoVCard.Dequeue() ;
+					if ( !item.HasVCard )
+					{
+						lock ( _lockRosterItems )
+						{
+							if ( !_rosterItemsWithNoVCard.Contains( item ) )
+							{
+								// using timer frees the UI - on roster item are called synchronously for all items on startup
+								_rosterItemsWithNoVCard.Enqueue( item ) ;
+								break ;
+							}
+						}
+					}
 				}
-				else
-				{
-					_rosterItemTimer.Stop() ;				
-				}
+
+				return ;
 			}
 
 			if ( rosterItem != null )
@@ -228,7 +251,7 @@ namespace xeus.Core
 					rosterItem.Presence = presence ;
 				}
 
-				if ( !_items.Contains( rosterItem ) )
+				if ( FindItem( rosterItem.Key ) == null )
 				{
 					_items.Add( rosterItem ) ;
 				}
@@ -238,7 +261,7 @@ namespace xeus.Core
 				Client.Instance.SendIqGrabber( viq, new IqCB( VcardResult ), rosterItem.Key ) ;
 			}
 		}
-		
+
 		public void DeleteRosterItem( RosterItem rosterItem )
 		{
 			Client.Instance.RosterManager.RemoveRosterItem( new Jid( rosterItem.Key ) ) ;

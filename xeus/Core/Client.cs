@@ -253,6 +253,11 @@ namespace xeus.Core
 			_xmppConnection.IqGrabber.SendIq( iq, iqCallback, cbArgument ) ;
 		}
 
+		public IQ SendIqGrabber( IQ iq )
+		{
+			return _xmppConnection.IqGrabber.SendIq( iq ) ;
+		}
+
 		public RosterManager RosterManager
 		{
 			get
