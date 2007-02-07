@@ -9,7 +9,7 @@ namespace xeus
 	/// </summary>
 	public partial class App : Application
 	{
-		public static Dispatcher dispatcherThread
+		public static Dispatcher DispatcherThread
 		{
 			get
 			{

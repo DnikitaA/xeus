@@ -20,7 +20,7 @@
 </Storyboard>
 
 <ControlTemplate x:Key="StatusDnd" TargetType="{x:Type Button}">
-<Viewbox x:Name="viewbox" SnapsToDevicePixels="False" ToolTip="Do not Disturb">
+<Viewbox x:Name="viewbox" SnapsToDevicePixels="False">
 	<Grid RenderTransformOrigin="0.5,0.5" x:Name="grid">
 		<Grid.RenderTransform>
 			<TransformGroup>
@@ -97,7 +97,7 @@
 </ControlTemplate>
 
 <ControlTemplate x:Key="StatusAway" TargetType="{x:Type Button}">
-<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.498,0.51" ToolTip="Away">
+<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.498,0.51" >
 <Grid x:Name="grid">
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
 		Stretch="Fill" Canvas.Left="0" x:Name="_circle">
@@ -159,7 +159,7 @@
 </ControlTemplate>
 
 <ControlTemplate x:Key="StatusFreeForChat" TargetType="{x:Type Button}">
-<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.498,0.51" ToolTip="Free for Chat">
+<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.498,0.51" >
 <Grid x:Name="grid">
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
 		Stretch="Fill" Canvas.Left="0" x:Name="_circle">
@@ -211,7 +211,7 @@
 </ControlTemplate>
 
 <ControlTemplate x:Key="StatusXAway" TargetType="{x:Type Button}">
-<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" ToolTip="eXtended Away">
+<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" >
 	<Grid x:Name="grid">
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
 		Stretch="Fill" Canvas.Left="0" x:Name="_circle">
@@ -273,7 +273,7 @@
 </ControlTemplate>
 
 <ControlTemplate x:Key="StatusOnline" TargetType="{x:Type Button}">
-<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" ToolTip="Online">
+<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" >
 	<Grid x:Name="grid">
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
 		Stretch="Fill" Canvas.Left="0" x:Name="_circle">
@@ -330,7 +330,7 @@
 </ControlTemplate>
 
 <ControlTemplate x:Key="StatusOffline" TargetType="{x:Type Button}">
-	<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" ToolTip="Offline">
+	<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" >
 		<Grid>
 		<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
 			Stretch="Fill" Canvas.Left="0" Fill="#FF3E3E3E"/>

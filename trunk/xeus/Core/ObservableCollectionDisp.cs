@@ -20,8 +20,6 @@ namespace xeus.Core
 
 		private delegate void MoveItemCallback( int oldIndex, int newIndex ) ;
 
-		// new public event PropertyChangedEventHandler PropertyChanged ;
-
 		public ObservableCollectionDisp( Dispatcher dispatcher )
 		{
 			dispatcherUIThread = dispatcher ;
@@ -35,7 +33,12 @@ namespace xeus.Core
 
 				foreach ( T item in Items )
 				{
-					builder.AppendLine( item.ToString() ) ;
+					if ( builder.Length > 0 )
+					{
+						builder.AppendLine() ;
+					}
+
+					builder.Append( item.ToString() ) ;
 				}
 
 				return builder.ToString() ;

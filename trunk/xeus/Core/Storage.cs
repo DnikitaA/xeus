@@ -62,6 +62,7 @@ namespace xeus.Core
 				                                                FileMode.Open, FileAccess.Read, FileShare.Read ) )
 				{
 					BitmapImage bitmap = new BitmapImage() ;
+					bitmap.CacheOption = BitmapCacheOption.OnLoad;
 					bitmap.BeginInit() ;
 					bitmap.StreamSource = fileStream ;
 					bitmap.EndInit() ;
@@ -82,7 +83,6 @@ namespace xeus.Core
 			if ( _defaultAvatar != null )
 			{
 				return _defaultAvatar ;
-
 			}
 
 			try
@@ -92,6 +92,7 @@ namespace xeus.Core
 				using ( Stream stream = Application.GetResourceStream( uri ).Stream )
 				{
 					_defaultAvatar = new BitmapImage() ;
+					_defaultAvatar.CacheOption = BitmapCacheOption.OnLoad;
 					_defaultAvatar.BeginInit() ;
 					_defaultAvatar.StreamSource = stream ;
 					_defaultAvatar.EndInit() ;
@@ -118,6 +119,7 @@ namespace xeus.Core
 					MemoryStream memoryStream = new MemoryStream( pic, 0, pic.Length ) ;
 					BitmapImage bitmap = new BitmapImage() ;
 					bitmap.BeginInit() ;
+					//bitmap.CacheOption = BitmapCacheOption.OnLoad;
 					bitmap.StreamSource = memoryStream ;
 					bitmap.EndInit() ;
 					return bitmap ;
@@ -126,7 +128,7 @@ namespace xeus.Core
 				{
 					BitmapImage bitmap = new BitmapImage() ;
 					bitmap.BeginInit() ;
-					bitmap.CacheOption = BitmapCacheOption.OnLoad;
+					//bitmap.CacheOption = BitmapCacheOption.OnLoad;
 					bitmap.UriSource = new Uri( photo.GetTag( "EXTVAL" ) ) ;
 					bitmap.EndInit() ;
 
@@ -137,6 +139,7 @@ namespace xeus.Core
 					byte[] pic = Convert.FromBase64String( photo.Value ) ;
 					MemoryStream memoryStream = new MemoryStream( pic, 0, pic.Length ) ;
 					BitmapImage bitmap = new BitmapImage() ;
+					//bitmap.CacheOption = BitmapCacheOption.OnLoad;
 					bitmap.BeginInit() ;
 					bitmap.StreamSource = memoryStream ;
 					bitmap.EndInit() ;

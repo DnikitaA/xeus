@@ -1,7 +1,5 @@
 using System ;
 using System.ComponentModel ;
-using System.IO ;
-using System.Net ;
 using System.Windows.Controls ;
 using System.Windows.Media.Imaging ;
 using agsXMPP.protocol.Base ;
@@ -13,10 +11,10 @@ namespace xeus.Core
 	internal class RosterItem : INotifyPropertyChanged
 	{
 		private ObservableCollectionDisp< Message > _messages =
-			new ObservableCollectionDisp< Message >( App.dispatcherThread ) ;
+			new ObservableCollectionDisp< Message >( App.DispatcherThread ) ;
 
 		private ObservableCollectionDisp< string > _errors =
-			new ObservableCollectionDisp< string >( App.dispatcherThread ) ;
+			new ObservableCollectionDisp< string >( App.DispatcherThread ) ;
 
 		private agsXMPP.protocol.iq.roster.RosterItem _rosterItem ;
 		private string _statusText = "Not Available" ;
@@ -32,6 +30,7 @@ namespace xeus.Core
 		private Organization _organization ;
 		private Email _emailPreferred ;
 		private BitmapImage _image ;
+		private bool _hasVCard = false ;
 
 		public event PropertyChangedEventHandler PropertyChanged ;
 
@@ -372,6 +371,18 @@ namespace xeus.Core
 			get
 			{
 				return _errors ;
+			}
+		}
+
+		public bool HasVCard
+		{
+			get
+			{
+				return _hasVCard ;
+			}
+			set
+			{
+				_hasVCard = value ;
 			}
 		}
 

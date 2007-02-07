@@ -7,7 +7,7 @@ namespace xeus.Core
 {
 	internal class Services
 	{
-		ObservableCollectionDisp< ServiceItem > _items = new ObservableCollectionDisp< ServiceItem >( App.dispatcherThread );
+		ObservableCollectionDisp< ServiceItem > _items = new ObservableCollectionDisp< ServiceItem >( App.DispatcherThread );
 
 		public ObservableCollectionDisp< ServiceItem > SearchEngines
 		{
@@ -35,7 +35,7 @@ namespace xeus.Core
 
 		private ObservableCollectionDisp< ServiceItem > GetServicesBySupports( string filter )
 		{
-			ObservableCollectionDisp< ServiceItem > filteredServices = new ObservableCollectionDisp< ServiceItem >( App.dispatcherThread ) ;
+			ObservableCollectionDisp< ServiceItem > filteredServices = new ObservableCollectionDisp< ServiceItem >( App.DispatcherThread ) ;
 
 			foreach ( ServiceItem item in _items )
 			{
