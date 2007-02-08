@@ -52,7 +52,7 @@
 			</Storyboard>
 		</DataTemplate.Resources>
 		<Grid RenderTransformOrigin="0.5,0.5"
-				Height="112" Width="232" Panel.ZIndex="1" x:Name="grid" >
+				Height="192" Width="232" Panel.ZIndex="1" x:Name="grid" >
 			<Grid.RenderTransform>
 				<TransformGroup>
 					<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -61,6 +61,11 @@
 					<TranslateTransform X="0" Y="0"/>
 				</TransformGroup>
 			</Grid.RenderTransform>
+			<Path Opacity="0.825" SnapsToDevicePixels="True" Fill="#FFFFFFFF" Stretch="Fill" Stroke="#FF3E3E3E" Margin="8,8,8,0" x:Name="rectangleTop" VerticalAlignment="Top" Width="Auto" Height="61" Data="F1 M4.4999995,0.50000107 L211.5,0.50000107 C213.70914,0.5 215.5,2.2908609 215.5,4.4999986 L215.5,60.5 0.50000215,60.5 0.50000215,4.4999986 C0.5,2.2908609 2.2908609,0.5 4.4999995,0.50000107 z">
+				<Path.BitmapEffect>
+					<DropShadowBitmapEffect Direction="274" Opacity="0.335" ShadowDepth="1" Softness="0.37"/>
+				</Path.BitmapEffect>
+			</Path>
 			<Rectangle Width="Auto" Height="Auto" RadiusX="5" RadiusY="5" Margin="8,8,8,8" Stroke="#FF000000" Opacity="0.605">
 				<Rectangle.Fill>
 					<ImageBrush Viewport="0,0,10,10"
@@ -87,7 +92,7 @@
 				</Rectangle.BitmapEffect>
 			</Rectangle>
 			<Image HorizontalAlignment="Left" Source="{Binding Path=Image}" Grid.Row="0" 
-				VerticalAlignment="Stretch" Stretch="Uniform" Width="56" Height="Auto" Margin="15.333,14.666,0,33.334" d:LayoutOverrides="GridBox" Panel.ZIndex="1"/>
+				VerticalAlignment="Top" Stretch="Uniform" Width="47" Height="49.334" Margin="17.333,14.666,0,0" d:LayoutOverrides="GridBox" Panel.ZIndex="1"/>
 			<TextBlock Margin="76.333,14.393,15,0"
   				TextTrimming="CharacterEllipsis"
   				FontFamily="Calibri" Foreground="#FFACACAC"
@@ -95,7 +100,33 @@
 			<TextBlock Text="{Binding Path=StatusDescription}" HorizontalAlignment="Stretch"
 			  				TextTrimming="CharacterEllipsis"
 			  				FontFamily="Calibri" Foreground="#FFB8D9F2"
-			  				x:Name="_displayStatus" Margin="76.333,34.393,15,0" FontSize="12" VerticalAlignment="Top" Height="17"/>
+			  				x:Name="_displayStatus" Margin="76.333,32.393,15,0" FontSize="12" VerticalAlignment="Top" Height="17"/>
+			<WrapPanel RenderTransformOrigin="0.5,0.5" Margin="92,73,15,16" VerticalAlignment="Stretch">
+				<WrapPanel.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform ScaleX="1" ScaleY="1"/>
+						<SkewTransform AngleX="0" AngleY="0"/>
+						<RotateTransform Angle="0"/>
+						<TranslateTransform X="0" Y="0"/>
+					</TransformGroup>
+				</WrapPanel.RenderTransform>
+				<TextBlock x:Name="_email" Height="14" FontSize="11" Foreground="#FF929292" Text="{Binding Path=EmailPreferred}" TextAlignment="Left" TextWrapping="Wrap" Width="125"/>
+				<TextBlock Height="14" FontSize="11" Foreground="#FF929292" Text="{Binding Path=Url}" TextAlignment="Left" TextWrapping="Wrap" x:Name="_url" Width="125"/>
+				<TextBlock Height="14" FontSize="11" Foreground="#FF929292" Text="{Binding Path=Description}" TextAlignment="Left" TextWrapping="Wrap" x:Name="_description" Width="125"/>
+				<TextBlock Height="14" FontSize="11" Foreground="#FF929292" Text="{Binding Path=FullName}" TextAlignment="Left" TextWrapping="Wrap" x:Name="_fullName" Width="125"/>
+				<TextBlock Height="14" FontSize="11" Foreground="#FF929292" Text="{Binding Path=Nickname}" TextAlignment="Left" TextWrapping="Wrap" x:Name="_nickname" Width="125"/>
+				<TextBlock Height="14" FontSize="11" Foreground="#FF929292" Text="{Binding Path=Organization}" TextAlignment="Left" TextWrapping="Wrap" x:Name="_organization" Width="125"/>
+				<TextBlock Height="14" FontSize="11" Foreground="#FF929292" Text="{Binding Path=Key}" TextAlignment="Left" TextWrapping="Wrap" x:Name="_id" Width="125"/>
+			</WrapPanel>
+			<WrapPanel HorizontalAlignment="Left" Margin="17.333,73,0,16" VerticalAlignment="Stretch" Width="70.667">
+				<TextBlock x:Name="_emailText" Height="14" FontSize="11" Foreground="#FF656565" Text="E-Mail" TextAlignment="Right" TextWrapping="Wrap" Visibility="Visible" Width="70.667"/>
+				<TextBlock Height="14" FontSize="11" Foreground="#FF656565" Text="Url" TextAlignment="Right" TextWrapping="Wrap" x:Name="_urlText" Width="70.667"/>
+				<TextBlock Height="14" FontSize="11" Foreground="#FF656565" Text="Description" TextAlignment="Right" TextWrapping="Wrap" x:Name="_descriptionText" Width="70.667"/>
+				<TextBlock Height="14" FontSize="11" Foreground="#FF656565" Text="Full Name" TextAlignment="Right" TextWrapping="Wrap" x:Name="_fullNameText" Width="70.667"/>
+				<TextBlock Height="14" FontSize="11" Foreground="#FF656565" Text="Nickname" TextAlignment="Right" TextWrapping="Wrap" x:Name="_nickNameText" Width="70.667"/>
+				<TextBlock Height="14" FontSize="11" Foreground="#FF656565" Text="Organization" TextAlignment="Right" TextWrapping="Wrap" x:Name="_organizationText" Width="70.667"/>
+				<TextBlock Height="14" FontSize="11" Foreground="#FF656565" Text="Id" TextAlignment="Right" TextWrapping="Wrap" x:Name="_idText" Width="70.667"/>
+			</WrapPanel>
 			</Grid>
 		<DataTemplate.Triggers>
 			<Trigger Property="IsVisible" Value="True">
@@ -103,6 +134,18 @@
 					<BeginStoryboard Storyboard="{StaticResource Flash}"/>
 				</Trigger.EnterActions>
 			</Trigger>
+			<DataTrigger Binding="{Binding Path=EmailPreferred}" Value="{x:Null}">
+				<Setter Property="Visibility" Value="Hidden" TargetName="_email" />
+				<Setter Property="Visibility" Value="Hidden" TargetName="_emailText" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=Url}" Value="{x:Null}">
+				<Setter Property="Visibility" Value="Hidden" TargetName="_url" />
+				<Setter Property="Visibility" Value="Hidden" TargetName="_urlText" />
+			</DataTrigger>
+			<DataTrigger Binding="{Binding Path=Description}" Value="{x:Null}">
+				<Setter Property="Visibility" Value="Hidden" TargetName="_description" />
+				<Setter Property="Visibility" Value="Hidden" TargetName="_descriptionText" />
+			</DataTrigger>
 		</DataTemplate.Triggers>
 	</DataTemplate>	
 
@@ -167,7 +210,7 @@
 		<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}, AncestorLevel=1}, Path=IsSelected}" Value="True">
 			<Setter Property="Background" Value="#9CBAE8FF" TargetName="_displayNameLabel" />
 		</DataTrigger>
-		<DataTrigger Binding="{Binding Path=Presence}" Value="Null">
+		<DataTrigger Binding="{Binding Path=Presence}" Value="{x:Null}">
 			<Setter Property="Visibility" Value="Hidden" TargetName="_statusButton" />
 		</DataTrigger>
 		<DataTrigger Binding="{Binding Path=Errors.Count}" Value="0">
