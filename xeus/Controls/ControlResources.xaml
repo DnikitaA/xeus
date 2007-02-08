@@ -30,8 +30,29 @@
   </CollectionViewSource>
 	
 	<DataTemplate x:Key="RosterItemTip" DataType="{x:Type local:RosterItem}">
+		<DataTemplate.Resources>
+			<Storyboard x:Key="Flash">
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="grid" Storyboard.TargetProperty="(UIElement.Opacity)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="#FF535353"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.3000000" Value="#FF424242"/>
+				</ColorAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="#FF484848"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.3000000" Value="#FF2E2E2E"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Offset)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.986"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+			</Storyboard>
+		</DataTemplate.Resources>
 		<Grid RenderTransformOrigin="0.5,0.5"
-				Height="112" Width="232" Panel.ZIndex="1" >
+				Height="112" Width="232" Panel.ZIndex="1" x:Name="grid" >
 			<Grid.RenderTransform>
 				<TransformGroup>
 					<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -48,13 +69,13 @@
 				</Rectangle.Fill>
 				<Rectangle.OpacityMask>
 					<RadialGradientBrush>
-						<GradientStop Color="#00FFFFFF" Offset="1"/>
 						<GradientStop Color="#FF000000" Offset="0"/>
-						<GradientStop Color="#7E9A9A9A" Offset="0.601"/>
+						<GradientStop Color="#77323232" Offset="1"/>
+						<GradientStop Color="#7B5B5B5B" Offset="0.812"/>
 					</RadialGradientBrush>
 				</Rectangle.OpacityMask>
 			</Rectangle>
-			<Rectangle SnapsToDevicePixels="True" Width="Auto" Height="Auto" RadiusX="4" RadiusY="4" Margin="8,8,8,8" Stroke="#FF3E3E3E" Opacity="0.825" >
+			<Rectangle SnapsToDevicePixels="True" Width="Auto" Height="Auto" RadiusX="4" RadiusY="4" Margin="8,8,8,8" Stroke="#FF3E3E3E" Opacity="0.825" x:Name="rectangle" >
 				<Rectangle.Fill>
 					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 						<GradientStop Color="#FF2C2C2C" Offset="0"/>
@@ -66,24 +87,30 @@
 				</Rectangle.BitmapEffect>
 			</Rectangle>
 			<Image HorizontalAlignment="Left" Source="{Binding Path=Image}" Grid.Row="0" 
-				VerticalAlignment="Stretch" Stretch="Uniform" Width="56" Height="Auto" Margin="16,16,0,32" d:LayoutOverrides="GridBox" Panel.ZIndex="1"/>
-			<TextBlock Text="{Binding Path=DisplayName}" HorizontalAlignment="Stretch" Margin="88,23.393,24,0"
+				VerticalAlignment="Stretch" Stretch="Uniform" Width="56" Height="Auto" Margin="15.333,14.666,0,33.334" d:LayoutOverrides="GridBox" Panel.ZIndex="1"/>
+			<TextBlock Margin="76.333,14.393,15,0"
   				TextTrimming="CharacterEllipsis"
-  				FontFamily="Calibri" Foreground="#FFDCDCDC"
-  				VerticalAlignment="Top" x:Name="_displayName" FontSize="12" Height="24.607"/>				
-			<Path SnapsToDevicePixels="True" Stretch="Fill" Margin="8.419,0,8.419,9" VerticalAlignment="Bottom" Width="Auto" Height="8" Data="F1 M108,86.5 C156.22919,86.5 197.58388,88.593307 215.08069,91.57692 214.27528,93.874832 212.07742,95.5 209.5,95.5 L6.5,95.5 C3.9225659,95.5 1.7247117,93.874825 0.91931057,91.57692 C18.416126,88.593307 59.770817,86.5 108,86.5 z" Opacity="0.65">
-				<Path.Fill>
-					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-						<GradientStop Color="#FF383838" Offset="0"/>
-						<GradientStop Color="#FF323232" Offset="1"/>
-					</LinearGradientBrush>
-				</Path.Fill>
-			</Path>
-			<Path SnapsToDevicePixels="True" Fill="#FFFFFFFF" Stretch="Fill" Margin="8,8,8,0" VerticalAlignment="Top" Width="Auto" Height="15.393" Data="F1 M6.5000019,0.49999809 L209.5,0.49999809 C212.81371,0.5 215.5,3.1862915 215.5,6.4999976 L215.5,14.893202 C185.50279,13.698905 148.29785,13 108,12.999999 67.702141,13 30.497213,13.698905 0.50000238,14.893202 L0.50000238,6.4999976 C0.5,3.1862915 3.1862915,0.5 6.5000019,0.49999809 z" Opacity="0.06"/>
-		</Grid>
+  				FontFamily="Calibri" Foreground="#FFACACAC"
+  				VerticalAlignment="Top" x:Name="_displayName" FontSize="15" Height="20" Text="{Binding Path=DisplayName}" />
+			<TextBlock Text="{Binding Path=StatusDescription}" HorizontalAlignment="Stretch"
+			  				TextTrimming="CharacterEllipsis"
+			  				FontFamily="Calibri" Foreground="#FFB8D9F2"
+			  				x:Name="_displayStatus" Margin="76.333,34.393,15,0" FontSize="12" VerticalAlignment="Top" Height="17"/>
+			</Grid>
+		<DataTemplate.Triggers>
+			<Trigger Property="IsVisible" Value="True">
+				<Trigger.EnterActions>
+					<BeginStoryboard Storyboard="{StaticResource Flash}"/>
+				</Trigger.EnterActions>
+			</Trigger>
+		</DataTemplate.Triggers>
 	</DataTemplate>	
 
   <Style TargetType="{x:Type ToolTip}">
+	<Setter Property="VerticalOffset" Value="-10" />
+	<Setter Property="HorizontalOffset" Value="-10" />
+	<Setter Property="Placement" Value="RelativePoint" />
+
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type ToolTip}">
@@ -101,7 +128,8 @@
 		Width="{Binding Path=Value, Converter={StaticResource _sizeFromSliderConverterSmall}, ElementName=_sliderItemSize}">
   	<Grid x:Name="_rosterItemGridOuter" RenderTransformOrigin="0.5,0.5"
 			Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}"
-			Margin="3,3,3,3" Width="130" Height="28" >
+			Margin="3,3,3,3" Width="130" Height="28" ToolTipService.InitialShowDelay="1500"
+			ToolTipService.BetweenShowDelay="1500" >
   		<Grid.ColumnDefinitions>
   			<ColumnDefinition Width="0.163*"/>
   			<ColumnDefinition Width="0.837*"/>
@@ -153,7 +181,12 @@
 		Width="{Binding Path=Value, Converter={StaticResource _sizeFromSliderConverterSmall}, ElementName=_sliderItemSize}">
   	<Grid x:Name="_rosterItemGridOuter" RenderTransformOrigin="0.5,0.5"
 			Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}"
-			Margin="3,3,3,3" Width="90" Height="100.819" >
+			Margin="3,3,3,3" Width="90" Height="100.819" ToolTipService.InitialShowDelay="1500" 
+			ToolTipService.BetweenShowDelay="1500" >
+		<Grid.ToolTip>
+			<ToolTip ContentTemplate="{StaticResource RosterItemTip}" 
+			Content="{Binding RelativeSource={RelativeSource Self},Path=DataContext}"/>
+		</Grid.ToolTip>
   		<Grid.RenderTransform>
   			<TransformGroup>
   				<ScaleTransform ScaleX="1" ScaleY="1"/>
