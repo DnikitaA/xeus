@@ -225,15 +225,6 @@ namespace xeus.Core
 
 					BitmapImage image = Storage.ImageFromPhoto( vcard.Photo ) ;
 							
-					if ( image != null )
-					{
-						Storage.CacheAvatar( Key, vcard.Photo ) ;
-					}
-					else
-					{
-						image = Storage.GetAvatar( Key ) ;
-					}
-
 					Image = image ;
 				}
 

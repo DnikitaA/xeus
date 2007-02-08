@@ -99,6 +99,7 @@ namespace xeus.Core
 			return vcard ;
 		}
 
+		/*
 		public static void CacheAvatar( string jid, Photo photo )
 		{
 			try
@@ -143,7 +144,7 @@ namespace xeus.Core
 				
 				return GetDefaultAvatar() ;
 			}
-		}
+		}*/
 
 		public static BitmapImage GetDefaultAvatar()
 		{

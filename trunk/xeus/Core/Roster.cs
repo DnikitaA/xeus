@@ -223,13 +223,13 @@ namespace xeus.Core
 					rosterItem.Presence = presence ;
 				}
 
+				Vcard vcard = Storage.GetVcard( rosterItem.Key ) ;
+				rosterItem.SetVcard( vcard );
+				
 				if ( FindItem( rosterItem.Key ) == null )
 				{
 					_items.Add( rosterItem ) ;
 				}
-
-				Vcard vcard = Storage.GetVcard( rosterItem.Key ) ;
-				rosterItem.SetVcard( vcard );
 
 				// ask for VCard
 				VcardIq viq = new VcardIq( IqType.get, new Jid( rosterItem.Key ) ) ;
