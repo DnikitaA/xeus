@@ -2,6 +2,7 @@ using System ;
 using System.ComponentModel ;
 using System.Windows.Controls ;
 using System.Windows.Media.Imaging ;
+using System.Windows.Threading ;
 using agsXMPP.protocol.Base ;
 using agsXMPP.protocol.client ;
 using agsXMPP.protocol.iq.vcard ;
@@ -15,6 +16,8 @@ namespace xeus.Core
 
 		private ObservableCollectionDisp< string > _errors =
 			new ObservableCollectionDisp< string >( App.DispatcherThread ) ;
+
+		private delegate void SetVcardCallback( Vcard vcard ) ;
 
 		private agsXMPP.protocol.iq.roster.RosterItem _rosterItem ;
 		private string _statusText = "Not Available" ;
@@ -30,7 +33,7 @@ namespace xeus.Core
 		private Organization _organization ;
 		private Email _emailPreferred ;
 		private BitmapImage _image ;
-		private bool _hasVCard = false ;
+		private bool _hasVCardRecivied = false ;
 
 		public event PropertyChangedEventHandler PropertyChanged ;
 
@@ -204,6 +207,48 @@ namespace xeus.Core
 			}
 		}
 
+		public void SetVcard( Vcard vcard )
+		{
+			if ( App.DispatcherThread.CheckAccess() )
+			{
+				if ( vcard != null )
+				{
+					Birthday = vcard.Birthday ;
+					Description = vcard.Description ;
+					EmailPreferred = vcard.GetPreferedEmailAddress() ;
+					FullName = vcard.Fullname ;
+					NickName = vcard.Nickname ;
+					Organization = vcard.Organization ;
+					Role = vcard.Role ;
+					Title = vcard.Title ;
+					Url = vcard.Url ;
+
+					BitmapImage image = Storage.ImageFromPhoto( vcard.Photo ) ;
+							
+					if ( image != null )
+					{
+						Storage.CacheAvatar( Key, vcard.Photo ) ;
+					}
+					else
+					{
+						image = Storage.GetAvatar( Key ) ;
+					}
+
+					Image = image ;
+				}
+
+				if ( Image == null )
+				{
+					Image = Storage.GetDefaultAvatar() ;
+				}
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.ApplicationIdle,
+				                                  new SetVcardCallback( SetVcard ), vcard ) ;
+			}
+		}
+
 		public string StatusText
 		{
 			get
@@ -374,15 +419,15 @@ namespace xeus.Core
 			}
 		}
 
-		public bool HasVCard
+		public bool HasVCardRecivied
 		{
 			get
 			{
-				return _hasVCard ;
+				return _hasVCardRecivied ;
 			}
 			set
 			{
-				_hasVCard = value ;
+				_hasVCardRecivied = value ;
 			}
 		}
 
