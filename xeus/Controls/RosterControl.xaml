@@ -34,7 +34,7 @@
                         <TextBlock Text="{Binding Path=Name}"/>
                     </Expander.Header>
                     <Expander.Content>
-                      <ItemsPresenter />
+                      <ItemsPresenter/>
                     </Expander.Content>
                   </Expander>
                 </ControlTemplate>
