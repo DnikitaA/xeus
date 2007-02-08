@@ -46,6 +46,9 @@
 				<TranslateTransform X="0" Y="0"/>
 			</TransformGroup>
 		</Ellipse.RenderTransform>
+		<Ellipse.BitmapEffect>
+			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
+		</Ellipse.BitmapEffect>
 	</Ellipse>
 		<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
 		<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
@@ -104,6 +107,9 @@
 				<GradientStop Color="#FF19304F" Offset="1"/>
 			</LinearGradientBrush>
 		</Ellipse.Fill>
+		<Ellipse.BitmapEffect>
+			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
+		</Ellipse.BitmapEffect>
 	</Ellipse>
 <Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="0" Height="0" Data="M22.628,30.472" Canvas.Left="0" Canvas.Top="0" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center" Fill="#FFFFFFFF"/>
 	<Path RenderTransformOrigin="-0.005,1" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" Fill="#77FFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Right" Margin="0,0.873,5.26,0" VerticalAlignment="Top" Width="4.953" Height="6.775" Data="M9.6690085,7.3294421 L7.5224369,1.111383 C9.407529,0.39091502 10.510661,0.30183072 12.012052,1.2959933 z">
@@ -163,6 +169,9 @@
 				<GradientStop Color="#FF2B5F18" Offset="1"/>
 			</LinearGradientBrush>
 		</Ellipse.Fill>
+		<Ellipse.BitmapEffect>
+			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
+		</Ellipse.BitmapEffect>
 	</Ellipse>
 	<Path SnapsToDevicePixels="False" Fill="#CCFFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Left" Margin="3.23,3.656,0,0" VerticalAlignment="Top" Width="9.932" Height="7.897" Data="F1 M5.0282145,-6.4830003 C8.1051111,-6.4830003 10.599428,-4.5002933 10.599428,-2.0545003 C10.599428,0.39129266 8.1051111,2.3739996 5.0282145,2.3739996 L4.1343474,2.2548513 0.49999991,4.5000005 1.4259897,1.2588339 C0.20860633,0.49111211 -0.54299998,-0.71192384 -0.54299998,-2.0545003 -0.54299998,-4.5002933 1.9513177,-6.4830003 5.0282145,-6.4830003 z"/>
 <Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
@@ -213,7 +222,7 @@
 			</LinearGradientBrush>
 		</Ellipse.Fill>
 		<Ellipse.BitmapEffect>
-			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
+			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
 		</Ellipse.BitmapEffect>
 	</Ellipse>
 		<Path RenderTransformOrigin="0,0" Fill="#FFE7E7E7" Stretch="Fill" Height="9.123" Data="M3.609375,20.441914 C4.1822915,20.441914 4.6513672,20.608418 5.0166016,20.941425 C5.3818359,21.274433 5.5644531,21.695169 5.5644531,22.203632 C5.5644531,22.719257 5.3836265,23.145365 5.0219727,23.481953 C4.6603189,23.818541 4.1894531,23.986835 3.609375,23.986835 C3.0364583,23.986835 2.563802,23.813169 2.1914063,23.465839 C1.8190104,23.118509 1.6328125,22.697773 1.6328125,22.203632 C1.6328125,21.688007 1.8208008,21.265482 2.1967773,20.936054 C2.5727539,20.606627 3.0436199,20.441914 3.609375,20.441914 z M1.8046876,8.3354683 L5.3710938,8.3354683 L4.9521484,18.94875 L2.2021484,18.94875 z" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="3">
@@ -274,6 +283,9 @@
 				<GradientStop Color="#FF046938" Offset="1"/>
 			</LinearGradientBrush>
 		</Ellipse.Fill>
+		<Ellipse.BitmapEffect>
+			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
+		</Ellipse.BitmapEffect>
 	</Ellipse>
 		<Path Fill="#A5FFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="7.965" Height="9.865" Data="F1 M2.8155,0 C4.3704576,0 5.631,1.2623332 5.631,2.8195 5.631,3.8548267 5.0737605,4.7598181 4.2193031,5.2095542 6.0439386,5.8137364 7.4298534,7.7533073 7.7589998,10.196696 6.480207,11.432182 4.7315388,12.151 2.8149738,12.151 0.93188268,12.151 -0.78912503,11.457072 -2.052,10.248644 -1.7384501,7.8079395 -0.3721537,5.8612647 1.4351363,5.2253799 C0.56834316,4.7777495 0,3.8650908 7.7043339E-08,2.8195 0,1.2623332 1.2605423,0 2.8155,0 z" Canvas.Left="0" Canvas.Top="0">
 			<Path.BitmapEffect>
@@ -353,6 +365,9 @@
 				<GradientStop Color="#FF7A600C" Offset="1"/>
 			</LinearGradientBrush>
 		</Ellipse.Fill>
+		<Ellipse.BitmapEffect>
+			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
+		</Ellipse.BitmapEffect>
 	</Ellipse>
 		<Path RenderTransformOrigin="0,0" Fill="#FFD7D7D7" Stretch="Fill" HorizontalAlignment="Center" Margin="0,0,0,3.757" VerticalAlignment="Bottom" Data="M1.8046875,10.220957 C2.0911458,10.220957 2.3256836,10.304209 2.5083008,10.470713 C2.690918,10.637217 2.7822266,10.847585 2.7822266,11.101816 C2.7822266,11.359629 2.6918132,11.572682 2.5109863,11.740976 C2.3301594,11.90927 2.0947266,11.993418 1.8046875,11.993418 C1.5182291,11.993418 1.281901,11.906585 1.0957031,11.73292 C0.90950519,11.559255 0.81640625,11.348886 0.81640625,11.101816 C0.81640625,10.844004 0.91040039,10.632741 1.0983887,10.468027 C1.286377,10.303313 1.5218099,10.220957 1.8046875,10.220957 z M0.90234381,4.1677341 L2.6855469,4.1677341 L2.4760742,9.4743748 L1.1010742,9.4743748 z">
 			<Path.RenderTransform>
