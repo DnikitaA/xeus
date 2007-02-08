@@ -1,12 +1,9 @@
-using System ;
 using System.Collections.ObjectModel ;
-using System.ComponentModel ;
-using System.Text ;
 using System.Windows.Threading ;
 
 namespace xeus.Core
 {
-	public class ObservableCollectionDisp< T > : ObservableCollection< T >, INotifyPropertyChanged
+	public class ObservableCollectionDisp< T > : ObservableCollection< T >
 	{
 		private Dispatcher dispatcherUIThread ;
 
@@ -25,32 +22,11 @@ namespace xeus.Core
 			dispatcherUIThread = dispatcher ;
 		}
 
-		public string FlatText
-		{
-			get
-			{
-				StringBuilder builder = new StringBuilder( 256 );
-
-				foreach ( T item in Items )
-				{
-					if ( builder.Length > 0 )
-					{
-						builder.AppendLine() ;
-					}
-
-					builder.Append( item.ToString() ) ;
-				}
-
-				return builder.ToString() ;
-			}
-		}
-
 		protected override void SetItem( int index, T item )
 		{
 			if ( dispatcherUIThread.CheckAccess() )
 			{
 				base.SetItem( index, item ) ;
-				NotifyPropertyChanged( "FlatText" ) ;
 			}
 			else
 			{
@@ -64,7 +40,6 @@ namespace xeus.Core
 			if ( dispatcherUIThread.CheckAccess() )
 			{
 				base.InsertItem( index, item ) ;
-				NotifyPropertyChanged( "FlatText" ) ;
 			}
 			else
 			{
@@ -78,12 +53,11 @@ namespace xeus.Core
 			if ( dispatcherUIThread.CheckAccess() )
 			{
 				base.RemoveItem( index ) ;
-				NotifyPropertyChanged( "FlatText" ) ;
 			}
 			else
 			{
 				dispatcherUIThread.BeginInvoke( DispatcherPriority.Send,
-				                                new RemoveItemCallback( RemoveItem ), index, new object[] {} ) ;
+				                                new RemoveItemCallback( RemoveItem ), index, new object[] { } ) ;
 			}
 		}
 
@@ -92,7 +66,6 @@ namespace xeus.Core
 			if ( dispatcherUIThread.CheckAccess() )
 			{
 				base.MoveItem( oldIndex, newIndex ) ;
-				NotifyPropertyChanged( "FlatText" ) ;
 			}
 			else
 			{
@@ -106,17 +79,11 @@ namespace xeus.Core
 			if ( dispatcherUIThread.CheckAccess() )
 			{
 				base.ClearItems() ;
-				NotifyPropertyChanged( "FlatText" ) ;
 			}
 			else
 			{
 				dispatcherUIThread.BeginInvoke( DispatcherPriority.Send, new ClearItemsCallback( ClearItems ) ) ;
 			}
-		}
-
-		private void NotifyPropertyChanged( String info )
-		{
-			base.OnPropertyChanged( new PropertyChangedEventArgs( info ) );
 		}
 	}
 }

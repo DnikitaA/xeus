@@ -14,8 +14,8 @@ namespace xeus.Core
 		private ObservableCollectionDisp< RosterItem > _items =
 			new ObservableCollectionDisp< RosterItem >( App.DispatcherThread ) ;
 
-		private Timer _rosterItemTimer = new Timer( 100 ) ;
-		private Queue< RosterItem > _rosterItemsWithNoVCard = new Queue< RosterItem >( 128 ) ;
+		private Timer _rosterItemTimer = new Timer( 200 ) ;
+		private Queue< RosterItem > _rosterItemsToRecieveVCard = new Queue< RosterItem >( 128 ) ;
 		private object _lockRosterItems = new object() ;
 
 		private Dictionary< string, Presence > _presences = new Dictionary< string, Presence >( 128 ) ;
@@ -141,43 +141,20 @@ namespace xeus.Core
 
 				if ( rosterItem != null )
 				{
-					rosterItem.HasVCard = true ;
+					rosterItem.HasVCardRecivied = true ;
 
 					if ( iq.Type == IqType.error || iq.Error != null )
 					{
 						rosterItem.Errors.Add( string.Format( "{0}: {1}", iq.Error.Code, iq.Error.Message ) ) ;
 					}
-					else if ( iq.Type == IqType.result && iq.Vcard != null )
+					else if ( iq.Type == IqType.result )
 					{
-						Vcard vcard = iq.Vcard ;
+						rosterItem.SetVcard( iq.Vcard ) ;
 
-						rosterItem.Birthday = vcard.Birthday ;
-						rosterItem.Description = vcard.Description ;
-						rosterItem.EmailPreferred = vcard.GetPreferedEmailAddress() ;
-						rosterItem.FullName = vcard.Fullname ;
-						rosterItem.NickName = vcard.Nickname ;
-						rosterItem.Organization = vcard.Organization ;
-						rosterItem.Role = vcard.Role ;
-						rosterItem.Title = vcard.Title ;
-						rosterItem.Url = vcard.Url ;
-
-						BitmapImage image = Storage.ImageFromPhoto( vcard.Photo ) ;
-
-						if ( image != null )
+						if ( iq.Vcard != null )
 						{
-							Storage.CacheAvatar( rosterItem.Key, vcard.Photo ) ;
+							Storage.CacheVCard( iq.Vcard, rosterItem.Key );
 						}
-						else
-						{
-							image = Storage.GetAvatar( rosterItem.Key ) ;
-						}
-
-						rosterItem.Image = image ;
-					}
-
-					if ( rosterItem.Image == null )
-					{
-						rosterItem.Image = Storage.GetAvatar( rosterItem.Key ) ;
 					}
 				}
 			}
@@ -206,38 +183,33 @@ namespace xeus.Core
 				lock ( _lockRosterItems )
 				{
 					// using timer frees the UI - on roster item are called synchronously for all items on startup
-					_rosterItemsWithNoVCard.Enqueue( rosterItem ) ;
+					_rosterItemsToRecieveVCard.Enqueue( rosterItem ) ;
 				}
 			}
 		}
 
 		private void _rosterItemTimer_Elapsed( object sender, ElapsedEventArgs e )
 		{
-			RosterItem rosterItem ;
+			RosterItem rosterItem = null ;
 
-			if ( _rosterItemsWithNoVCard.Count > 0 )
+			_rosterItemTimer.Stop();
+			_rosterItemTimer.Start();
+
+			if ( _rosterItemsToRecieveVCard.Count > 0 )
 			{
-				rosterItem = _rosterItemsWithNoVCard.Dequeue() ;
-			}
-			else
-			{
-				foreach ( RosterItem item in _items )
+				lock ( _lockRosterItems )
 				{
-					if ( !item.HasVCard )
+					rosterItem = _rosterItemsToRecieveVCard.Dequeue() ;
+
+					if ( rosterItem.HasVCardRecivied )
 					{
-						lock ( _lockRosterItems )
-						{
-							if ( !_rosterItemsWithNoVCard.Contains( item ) )
-							{
-								// using timer frees the UI - on roster item are called synchronously for all items on startup
-								_rosterItemsWithNoVCard.Enqueue( item ) ;
-								break ;
-							}
-						}
+						return ;
+					}
+					else
+					{
+						_rosterItemsToRecieveVCard.Enqueue( rosterItem ) ; // push to the end of the queue
 					}
 				}
-
-				return ;
 			}
 
 			if ( rosterItem != null )
@@ -255,6 +227,9 @@ namespace xeus.Core
 				{
 					_items.Add( rosterItem ) ;
 				}
+
+				Vcard vcard = Storage.GetVcard( rosterItem.Key ) ;
+				rosterItem.SetVcard( vcard );
 
 				// ask for VCard
 				VcardIq viq = new VcardIq( IqType.get, new Jid( rosterItem.Key ) ) ;

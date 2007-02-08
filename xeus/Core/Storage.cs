@@ -1,9 +1,13 @@
 using System ;
 using System.IO ;
 using System.Reflection ;
+using System.Runtime.Serialization.Formatters.Binary ;
+using System.Text ;
 using System.Windows ;
 using System.Windows.Media.Imaging ;
+using System.Xml ;
 using agsXMPP.protocol.iq.vcard ;
+using agsXMPP.Xml.Dom ;
 
 namespace xeus.Core
 {
@@ -20,9 +24,9 @@ namespace xeus.Core
 			_folder = fileInfo.DirectoryName ;
 		}
 
-		private static DirectoryInfo GetAvatarCacheFolder()
+		private static DirectoryInfo GetCacheFolder()
 		{
-			DirectoryInfo directoryInfo = new DirectoryInfo( _folder + "\\AvatarCache" ) ;
+			DirectoryInfo directoryInfo = new DirectoryInfo( _folder + "\\Cache" ) ;
 
 			if ( !directoryInfo.Exists )
 			{
@@ -32,13 +36,76 @@ namespace xeus.Core
 			return directoryInfo ;
 		}
 
+		public static void CacheVCard( Vcard vcard, string jid )
+		{
+			try
+			{
+				DirectoryInfo directoryInfo = GetCacheFolder() ;
+
+				using (
+					FileStream fileStream = new FileStream( string.Format( "{0}\\{1:d}", directoryInfo.FullName, jid.GetHashCode() ),
+					                                        FileMode.Create, FileAccess.Write, FileShare.None ) )
+				{
+					using ( StreamWriter streamWriter = new StreamWriter( fileStream ) )
+					{
+						string x = "<vCard>" ;
+						x += vcard.InnerXml ;
+						x += "</vCard>" ;
+						streamWriter.Write( x ) ;
+					}
+				}
+			}
+
+			catch ( Exception e )
+			{
+				Client.Instance.Log( e.Message ) ; 
+			}
+		}
+
+		public static Vcard GetVcard( string jid )
+		{
+			Vcard vcard = null ;
+
+			try
+			{
+				DirectoryInfo directoryInfo = GetCacheFolder() ;
+
+				using ( FileStream fileStream = new FileStream( string.Format( "{0}\\{1:d}", directoryInfo.FullName, jid.GetHashCode() ),
+				                                                FileMode.Open, FileAccess.Read, FileShare.Read ) )
+				{
+					using ( StreamReader streamReader = new StreamReader( fileStream ) )
+					{
+						Document doc = new Document() ;
+						doc.LoadXml( streamReader.ReadToEnd() ) ;
+
+						if ( doc.RootElement != null )
+						{
+							vcard = new Vcard() ;
+
+							foreach ( Node node in doc.RootElement.ChildNodes )
+							{
+								vcard.AddChild( node ) ;
+							}
+						}
+					}
+				}
+			}
+
+			catch ( Exception e )
+			{
+				Client.Instance.Log( e.Message ) ; 
+			}
+
+			return vcard ;
+		}
+
 		public static void CacheAvatar( string jid, Photo photo )
 		{
 			try
 			{
-				DirectoryInfo directoryInfo = GetAvatarCacheFolder() ;
+				DirectoryInfo directoryInfo = GetCacheFolder() ;
 
-				using ( FileStream fileStream = new FileStream( string.Format( "{0}\\{1:d}", directoryInfo.FullName, jid.GetHashCode() ),
+				using ( FileStream fileStream = new FileStream( string.Format( "{0}\\{1:d}.avatar", directoryInfo.FullName, jid.GetHashCode() ),
 				                                                FileMode.Create, FileAccess.Write, FileShare.None ) )
 				{
 					byte[] photoSource = Convert.FromBase64String( photo.GetTag( "BINVAL" ) ) ;
@@ -54,11 +121,11 @@ namespace xeus.Core
 
 		public static BitmapImage GetAvatar( string jid )
 		{
-			DirectoryInfo directoryInfo = GetAvatarCacheFolder() ;
+			DirectoryInfo directoryInfo = GetCacheFolder() ;
 
 			try
 			{
-				using ( FileStream fileStream = new FileStream( string.Format( "{0}\\{1:d}", directoryInfo.FullName, jid.GetHashCode() ),
+				using ( FileStream fileStream = new FileStream( string.Format( "{0}\\{1:d}.avatar", directoryInfo.FullName, jid.GetHashCode() ),
 				                                                FileMode.Open, FileAccess.Read, FileShare.Read ) )
 				{
 					BitmapImage bitmap = new BitmapImage() ;
