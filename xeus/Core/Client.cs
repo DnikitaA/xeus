@@ -97,10 +97,16 @@ namespace xeus.Core
 			_xmppConnection.OnMessage += new XmppClientConnection.MessageHandler( _xmppConnection_OnMessage );
 			_xmppConnection.OnXmppError += new OnXmppErrorHandler( _xmppConnection_OnXmppError );
 			_xmppConnection.OnAuthError += new OnXmppErrorHandler( _xmppConnection_OnAuthError );
+			_xmppConnection.ClientSocket.OnValidateCertificate += new System.Net.Security.RemoteCertificateValidationCallback( ClientSocket_OnValidateCertificate );
 
 			_messageCenter.RegisterEvent( _instance );
 
 			Log( "Setup finished" ) ;
+		}
+
+		bool ClientSocket_OnValidateCertificate( object sender, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors )
+		{
+			return true ;
 		}
 
 		void _xmppConnection_OnAuthError( object sender, Element e )
@@ -250,12 +256,10 @@ namespace xeus.Core
 
 		public void SendIqGrabber( IQ iq, IqCB iqCallback, object cbArgument )
 		{
-			_xmppConnection.IqGrabber.SendIq( iq, iqCallback, cbArgument ) ;
-		}
-
-		public IQ SendIqGrabber( IQ iq )
-		{
-			return _xmppConnection.IqGrabber.SendIq( iq ) ;
+			if ( _xmppConnection.Binded )
+			{
+				_xmppConnection.IqGrabber.SendIq( iq, iqCallback, cbArgument ) ;
+			}
 		}
 
 		public RosterManager RosterManager
