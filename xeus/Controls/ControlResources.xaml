@@ -31,11 +31,39 @@
 
 	
 	<DataTemplate x:Key="RosterItemTip" DataType="{x:Type local:RosterItem}">
-	    <Viewbox> 
-		  	<Grid RenderTransformOrigin="0.5,0.5"
-					Margin="3,3,3,3" Width="130" Height="28" >
-			</Grid>
-		</Viewbox>
+		<Grid RenderTransformOrigin="0.5,0.5"
+				Height="112" Width="232" Panel.ZIndex="1" >
+			<Grid.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="1" ScaleY="1"/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="0"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</Grid.RenderTransform>
+			<Rectangle SnapsToDevicePixels="True" Width="Auto" Height="Auto" RadiusX="6" RadiusY="6" Margin="8,8,8,8" Stroke="#FF3C3C3C" >
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+						<GradientStop Color="#FF444444" Offset="0"/>
+						<GradientStop Color="#FF3A3A3A" Offset="0.986"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+				<Rectangle.BitmapEffect>
+					<DropShadowBitmapEffect Direction="274" Opacity="0.335" ShadowDepth="1" Softness="0.37"/>
+				</Rectangle.BitmapEffect>
+			</Rectangle>
+			<Image HorizontalAlignment="Left" Source="{Binding Path=Image}" Grid.Row="0" 
+				VerticalAlignment="Stretch" Stretch="Uniform" Width="56" Height="Auto" Margin="16,16,0,32" d:LayoutOverrides="GridBox" Panel.ZIndex="1"/>
+			<Path SnapsToDevicePixels="True" Stretch="Fill" Margin="8.419,0,8.419,8" VerticalAlignment="Bottom" Width="Auto" Height="10" Data="F1 M108,86.5 C156.22919,86.5 197.58388,88.593307 215.08069,91.57692 214.27528,93.874832 212.07742,95.5 209.5,95.5 L6.5,95.5 C3.9225659,95.5 1.7247117,93.874825 0.91931057,91.57692 C18.416126,88.593307 59.770817,86.5 108,86.5 z">
+				<Path.Fill>
+					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+						<GradientStop Color="#FF383838" Offset="0"/>
+						<GradientStop Color="#05404040" Offset="1"/>
+					</LinearGradientBrush>
+				</Path.Fill>
+			</Path>
+			<Path SnapsToDevicePixels="True" Fill="#0CFFFFFF" Stretch="Fill" Margin="8,8,8,0" VerticalAlignment="Top" Width="Auto" Height="15.393" Data="F1 M6.5000019,0.49999809 L209.5,0.49999809 C212.81371,0.5 215.5,3.1862915 215.5,6.4999976 L215.5,14.893202 C185.50279,13.698905 148.29785,13 108,12.999999 67.702141,13 30.497213,13.698905 0.50000238,14.893202 L0.50000238,6.4999976 C0.5,3.1862915 3.1862915,0.5 6.5000019,0.49999809 z"/>
+		</Grid>
 	</DataTemplate>	
   
   <Style TargetType="{x:Type ToolTip}">
@@ -118,6 +146,9 @@
   				<TranslateTransform X="0" Y="0"/>
   			</TransformGroup>
   		</Grid.RenderTransform>
+		<Grid.ToolTip>
+			<ToolTip ContentTemplate="{StaticResource RosterItemTip}"/>
+		</Grid.ToolTip>	
 	    	
   		<Grid.RowDefinitions>
   			<RowDefinition Height="0.113*"/>
