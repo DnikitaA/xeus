@@ -15,6 +15,7 @@ namespace xeus.Core
 	{
 		private static string _folder ;
 		private static BitmapImage _defaultAvatar ;
+		private static BitmapImage _defaultServiceAvatar ;
 
 		static Storage()
 		{
@@ -99,83 +100,45 @@ namespace xeus.Core
 			return vcard ;
 		}
 
-		/*
-		public static void CacheAvatar( string jid, Photo photo )
+		private static BitmapImage GetAvatar( string url, BitmapImage avatarStorage )
 		{
-			try
+			if ( avatarStorage != null )
 			{
-				DirectoryInfo directoryInfo = GetCacheFolder() ;
-
-				using ( FileStream fileStream = new FileStream( string.Format( "{0}\\{1:d}.avatar", directoryInfo.FullName, jid.GetHashCode() ),
-				                                                FileMode.Create, FileAccess.Write, FileShare.None ) )
-				{
-					byte[] photoSource = Convert.FromBase64String( photo.GetTag( "BINVAL" ) ) ;
-					fileStream.Write( photoSource, 0, photoSource.Length ) ;
-				}
-			}
-
-			catch ( Exception e )
-			{
-				Client.Instance.Log( e.Message ) ; 
-			}
-		}
-
-		public static BitmapImage GetAvatar( string jid )
-		{
-			DirectoryInfo directoryInfo = GetCacheFolder() ;
-
-			try
-			{
-				using ( FileStream fileStream = new FileStream( string.Format( "{0}\\{1:d}.avatar", directoryInfo.FullName, jid.GetHashCode() ),
-				                                                FileMode.Open, FileAccess.Read, FileShare.Read ) )
-				{
-					BitmapImage bitmap = new BitmapImage() ;
-					bitmap.CacheOption = BitmapCacheOption.OnLoad;
-					bitmap.BeginInit() ;
-					bitmap.StreamSource = fileStream ;
-					bitmap.EndInit() ;
-					return bitmap ;
-				}
-			}
-
-			catch ( Exception e )
-			{
-				Client.Instance.Log( e.Message ) ;
-				
-				return GetDefaultAvatar() ;
-			}
-		}*/
-
-		public static BitmapImage GetDefaultAvatar()
-		{
-			if ( _defaultAvatar != null )
-			{
-				return _defaultAvatar ;
+				return avatarStorage ;
 			}
 
 			try
 			{
-				Uri uri = new Uri("pack://application:,,,/Images/Avatar.png", UriKind.Absolute);
+				Uri uri = new Uri( url, UriKind.Absolute );
 				
 				using ( Stream stream = Application.GetResourceStream( uri ).Stream )
 				{
-					_defaultAvatar = new BitmapImage() ;
-					_defaultAvatar.CacheOption = BitmapCacheOption.OnLoad;
-					_defaultAvatar.BeginInit() ;
-					_defaultAvatar.StreamSource = stream ;
-					_defaultAvatar.EndInit() ;
+					avatarStorage = new BitmapImage() ;
+					avatarStorage.CacheOption = BitmapCacheOption.OnLoad;
+					avatarStorage.BeginInit() ;
+					avatarStorage.StreamSource = stream ;
+					avatarStorage.EndInit() ;
 				}
 
-				return _defaultAvatar ;
+				return avatarStorage ;
 			}
 
 			catch ( Exception e )
 			{
 				Client.Instance.Log( e.Message ) ;
 				return null ; 
-			}
+			}			
 		}
 
+		public static BitmapImage GetDefaultAvatar()
+		{
+			return GetAvatar( "pack://application:,,,/Images/avatar.png", _defaultAvatar ) ;
+		}
+
+		public static BitmapImage GetDefaultServiceAvatar()
+		{
+			return GetAvatar( "pack://application:,,,/Images/service.png", _defaultServiceAvatar ) ;
+		}
 
 		public static BitmapImage ImageFromPhoto( Photo photo )
 		{
