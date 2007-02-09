@@ -134,18 +134,6 @@
 					<BeginStoryboard Storyboard="{StaticResource Flash}"/>
 				</Trigger.EnterActions>
 			</Trigger>
-			<DataTrigger Binding="{Binding Path=EmailPreferred}" Value="{x:Null}">
-				<Setter Property="Visibility" Value="Hidden" TargetName="_email" />
-				<Setter Property="Visibility" Value="Hidden" TargetName="_emailText" />
-			</DataTrigger>
-			<DataTrigger Binding="{Binding Path=Url}" Value="{x:Null}">
-				<Setter Property="Visibility" Value="Hidden" TargetName="_url" />
-				<Setter Property="Visibility" Value="Hidden" TargetName="_urlText" />
-			</DataTrigger>
-			<DataTrigger Binding="{Binding Path=Description}" Value="{x:Null}">
-				<Setter Property="Visibility" Value="Hidden" TargetName="_description" />
-				<Setter Property="Visibility" Value="Hidden" TargetName="_descriptionText" />
-			</DataTrigger>
 		</DataTemplate.Triggers>
 	</DataTemplate>	
 
@@ -209,9 +197,6 @@
 	<DataTemplate.Triggers>
 		<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}, AncestorLevel=1}, Path=IsSelected}" Value="True">
 			<Setter Property="Background" Value="#9CBAE8FF" TargetName="_displayNameLabel" />
-		</DataTrigger>
-		<DataTrigger Binding="{Binding Path=Presence}" Value="{x:Null}">
-			<Setter Property="Visibility" Value="Hidden" TargetName="_statusButton" />
 		</DataTrigger>
 		<DataTrigger Binding="{Binding Path=Errors.Count}" Value="0">
 			<Setter Property="Visibility" Value="Hidden" TargetName="_errorButton" />
