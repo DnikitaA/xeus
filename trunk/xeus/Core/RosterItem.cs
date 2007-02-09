@@ -20,7 +20,7 @@ namespace xeus.Core
 		private delegate void SetVcardCallback( Vcard vcard ) ;
 
 		private agsXMPP.protocol.iq.roster.RosterItem _rosterItem ;
-		private string _statusText = "Not Available" ;
+		private string _statusText = "Unavailable" ;
 
 		private DateTime _birthday = DateTime.MinValue ;
 		private string _url = String.Empty ;
@@ -38,7 +38,7 @@ namespace xeus.Core
 		public event PropertyChangedEventHandler PropertyChanged ;
 
 		public Presence _presence ;
-		private string _statusDescription = "Not Available" ;
+		private string _statusDescription = "Unavailable" ;
 
 		public RosterItem( agsXMPP.protocol.iq.roster.RosterItem rosterItem )
 		{
@@ -137,18 +137,12 @@ namespace xeus.Core
 			{
 				string group = Group ;
 
-				if ( ( _presence == null && value != null )
-					|| ( _presence != null && value == null ) )
-				{
-					_errors.Clear();
-				}
-
 				_presence = value ;
-				_statusDescription = "Not Available" ;
+				_statusDescription = "Unavailable" ;
 
-				if ( _presence == null )
+				if ( _presence == null || _presence.Type != PresenceType.available )
 				{
-					_statusText = "Not Available" ;
+					_statusText = "Unavailable" ;
 				}
 				else
 				{
@@ -186,6 +180,8 @@ namespace xeus.Core
 									break ;
 								}
 						}
+
+						_errors.Clear();
 
 						if ( _presence.Status != null && _presence.Status != String.Empty )
 						{

@@ -11,7 +11,8 @@
     OverridesDefaultStyle="False"
 	WindowStyle="None" AllowsTransparency="True"
     ResizeMode="CanResizeWithGrip" BorderBrush="#FF1E1E1E" BorderThickness="2,2,2,2"
-    Width="394"
+    xmlns:settings="clr-namespace:xeus.Core"
+    settings:WindowSettings.Save="True"	
     >
 
   <Window.Resources>
