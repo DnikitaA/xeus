@@ -83,6 +83,22 @@ namespace xeus.Core
 
 				if ( rosterItem != null )
 				{
+					if ( presence.From.User == null )
+					{
+						// this is the server 
+						foreach ( RosterItem rosterItemOfService in _items )
+						{
+							if ( rosterItemOfService.XmppRosterItem.Jid.Server == presence.From.Server
+								&& ( rosterItemOfService.Errors.Count > 0 
+										|| rosterItemOfService.Presence == null ) )
+							{
+								rosterItemOfService.Errors.Clear();
+								rosterItemOfService.HasVCardRecivied = false ;
+								_rosterItemsToRecieveVCard.Enqueue( rosterItemOfService ) ;
+							}
+						}
+
+					}
 					rosterItem.Presence = presence ;
 				}
 			}
