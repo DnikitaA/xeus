@@ -83,7 +83,8 @@ namespace xeus.Core
 
 				if ( rosterItem != null )
 				{
-					if ( presence.From.User == null )
+					if ( presence.From.User == null && presence.Error == null
+							&& presence.Type == PresenceType.available )
 					{
 						// this is the server 
 						foreach ( RosterItem rosterItemOfService in _items )
