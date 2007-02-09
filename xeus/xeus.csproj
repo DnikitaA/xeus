@@ -118,6 +118,7 @@
     <Compile Include="Core\Services.cs" />
     <Compile Include="Core\SizeFromSliderConverterSmall.cs" />
     <Compile Include="Core\Storage.cs" />
+    <Compile Include="Core\WindowState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
