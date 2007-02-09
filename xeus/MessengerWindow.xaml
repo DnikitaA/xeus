@@ -5,12 +5,13 @@
     xmlns:localcore="clr-namespace:xeus.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="xeus.MessengerWindow"
-    Title="xeus" Height="461" Width="222"
+    Title="xeus"
     SnapsToDevicePixels="True"
     Margin="0,0,0,0"
     OverridesDefaultStyle="False"
 	WindowStyle="None" AllowsTransparency="True"
     ResizeMode="CanResizeWithGrip" BorderBrush="#FF1E1E1E" BorderThickness="2,2,2,2"
+    Width="394"
     >
 
   <Window.Resources>
@@ -25,15 +26,8 @@
 		</ImageBrush>
 	</Window.Background>
 
-      <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="0.93*"/>
-      <RowDefinition Height="0.07*"/>
-    </Grid.RowDefinitions>
-      	<TextBlock Margin="0,-33,0,0" VerticalAlignment="Top" Height="65" Panel.ZIndex="1" FontSize="58" FontStyle="Italic" FontWeight="Bold" Foreground="#FF323232" Text="xeus" TextWrapping="Wrap" Background="{x:Null}"/>
-	<Rectangle Grid.Row="0" Fill="#2D000000" VerticalAlignment="Top" Height="32"/>
-    <local:RosterControl x:Name="_roster" Grid.Row="0" Width="Auto" Height="Auto" Margin="2,32,2,2"/>
-	<StatusBar Grid.Row="1" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}">
+    <DockPanel LastChildFill="True">
+	<StatusBar DockPanel.Dock="Bottom" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}" Height="30" VerticalAlignment="Bottom">
 		<StatusBarItem HorizontalAlignment="Stretch" Margin="0,0,0,0"
 		    	  x:Name="_statusMyStatus" VerticalAlignment="Stretch">
 		    <Button x:Name="_buttonmyStatus" Width="15" Height="15" Template="{Binding Path=StatusTemplate}"  Click="DisplayPopup">		
@@ -42,7 +36,7 @@
 			</Popup>
 			</Button>
 		</StatusBarItem>
-		<StatusBarItem HorizontalAlignment="Stretch" Margin="0,0,0,0"
+		<StatusBarItem HorizontalAlignment="Stretch" 
 		    	  x:Name="_statusUnreadMessages" VerticalAlignment="Stretch"
 		          Visibility="{Binding Path=MessageCenter.ChatMessages.Count, Converter={StaticResource _visibilityConverter}}">
 	  		<Grid d:IsLayer="True" x:Name="Status" Grid.ColumnSpan="1" Grid.RowSpan="3" Width="Auto" Height="Auto">
@@ -56,6 +50,7 @@
 			</Grid>
 		</StatusBarItem>
 	</StatusBar>
-  </Grid>
+   	<local:RosterControl x:Name="_roster" DockPanel.Dock="Top"/>
+  </DockPanel>
 </Window>
 
