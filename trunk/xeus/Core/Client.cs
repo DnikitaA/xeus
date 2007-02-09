@@ -111,7 +111,7 @@ namespace xeus.Core
 
 		void _xmppConnection_OnAuthError( object sender, Element e )
 		{
-			
+			//_messageCenter.ErrorMessages.Add( new Message( e.));
 		}
 
 		void _xmppConnection_OnXmppError( object sender, Element e )

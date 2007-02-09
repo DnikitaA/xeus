@@ -102,6 +102,10 @@ namespace xeus.Core
 				{
 					return "<offline>" ;
 				}
+				else if ( _rosterItem.Jid.User == null )
+				{
+					return "<services>" ;
+				}
 				else if ( _rosterItem.GetGroups().Count > 0 )
 				{
 					Group group = ( Group ) _rosterItem.GetGroups().Item( 0 ) ;
