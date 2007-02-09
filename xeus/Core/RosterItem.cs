@@ -234,7 +234,14 @@ namespace xeus.Core
 
 				if ( Image == null )
 				{
-					Image = Storage.GetDefaultAvatar() ;
+					if ( XmppRosterItem.Jid.User == null )
+					{
+						Image = Storage.GetDefaultServiceAvatar() ;
+					}
+					else
+					{
+						Image = Storage.GetDefaultAvatar() ;
+					}
 				}
 			}
 			else
