@@ -2,7 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:local="clr-namespace:xeus.Core"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic" xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="xeus.Controls.RosterControl"
-    Width="181" Height="116" Margin="2,2,2,2">
+    Margin="2,2,2,2">
 
   <UserControl.Resources>
     <ResourceDictionary>
@@ -12,13 +12,13 @@
     </ResourceDictionary>
   </UserControl.Resources>
 
-  <Grid>
+  <DockPanel LastChildFill="True">
   	<Slider Margin="8,0,8,8" x:Name="_sliderItemSize"
 	 VerticalAlignment="Bottom" Minimum="50.0" Maximum="200.0" Style="{DynamicResource SliderStyleRoster}" 
-	 TickPlacement="TopLeft" LargeChange="20" SmallChange="10" IsSnapToTickEnabled="True" Height="24"/>
+	 TickPlacement="TopLeft" LargeChange="20" SmallChange="10" IsSnapToTickEnabled="True" Height="24" DockPanel.Dock="Bottom"/>
   	<ListBox x:Name="_roster" ItemsSource="{Binding Source={StaticResource _rosterView}}"
              Style="{DynamicResource ListBoxStyleRoster}" Margin="0,0,0,36"
-             MouseDoubleClick="OnDoubleClickRosterItem" AllowDrop="True"
+             MouseDoubleClick="OnDoubleClickRosterItem" AllowDrop="True" DockPanel.Dock="Top"
              Drop="RosterControl_Drop" DragOver="RosterControl_DragOver"
            	 PreviewMouseLeftButtonDown="RosterControl_PreviewMouseLeftButtonDown">
       <ListBox.GroupStyle>
@@ -45,5 +45,5 @@
         </GroupStyle>
       </ListBox.GroupStyle>      
     </ListBox>
-  </Grid>
+  </DockPanel>
 </UserControl>
