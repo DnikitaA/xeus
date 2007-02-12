@@ -94,7 +94,7 @@
           </ControlTemplate>
         </Setter.Value>
       </Setter>
-    	<Setter Property="HeaderTemplate" Value="{DynamicResource RosterItemSmall}"/>
+    	<!--<Setter Property="HeaderTemplate" Value="{DynamicResource RosterItemSmall}"/>-->
     </Style>
     
 	
