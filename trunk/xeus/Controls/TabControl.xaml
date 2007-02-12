@@ -41,33 +41,37 @@
       </GradientBrush.GradientStops>
     </LinearGradientBrush>
     
-    
-
     <Style TargetType="{x:Type TabItem}">
       <Setter Property="Template">
         <Setter.Value>
           <ControlTemplate TargetType="{x:Type TabItem}">
-            <Grid Margin="0,5,0,0" Height="30">
+            <Grid Margin="0,5,0,0">
               <Border 
-                Name="Border"
-                Margin="0,0,-4,0" 
-                Background="{StaticResource TabBackgoundBrush}"
+                x:Name="Border"
+                Margin="0,0,0,0"
                 BorderBrush="{StaticResource TabBorderBrush}" 
                 BorderThickness="1,1,1,0" 
                 CornerRadius="2,2,2,0" >
-                <Grid>
+              	<Border.Background>
+              		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+              			<GradientStop Color="#FF696969" Offset="0"/>
+              			<GradientStop Color="#FF3E3E3E" Offset="0.981"/>
+              		</LinearGradientBrush>
+              	</Border.Background>
+                <Grid Width="119">
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                   </Grid.ColumnDefinitions>
-                  <ContentPresenter Grid.Column="1" x:Name="ContentSite"
+                  <ContentPresenter Grid.Column="0" x:Name="ContentSite"
                        VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
+                       HorizontalAlignment="Stretch"
                        ContentSource="Header"
-                       Margin="7,2,12,2"                    
-                       RecognizesAccessKey="True" />
+                       Margin="8,0,8,0"                    
+                       RecognizesAccessKey="True" Height="21.815" Grid.ColumnSpan="2" />
                 </Grid>
               </Border>
+			<Rectangle Fill="#28E1E1E1" VerticalAlignment="Top" Height="11"/>
             </Grid>
             <ControlTemplate.Triggers>
               <Trigger Property="IsSelected" Value="True">
@@ -94,7 +98,8 @@
           </ControlTemplate>
         </Setter.Value>
       </Setter>
-    	<!--<Setter Property="HeaderTemplate" Value="{DynamicResource RosterItemSmall}"/>-->
+    	<!--<Setter Property="HeaderTemplate" Value="{DynamicResource RosterItemTab}"/>-->
+		<Setter Property="HeaderTemplate" Value="{DynamicResource RosterItemTab}"/>
     </Style>
     
 	
