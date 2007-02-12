@@ -47,17 +47,21 @@ namespace xeus.Controls
 			if ( tab == null )
 			{
 				tab = new TabItem();
+				tab.Header = rosterItem ;
 				tab.Content = rosterItem ;
 				tab.Tag = jid ;
 
 				_tabs.Items.Add( tab ) ;
 			}
 
-			Client.Instance.MessageCenter.MoveUnreadMessagesToRosterItem( rosterItem );
-
-			if ( !IsVisible )
+			if ( rosterItem != null )
 			{
-				Show();
+				Client.Instance.MessageCenter.MoveUnreadMessagesToRosterItem( rosterItem );
+
+				if ( !IsVisible )
+				{
+					Show() ;
+				}
 			}
 		}
 

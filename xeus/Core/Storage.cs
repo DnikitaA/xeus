@@ -14,6 +14,7 @@ namespace xeus.Core
 	internal static class Storage
 	{
 		private static string _folder ;
+
 		private static BitmapImage _defaultAvatar ;
 		private static BitmapImage _defaultServiceAvatar ;
 
@@ -100,7 +101,7 @@ namespace xeus.Core
 			return vcard ;
 		}
 
-		private static BitmapImage GetAvatar( string url, BitmapImage avatarStorage )
+		private static BitmapImage GetAvatar( string url, ref BitmapImage avatarStorage )
 		{
 			if ( avatarStorage != null )
 			{
@@ -132,12 +133,12 @@ namespace xeus.Core
 
 		public static BitmapImage GetDefaultAvatar()
 		{
-			return GetAvatar( "pack://application:,,,/Images/avatar.png", _defaultAvatar ) ;
+			return GetAvatar( "pack://application:,,,/Images/avatar.png", ref _defaultAvatar ) ;
 		}
 
 		public static BitmapImage GetDefaultServiceAvatar()
 		{
-			return GetAvatar( "pack://application:,,,/Images/service.png", _defaultServiceAvatar ) ;
+			return GetAvatar( "pack://application:,,,/Images/service.png", ref _defaultServiceAvatar ) ;
 		}
 
 		public static BitmapImage ImageFromPhoto( Photo photo )

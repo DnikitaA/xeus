@@ -16,6 +16,7 @@
   			<ResourceDictionary Source="Controls\TabMessages.xaml"/>
   			<ResourceDictionary Source="Controls\ResizeGropResources.xaml"/>
   			<ResourceDictionary Source="Controls\ToolTipsResourcexaml.xaml"/>
+  			<ResourceDictionary Source="Controls\TabControl.xaml"/>
   		</ResourceDictionary.MergedDictionaries>
   	</ResourceDictionary>
   </Application.Resources>

@@ -4,13 +4,6 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic">
 	<!-- Resource dictionary entries should be defined here. -->
 	<Style x:Key="TabMessages" TargetType="{x:Type TabControl}">
-		<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-		<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-		<Setter Property="BorderBrush">
-			<Setter.Value>
-				<SolidColorBrush/>
-			</Setter.Value>
-		</Setter>
 		<Setter Property="BorderThickness" Value="3,3,3,3"/>
 		<Setter Property="Margin" Value="0,0,0,0"/>
 		<Setter Property="Padding" Value="1,1,1,1"/>
@@ -32,9 +25,7 @@
 						</Grid.RowDefinitions>
 						<TabPanel Margin="2,2,2,0" x:Name="HeaderPanel" Grid.Column="0" Grid.Row="0" Background="#00FFFFFF" IsItemsHost="True" Panel.ZIndex="1" KeyboardNavigation.TabIndex="1"/>
 						<Grid x:Name="ContentPanel" Grid.Column="0" Grid.Row="1" KeyboardNavigation.DirectionalNavigation="Contained" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
-							<Microsoft_Windows_Themes:ClassicBorderDecorator Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderStyle="Raised" BorderThickness="{TemplateBinding BorderThickness}">
-								<ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="2,2,2,2" x:Name="PART_SelectedContentHost" Content="{TemplateBinding SelectedContent}" ContentSource="SelectedContent" ContentTemplate="{TemplateBinding SelectedContentTemplate}"/>
-							</Microsoft_Windows_Themes:ClassicBorderDecorator>
+							<ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="2,2,2,2" x:Name="PART_SelectedContentHost" Content="{TemplateBinding SelectedContent}" ContentSource="SelectedContent" ContentTemplate="{TemplateBinding SelectedContentTemplate}"/>
 						</Grid>
 					</Grid>
 					<ControlTemplate.Triggers>
