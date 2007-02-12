@@ -69,6 +69,7 @@
     <Page Include="Controls\ScrollbarResources.xaml" />
     <Page Include="Controls\SliderRosterStyle.xaml" />
     <Page Include="Controls\StatusbarResources.xaml" />
+    <Page Include="Controls\TabControl.xaml" />
     <Page Include="Controls\TabMessages.xaml" />
     <Page Include="Controls\ResizeGropResources.xaml" />
     <Page Include="Controls\ToolTipsResourcexaml.xaml" />
