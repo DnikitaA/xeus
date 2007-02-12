@@ -3,6 +3,7 @@
 	xmlns:local="clr-namespace:xeus.Core"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic">
 	<!-- Resource dictionary entries should be defined here. -->
+	<!--
 	<Style x:Key="TabMessages" TargetType="{x:Type TabControl}">
 		<Setter Property="BorderThickness" Value="3,3,3,3"/>
 		<Setter Property="Margin" Value="0,0,0,0"/>
@@ -66,7 +67,7 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
-
+-->
 	<DataTemplate x:Key="RosterItemMessagesTemplate" DataType="{x:Type local:RosterItem}">
 	<Grid>
 		<TextBlock Text="{Binding Path=DisplayName}"
