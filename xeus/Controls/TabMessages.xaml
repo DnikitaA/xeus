@@ -68,6 +68,7 @@
 		</Setter>
 	</Style>
 -->
+
 	<DataTemplate x:Key="RosterItemMessagesTemplate" DataType="{x:Type local:RosterItem}">
 	<Grid>
 		<TextBlock Text="{Binding Path=DisplayName}"
