@@ -93,6 +93,7 @@ namespace xeus.Core
 						if ( MessageWindow.IsOpen() )
 						{
 							rosterItem.Messages.Add( new ChatMessage( msg, rosterItem ) );
+							MessageWindow.DisplayChat( rosterItem.Key );
 						}
 						else
 						{
