@@ -16,6 +16,11 @@ namespace xeus.Core
 		private ObservableCollectionDisp< Message > _hedlineMessages =
 			new ObservableCollectionDisp< Message >( App.DispatcherThread ) ;
 
+		public void Alert( string text )
+		{
+			App.Instance.Window.Alert( text ) ;
+		}
+
 		public void RegisterEvent( Client client )
 		{
 			client.Message += new Client.MessageHandler( client_Message ) ;

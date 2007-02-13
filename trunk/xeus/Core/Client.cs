@@ -98,10 +98,16 @@ namespace xeus.Core
 			_xmppConnection.OnXmppError += new OnXmppErrorHandler( _xmppConnection_OnXmppError );
 			_xmppConnection.OnAuthError += new OnXmppErrorHandler( _xmppConnection_OnAuthError );
 			_xmppConnection.ClientSocket.OnValidateCertificate += new System.Net.Security.RemoteCertificateValidationCallback( ClientSocket_OnValidateCertificate );
+			_xmppConnection.OnSocketError += new ErrorHandler( _xmppConnection_OnSocketError );
 
 			_messageCenter.RegisterEvent( _instance );
 
 			Log( "Setup finished" ) ;
+		}
+
+		void _xmppConnection_OnSocketError( object sender, Exception ex )
+		{
+			_messageCenter.Alert( ex.Message );
 		}
 
 		bool ClientSocket_OnValidateCertificate( object sender, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors )

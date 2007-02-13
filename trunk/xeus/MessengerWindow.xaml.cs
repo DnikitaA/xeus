@@ -1,10 +1,10 @@
 using System ;
 using System.Windows ;
-using System.Windows.Controls ;
-using System.Windows.Controls.Primitives ;
+using System.Windows.Forms ;
 using System.Windows.Input ;
 using xeus.Controls ;
 using xeus.Core ;
+using Button=System.Windows.Controls.Button;
 
 namespace xeus
 {
@@ -13,9 +13,17 @@ namespace xeus
 	/// </summary>
 	public partial class MessengerWindow : Window
 	{
+
+		NotifyIcon _notifyIcon = new NotifyIcon();
+ 
 		public MessengerWindow()
 		{
 			InitializeComponent() ;
+		}
+
+		public void Alert( string text )
+		{
+			_notifyIcon.ShowBalloonTip( 500, "Connection error", text, new ToolTipIcon() );
 		}
 
 		protected override void OnInitialized( EventArgs e )
@@ -24,12 +32,12 @@ namespace xeus
 
 			DataContext = Client.Instance ;
 
-			Client.Instance.Setup() ;
-			Client.Instance.Connect() ;
-
 			Button buttonMessages = _statusBar.FindName( "_buttonMessages" ) as Button ;
 
 			buttonMessages.Click += new RoutedEventHandler( buttonMessages_Click ) ;
+
+			_notifyIcon.Visible = true ;
+			_notifyIcon.Text = "xeus" ;
 		}
 
 		public void DisplayPopup( object sender, RoutedEventArgs e )

@@ -9,6 +9,16 @@ namespace xeus
 	/// </summary>
 	public partial class App : Application
 	{
+		private MessengerWindow _window ;
+
+		public MessengerWindow Window
+		{
+			get
+			{
+				return _window ;
+			}
+		}
+
 		public static Dispatcher DispatcherThread
 		{
 			get
@@ -30,11 +40,14 @@ namespace xeus
 		protected override void OnStartup( StartupEventArgs e )
 		{
 			_theApp = this ;
+			_window = new MessengerWindow() ;
 
 			base.OnStartup( e ) ;
 
-			MessengerWindow messengerWindow = new MessengerWindow() ;
-			messengerWindow.Show() ;
+			_window.Show() ;
+
+			Client.Instance.Setup() ;
+			Client.Instance.Connect() ;
 		}
 
 		protected override void OnExit( ExitEventArgs e )
