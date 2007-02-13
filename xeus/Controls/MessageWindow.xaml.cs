@@ -13,7 +13,9 @@ namespace xeus.Controls
 	/// </summary>
 	public partial class MessageWindow : WindowBase
 	{
-		private static MessageWindow _instance = new MessageWindow() ;
+		private static MessageWindow _instance ;
+
+		private delegate void DisplayChatCallback( string jid ) ;
 
 		public MessageWindow()
 		{
@@ -24,6 +26,11 @@ namespace xeus.Controls
 		{
 			_instance = null ;
 			base.OnClosed( e );
+		}
+
+		public static bool IsOpen()
+		{
+			return ( _instance != null ) ;
 		}
 
 		public static void CloseWindow()
@@ -49,32 +56,40 @@ namespace xeus.Controls
 
 		public static void DisplayChat( string jid )
 		{
-			if ( _instance == null )
+			if ( App.DispatcherThread.CheckAccess() )
 			{
-				_instance = new MessageWindow();
-			}
-
-			TabItem tab = FindTab( jid ) ;
-			RosterItem rosterItem = Client.Instance.Roster.FindItem( jid ) ;
-
-			if ( tab == null )
-			{
-				tab = new TabItem();
-				tab.Header = rosterItem ;
-				tab.Content = rosterItem ;
-				tab.Tag = jid ;
-
-				_instance._tabs.Items.Add( tab ) ;
-			}
-
-			if ( rosterItem != null )
-			{
-				Client.Instance.MessageCenter.MoveUnreadMessagesToRosterItem( rosterItem );
-
-				if ( !_instance.IsVisible )
+				if ( _instance == null )
 				{
-					_instance.Show() ;
+					_instance = new MessageWindow();
 				}
+
+				TabItem tab = FindTab( jid ) ;
+				RosterItem rosterItem = Client.Instance.Roster.FindItem( jid ) ;
+
+				if ( tab == null )
+				{
+					tab = new TabItem() ;
+					tab.Header = rosterItem ;
+					tab.Content = rosterItem ;
+					tab.Tag = jid ;
+
+					_instance._tabs.Items.Add( tab ) ;
+				}
+
+				if ( rosterItem != null )
+				{
+					Client.Instance.MessageCenter.MoveUnreadMessagesToRosterItem( rosterItem ) ;
+
+					if ( !_instance.IsVisible )
+					{
+						_instance.Show() ;
+					}
+				}
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new DisplayChatCallback( DisplayChat ), jid ) ;				
 			}
 		}
 

@@ -1,5 +1,6 @@
 using System.Windows.Markup ;
 using agsXMPP.protocol.client ;
+using xeus.Controls ;
 
 namespace xeus.Core
 {
@@ -61,7 +62,7 @@ namespace xeus.Core
 
 		public void MoveUnreadMessagesToRosterItem( RosterItem rosterItem )
 		{
-			for ( int i = Client.Instance.MessageCenter.ChatMessages.Count - 1; i >= 0 ; i--  )
+			for ( int i = Client.Instance.MessageCenter.ChatMessages.Count - 1; i >= 0 ; i = Client.Instance.MessageCenter.ChatMessages.Count - 1 )
 			{
 				ChatMessage message = Client.Instance.MessageCenter.ChatMessages[ i ] ;
 
@@ -88,7 +89,16 @@ namespace xeus.Core
 				case MessageType.chat:
 					{
 						RosterItem rosterItem = Client.Instance.Roster.FindItem( msg.From.Bare ) ;
-						_chatMessages.Add( new ChatMessage( msg, rosterItem ) );
+
+						if ( MessageWindow.IsOpen() )
+						{
+							rosterItem.Messages.Add( new ChatMessage( msg, rosterItem ) );
+						}
+						else
+						{
+							_chatMessages.Add( new ChatMessage( msg, rosterItem ) ) ;
+						}
+
 						break ;
 					}
 				case MessageType.error:

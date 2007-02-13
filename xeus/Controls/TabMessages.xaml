@@ -9,11 +9,8 @@
 		<TextBlock Text="{Binding Path=DisplayName}"
 		 Width="320" Height="32" Background="#FF5BCB3A" FontSize="16" Foreground="#FFC72121" VerticalAlignment="Top" />
 
-		<FlowDocumentReader Document="{Binding Path=MessagesDocument}" Margin="0,36,0,0"/>
-		<!--		 
 		<ListBox Margin="0,36,0,0" IsSynchronizedWithCurrentItem="True"
 			ItemsSource="{Binding Path=Messages}" ItemTemplate="{StaticResource ChatMessageItem}" />
-		-->
 	</Grid>
 	</DataTemplate>
 	
