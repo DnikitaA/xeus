@@ -11,41 +11,14 @@ namespace xeus.Controls
 	/// <summary>
 	/// Interaction logic for MessageWindow.xaml
 	/// </summary>
-	public partial class MessageWindow : Window
+	public partial class MessageWindow : WindowBase
 	{
 		private static MessageWindow _instance = new MessageWindow() ;
-
-//		Timer _timer = new Timer( 250 ) ;
-//		private delegate void MyTimerCallback( object sender, ElapsedEventArgs e ) ;
-
 
 		public MessageWindow()
 		{
 			InitializeComponent() ;
-			/*
-			_timer.AutoReset = false ;
-			_timer.Elapsed += new ElapsedEventHandler( _timer_Elapsed );*/
 		}
-		/*
-		void _timer_Elapsed( object sender, ElapsedEventArgs e )
-		{
-			if ( App.DispatcherThread.CheckAccess() )
-			{
-				Hide() ;
-			}
-			else
-			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
-				                                  new MyTimerCallback( _timer_Elapsed ), sender, new object[] { e } ) ;
-			}
-		}
-		/*
-		protected override void OnClosing( System.ComponentModel.CancelEventArgs e )
-		{
-			e.Cancel = true ;
-
-			_timer.Start();
-		}*/
 
 		protected override void OnClosed( System.EventArgs e )
 		{

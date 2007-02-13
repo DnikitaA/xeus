@@ -1,4 +1,4 @@
-﻿<Window
+﻿<win:WindowBase
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:xeus.Controls"
@@ -9,8 +9,9 @@
     SnapsToDevicePixels="True"
     Margin="0,0,0,0"
     OverridesDefaultStyle="False"
-	WindowStyle="None" AllowsTransparency="True"
+	  WindowStyle="None" AllowsTransparency="True"
     ResizeMode="CanResizeWithGrip" BorderBrush="#FF1E1E1E" BorderThickness="2,2,2,2"
+    xmlns:win="clr-namespace:xeus.Controls"
     xmlns:settings="clr-namespace:xeus.Core"
     settings:WindowSettings.Save="True"	
     >
@@ -53,5 +54,5 @@
 	</StatusBar>
    	<local:RosterControl x:Name="_roster" DockPanel.Dock="Top"/>
   </DockPanel>
-</Window>
+</win:WindowBase>
 

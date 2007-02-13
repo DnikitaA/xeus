@@ -102,6 +102,7 @@
       <SubType>Code</SubType>
       <DependentUpon>StatusControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WindowBase.cs" />
     <Compile Include="Core\CountToVisibilityConverter.cs" />
     <Compile Include="Core\MessageCenter.cs" />
     <Compile Include="Controls\ServicesControl.xaml.cs">
