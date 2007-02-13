@@ -1,3 +1,4 @@
+using System.Windows.Markup ;
 using agsXMPP.protocol.client ;
 
 namespace xeus.Core
@@ -10,8 +11,8 @@ namespace xeus.Core
 		private ObservableCollectionDisp< Message > _errorMessages =
 			new ObservableCollectionDisp< Message >( App.DispatcherThread ) ;
 
-		private ObservableCollectionDisp< Message > _chatMessages =
-			new ObservableCollectionDisp< Message >( App.DispatcherThread ) ;
+		private ObservableCollectionDisp< ChatMessage > _chatMessages =
+			new ObservableCollectionDisp< ChatMessage >( App.DispatcherThread ) ;
 
 		private ObservableCollectionDisp< Message > _hedlineMessages =
 			new ObservableCollectionDisp< Message >( App.DispatcherThread ) ;
@@ -42,7 +43,7 @@ namespace xeus.Core
 			}
 		}
 
-		public ObservableCollectionDisp< Message > ChatMessages
+		public ObservableCollectionDisp< ChatMessage > ChatMessages
 		{
 			get
 			{
@@ -62,7 +63,7 @@ namespace xeus.Core
 		{
 			for ( int i = Client.Instance.MessageCenter.ChatMessages.Count - 1; i >= 0 ; i--  )
 			{
-				Message message = Client.Instance.MessageCenter.ChatMessages[ i ] ;
+				ChatMessage message = Client.Instance.MessageCenter.ChatMessages[ i ] ;
 
 				rosterItem.Messages.Add( message ) ;
 
@@ -86,7 +87,8 @@ namespace xeus.Core
 					}
 				case MessageType.chat:
 					{
-						_chatMessages.Add( msg );
+						RosterItem rosterItem = Client.Instance.Roster.FindItem( msg.From.Bare ) ;
+						_chatMessages.Add( new ChatMessage( msg, rosterItem ) );
 						break ;
 					}
 				case MessageType.error:

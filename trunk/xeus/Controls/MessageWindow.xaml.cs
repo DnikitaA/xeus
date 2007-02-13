@@ -82,9 +82,9 @@ namespace xeus.Controls
 		{
 			List< string > recievers = new List< string >( Client.Instance.MessageCenter.ChatMessages.Count );
 			
-			foreach ( Message message in Client.Instance.MessageCenter.ChatMessages )
+			foreach ( ChatMessage message in Client.Instance.MessageCenter.ChatMessages )
 			{
-				recievers.Add( message.From.Bare );
+				recievers.Add( message.From );
 			}
 
 			foreach ( string jid in recievers )

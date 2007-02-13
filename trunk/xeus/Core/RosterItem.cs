@@ -1,6 +1,8 @@
 using System ;
+using System.Collections.Specialized ;
 using System.ComponentModel ;
 using System.Windows.Controls ;
+using System.Windows.Documents ;
 using System.Windows.Media.Imaging ;
 using System.Windows.Threading ;
 using agsXMPP.protocol.Base ;
@@ -11,13 +13,16 @@ namespace xeus.Core
 {
 	internal class RosterItem : INotifyPropertyChanged
 	{
-		private ObservableCollectionDisp< Message > _messages =
-			new ObservableCollectionDisp< Message >( App.DispatcherThread ) ;
+		private ObservableCollectionDisp< ChatMessage > _messages =
+			new ObservableCollectionDisp< ChatMessage >( App.DispatcherThread ) ;
 
 		private ObservableCollectionDisp< string > _errors =
 			new ObservableCollectionDisp< string >( App.DispatcherThread ) ;
 
+		private FlowDocument _flowDocument = new FlowDocument() ;
+
 		private delegate void SetVcardCallback( Vcard vcard ) ;
+		private delegate void MessagesChangedCallback( object sender, NotifyCollectionChangedEventArgs e ) ;
 
 		private agsXMPP.protocol.iq.roster.RosterItem _rosterItem ;
 		private string _statusText = "Unavailable" ;
@@ -43,6 +48,39 @@ namespace xeus.Core
 		public RosterItem( agsXMPP.protocol.iq.roster.RosterItem rosterItem )
 		{
 			_rosterItem = rosterItem ;
+
+			_messages.CollectionChanged += new NotifyCollectionChangedEventHandler( _messages_CollectionChanged ) ;
+		}
+
+		private void _messages_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
+		{
+			if ( _flowDocument.Dispatcher.CheckAccess() )
+			{
+				switch ( e.Action )
+				{
+					case NotifyCollectionChangedAction.Add:
+						{
+							foreach ( ChatMessage message in e.NewItems )
+							{
+								_flowDocument.Blocks.Add( new Paragraph( new Run( message.Body ) ) ) ;
+							}
+
+							NotifyPropertyChanged( "MessagesDocument" ) ;
+							break ;
+						}
+					case NotifyCollectionChangedAction.Reset:
+						{
+							_flowDocument = new FlowDocument() ;
+							NotifyPropertyChanged( "MessagesDocument" ) ;
+							break ;
+						}
+				}
+			}
+			else
+			{
+				_flowDocument.Dispatcher.BeginInvoke( DispatcherPriority.ApplicationIdle,
+				                                  new MessagesChangedCallback( _messages_CollectionChanged ), sender, e ) ;				
+			}
 		}
 
 		public agsXMPP.protocol.iq.roster.RosterItem XmppRosterItem
@@ -181,7 +219,7 @@ namespace xeus.Core
 								}
 						}
 
-						_errors.Clear();
+						_errors.Clear() ;
 
 						if ( _presence.Status != null && _presence.Status != String.Empty )
 						{
@@ -224,7 +262,7 @@ namespace xeus.Core
 					Url = vcard.Url ;
 
 					BitmapImage image = Storage.ImageFromPhoto( vcard.Photo ) ;
-							
+
 					Image = image ;
 				}
 
@@ -401,7 +439,7 @@ namespace xeus.Core
 			}
 		}
 
-		public ObservableCollectionDisp< Message > Messages
+		public ObservableCollectionDisp< ChatMessage > Messages
 		{
 			get
 			{
@@ -434,6 +472,14 @@ namespace xeus.Core
 			if ( PropertyChanged != null )
 			{
 				PropertyChanged( this, new PropertyChangedEventArgs( info ) ) ;
+			}
+		}
+
+		public FlowDocument MessagesDocument
+		{
+			get
+			{
+				return _flowDocument ;
 			}
 		}
 	}
