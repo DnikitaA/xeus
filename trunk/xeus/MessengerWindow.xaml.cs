@@ -11,7 +11,7 @@ namespace xeus
 	/// <summary>
 	/// Interaction logic for Window1.xaml
 	/// </summary>
-	public partial class MessengerWindow : Window
+	public partial class MessengerWindow : WindowBase
 	{
 
 		NotifyIcon _notifyIcon = new NotifyIcon();
@@ -50,13 +50,14 @@ namespace xeus
 			MessageWindow.DisplayAllChats() ;
 		}
 
+		/*
 		protected override void OnMouseLeftButtonDown( MouseButtonEventArgs e )
 		{
-			/*IInputElement iie = InputHitTest( e.GetPosition( this ) ) ;
-			if ( iie is Canvas )*/
+			IInputElement iie = InputHitTest( e.GetPosition( this ) ) ;
+			if ( iie is Canvas )
 			base.OnMouseLeftButtonDown( e ) ;
 			DragMove() ;
-		}
+		}*/
 
 		protected override void OnClosing( System.ComponentModel.CancelEventArgs e )
 		{

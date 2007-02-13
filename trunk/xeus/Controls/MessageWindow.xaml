@@ -1,10 +1,11 @@
-﻿<Window
+﻿<win:WindowBase
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:local="clr-namespace:xeus.Core"
+	  xmlns:local="clr-namespace:xeus.Core"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Class="xeus.Controls.MessageWindow"
+    xmlns:win="clr-namespace:xeus.Controls"
     Title="xeus.Controls" Height="300" Width="300"
-	WindowStyle="None" AllowsTransparency="True"
+	  WindowStyle="None" AllowsTransparency="True"
     ResizeMode="CanResizeWithGrip" BorderBrush="#FF1E1E1E" BorderThickness="2,2,2,2"
     >
 	<Window.Background>
@@ -18,4 +19,4 @@
     	<TabControl x:Name="_tabs" ContentTemplate="{StaticResource RosterItemMessagesTemplate}" 
 			Margin="8,8,8,8" Style="{DynamicResource TabControlStyle}" />
 	</Grid>
-</Window>
+</win:WindowBase>
