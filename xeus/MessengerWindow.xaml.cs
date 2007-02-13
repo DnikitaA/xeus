@@ -47,7 +47,7 @@ namespace xeus
 
 		private void buttonMessages_Click( object sender, RoutedEventArgs e )
 		{
-			MessageWindow.Instance.DisplayAllChats() ;
+			MessageWindow.DisplayAllChats() ;
 		}
 
 		protected override void OnMouseLeftButtonDown( MouseButtonEventArgs e )
@@ -56,6 +56,13 @@ namespace xeus
 			if ( iie is Canvas )*/
 			base.OnMouseLeftButtonDown( e ) ;
 			DragMove() ;
+		}
+
+		protected override void OnClosing( System.ComponentModel.CancelEventArgs e )
+		{
+			base.OnClosing( e );
+
+			MessageWindow.CloseWindow();
 		}
 	}
 }

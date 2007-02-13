@@ -1,6 +1,8 @@
 using System.Collections.Generic ;
+using System.Timers ;
 using System.Windows ;
 using System.Windows.Controls ;
+using System.Windows.Threading ;
 using agsXMPP.protocol.client ;
 using xeus.Core ;
 
@@ -13,22 +15,55 @@ namespace xeus.Controls
 	{
 		private static MessageWindow _instance = new MessageWindow() ;
 
+//		Timer _timer = new Timer( 250 ) ;
+//		private delegate void MyTimerCallback( object sender, ElapsedEventArgs e ) ;
+
+
 		public MessageWindow()
 		{
 			InitializeComponent() ;
+			/*
+			_timer.AutoReset = false ;
+			_timer.Elapsed += new ElapsedEventHandler( _timer_Elapsed );*/
+		}
+		/*
+		void _timer_Elapsed( object sender, ElapsedEventArgs e )
+		{
+			if ( App.DispatcherThread.CheckAccess() )
+			{
+				Hide() ;
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new MyTimerCallback( _timer_Elapsed ), sender, new object[] { e } ) ;
+			}
+		}
+		/*
+		protected override void OnClosing( System.ComponentModel.CancelEventArgs e )
+		{
+			e.Cancel = true ;
+
+			_timer.Start();
+		}*/
+
+		protected override void OnClosed( System.EventArgs e )
+		{
+			_instance = null ;
+			base.OnClosed( e );
 		}
 
-		public static MessageWindow Instance
+		public static void CloseWindow()
 		{
-			get
+			if ( _instance != null )
 			{
-				return _instance ;
+				_instance.Close();
 			}
 		}
 
-		TabItem FindTab( string jid )
+		static TabItem FindTab( string jid )
 		{
-			foreach ( TabItem tab in _tabs.Items )
+			foreach ( TabItem tab in _instance._tabs.Items )
 			{
 				if ( ( string )tab.Tag == jid )
 				{
@@ -39,8 +74,13 @@ namespace xeus.Controls
 			return null ;
 		}
 
-		public void DisplayChat( string jid )
+		public static void DisplayChat( string jid )
 		{
+			if ( _instance == null )
+			{
+				_instance = new MessageWindow();
+			}
+
 			TabItem tab = FindTab( jid ) ;
 			RosterItem rosterItem = Client.Instance.Roster.FindItem( jid ) ;
 
@@ -51,21 +91,21 @@ namespace xeus.Controls
 				tab.Content = rosterItem ;
 				tab.Tag = jid ;
 
-				_tabs.Items.Add( tab ) ;
+				_instance._tabs.Items.Add( tab ) ;
 			}
 
 			if ( rosterItem != null )
 			{
 				Client.Instance.MessageCenter.MoveUnreadMessagesToRosterItem( rosterItem );
 
-				if ( !IsVisible )
+				if ( !_instance.IsVisible )
 				{
-					Show() ;
+					_instance.Show() ;
 				}
 			}
 		}
 
-		public void DisplayAllChats()
+		public static void DisplayAllChats()
 		{
 			List< string > recievers = new List< string >( Client.Instance.MessageCenter.ChatMessages.Count );
 			
