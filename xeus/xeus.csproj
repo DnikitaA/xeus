@@ -103,6 +103,7 @@
       <DependentUpon>StatusControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WindowBase.cs" />
+    <Compile Include="Core\ChatMessage.cs" />
     <Compile Include="Core\CountToVisibilityConverter.cs" />
     <Compile Include="Core\MessageCenter.cs" />
     <Compile Include="Controls\ServicesControl.xaml.cs">
@@ -122,6 +123,12 @@
     <Compile Include="Core\SizeFromSliderConverterSmall.cs" />
     <Compile Include="Core\Storage.cs" />
     <Compile Include="Core\WindowState.cs" />
+    <Compile Include="HtmlToXaml\HtmlCssParser.cs" />
+    <Compile Include="HtmlToXaml\HtmlLexicalAnalyzer.cs" />
+    <Compile Include="HtmlToXaml\HtmlParser.cs" />
+    <Compile Include="HtmlToXaml\HtmlSchema.cs" />
+    <Compile Include="HtmlToXaml\HtmlTokenType.cs" />
+    <Compile Include="HtmlToXaml\HtmlToXamlConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

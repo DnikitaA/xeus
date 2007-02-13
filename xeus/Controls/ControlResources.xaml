@@ -21,7 +21,7 @@
       <TextBlock Text="{Binding Path=Name}" />
     </Grid>
   </DataTemplate>
- 
+  
  <!-- roster -->
   <CollectionViewSource x:Key="_rosterView" Source="{Binding Path=Roster.Items}">
     <CollectionViewSource.SortDescriptions>
@@ -373,4 +373,12 @@
   		</Border>
 	</Grid>
   </DataTemplate>
+  
+
+ <DataTemplate x:Key="ChatMessageItem" DataType="{x:Type local:ChatMessage}">
+    <Grid>
+      <!-- <FlowDocumentReader Document="{Binding Path=Document}"/> -->
+    </Grid>
+  </DataTemplate>
+    
 </ResourceDictionary>
