@@ -10,6 +10,6 @@
 
     <Grid>
     	<TabControl x:Name="_tabs" ContentTemplate="{StaticResource RosterItemMessagesTemplate}" 
-			Margin="8,8,8,8" />
+			Margin="8,8,8,8" Style="{DynamicResource TabControlStyle}" />
 	</Grid>
 </Window>

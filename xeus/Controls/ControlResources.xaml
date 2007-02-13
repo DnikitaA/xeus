@@ -13,6 +13,9 @@
           Source="{Binding Path=Services.Items}"
           />
 
+	<!-- Resource dictionary entries should be defined here. -->
+
+
   <DataTemplate DataType="{x:Type local:ServiceItem}">
     <Grid>
       <TextBlock Text="{Binding Path=Name}" />
@@ -345,27 +348,27 @@
 <DataTemplate x:Key="RosterItemTab" DataType="{x:Type local:RosterItem}">
   	<Grid x:Name="_rosterItemGridOuter" RenderTransformOrigin="0.5,0.5"
 			Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}"
-			Margin="3,3,3,3" Width="130" Height="28" ToolTipService.InitialShowDelay="1500"
+			Margin="3,3,3,3" Width="110" Height="25" ToolTipService.InitialShowDelay="1500"
 			ToolTipService.BetweenShowDelay="1500" >
   		<Grid.ColumnDefinitions>
   			<ColumnDefinition Width="0.163*"/>
   			<ColumnDefinition Width="0.837*"/>
   		</Grid.ColumnDefinitions>
 		<Image HorizontalAlignment="Left" Source="{Binding Path=Image}" Grid.Row="0" 
-				VerticalAlignment="Top" Stretch="Uniform" Width="29" Height="28" Margin="0,0,0,0" d:LayoutOverrides="HorizontalAlignment" Panel.ZIndex="1" Grid.ColumnSpan="2"/>
+				VerticalAlignment="Top" Stretch="Uniform" Width="29" Height="25" d:LayoutOverrides="HorizontalAlignment" Panel.ZIndex="1" Grid.ColumnSpan="2"/>
   		<Border VerticalAlignment="Stretch" Width="Auto" Grid.Column="1"
   		 Height="Auto" Grid.Row="0" Grid.RowSpan="1"
   		 CornerRadius="3,3,3,3" x:Name="_displayNameLabel"
-  		 Visibility="Visible" BorderThickness="1,1,1,1" Margin="2,0,-3,0" d:LayoutOverrides="GridBox">
-		<Grid Grid.Row="1" Margin="2,0,1,1" HorizontalAlignment="Left" Width="104.31" >     
-  			<TextBlock Text="{Binding Path=DisplayName}" HorizontalAlignment="Stretch" Margin="2,0.5,0,0"
+  		 Visibility="Visible" BorderThickness="1,1,1,1" Margin="11.07,0,-3,0" d:LayoutOverrides="GridBox">
+		<Grid Grid.Row="1" HorizontalAlignment="Stretch" Width="78.75" >     
+  			<TextBlock Text="{Binding Path=DisplayName}" HorizontalAlignment="Stretch" Margin="0,0,0,0"
   				TextTrimming="CharacterEllipsis"
   				FontFamily="Calibri" Foreground="#FF1E1E1E"
-  				VerticalAlignment="Top" x:Name="_displayName" FontSize="12"/>
+  				VerticalAlignment="Top" x:Name="_displayName" FontSize="12" d:LayoutOverrides="VerticalAlignment" Height="10.793"/>
   			<TextBlock Text="{Binding Path=StatusDescription}" HorizontalAlignment="Stretch"
   				TextTrimming="CharacterEllipsis"
   				FontFamily="Calibri" Foreground="#FF334E63"
-  				x:Name="_displayStatus" Margin="2,0,0,0" FontSize="10" VerticalAlignment="Bottom"/>				
+  				x:Name="_displayStatus" Margin="0,0,0,3" FontSize="10" VerticalAlignment="Bottom" d:LayoutOverrides="VerticalAlignment" Height="9.207"/>				
 	    </Grid>  
   		</Border>
 	</Grid>
