@@ -33,6 +33,13 @@
               	<Setter Property="BorderThickness" TargetName="Border" Value="1,1,1,1"/>
               	<Setter Property="CornerRadius" TargetName="Border" Value="2,2,2,2"/>
               </Trigger>
+				<MultiTrigger>
+                <MultiTrigger.Conditions>
+                  <Condition Property="IsMouseOver" Value="True" />
+                  <Condition Property="IsSelected" Value="False" />
+                </MultiTrigger.Conditions>
+            		<Setter Property="Background" TargetName="Border" Value="#26FFFFFF"/>
+            	</MultiTrigger>
               <Trigger Property="IsSelected" Value="false"/>
               <Trigger Property="IsEnabled" Value="False"/>
             </ControlTemplate.Triggers>
@@ -121,6 +128,7 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="SnapsToDevicePixels" Value="True"/>
 	</Style>
 	
 </ResourceDictionary>
