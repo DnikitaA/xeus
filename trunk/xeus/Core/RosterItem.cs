@@ -2,7 +2,6 @@ using System ;
 using System.Collections.Specialized ;
 using System.ComponentModel ;
 using System.Windows.Controls ;
-using System.Windows.Documents ;
 using System.Windows.Media.Imaging ;
 using System.Windows.Threading ;
 using agsXMPP.protocol.Base ;
@@ -18,8 +17,6 @@ namespace xeus.Core
 
 		private ObservableCollectionDisp< string > _errors =
 			new ObservableCollectionDisp< string >( App.DispatcherThread ) ;
-
-		private FlowDocument _flowDocument = new FlowDocument() ;
 
 		private delegate void SetVcardCallback( Vcard vcard ) ;
 		private delegate void MessagesChangedCallback( object sender, NotifyCollectionChangedEventArgs e ) ;
@@ -48,39 +45,6 @@ namespace xeus.Core
 		public RosterItem( agsXMPP.protocol.iq.roster.RosterItem rosterItem )
 		{
 			_rosterItem = rosterItem ;
-
-			_messages.CollectionChanged += new NotifyCollectionChangedEventHandler( _messages_CollectionChanged ) ;
-		}
-
-		private void _messages_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
-		{
-			if ( _flowDocument.Dispatcher.CheckAccess() )
-			{
-				switch ( e.Action )
-				{
-					case NotifyCollectionChangedAction.Add:
-						{
-							foreach ( ChatMessage message in e.NewItems )
-							{
-								_flowDocument.Blocks.Add( new Paragraph( new Run( message.Body ) ) ) ;
-							}
-
-							NotifyPropertyChanged( "MessagesDocument" ) ;
-							break ;
-						}
-					case NotifyCollectionChangedAction.Reset:
-						{
-							_flowDocument = new FlowDocument() ;
-							NotifyPropertyChanged( "MessagesDocument" ) ;
-							break ;
-						}
-				}
-			}
-			else
-			{
-				_flowDocument.Dispatcher.BeginInvoke( DispatcherPriority.ApplicationIdle,
-				                                  new MessagesChangedCallback( _messages_CollectionChanged ), sender, e ) ;				
-			}
 		}
 
 		public agsXMPP.protocol.iq.roster.RosterItem XmppRosterItem
@@ -280,7 +244,7 @@ namespace xeus.Core
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.ApplicationIdle,
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
 				                                  new SetVcardCallback( SetVcard ), vcard ) ;
 			}
 		}
@@ -472,14 +436,6 @@ namespace xeus.Core
 			if ( PropertyChanged != null )
 			{
 				PropertyChanged( this, new PropertyChangedEventArgs( info ) ) ;
-			}
-		}
-
-		public FlowDocument MessagesDocument
-		{
-			get
-			{
-				return _flowDocument ;
 			}
 		}
 	}

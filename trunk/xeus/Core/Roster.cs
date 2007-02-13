@@ -14,7 +14,7 @@ namespace xeus.Core
 		private ObservableCollectionDisp< RosterItem > _items =
 			new ObservableCollectionDisp< RosterItem >( App.DispatcherThread ) ;
 
-		private Timer _rosterItemTimer = new Timer( 200 ) ;
+		private Timer _rosterItemTimer = new Timer( 100 ) ;
 		private Queue< RosterItem > _rosterItemsToRecieveVCard = new Queue< RosterItem >( 128 ) ;
 		private object _lockRosterItems = new object() ;
 
@@ -177,7 +177,7 @@ namespace xeus.Core
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.ApplicationIdle,
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
 				                                  new VcardResultCallback( VcardResult ), sender, new object[] { iq, data } ) ;
 			}
 		}

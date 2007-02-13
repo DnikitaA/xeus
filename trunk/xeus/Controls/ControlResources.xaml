@@ -377,7 +377,7 @@
 
  <DataTemplate x:Key="ChatMessageItem" DataType="{x:Type local:ChatMessage}">
     <Grid>
-      <!-- <FlowDocumentReader Document="{Binding Path=Document}"/> -->
+	<TextBlock Text="{Binding Path=Body}"/>
     </Grid>
   </DataTemplate>
     
