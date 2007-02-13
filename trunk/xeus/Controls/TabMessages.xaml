@@ -70,7 +70,7 @@
 -->
 
 	<DataTemplate x:Key="RosterItemMessagesTemplate" DataType="{x:Type local:RosterItem}">
-	<Grid>
+	<Grid Height="184">
 		<TextBlock Text="{Binding Path=DisplayName}"
 		 Width="320" Height="32" Background="#FF5BCB3A" FontSize="16" Foreground="#FFC72121" VerticalAlignment="Top" />
 		 
