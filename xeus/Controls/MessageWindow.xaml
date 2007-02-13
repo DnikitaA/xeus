@@ -7,7 +7,13 @@
 	WindowStyle="None" AllowsTransparency="True"
     ResizeMode="CanResizeWithGrip" BorderBrush="#FF1E1E1E" BorderThickness="2,2,2,2"
     >
-
+	<Window.Background>
+		<ImageBrush Viewport="0,0,10,10"
+      				ViewportUnits="Absolute"
+	   				TileMode="Tile" Stretch="None">
+			<ImageBrush.ImageSource>/Images/ximple.png</ImageBrush.ImageSource>
+		</ImageBrush>
+	</Window.Background>
     <Grid>
     	<TabControl x:Name="_tabs" ContentTemplate="{StaticResource RosterItemMessagesTemplate}" 
 			Margin="8,8,8,8" Style="{DynamicResource TabControlStyle}" />

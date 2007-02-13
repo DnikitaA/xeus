@@ -62,21 +62,33 @@
       <ControlTemplate TargetType="{x:Type Thumb}">
         <Border 
           CornerRadius="2,2,2,2"
-          BorderThickness="1" BorderBrush="#FF484848" >
+          BorderThickness="1" BorderBrush="#FF4A4848" x:Name="border" >
         	<Border.Background>
         		<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-        			<GradientStop Color="#FF6C6C6C" Offset="0"/>
-        			<GradientStop Color="#FF5E5E5E" Offset="1"/>
+        			<GradientStop Color="#FF404040" Offset="0"/>
+        			<GradientStop Color="#FF2E2E2E" Offset="0.981"/>
         		</LinearGradientBrush>
         	</Border.Background>
         	<Grid Width="Auto" Height="Auto">
 			    <Grid.ColumnDefinitions>
-			      <ColumnDefinition Width="5"/>
+			      <ColumnDefinition Width="12.75"/>
 			      <ColumnDefinition Width="*"/>
 			    </Grid.ColumnDefinitions>
-        		<Rectangle Fill="#FF818181" Width="2" Height="Auto" HorizontalAlignment="Left" Margin="1,2,0,2" RadiusX="1" RadiusY="1"/>
+        		<Rectangle Fill="#FFFFFFFF" Width="4.875" Height="Auto" HorizontalAlignment="Left" Margin="1,1.25,0,1.25" RadiusX="1" RadiusY="1" Opacity="0.08" d:LayoutOverrides="HorizontalAlignment"/>
         	</Grid>
         </Border>
+      	<ControlTemplate.Triggers>
+      		<Trigger Property="IsMouseOver" Value="True">
+      			<Setter Property="Background" TargetName="border">
+      				<Setter.Value>
+      					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+      						<GradientStop Color="#FF636262" Offset="0"/>
+      						<GradientStop Color="#FF3E3E3E" Offset="0.981"/>
+      					</LinearGradientBrush>
+      				</Setter.Value>
+      			</Setter>
+      		</Trigger>
+      	</ControlTemplate.Triggers>
       </ControlTemplate>
     </Setter.Value>
   </Setter>
@@ -134,19 +146,22 @@
       <ColumnDefinition MaxWidth="18"/>
     </Grid.ColumnDefinitions>
     <Border
-      Grid.ColumnSpan="3"
-      CornerRadius="2" 
-      Background="#F0F0F0" />
-    <RepeatButton 
-      Grid.Column="0"                           
-      Style="{StaticResource ScrollBarLineButton}"
-      Width="18"
-      Command="ScrollBar.LineLeftCommand"
-      Content="M 4 0 L 4 8 L 0 4 Z" />
+      Grid.RowSpan="1"
+      CornerRadius="0,0,0,0" 
+      BorderThickness="0,0,0,1" Grid.ColumnSpan="3" >
+    	<Rectangle Width="Auto" Height="Auto" RadiusX="2" RadiusY="2" Stroke="#FF484848">
+    		<Rectangle.Fill>
+    			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
+    				<GradientStop Color="#FF262626" Offset="0"/>
+    				<GradientStop Color="#FF3E3E3E" Offset="1"/>
+    			</LinearGradientBrush>
+    		</Rectangle.Fill>
+    	</Rectangle>
+    </Border>
     <Track 
-      Name="PART_Track"
-      Grid.Column="1"
-      IsDirectionReversed="False">
+      x:Name="PART_Track"
+      Grid.Column="0"
+      IsDirectionReversed="False" Grid.ColumnSpan="3">
       <Track.DecreaseRepeatButton>
         <RepeatButton 
           Style="{StaticResource ScrollBarPageButton}"
@@ -156,20 +171,23 @@
         <Thumb 
           Style="{StaticResource ScrollBarThumb}" 
           Margin="0,1,0,1"  
-          Background="Red"/>
+          >
+        	<Thumb.LayoutTransform>
+        		<TransformGroup>
+        			<ScaleTransform ScaleX="1" ScaleY="1"/>
+        			<SkewTransform AngleX="0" AngleY="0"/>
+        			<RotateTransform Angle="90"/>
+        			<TranslateTransform X="0" Y="0"/>
+        		</TransformGroup>
+        	</Thumb.LayoutTransform>
+        </Thumb>
       </Track.Thumb>
-      <Track.IncreaseRepeatButton>
-        <RepeatButton 
-          Style="{StaticResource ScrollBarPageButton}"
-          Command="ScrollBar.PageRightCommand" />
-      </Track.IncreaseRepeatButton>
+    	<Track.IncreaseRepeatButton>
+    		<RepeatButton 
+    			Style="{StaticResource ScrollBarPageButton}"
+    			Command="ScrollBar.PageLeftCommand" />
+    	</Track.IncreaseRepeatButton>
     </Track>
-    <RepeatButton 
-      Grid.Column="3" 
-      Style="{StaticResource ScrollBarLineButton}"
-      Width="18"
-      Command="ScrollBar.LineRightCommand"
-      Content="M 0 0 L 4 4 L 0 8 Z"/>
   </Grid>
 </ControlTemplate>
 

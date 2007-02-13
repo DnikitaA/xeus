@@ -363,12 +363,12 @@
 		<Grid Grid.Row="1" HorizontalAlignment="Stretch" Width="78.75" >     
   			<TextBlock Text="{Binding Path=DisplayName}" HorizontalAlignment="Stretch" Margin="0,0,0,0"
   				TextTrimming="CharacterEllipsis"
-  				FontFamily="Calibri" Foreground="#FF1E1E1E"
-  				VerticalAlignment="Top" x:Name="_displayName" FontSize="12" d:LayoutOverrides="VerticalAlignment" Height="10.793"/>
+  				FontFamily="Calibri" Foreground="#FFDDDDDD"
+  				VerticalAlignment="Top" x:Name="_displayName" FontSize="12" d:LayoutOverrides="VerticalAlignment" Height="10.793" SnapsToDevicePixels="True"/>
   			<TextBlock Text="{Binding Path=StatusDescription}" HorizontalAlignment="Stretch"
   				TextTrimming="CharacterEllipsis"
-  				FontFamily="Calibri" Foreground="#FF334E63"
-  				x:Name="_displayStatus" Margin="0,0,0,3" FontSize="10" VerticalAlignment="Bottom" d:LayoutOverrides="VerticalAlignment" Height="9.207"/>				
+  				FontFamily="Calibri" Foreground="#FF9DC6E7"
+  				x:Name="_displayStatus" Margin="0,0,0,3" FontSize="10" VerticalAlignment="Bottom" d:LayoutOverrides="VerticalAlignment" Height="9.207" SnapsToDevicePixels="True"/>				
 	    </Grid>  
   		</Border>
 	</Grid>
