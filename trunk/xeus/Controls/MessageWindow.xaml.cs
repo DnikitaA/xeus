@@ -20,8 +20,20 @@ namespace xeus.Controls
 		public MessageWindow()
 		{
 			InitializeComponent() ;
+
+			_tabs.SelectionChanged += new SelectionChangedEventHandler( _tabs_SelectionChanged );
 		}
 
+		void _tabs_SelectionChanged( object sender, SelectionChangedEventArgs e )
+		{
+			RosterItem rosterItem = ( ( TabItem )_tabs.SelectedItem ).Content as RosterItem ;
+
+			if ( rosterItem != null )
+			{
+				rosterItem.HasUnreadMessages = false ;
+			}
+		}
+	
 		protected override void OnClosed( System.EventArgs e )
 		{
 			_instance = null ;
@@ -64,16 +76,30 @@ namespace xeus.Controls
 				}
 
 				TabItem tab = FindTab( jid ) ;
-				RosterItem rosterItem = Client.Instance.Roster.FindItem( jid ) ;
+				RosterItem rosterItem  ;
 
 				if ( tab == null )
 				{
+					rosterItem = Client.Instance.Roster.FindItem( jid ) ;
+
 					tab = new TabItem() ;
 					tab.Header = rosterItem ;
 					tab.Content = rosterItem ;
 					tab.Tag = jid ;
 
 					_instance._tabs.Items.Add( tab ) ;
+				}
+				else
+				{
+					rosterItem = tab.Content as RosterItem ;
+
+					RosterItem selectedItem = ( ( TabItem ) _instance._tabs.SelectedItem ).Content as RosterItem ;
+					
+					if ( rosterItem != null && selectedItem != null
+							&& selectedItem.Key == rosterItem.Key )
+					{
+						rosterItem.HasUnreadMessages = false ;
+					}
 				}
 
 				if ( rosterItem != null )

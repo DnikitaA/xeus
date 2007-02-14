@@ -10,7 +10,7 @@ using agsXMPP.protocol.iq.vcard ;
 
 namespace xeus.Core
 {
-	internal class RosterItem : INotifyPropertyChanged
+	internal class RosterItem : INotifyPropertyChanged, IDisposable
 	{
 		private ObservableCollectionDisp< ChatMessage > _messages =
 			new ObservableCollectionDisp< ChatMessage >( App.DispatcherThread ) ;
@@ -19,7 +19,6 @@ namespace xeus.Core
 			new ObservableCollectionDisp< string >( App.DispatcherThread ) ;
 
 		private delegate void SetVcardCallback( Vcard vcard ) ;
-		private delegate void MessagesChangedCallback( object sender, NotifyCollectionChangedEventArgs e ) ;
 
 		private agsXMPP.protocol.iq.roster.RosterItem _rosterItem ;
 		private string _statusText = "Unavailable" ;
@@ -36,6 +35,7 @@ namespace xeus.Core
 		private Email _emailPreferred ;
 		private BitmapImage _image ;
 		private bool _hasVCardRecivied = false ;
+		private bool _hasUnreadMessages = false ;
 
 		public event PropertyChangedEventHandler PropertyChanged ;
 
@@ -45,6 +45,26 @@ namespace xeus.Core
 		public RosterItem( agsXMPP.protocol.iq.roster.RosterItem rosterItem )
 		{
 			_rosterItem = rosterItem ;
+
+			_messages.CollectionChanged += new NotifyCollectionChangedEventHandler( _messages_CollectionChanged ) ;
+		}
+
+		private void _messages_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
+		{
+			switch ( e.Action )
+			{
+				case NotifyCollectionChangedAction.Add:
+				case NotifyCollectionChangedAction.Replace:
+					{
+						HasUnreadMessages = true ;
+						break ;
+					}
+				case NotifyCollectionChangedAction.Reset:
+					{
+						HasUnreadMessages = false ;
+						break ;
+					}
+			}
 		}
 
 		public agsXMPP.protocol.iq.roster.RosterItem XmppRosterItem
@@ -431,12 +451,30 @@ namespace xeus.Core
 			}
 		}
 
+		public bool HasUnreadMessages
+		{
+			get
+			{
+				return _hasUnreadMessages ;
+			}
+			set
+			{
+				_hasUnreadMessages = value ;
+				NotifyPropertyChanged( "HasUnreadMessages" ) ;
+			}
+		}
+
 		private void NotifyPropertyChanged( String info )
 		{
 			if ( PropertyChanged != null )
 			{
 				PropertyChanged( this, new PropertyChangedEventArgs( info ) ) ;
 			}
+		}
+
+		public void Dispose()
+		{
+			_messages.CollectionChanged -= _messages_CollectionChanged ;
 		}
 	}
 }
