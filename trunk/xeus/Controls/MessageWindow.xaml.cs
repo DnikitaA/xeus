@@ -15,7 +15,7 @@ namespace xeus.Controls
 	{
 		private static MessageWindow _instance ;
 
-		private delegate void DisplayChatCallback( string jid ) ;
+		private delegate void DisplayChatCallback( string jid, bool activate ) ;
 
 		public MessageWindow()
 		{
@@ -66,7 +66,7 @@ namespace xeus.Controls
 			return null ;
 		}
 
-		public static void DisplayChat( string jid )
+		public static void DisplayChat( string jid, bool activateTab )
 		{
 			if ( App.DispatcherThread.CheckAccess() )
 			{
@@ -102,6 +102,12 @@ namespace xeus.Controls
 					}
 				}
 
+				if ( activateTab )
+				{
+					_instance._tabs.SelectedItem = tab ;
+					_instance.Activate() ;
+				}
+
 				if ( rosterItem != null )
 				{
 					Client.Instance.MessageCenter.MoveUnreadMessagesToRosterItem( rosterItem ) ;
@@ -115,7 +121,7 @@ namespace xeus.Controls
 			else
 			{
 				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
-				                                  new DisplayChatCallback( DisplayChat ), jid ) ;				
+				                                  new DisplayChatCallback( DisplayChat ), jid, false ) ;				
 			}
 		}
 
@@ -130,7 +136,7 @@ namespace xeus.Controls
 
 			foreach ( string jid in recievers )
 			{
-				DisplayChat( jid ) ;
+				DisplayChat( jid, false ) ;
 			}
 		}
 	}
