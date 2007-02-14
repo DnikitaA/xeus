@@ -5,41 +5,29 @@
 	<!-- Resource dictionary entries should be defined here. -->
 
 	<DataTemplate x:Key="RosterItemMessagesTemplate" DataType="{x:Type local:RosterItem}">
-	<Grid>
-
-		<ListBox 
-			ItemsSource="{Binding Path=Messages}" ItemTemplate="{StaticResource ChatMessageItem}" Style="{DynamicResource ListBoxStyleMessages}" BorderThickness="1,1,1,1" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="#00FFFFFF" >
-			<ListBox.ItemsPanel>
+		<ListBox IsSynchronizedWithCurrentItem="True"
+			ItemsSource="{Binding Path=Messages}"
+			ItemTemplate="{StaticResource ChatMessageItem}" Style="{DynamicResource ListBoxStyleMessages}" BorderThickness="1,1,1,1" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="#00FFFFFF" x:Name="_listMessages" >
+			<!--<ListBox.ItemsPanel>
 				<ItemsPanelTemplate>
-					<StackPanel/>
+					<DockPanel LastChildFill="False" HorizontalAlignment="Left"/>
 				</ItemsPanelTemplate>
-			</ListBox.ItemsPanel>
+			</ListBox.ItemsPanel>-->
 		</ListBox>		
-	</Grid>
 	</DataTemplate>
+
 	
 	<Style x:Key="ListBoxStyleMessages" TargetType="{x:Type ListBox}">
-		<Setter Property="BorderBrush">
-			<Setter.Value>
-				<SolidColorBrush/>
-			</Setter.Value>
-		</Setter>
 		<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
 		<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
 		<Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
-		<Setter Property="VerticalContentAlignment" Value="Center"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type ListBox}">
-					<Microsoft_Windows_Themes:ClassicBorderDecorator SnapsToDevicePixels="True" x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderStyle="Sunken" BorderThickness="{TemplateBinding BorderThickness}">
 						<ScrollViewer Focusable="False" Padding="{TemplateBinding Padding}">
 							<ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
 						</ScrollViewer>
-					</Microsoft_Windows_Themes:ClassicBorderDecorator>
 					<ControlTemplate.Triggers>
-						<Trigger Property="IsEnabled" Value="False">
-							<Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
-						</Trigger>
 						<Trigger Property="IsGrouping" Value="True">
 							<Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
 						</Trigger>
