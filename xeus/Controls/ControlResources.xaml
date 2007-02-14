@@ -382,9 +382,11 @@
   
 
  <DataTemplate x:Key="ChatMessageItem" DataType="{x:Type local:ChatMessage}">
-    <Grid>
-	<TextBlock Text="{Binding Path=Body}"/>
-    </Grid>
+    <DockPanel>
+		<Image Source="{Binding Path=Image}" Width="20" VerticalAlignment="Top" Height="20" />
+		<TextBlock Text="{Binding Path=Body}" Foreground="#FFC5A581" HorizontalAlignment="Stretch"
+		 Margin="0,0,0,0" TextWrapping="WrapWithOverflow" ScrollViewer.VerticalScrollBarVisibility="Disabled" TextTrimming="WordEllipsis"/>
+    </DockPanel>
   </DataTemplate>
     
 </ResourceDictionary>

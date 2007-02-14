@@ -349,7 +349,16 @@
 		</TransformGroup>
 	</Viewbox.RenderTransform>
 	<Grid>
-	<Path SnapsToDevicePixels="False" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Stretch" Data="F1 M5.0282145,-6.4830003 C8.1051111,-6.4830003 10.599428,-4.5002933 10.599428,-2.0545003 C10.599428,0.39129266 8.1051111,2.3739996 5.0282145,2.3739996 L4.1343474,2.2548513 0.49999991,4.5000005 1.4259897,1.2588339 C0.20860633,0.49111211 -0.54299998,-0.71192384 -0.54299998,-2.0545003 -0.54299998,-4.5002933 1.9513177,-6.4830003 5.0282145,-6.4830003 z" Width="12" Fill="#FFB1CFE3" Opacity="0.9" Stroke="#FF555555"/>
+	<Path Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Stretch" Data="F1 M5.0282145,-6.4830003 C8.1051111,-6.4830003 10.599428,-4.5002933 10.599428,-2.0545003 C10.599428,0.39129266 8.1051111,2.3739996 5.0282145,2.3739996 L4.1343474,2.2548513 0.49999991,4.5000005 1.4259897,1.2588339 C0.20860633,0.49111211 -0.54299998,-0.71192384 -0.54299998,-2.0545003 -0.54299998,-4.5002933 1.9513177,-6.4830003 5.0282145,-6.4830003 z" Width="12" Fill="#FFB1CFE3" Opacity="0.9" RenderTransformOrigin="0.5,0.5" x:Name="path">
+		<Path.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="0"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Path.RenderTransform>
+	</Path>
 	</Grid>
 </Viewbox>
 </ControlTemplate>
