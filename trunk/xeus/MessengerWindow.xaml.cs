@@ -47,7 +47,7 @@ namespace xeus
 
 		private void buttonMessages_Click( object sender, RoutedEventArgs e )
 		{
-			MessageWindow.DisplayAllChats() ;
+			MessageWindow.DisplayChatWindow( null, false ) ;
 		}
 
 		protected override void OnClosing( System.ComponentModel.CancelEventArgs e )

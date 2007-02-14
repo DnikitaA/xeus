@@ -126,7 +126,7 @@ namespace xeus.Controls
 
 		private void OpenMessageWindow( RosterItem rosterItem )
 		{
-			MessageWindow.DisplayChat( rosterItem.Key, true ) ;
+			MessageWindow.DisplayChatWindow( rosterItem.Key, true ) ;
 		}
 
 		private void RosterControl_Drop( object sender, DragEventArgs e )

@@ -66,7 +66,7 @@ namespace xeus.Controls
 			return null ;
 		}
 
-		public static void DisplayChat( string jid, bool activateTab )
+		static void DisplayChat( string jid, bool activateTab )
 		{
 			if ( App.DispatcherThread.CheckAccess() )
 			{
@@ -82,6 +82,12 @@ namespace xeus.Controls
 				{
 					rosterItem = Client.Instance.Roster.FindItem( jid ) ;
 
+					if ( rosterItem == null )
+					{
+						// not yet in the roster
+						return ;
+					}
+
 					tab = new TabItem() ;
 					tab.Header = rosterItem ;
 					tab.Content = rosterItem ;
@@ -93,10 +99,12 @@ namespace xeus.Controls
 				{
 					rosterItem = tab.Content as RosterItem ;
 
-					RosterItem selectedItem = ( ( TabItem ) _instance._tabs.SelectedItem ).Content as RosterItem ;
-					
+					TabItem tabItemSelected = ( TabItem )_instance._tabs.SelectedItem ;
+
+					RosterItem selectedItem = tabItemSelected.Content as RosterItem ;
+
 					if ( rosterItem != null && selectedItem != null
-							&& selectedItem.Key == rosterItem.Key )
+					     && selectedItem.Key == rosterItem.Key )
 					{
 						rosterItem.HasUnreadMessages = false ;
 					}
@@ -125,7 +133,7 @@ namespace xeus.Controls
 			}
 		}
 
-		public static void DisplayAllChats()
+		public static void DisplayChatWindow( string activateJid, bool activate )
 		{
 			List< string > recievers = new List< string >( Client.Instance.MessageCenter.ChatMessages.Count );
 			
@@ -138,6 +146,8 @@ namespace xeus.Controls
 			{
 				DisplayChat( jid, false ) ;
 			}
+
+			DisplayChat( activateJid, activate ) ;
 		}
 	}
 }
