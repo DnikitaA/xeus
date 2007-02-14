@@ -9,8 +9,14 @@
 		<TextBlock Text="{Binding Path=DisplayName}"
 		 Width="320" Height="32" Background="#FF5BCB3A" FontSize="16" Foreground="#FFC72121" VerticalAlignment="Top" />
 
-		<ListBox Margin="0,36,0,0" IsSynchronizedWithCurrentItem="True"
-			ItemsSource="{Binding Path=Messages}" ItemTemplate="{StaticResource ChatMessageItem}" />
+		<ListBox Margin="0,36,0,0" 
+			ItemsSource="{Binding Path=Messages}" ItemTemplate="{StaticResource ChatMessageItem}" >
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal"/>
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+		</ListBox>		
 	</Grid>
 	</DataTemplate>
 	
