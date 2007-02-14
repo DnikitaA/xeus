@@ -354,6 +354,7 @@
   			<ColumnDefinition Width="0.163*"/>
   			<ColumnDefinition Width="0.837*"/>
   		</Grid.ColumnDefinitions>
+		<Button x:Name="_unreadMsg" HorizontalAlignment="Left" Margin="17.001,11.154,0,0" Width="9.93" Template="{DynamicResource MessageIcon}" Grid.ColumnSpan="2" />
 		<Image HorizontalAlignment="Left" Source="{Binding Path=Image}" Grid.Row="0" 
 				VerticalAlignment="Top" Stretch="Uniform" Width="29" Height="25" d:LayoutOverrides="HorizontalAlignment" Panel.ZIndex="1" Grid.ColumnSpan="2"/>
   		<Border VerticalAlignment="Stretch" Width="Auto" Grid.Column="1"
@@ -372,6 +373,11 @@
 	    </Grid>  
   		</Border>
 	</Grid>
+	<DataTemplate.Triggers>
+		<DataTrigger Binding="{Binding Path=HasUnreadMessages}" Value="false">
+			<Setter Property="Visibility" Value="Hidden" TargetName="_unreadMsg" />
+		</DataTrigger>
+	</DataTemplate.Triggers>
   </DataTemplate>
   
 
