@@ -27,7 +27,8 @@ namespace xeus.Controls
 
 		private void _tabs_SelectionChanged( object sender, SelectionChangedEventArgs e )
 		{
-			RosterItem rosterItem = ( ( TabItem ) _tabs.SelectedItem ).Content as RosterItem ;
+			TabItem selectedItem = ( TabItem ) _tabs.SelectedItem ;
+			RosterItem rosterItem = selectedItem.Content as RosterItem ;
 
 			if ( rosterItem != null )
 			{
@@ -120,6 +121,11 @@ namespace xeus.Controls
 				if ( _listBox == null )
 				{
 					_listBox = EnumVisual( _instance._tabs ) ;
+
+					if ( _listBox != null )
+					{
+						_listBox.DataContextChanged += new DependencyPropertyChangedEventHandler( _listBox_DataContextChanged );
+					}
 				}
 
 				if ( rosterItem != null )
@@ -131,12 +137,27 @@ namespace xeus.Controls
 						_instance.Show() ;
 					}
 				}
+
+				ScrollToLastItem( _listBox ) ;
 			}
 			else
 			{
 				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
 				                                  new DisplayChatCallback( DisplayChat ), jid, false ) ;
 			}
+		}
+
+		static void _listBox_DataContextChanged( object sender, DependencyPropertyChangedEventArgs e )
+		{
+			ScrollToLastItem( _listBox );
+		}
+
+		public static void ScrollToLastItem( ListBox listBox )
+		{
+			if ( listBox != null && listBox.Items.Count > 0 )
+			{
+				listBox.ScrollIntoView( listBox.Items[ listBox.Items.Count - 1 ] ) ;
+			}			
 		}
 
 		public static ListBox EnumVisual( Visual myVisual )
@@ -176,11 +197,6 @@ namespace xeus.Controls
 			}
 
 			DisplayChat( activateJid, activate ) ;
-
-			if ( _listBox != null && _listBox.Items.Count > 0 )
-			{
-				_listBox.ScrollIntoView( _listBox.Items[ _listBox.Items.Count - 1 ] ) ;
-			}
 		}
 	}
 }
