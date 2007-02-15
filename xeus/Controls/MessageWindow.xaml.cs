@@ -14,6 +14,7 @@ namespace xeus.Controls
 	public partial class MessageWindow : WindowBase
 	{
 		private static MessageWindow _instance ;
+		private static ListBox _listBox ;
 
 		private delegate void DisplayChatCallback( string jid, bool activate ) ;
 
@@ -116,6 +117,11 @@ namespace xeus.Controls
 					_instance.Activate() ;
 				}
 
+				if ( _listBox == null )
+				{
+					_listBox = EnumVisual( _instance._tabs ) ;
+				}
+
 				if ( rosterItem != null )
 				{
 					Client.Instance.MessageCenter.MoveUnreadMessagesToRosterItem( rosterItem ) ;
@@ -125,23 +131,12 @@ namespace xeus.Controls
 						_instance.Show() ;
 					}
 				}
-
-				ListBox listBox = EnumVisual( _instance._tabs ) ;
-
-				//ListBox listBox = _instance.FindListBox( presenter, "_listMessages" ) ;
 			}
 			else
 			{
 				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
 				                                  new DisplayChatCallback( DisplayChat ), jid, false ) ;
 			}
-		}
-
-		ListBox FindListBox( ContentPresenter presenter, string name )
-		{
-			DataTemplate dataTemplate = ( DataTemplate ) App.Current.FindResource( "RosterItemMessagesTemplate" ) ;
-			ListBox listBox = ( ListBox )dataTemplate.FindName( name, presenter );
-			return listBox ;
 		}
 
 		public static ListBox EnumVisual( Visual myVisual )
@@ -181,6 +176,11 @@ namespace xeus.Controls
 			}
 
 			DisplayChat( activateJid, activate ) ;
+
+			if ( _listBox != null && _listBox.Items.Count > 0 )
+			{
+				_listBox.ScrollIntoView( _listBox.Items[ _listBox.Items.Count - 1 ] ) ;
+			}
 		}
 	}
 }
