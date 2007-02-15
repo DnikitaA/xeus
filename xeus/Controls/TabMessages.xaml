@@ -1,16 +1,20 @@
 ﻿<ResourceDictionary
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
 	xmlns:local="clr-namespace:xeus.Core"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic">
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  x:Class="xeus.Controls.TabMessages">
 	<!-- Resource dictionary entries should be defined here. -->
 
 	<DataTemplate x:Key="RosterItemMessagesTemplate" DataType="{x:Type local:RosterItem}">
-		<ListBox IsSynchronizedWithCurrentItem="True"
+		<ListBox IsSynchronizedWithCurrentItem="True" 
 			ItemsSource="{Binding Path=Messages}"
-			ItemTemplate="{StaticResource ChatMessageItem}" Style="{DynamicResource ListBoxStyleMessages}" BorderThickness="1,1,1,1" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="#00FFFFFF" x:Name="_listMessages" >
+			ItemTemplate="{StaticResource ChatMessageItem}" Style="{DynamicResource ListBoxStyleMessages}"
+             BorderThickness="1,1,1,1" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="False"
+             ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="#00FFFFFF"
+             x:Name="_listMessages" >
 			<!--<ListBox.ItemsPanel>
 				<ItemsPanelTemplate>
-					<DockPanel LastChildFill="False" HorizontalAlignment="Left"/>
+					<VirtualizingStackPanel SourceUpdated="OnTargetUpdated" TargetUpdated="OnTargetUpdated"/>
 				</ItemsPanelTemplate>
 			</ListBox.ItemsPanel>-->
 		</ListBox>		
