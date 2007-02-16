@@ -1,5 +1,6 @@
 using System ;
 using System.Collections.Generic ;
+using System.Timers ;
 using System.Windows ;
 using System.Windows.Controls ;
 using System.Windows.Media ;
@@ -15,6 +16,9 @@ namespace xeus.Controls
 	{
 		private static MessageWindow _instance ;
 		private static ListBox _listBox ;
+		private Timer _listRefreshTimer = new Timer( 250 ) ;
+
+		private delegate void ScrollToLastItemCallback( ListBox listBox ) ;
 
 		private delegate void DisplayChatCallback( string jid, bool activate ) ;
 
@@ -23,6 +27,13 @@ namespace xeus.Controls
 			InitializeComponent() ;
 
 			_tabs.SelectionChanged += new SelectionChangedEventHandler( _tabs_SelectionChanged ) ;
+			_listRefreshTimer.Elapsed += new ElapsedEventHandler( _listRefreshTimer_Elapsed ) ;
+			_listRefreshTimer.AutoReset = false ;
+		}
+
+		private void _listRefreshTimer_Elapsed( object sender, ElapsedEventArgs e )
+		{
+			ScrollToLastItem( _listBox ) ;
 		}
 
 		private void _tabs_SelectionChanged( object sender, SelectionChangedEventArgs e )
@@ -34,6 +45,8 @@ namespace xeus.Controls
 			{
 				rosterItem.HasUnreadMessages = false ;
 			}
+
+			_listRefreshTimer.Start() ;
 		}
 
 		protected override void OnClosed( EventArgs e )
@@ -124,7 +137,7 @@ namespace xeus.Controls
 
 					if ( _listBox != null )
 					{
-						_listBox.DataContextChanged += new DependencyPropertyChangedEventHandler( _listBox_DataContextChanged );
+						_listBox.DataContextChanged += new DependencyPropertyChangedEventHandler( _listBox_DataContextChanged ) ;
 					}
 				}
 
@@ -138,7 +151,7 @@ namespace xeus.Controls
 					}
 				}
 
-				ScrollToLastItem( _listBox ) ;
+				_instance._listRefreshTimer.Start() ;
 			}
 			else
 			{
@@ -147,18 +160,25 @@ namespace xeus.Controls
 			}
 		}
 
-		static void _listBox_DataContextChanged( object sender, DependencyPropertyChangedEventArgs e )
+		private static void _listBox_DataContextChanged( object sender, DependencyPropertyChangedEventArgs e )
 		{
-			
-			ScrollToLastItem( _listBox );
+			_instance._listRefreshTimer.Start() ;
 		}
 
 		public static void ScrollToLastItem( ListBox listBox )
 		{
-			if ( listBox != null && listBox.Items.Count > 0 )
+			if ( App.DispatcherThread.CheckAccess() )
 			{
-				listBox.ScrollIntoView( listBox.Items[ listBox.Items.Count - 1 ] ) ;
-			}			
+				if ( listBox != null && listBox.Items.Count > 0 )
+				{
+					listBox.ScrollIntoView( listBox.Items[ listBox.Items.Count - 1 ] ) ;
+				}
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new ScrollToLastItemCallback( ScrollToLastItem ), listBox ) ;
+			}
 		}
 
 		public static ListBox EnumVisual( Visual myVisual )
@@ -171,7 +191,7 @@ namespace xeus.Controls
 				{
 					return childVisual as ListBox ;
 				}
-				
+
 				ListBox listBox = EnumVisual( childVisual ) ;
 
 				if ( listBox != null )
