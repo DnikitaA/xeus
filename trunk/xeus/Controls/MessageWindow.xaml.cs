@@ -149,6 +149,7 @@ namespace xeus.Controls
 
 		static void _listBox_DataContextChanged( object sender, DependencyPropertyChangedEventArgs e )
 		{
+			
 			ScrollToLastItem( _listBox );
 		}
 
