@@ -16,7 +16,7 @@ namespace xeus.Controls
 	{
 		private static MessageWindow _instance ;
 		private static ListBox _listBox ;
-		private Timer _listRefreshTimer = new Timer( 250 ) ;
+		private Timer _listRefreshTimer = new Timer( 150 ) ;
 
 		private delegate void ScrollToLastItemCallback( ListBox listBox ) ;
 
@@ -46,7 +46,7 @@ namespace xeus.Controls
 				rosterItem.HasUnreadMessages = false ;
 			}
 
-			_listRefreshTimer.Start() ;
+			// _listRefreshTimer.Start() ;
 		}
 
 		protected override void OnClosed( EventArgs e )
