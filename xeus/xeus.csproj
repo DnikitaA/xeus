@@ -73,6 +73,7 @@
     <Page Include="Controls\TabControl.xaml" />
     <Page Include="Controls\TabMessages.xaml" />
     <Page Include="Controls\ResizeGropResources.xaml" />
+    <Page Include="Controls\TextBoxResource.xaml" />
     <Page Include="Controls\ToolTipsResourcexaml.xaml" />
   </ItemGroup>
   <ItemGroup>
