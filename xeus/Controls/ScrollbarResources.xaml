@@ -62,10 +62,10 @@
       <ControlTemplate TargetType="{x:Type Thumb}">
         <Border 
           CornerRadius="2,2,2,2"
-          BorderThickness="1" BorderBrush="#FF4A4848" x:Name="border" >
+          BorderThickness="1" BorderBrush="#FF282828" x:Name="border" >
         	<Border.Background>
         		<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-        			<GradientStop Color="#FF404040" Offset="0"/>
+        			<GradientStop Color="#FF363636" Offset="0"/>
         			<GradientStop Color="#FF2E2E2E" Offset="0.981"/>
         		</LinearGradientBrush>
         	</Border.Background>
@@ -74,7 +74,7 @@
 			      <ColumnDefinition Width="12.75"/>
 			      <ColumnDefinition Width="*"/>
 			    </Grid.ColumnDefinitions>
-        		<Rectangle Fill="#FFFFFFFF" Width="4.875" Height="Auto" HorizontalAlignment="Left" Margin="1,1.25,0,1.25" RadiusX="1" RadiusY="1" Opacity="0.08" d:LayoutOverrides="HorizontalAlignment"/>
+        		<Rectangle Fill="#FFFFFFFF" Width="4.875" Height="Auto" HorizontalAlignment="Left" Margin="1,1.25,0,1.25" RadiusX="1" RadiusY="1" Opacity="0.03" d:LayoutOverrides="HorizontalAlignment"/>
         	</Grid>
         </Border>
       	<ControlTemplate.Triggers>
@@ -82,8 +82,8 @@
       			<Setter Property="Background" TargetName="border">
       				<Setter.Value>
       					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-      						<GradientStop Color="#FF636262" Offset="0"/>
-      						<GradientStop Color="#FF3E3E3E" Offset="0.981"/>
+      						<GradientStop Color="#FF343434" Offset="0"/>
+      						<GradientStop Color="#FF282828" Offset="0.981"/>
       					</LinearGradientBrush>
       				</Setter.Value>
       			</Setter>
@@ -104,14 +104,14 @@
       <ControlTemplate TargetType="{x:Type Thumb}">
         <Border 
           CornerRadius="2,2,2,2"
-          BorderThickness="1" BorderBrush="#FF4A4848" x:Name="border" >
+          BorderThickness="1" BorderBrush="#FF262626" x:Name="border" >
         	<Border.Background>
-        		<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-        			<GradientStop Color="#FF404040" Offset="0"/>
-        			<GradientStop Color="#FF2E2E2E" Offset="0.981"/>
+        		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+        			<GradientStop Color="#FF343434" Offset="0"/>
+        			<GradientStop Color="#FF2A2A2A" Offset="0.981"/>
         		</LinearGradientBrush>
         	</Border.Background>
-        	<Rectangle Fill="#FFFFFFFF" RadiusX="1" RadiusY="1" Opacity="0.08" Margin="1,1,1,0" VerticalAlignment="Top" Height="6.002"/>
+        	<Rectangle Fill="#FFFFFFFF" RadiusX="1" RadiusY="1" Opacity="0.03" Margin="1,1,1,0" VerticalAlignment="Top" Height="6.002"/>
         </Border>
       	<ControlTemplate.Triggers>
       		<Trigger Property="IsMouseOver" Value="True">
@@ -141,7 +141,7 @@
       Grid.RowSpan="3"
       CornerRadius="0,0,0,0" 
       BorderThickness="0,0,0,1" >
-    	<Rectangle Width="Auto" Height="Auto" RadiusX="2" RadiusY="2" Stroke="#FF484848">
+    	<Rectangle Width="Auto" Height="Auto" RadiusX="2" RadiusY="2" Stroke="#FF262626">
     		<Rectangle.Fill>
     			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
     				<GradientStop Color="#FF303030" Offset="0"/>
@@ -185,7 +185,7 @@
       Grid.RowSpan="1"
       CornerRadius="0,0,0,0" 
       BorderThickness="0,0,0,1" Grid.ColumnSpan="3" >
-    	<Rectangle Width="Auto" Height="Auto" RadiusX="2" RadiusY="2" Stroke="#FF484848">
+    	<Rectangle Width="Auto" Height="Auto" RadiusX="2" RadiusY="2" Stroke="#FF282828">
     		<Rectangle.Fill>
     			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
     				<GradientStop Color="#FF262626" Offset="0"/>
