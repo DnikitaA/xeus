@@ -34,9 +34,38 @@ namespace xeus.Controls
 			_listRefreshTimer.AutoReset = false ;
 		}
 
+		public static ListBox MessageListBox
+		{
+			get
+			{
+				return _listBox ;
+			}
+			set
+			{
+				_listBox = value ;
+
+				if ( _listBox != null )
+				{
+					_listBox.DataContextChanged += new DependencyPropertyChangedEventHandler( _listBox_DataContextChanged ) ;
+				}
+			}
+		}
+
+		public static TextBox MessageTextBox
+		{
+			get
+			{
+				return _textBox ;
+			}
+			set
+			{
+				_textBox = value ;
+			}
+		}
+
 		private void _listRefreshTimer_Elapsed( object sender, ElapsedEventArgs e )
 		{
-			ScrollToLastItem( _listBox ) ;
+			ScrollToLastItem( MessageListBox ) ;
 		}
 
 		private void _tabs_SelectionChanged( object sender, SelectionChangedEventArgs e )
@@ -132,20 +161,22 @@ namespace xeus.Controls
 					_instance.Activate() ;
 				}
 
-				if ( _listBox == null )
+				/*
+				if ( MessageListBox == null )
 				{
-					_listBox = ( ListBox )EnumVisual< ListBox >( _instance._tabs ) ;
+					MessageListBox = ( ListBox )EnumVisual< ListBox >( _instance._tabs ) ;
 
-					if ( _listBox != null )
+					if ( MessageListBox != null )
 					{
-						_listBox.DataContextChanged += new DependencyPropertyChangedEventHandler( _listBox_DataContextChanged ) ;
+						MessageListBox.DataContextChanged += new DependencyPropertyChangedEventHandler( _listBox_DataContextChanged ) ;
 					}
-				}
+				}*/
 
-				if ( _textBox == null )
+				/*
+				if ( MessageTextBox == null )
 				{
-					_textBox = ( TextBox )EnumVisual< TextBox >( _instance._tabs ) ;
-				}
+					MessageTextBox = ( TextBox )EnumVisual< TextBox >( _instance._tabs ) ;
+				}*/
 
 				if ( rosterItem != null )
 				{
@@ -168,9 +199,9 @@ namespace xeus.Controls
 
 		public static void SendMessage()
 		{
-			if ( _textBox != null )
+			if ( MessageTextBox != null )
 			{
-				_textBox.Text = String.Empty ;
+				MessageTextBox.Text = String.Empty ;
 			}
 		}
 
