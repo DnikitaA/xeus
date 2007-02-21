@@ -16,7 +16,10 @@ namespace xeus.Controls
 	{
 		private static MessageWindow _instance ;
 		private static ListBox _listBox ;
+		private static TextBox _textBox ;
+
 		private Timer _listRefreshTimer = new Timer( 150 ) ;
+
 
 		private delegate void ScrollToLastItemCallback( ListBox listBox ) ;
 
@@ -45,8 +48,6 @@ namespace xeus.Controls
 			{
 				rosterItem.HasUnreadMessages = false ;
 			}
-
-			// _listRefreshTimer.Start() ;
 		}
 
 		protected override void OnClosed( EventArgs e )
@@ -133,12 +134,17 @@ namespace xeus.Controls
 
 				if ( _listBox == null )
 				{
-					_listBox = EnumVisual( _instance._tabs ) ;
+					_listBox = ( ListBox )EnumVisual< ListBox >( _instance._tabs ) ;
 
 					if ( _listBox != null )
 					{
 						_listBox.DataContextChanged += new DependencyPropertyChangedEventHandler( _listBox_DataContextChanged ) ;
 					}
+				}
+
+				if ( _textBox == null )
+				{
+					_textBox = ( TextBox )EnumVisual< TextBox >( _instance._tabs ) ;
 				}
 
 				if ( rosterItem != null )
@@ -157,6 +163,14 @@ namespace xeus.Controls
 			{
 				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
 				                                  new DisplayChatCallback( DisplayChat ), jid, false ) ;
+			}
+		}
+
+		public static void SendMessage()
+		{
+			if ( _textBox != null )
+			{
+				_textBox.Text = String.Empty ;
 			}
 		}
 
@@ -181,22 +195,22 @@ namespace xeus.Controls
 			}
 		}
 
-		public static ListBox EnumVisual( Visual myVisual )
+		public static Visual EnumVisual< T >( Visual myVisual )
 		{
 			for ( int i = 0; i < VisualTreeHelper.GetChildrenCount( myVisual ); i++ )
 			{
 				Visual childVisual = ( Visual ) VisualTreeHelper.GetChild( myVisual, i ) ;
 
-				if ( childVisual is ListBox )
+				if ( childVisual is T )
 				{
-					return childVisual as ListBox ;
+					return childVisual ;
 				}
 
-				ListBox listBox = EnumVisual( childVisual ) ;
+				Visual control = EnumVisual< T >( childVisual ) ;
 
-				if ( listBox != null )
+				if ( control != null )
 				{
-					return listBox ;
+					return control ;
 				}
 			}
 
