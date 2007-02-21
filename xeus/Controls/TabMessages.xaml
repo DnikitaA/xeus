@@ -15,7 +15,8 @@
 			<RowDefinition Height="0.278*"/>
 			<RowDefinition Height="0.722*"/>
 		</Grid.RowDefinitions>
-		<ListBox
+    <ListBox
+      Initialized="ListBoxInitialized"
 			ItemsSource="{Binding Path=Messages}"
 			ItemTemplate="{StaticResource ChatMessageItem}" Style="{DynamicResource ListBoxStyleMessages}"
              BorderThickness="1,1,1,1" VerticalContentAlignment="Stretch" ScrollViewer.CanContentScroll="False"
@@ -24,7 +25,8 @@
       	<GridSplitter ResizeDirection="Rows"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Bottom" BorderThickness="1,1,1,1" BorderBrush="#FF4B4B4B"/>
-	        <TextBox VerticalAlignment="Stretch" Height="Auto" Grid.Row="1" Style="{DynamicResource TextBoxStyleBlack}" TextWrapping="Wrap" />
+	        <TextBox VerticalAlignment="Stretch" Height="Auto" Grid.Row="1" Style="{DynamicResource TextBoxStyleBlack}" TextWrapping="Wrap"
+                   Initialized="TextBoxInitialized"/>
 		<Grid d:IsLayer="True" x:Name="Layer" Grid.ColumnSpan="1" Grid.RowSpan="2">
 			<Button Height="25" Content="Button" HorizontalAlignment="Right" Margin="0,0,5,5" 
 				VerticalAlignment="Bottom" Width="20" Template="{DynamicResource SendIcon}" Click="OnSendClick"/>
