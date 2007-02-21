@@ -26,7 +26,8 @@
                     VerticalAlignment="Bottom" BorderThickness="1,1,1,1" BorderBrush="#FF4B4B4B"/>
 	        <TextBox VerticalAlignment="Stretch" Height="Auto" Grid.Row="1" Style="{DynamicResource TextBoxStyleBlack}" TextWrapping="Wrap" />
 		<Grid d:IsLayer="True" x:Name="Layer" Grid.ColumnSpan="1" Grid.RowSpan="2">
-			<Button Height="25" Content="Button" HorizontalAlignment="Right" Margin="0,0,5,5" VerticalAlignment="Bottom" Width="20" Template="{DynamicResource SendIcon}"/>
+			<Button Height="25" Content="Button" HorizontalAlignment="Right" Margin="0,0,5,5" 
+				VerticalAlignment="Bottom" Width="20" Template="{DynamicResource SendIcon}" Click="OnSendClick"/>
 		</Grid>
     </Grid>	
 	</DataTemplate>
