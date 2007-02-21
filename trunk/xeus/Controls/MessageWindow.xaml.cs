@@ -201,7 +201,13 @@ namespace xeus.Controls
 		{
 			if ( MessageTextBox != null )
 			{
-				MessageTextBox.Text = String.Empty ;
+				RosterItem rosterItem = _instance._tabs.SelectedContent as RosterItem ;
+
+				if ( rosterItem != null )
+				{
+					Client.Instance.SendChatMessage( rosterItem.XmppRosterItem.Jid, MessageTextBox.Text );
+					MessageTextBox.Text = String.Empty ;
+				}
 			}
 		}
 

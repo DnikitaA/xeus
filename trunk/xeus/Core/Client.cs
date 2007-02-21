@@ -163,6 +163,17 @@ namespace xeus.Core
 			}
 		}
 
+		public void SendChatMessage( Jid jid, string text )
+		{
+			Message message = new Message();
+
+			message.Type = MessageType.chat;
+			message.To = jid;
+			message.Body = text;
+			
+			_xmppConnection.Send( message );
+		}
+
 		public void SetMyPresence( ShowType showType )
 		{
 			Connect() ;
