@@ -5,6 +5,7 @@ using System.Windows ;
 using System.Windows.Controls ;
 using System.Windows.Media ;
 using System.Windows.Threading ;
+using agsXMPP.protocol.client ;
 using xeus.Core ;
 
 namespace xeus.Controls
@@ -161,23 +162,6 @@ namespace xeus.Controls
 					_instance.Activate() ;
 				}
 
-				/*
-				if ( MessageListBox == null )
-				{
-					MessageListBox = ( ListBox )EnumVisual< ListBox >( _instance._tabs ) ;
-
-					if ( MessageListBox != null )
-					{
-						MessageListBox.DataContextChanged += new DependencyPropertyChangedEventHandler( _listBox_DataContextChanged ) ;
-					}
-				}*/
-
-				/*
-				if ( MessageTextBox == null )
-				{
-					MessageTextBox = ( TextBox )EnumVisual< TextBox >( _instance._tabs ) ;
-				}*/
-
 				if ( rosterItem != null )
 				{
 					Client.Instance.MessageCenter.MoveUnreadMessagesToRosterItem( rosterItem ) ;
@@ -205,8 +189,9 @@ namespace xeus.Controls
 
 				if ( rosterItem != null )
 				{
-					Client.Instance.SendChatMessage( rosterItem.XmppRosterItem.Jid, MessageTextBox.Text );
+					Client.Instance.SendChatMessage( rosterItem, MessageTextBox.Text );
 					MessageTextBox.Text = String.Empty ;
+					_instance._listRefreshTimer.Start() ;
 				}
 			}
 		}
