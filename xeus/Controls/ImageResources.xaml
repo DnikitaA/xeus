@@ -402,7 +402,7 @@
 		<Ellipse.Fill>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 				<GradientStop Color="#FFD0B87B" Offset="0"/>
-				<GradientStop Color="#FF7A600C" Offset="1"/>
+				<GradientStop Color="#FF7A370C" Offset="1"/>
 			</LinearGradientBrush>
 		</Ellipse.Fill>
 		<Ellipse.BitmapEffect>
@@ -435,7 +435,7 @@
 	  		<Setter.Value>
 	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 	  				<GradientStop Color="#FFF0D6B3" Offset="0"/>
-	  				<GradientStop Color="#FFA2862B" Offset="1"/>
+	  				<GradientStop Color="#FFA25F2B" Offset="1"/>
 	  			</LinearGradientBrush>
 	  		</Setter.Value>
 	  	</Setter>

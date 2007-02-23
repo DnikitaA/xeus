@@ -69,6 +69,7 @@
     <Page Include="Controls\ImageResources.xaml" />
     <Page Include="Controls\ScrollbarResources.xaml" />
     <Page Include="Controls\SliderRosterStyle.xaml" />
+    <Page Include="Controls\SplitterResources.xaml" />
     <Page Include="Controls\StatusbarResources.xaml" />
     <Page Include="Controls\TabControl.xaml" />
     <Page Include="Controls\TabMessages.xaml" />
@@ -124,6 +125,7 @@
     <Compile Include="Core\Services.cs" />
     <Compile Include="Core\SizeFromSliderConverterSmall.cs" />
     <Compile Include="Core\Storage.cs" />
+    <Compile Include="Core\TimeUtilities.cs" />
     <Compile Include="Core\WindowState.cs" />
     <Compile Include="HtmlToXaml\HtmlCssParser.cs" />
     <Compile Include="HtmlToXaml\HtmlLexicalAnalyzer.cs" />

@@ -174,7 +174,7 @@ namespace xeus.Core
 			
 			_xmppConnection.Send( message );
 
-			rosterItem.Messages.Add( new ChatMessage( message, rosterItem ) ) ;
+			rosterItem.Messages.Add( new ChatMessage( message, rosterItem, DateTime.Now ) ) ;
 		}
 
 		public void SetMyPresence( ShowType showType )

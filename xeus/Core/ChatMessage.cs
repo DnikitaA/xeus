@@ -1,7 +1,6 @@
 using System ;
 using System.ComponentModel ;
 using System.IO ;
-using System.Windows.Controls ;
 using System.Windows.Documents ;
 using System.Windows.Markup ;
 using System.Windows.Media.Imaging ;
@@ -14,13 +13,17 @@ namespace xeus.Core
 	{
 		private Message _message ;
 		private readonly RosterItem _rosterItem ;
+		private DateTime _time ;
+		private string _relativeTime ;
 
 		public event PropertyChangedEventHandler PropertyChanged ;
 
-		public ChatMessage( Message message, RosterItem rosterItem )
+		public ChatMessage( Message message, RosterItem rosterItem, DateTime time )
 		{
 			_message = message ;
+			_time = time ;
 			_rosterItem = rosterItem ;
+			_relativeTime = TimeUtilities.FormatRelativeTime( time ) ;
 		}
 
 		public string From
@@ -59,7 +62,7 @@ namespace xeus.Core
 		{
 			get
 			{
-				if ( _rosterItem == null )
+				if ( _rosterItem == null || SentByMe )
 				{
 					return Storage.GetDefaultAvatar() ;
 				}
@@ -75,6 +78,28 @@ namespace xeus.Core
 			get
 			{
 				return ( _message.From.Bare == Client.Instance.MyJid.Bare ) ;
+			}
+		}
+
+		public DateTime Time
+		{
+			get
+			{
+				return _time ;
+			}
+		}
+
+		public string RelativeTime
+		{
+			get
+			{
+				return _relativeTime ;
+			}
+
+			set
+			{
+				_relativeTime = value ;
+				NotifyPropertyChanged( "RelativeTime" ) ;
 			}
 		}
 

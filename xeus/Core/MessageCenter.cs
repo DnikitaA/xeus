@@ -1,3 +1,4 @@
+using System ;
 using System.Windows.Markup ;
 using agsXMPP.protocol.client ;
 using xeus.Controls ;
@@ -92,12 +93,12 @@ namespace xeus.Core
 
 						if ( MessageWindow.IsOpen() )
 						{
-							rosterItem.Messages.Add( new ChatMessage( msg, rosterItem ) );
+							rosterItem.Messages.Add( new ChatMessage( msg, rosterItem, DateTime.Now ) );
 							MessageWindow.DisplayChatWindow( rosterItem.Key, false );
 						}
 						else
 						{
-							_chatMessages.Add( new ChatMessage( msg, rosterItem ) ) ;
+							_chatMessages.Add( new ChatMessage( msg, rosterItem, DateTime.Now ) ) ;
 						}
 
 						break ;
