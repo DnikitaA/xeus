@@ -70,6 +70,14 @@ namespace xeus.Core
 			}
 		}
 
+		public bool SentByMe
+		{
+			get
+			{
+				return ( _message.From.Bare == Client.Instance.MyJid.Bare ) ;
+			}
+		}
+
 		private void NotifyPropertyChanged( String info )
 		{
 			if ( PropertyChanged != null )

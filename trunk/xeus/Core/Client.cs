@@ -163,15 +163,18 @@ namespace xeus.Core
 			}
 		}
 
-		public void SendChatMessage( Jid jid, string text )
+		public void SendChatMessage( RosterItem rosterItem, string text )
 		{
 			Message message = new Message();
 
 			message.Type = MessageType.chat;
-			message.To = jid;
+			message.To = rosterItem.XmppRosterItem.Jid;
 			message.Body = text;
+			message.From = MyJid ;
 			
 			_xmppConnection.Send( message );
+
+			rosterItem.Messages.Add( new ChatMessage( message, rosterItem ) ) ;
 		}
 
 		public void SetMyPresence( ShowType showType )
@@ -341,6 +344,19 @@ namespace xeus.Core
 
 				NotifyPropertyChanged( "MyPresence" ) ;
 				NotifyPropertyChanged( "StatusTemplate" ) ;
+			}
+		}
+
+		public Jid MyJid
+		{
+			get
+			{
+				if ( _xmppConnection != null )
+				{
+					return _xmppConnection.MyJID ;
+				}
+
+				return null ;
 			}
 		}
 
