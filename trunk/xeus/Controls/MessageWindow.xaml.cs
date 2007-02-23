@@ -20,11 +20,12 @@ namespace xeus.Controls
 		private static TextBox _textBox ;
 
 		private Timer _listRefreshTimer = new Timer( 150 ) ;
+		private Timer _timeRefreshTimer = new Timer( 10000 ) ;
 
 
 		private delegate void ScrollToLastItemCallback( ListBox listBox ) ;
-
 		private delegate void DisplayChatCallback( string jid, bool activate ) ;
+		private delegate void RefreshTimeCallback() ;
 
 		public MessageWindow()
 		{
@@ -32,7 +33,37 @@ namespace xeus.Controls
 
 			_tabs.SelectionChanged += new SelectionChangedEventHandler( _tabs_SelectionChanged ) ;
 			_listRefreshTimer.Elapsed += new ElapsedEventHandler( _listRefreshTimer_Elapsed ) ;
+			_timeRefreshTimer.Elapsed += new ElapsedEventHandler( _timeRefreshTimer_Elapsed );
+
 			_listRefreshTimer.AutoReset = false ;
+			_listRefreshTimer.Start();
+		}
+
+		void _timeRefreshTimer_Elapsed( object sender, ElapsedEventArgs e )
+		{
+			RefreshTime() ;
+		}
+
+		void RefreshTime()
+		{
+			if ( App.DispatcherThread.CheckAccess() )
+			{
+				TabItem selectedItem = ( TabItem )_instance._tabs.SelectedItem ;
+				RosterItem rosterItem = selectedItem.Content as RosterItem ;
+
+				if ( rosterItem != null )
+				{
+					foreach ( ChatMessage message in rosterItem.Messages )
+					{
+						message.RelativeTime = TimeUtilities.FormatRelativeTime( message.Time ) ;
+					}
+				}
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new RefreshTimeCallback( RefreshTime ) ) ;
+			}
 		}
 
 		public static ListBox MessageListBox
@@ -82,7 +113,11 @@ namespace xeus.Controls
 
 		protected override void OnClosed( EventArgs e )
 		{
+			_timeRefreshTimer.Stop();
+			_listRefreshTimer.Stop();
+
 			_instance = null ;
+
 			base.OnClosed( e ) ;
 		}
 
@@ -173,6 +208,7 @@ namespace xeus.Controls
 				}
 
 				_instance._listRefreshTimer.Start() ;
+				_instance._timeRefreshTimer.Start();
 			}
 			else
 			{

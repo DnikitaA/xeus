@@ -18,6 +18,7 @@
   			<ResourceDictionary Source="Controls\ToolTipsResourcexaml.xaml"/>
   			<ResourceDictionary Source="Controls\TabControl.xaml"/>
   			<ResourceDictionary Source="Controls\TextBoxResource.xaml"/>
+  			<ResourceDictionary Source="Controls\SplitterResources.xaml"/>
   		</ResourceDictionary.MergedDictionaries>
   	</ResourceDictionary>
   </Application.Resources>
