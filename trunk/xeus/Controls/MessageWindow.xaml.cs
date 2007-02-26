@@ -107,6 +107,16 @@ namespace xeus.Controls
 
 			if ( rosterItem != null )
 			{
+				if ( rosterItem.Messages.Count == 0 )
+				{
+					List< ChatMessage > messages = Database.Instance.ReadMessages( rosterItem ) ;
+
+					foreach ( ChatMessage message in messages )
+					{
+						rosterItem.Messages.Add( message );
+					}
+				}
+
 				rosterItem.HasUnreadMessages = false ;
 			}
 		}
