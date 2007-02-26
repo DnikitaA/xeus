@@ -5,10 +5,12 @@ using System.Windows.Documents ;
 using System.Windows.Markup ;
 using System.Windows.Media.Imaging ;
 using System.Xml ;
+using System.Xml.Serialization ;
 using agsXMPP.protocol.client ;
 
 namespace xeus.Core
 {
+	[Serializable]
 	class ChatMessage : INotifyPropertyChanged
 	{
 		private Message _message ;
@@ -18,6 +20,10 @@ namespace xeus.Core
 
 		public event PropertyChangedEventHandler PropertyChanged ;
 
+		public ChatMessage()
+		{
+		}
+
 		public ChatMessage( Message message, RosterItem rosterItem, DateTime time )
 		{
 			_message = message ;
@@ -26,6 +32,25 @@ namespace xeus.Core
 			_relativeTime = TimeUtilities.FormatRelativeTime( time ) ;
 		}
 
+		public string MessageInnerXml
+		{
+			get
+			{
+				return _message.InnerXml ;
+			}
+
+			set
+			{
+				if ( _message == null )
+				{
+					_message = new Message();
+				}
+
+				_message.InnerXml = value ;
+			}
+		}
+
+		[XmlIgnore]
 		public string From
 		{
 			get
@@ -34,6 +59,7 @@ namespace xeus.Core
 			}
 		}
 
+		[XmlIgnore]
 		public string Body
 		{
 			get
@@ -49,6 +75,7 @@ namespace xeus.Core
 			}
 		}
 
+		[XmlIgnore]
 		public FlowDocument Document
 		{
 			get
@@ -58,6 +85,7 @@ namespace xeus.Core
 			}
 		}
 
+		[XmlIgnore]
 		public BitmapImage Image
 		{
 			get
@@ -73,6 +101,7 @@ namespace xeus.Core
 			}
 		}
 
+		[XmlIgnore]
 		public bool SentByMe
 		{
 			get
@@ -87,8 +116,14 @@ namespace xeus.Core
 			{
 				return _time ;
 			}
+			
+			set
+			{
+				_time = value ;
+			}
 		}
 
+		[XmlIgnore]
 		public string RelativeTime
 		{
 			get

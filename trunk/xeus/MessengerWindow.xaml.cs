@@ -52,9 +52,16 @@ namespace xeus
 
 		protected override void OnClosing( System.ComponentModel.CancelEventArgs e )
 		{
+			SaveData() ;
+
 			base.OnClosing( e );
 
 			MessageWindow.CloseWindow();
+		}
+
+		void SaveData()
+		{
+			Database.Instance.SaveRosterItems( Client.Instance.Roster.Items );
 		}
 	}
 }

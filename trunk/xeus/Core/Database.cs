@@ -23,6 +23,7 @@ namespace xeus.Core
 
 		public Database()
 		{
+			/*
 			string path = string.Format( "{0}\\{1}", Storage.GetDbFolder(), "Default" ) ;
 
 			try
@@ -35,21 +36,24 @@ namespace xeus.Core
 				// does not exist
 				_xmlDatabase.RootName = "xeus" ;
 				_xmlDatabase.Create();
-			}
+			}*/
 		}
 
 		public void SaveRosterItems( ObservableCollectionDisp< RosterItem > rosterItems )
 		{
-			string path = string.Format( "{0}\\{1}", Storage.GetDbFolder(), "Roster" ) ;
+			/*string path = string.Format( "{0}\\{1}", Storage.GetDbFolder(), "Roster" ) ;
+
+			RosterItem[] list = new RosterItem[rosterItems.Count] ;
+			rosterItems.CopyTo( list, 0 );
 
 			using ( FileStream file = File.Create( path ) )
 			{
 				BinaryFormatter formatter = new BinaryFormatter() ;
-				formatter.Serialize( file, rosterItems ) ;
+				formatter.Serialize( file, list ) ;
 
 				file.Flush();
 				file.Close();
-			}
+			}*/
 		}
 	}
 }
