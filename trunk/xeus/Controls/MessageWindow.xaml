@@ -4,9 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Class="xeus.Controls.MessageWindow"
     xmlns:win="clr-namespace:xeus.Controls"
+    xmlns:settings="clr-namespace:xeus.Core"
     Title="xeus.Controls" Height="300" Width="300"
 	  WindowStyle="None" AllowsTransparency="True"
     ResizeMode="CanResizeWithGrip" BorderBrush="#FF1E1E1E" BorderThickness="2,2,2,2"
+    settings:WindowSettings.Save="True"	
     >
 	<Window.Background>
 		<ImageBrush Viewport="0,0,10,10"

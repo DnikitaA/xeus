@@ -19,12 +19,12 @@ namespace xeus.Core
 				{
 					return "Right now" ;
 				}
-				else if ( Math.Round( ( now - startTime ).TotalMinutes, 0 ) == 0 )
+				else if ( ( now - startTime ).TotalMinutes < 1 )
 				{
 					// same minute
 					builder.AppendFormat( "{0} sec ago",  Math.Round( ( now - startTime ).TotalSeconds / 10 * 10, 0 ) ) ;
 				}
-				else if ( Math.Round( ( now - startTime ).TotalHours, 0 ) == 0 )
+				else if ( ( now - startTime ).TotalHours < 1 )
 				{
 					builder.AppendFormat( "{0} min ago", Math.Round( ( now - startTime ).TotalMinutes, 0 ) ) ;
 				}
@@ -33,7 +33,8 @@ namespace xeus.Core
 					builder.AppendFormat( "{0} ago", ( now - startTime ) ) ;
 				}
 			}
-			else if ( ( now.Date - startTime.Date ).TotalDays == 1 )
+			else if ( ( now.Date - startTime.Date ).TotalDays > 1
+					&& ( now.Date - startTime.Date ).TotalDays < 2 )
 			{
 				// yesterday
 				builder.AppendFormat( "yesterday {0}", startTime.TimeOfDay ) ;
