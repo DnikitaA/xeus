@@ -143,6 +143,17 @@
 														<Trigger Property="IsDragging" Value="True">
 															<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
 														</Trigger>
+														<Trigger Property="IsMouseOver" Value="True">
+															<Setter Property="Fill" TargetName="rectangle">
+																<Setter.Value>
+																	<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+																		<GradientStop Color="#FF6389A4" Offset="0"/>
+																		<GradientStop Color="#FF395269" Offset="1"/>
+																	</LinearGradientBrush>
+																</Setter.Value>
+															</Setter>
+															<Setter Property="Fill" TargetName="path" Value="#FFB2B0B0"/>
+														</Trigger>
 													</ControlTemplate.Triggers>
 												</ControlTemplate>
 											</Setter.Value>

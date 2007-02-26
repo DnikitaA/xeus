@@ -41,10 +41,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\agsXMPP\agsXMPP.dll</HintPath>
     </Reference>
-    <Reference Include="Clifton.Tools.Xml, Version=1.0.2586.15429, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\XmlDb\Clifton.Tools.Xml.dll</HintPath>
-    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="PresentationDesignDeveloper, Version=0.0.4030.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -108,6 +104,7 @@
     <Compile Include="Controls\WindowBase.cs" />
     <Compile Include="Core\ChatMessage.cs" />
     <Compile Include="Core\CountToVisibilityConverter.cs" />
+    <Compile Include="Core\Database.cs" />
     <Compile Include="Core\MessageCenter.cs" />
     <Compile Include="Controls\ServicesControl.xaml.cs">
       <SubType>Code</SubType>
@@ -127,6 +124,7 @@
     <Compile Include="Core\Storage.cs" />
     <Compile Include="Core\TimeUtilities.cs" />
     <Compile Include="Core\WindowState.cs" />
+    <Compile Include="Database\XmlDatabase.cs" />
     <Compile Include="HtmlToXaml\HtmlCssParser.cs" />
     <Compile Include="HtmlToXaml\HtmlLexicalAnalyzer.cs" />
     <Compile Include="HtmlToXaml\HtmlParser.cs" />

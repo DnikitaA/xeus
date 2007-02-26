@@ -19,12 +19,12 @@ namespace xeus.Core
 				{
 					return "Right now" ;
 				}
-				else if ( ( now.Date - startTime.Date ).Minutes == 0 )
+				else if ( ( now - startTime ).Minutes == 0 )
 				{
 					// same minute
 					builder.AppendFormat( "{0} sec ago",  ( ( now - startTime ).Seconds / 10 * 10 ) ) ;
 				}
-				else if ( ( now.Date - startTime.Date ).Hours == 0 )
+				else if ( ( now - startTime ).Hours == 0 )
 				{
 					builder.AppendFormat( "{0} min ago", ( now - startTime ).Minutes ) ;
 				}
