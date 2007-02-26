@@ -1,6 +1,7 @@
 using System ;
 using System.Collections.Specialized ;
 using System.ComponentModel ;
+using System.Data ;
 using System.Windows.Controls ;
 using System.Windows.Media.Imaging ;
 using System.Windows.Threading ;
@@ -24,6 +25,7 @@ namespace xeus.Core
 		private agsXMPP.protocol.iq.roster.RosterItem _rosterItem ;
 		private string _statusText = "Unavailable" ;
 
+		private string _key ;
 		private DateTime _birthday = DateTime.MinValue ;
 		private string _url = String.Empty ;
 		private string _title = String.Empty ;
@@ -43,11 +45,23 @@ namespace xeus.Core
 		public Presence _presence ;
 		private string _statusDescription = "Unavailable" ;
 
-		public RosterItem( agsXMPP.protocol.iq.roster.RosterItem rosterItem )
+		private RosterItem()
+		{
+			_messages.CollectionChanged += new NotifyCollectionChangedEventHandler( _messages_CollectionChanged ) ;
+		}
+
+		public RosterItem( DataRow row ) : this()
+		{
+			_key = row[ "Key" ] as string ;
+			_name = row[ "Name" ] as string ;
+			_fullName = row[ "FullName" ] as string ;
+			_nickName = row[ "NickName" ] as string ;
+		}
+
+		public RosterItem( agsXMPP.protocol.iq.roster.RosterItem rosterItem ) : this()
 		{
 			_rosterItem = rosterItem ;
-
-			_messages.CollectionChanged += new NotifyCollectionChangedEventHandler( _messages_CollectionChanged ) ;
+			_key = _rosterItem.Jid.Bare ;
 		}
 
 		private void _messages_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
@@ -74,13 +88,23 @@ namespace xeus.Core
 			{
 				return _rosterItem ;
 			}
+
+			set
+			{
+				_rosterItem = value ;
+			}
 		}
 
 		public string Key
 		{
 			get
 			{
-				return _rosterItem.Jid.Bare ;
+				return _key ;
+			}
+
+			set
+			{
+				_key = value ;
 			}
 		}
 

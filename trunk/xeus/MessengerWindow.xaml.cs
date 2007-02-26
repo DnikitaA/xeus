@@ -61,7 +61,8 @@ namespace xeus
 
 		void SaveData()
 		{
-			Database.Instance.SaveRosterItems( Client.Instance.Roster.Items );
+			Database.Instance.StoreRosterItems( Client.Instance.Roster.Items );
+			Database.Instance.Save() ;
 		}
 	}
 }
