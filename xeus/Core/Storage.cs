@@ -62,10 +62,8 @@ namespace xeus.Core
 				{
 					using ( StreamWriter streamWriter = new StreamWriter( fileStream ) )
 					{
-						string x = "<vCard>" ;
-						x += vcard.InnerXml ;
-						x += "</vCard>" ;
-						streamWriter.Write( x ) ;
+						string vcardXml = string.Format( "<vCard>{0}</vCard>", vcard.InnerXml ) ;
+						streamWriter.Write( vcardXml ) ;
 					}
 				}
 			}
