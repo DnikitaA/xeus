@@ -1,91 +1,61 @@
 using System ;
 using System.ComponentModel ;
-using System.IO ;
-using System.Windows.Documents ;
-using System.Windows.Markup ;
+using System.Data ;
 using System.Windows.Media.Imaging ;
-using System.Xml ;
-using System.Xml.Serialization ;
 using agsXMPP.protocol.client ;
 
 namespace xeus.Core
 {
-	[Serializable]
-	class ChatMessage : INotifyPropertyChanged
+	internal class ChatMessage : INotifyPropertyChanged
 	{
-		private Message _message ;
+		private string _from ;
+		private string _to ;
 		private readonly RosterItem _rosterItem ;
 		private DateTime _time ;
 		private string _relativeTime ;
+		private string _body ;
+		private bool _isFromDb = false ;
 
 		public event PropertyChangedEventHandler PropertyChanged ;
 
-		public ChatMessage()
+		public ChatMessage( DataRow row, RosterItem rosterItem )
 		{
+			_isFromDb = true ;
+			_rosterItem = rosterItem ;
+
+			_body = row[ "Body" ] as string ;
+			_from = row[ "From" ] as string ;
+			_to = row[ "To" ] as string ;
+			_time = DateTime.FromBinary( long.Parse( row[ "Time" ] as string ) ) ;
+			_relativeTime = TimeUtilities.FormatRelativeTime( _time ) ;
 		}
 
 		public ChatMessage( Message message, RosterItem rosterItem, DateTime time )
 		{
-			_message = message ;
+			_body = message.Body ;
 			_time = time ;
 			_rosterItem = rosterItem ;
+			_from = message.From.Bare ;
+			_to = message.To.Bare ;
 			_relativeTime = TimeUtilities.FormatRelativeTime( time ) ;
 		}
 
-		public string MessageInnerXml
-		{
-			get
-			{
-				return _message.InnerXml ;
-			}
-
-			set
-			{
-				if ( _message == null )
-				{
-					_message = new Message();
-				}
-
-				_message.InnerXml = value ;
-			}
-		}
-
-		[XmlIgnore]
 		public string From
 		{
 			get
 			{
-				return _message.From.Bare ;
+				return _from ;
 			}
 		}
 
-		[XmlIgnore]
 		public string Body
 		{
 			get
 			{
-				if ( _message.Html == null )
-				{
-					return _message.Body ;
-				}
-				else
-				{
-					return _message.Html.Body.InnerHtml ;
-				}
+				return _body ;
 			}
 		}
 
-		[XmlIgnore]
-		public FlowDocument Document
-		{
-			get
-			{
-				string xaml = HTMLConverter.HtmlToXamlConverter.ConvertHtmlToXaml( Body, true ) ;
-				return XamlReader.Load( new XmlTextReader( new StringReader( xaml ) ) ) as FlowDocument ;
-			}
-		}
-
-		[XmlIgnore]
 		public BitmapImage Image
 		{
 			get
@@ -101,12 +71,11 @@ namespace xeus.Core
 			}
 		}
 
-		[XmlIgnore]
 		public bool SentByMe
 		{
 			get
 			{
-				return ( _message.From.Bare == Client.Instance.MyJid.Bare ) ;
+				return ( _from == Client.Instance.MyJid.Bare ) ;
 			}
 		}
 
@@ -116,14 +85,8 @@ namespace xeus.Core
 			{
 				return _time ;
 			}
-			
-			set
-			{
-				_time = value ;
-			}
 		}
 
-		[XmlIgnore]
 		public string RelativeTime
 		{
 			get
@@ -135,6 +98,22 @@ namespace xeus.Core
 			{
 				_relativeTime = value ;
 				NotifyPropertyChanged( "RelativeTime" ) ;
+			}
+		}
+
+		public string To
+		{
+			get
+			{
+				return _to ;
+			}
+		}
+
+		public bool IsFromDb
+		{
+			get
+			{
+				return _isFromDb ;
 			}
 		}
 
