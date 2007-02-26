@@ -38,8 +38,13 @@ namespace xeus.Core
 
 		public Roster()
 		{
-			_rosterItemTimer.AutoReset = true ;
-			_rosterItemTimer.Start() ;
+			List< RosterItem > dbRosterItems = Database.Instance.ReadRosterItems() ;
+
+			foreach ( RosterItem item in dbRosterItems )
+			{
+				_rosterItemsToRecieveVCard.Enqueue( item );
+			}
+
 			_rosterItemTimer.Elapsed += new ElapsedEventHandler( _rosterItemTimer_Elapsed ) ;
 		}
 
@@ -54,14 +59,21 @@ namespace xeus.Core
 		public void RegisterEvents( XmppClientConnection xmppConnection )
 		{
 			xmppConnection.OnRosterItem += new XmppClientConnection.RosterHandler( xmppConnecion_OnRosterItem ) ;
+			xmppConnection.OnRosterEnd += new ObjectHandler( xmppConnection_OnRosterEnd );
 			xmppConnection.OnPresence += new XmppClientConnection.PresenceHandler( xmppConnection_OnPresence ) ;
+		}
+
+		void xmppConnection_OnRosterEnd( object sender )
+		{
+			_rosterItemTimer.AutoReset = true ;
+			_rosterItemTimer.Start() ;
 		}
 
 		public RosterItem FindItem( string bare )
 		{
 			foreach ( RosterItem rosterItem in _items )
 			{
-				if ( rosterItem.XmppRosterItem.Jid.Bare == bare )
+				if ( rosterItem.Key == bare )
 				{
 					return rosterItem ;
 				}
@@ -200,6 +212,15 @@ namespace xeus.Core
 				lock ( _lockRosterItems )
 				{
 					// using timer frees the UI - on roster item are called synchronously for all items on startup
+					foreach ( RosterItem existingItem in _rosterItemsToRecieveVCard )
+					{
+						if ( existingItem.Key == item.Jid.Bare )
+						{
+							existingItem.XmppRosterItem = item ;
+							return ;
+						}
+					}
+
 					_rosterItemsToRecieveVCard.Enqueue( rosterItem ) ;
 				}
 			}

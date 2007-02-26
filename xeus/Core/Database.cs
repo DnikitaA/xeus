@@ -1,59 +1,95 @@
-using System;
-using System.Collections.Generic;
-using System.IO ;
-using System.Runtime.Serialization.Formatters.Binary ;
-using System.Text;
-using System.Xml ;
-using Clifton.Tools.Xml;
+using System ;
+using System.Collections.Generic ;
+using System.Data ;
+using Clifton.Tools.Xml ;
 
 namespace xeus.Core
 {
-	class Database
+	internal class NullFieldValuePair : XmlDatabase.FieldValuePair
 	{
-		private static Database _instance = new Database();
-		XmlDatabase _xmlDatabase = new XmlDatabase();
+		public NullFieldValuePair( string field, string val )
+			: base( ( field == null ) ? String.Empty : field, ( val == null ) ? String.Empty : val )
+		{
+		}
+	}
+
+	internal class Database : XmlDatabase
+	{
+		private static Database _instance = new Database() ;
 
 		public static Database Instance
 		{
 			get
 			{
-				return _instance;
+				return _instance ;
 			}
 		}
 
 		public Database()
 		{
-			/*
-			string path = string.Format( "{0}\\{1}", Storage.GetDbFolder(), "Default" ) ;
+			string path = string.Format( "{0}\\{1}", Storage.GetDbFolder(), "Default.xeusdb" ) ;
 
 			try
 			{
-				_xmlDatabase.Load( path ) ;
+				RootName = "xeus" ;
+				Load( path ) ;
 			}
 
-			catch ( XmlException )
+			catch ( Exception )
 			{
 				// does not exist
-				_xmlDatabase.RootName = "xeus" ;
-				_xmlDatabase.Create();
-			}*/
+				RootName = "xeus" ;
+				Create() ;
+			}
 		}
 
-		public void SaveRosterItems( ObservableCollectionDisp< RosterItem > rosterItems )
+		private FieldValuePair[] GetData( RosterItem item )
 		{
-			/*string path = string.Format( "{0}\\{1}", Storage.GetDbFolder(), "Roster" ) ;
+			FieldValuePair[] data = new FieldValuePair[ 4 ] ;
 
-			RosterItem[] list = new RosterItem[rosterItems.Count] ;
-			rosterItems.CopyTo( list, 0 );
+			data[ 0 ] = new NullFieldValuePair( "Key", item.Key ) ;
+			data[ 1 ] = new NullFieldValuePair( "Name", item.Name ) ;
+			data[ 2 ] = new NullFieldValuePair( "FullName", item.FullName ) ;
+			data[ 3 ] = new NullFieldValuePair( "NickName", item.NickName ) ;
 
-			using ( FileStream file = File.Create( path ) )
+			return data ;
+		}
+
+		public List< RosterItem > ReadRosterItems()
+		{
+			List< RosterItem > rosterItems = new List< RosterItem >( );
+
+			DataTable data = Query( "Roster/RosterItem" ) ;
+
+			foreach ( DataRow row in data.Rows )
 			{
-				BinaryFormatter formatter = new BinaryFormatter() ;
-				formatter.Serialize( file, list ) ;
+				rosterItems.Add( new RosterItem( row ) );
+			}
 
-				file.Flush();
-				file.Close();
-			}*/
+			return rosterItems ;
+		}
+
+		public void StoreRosterItems( ObservableCollectionDisp< RosterItem > rosterItems )
+		{
+			foreach ( RosterItem item in rosterItems )
+			{
+				FieldValuePair[] data = GetData( item ) ;
+
+				SaveOrUpdate( "Roster/RosterItem", string.Format( "@Key='{0}'", item.Key ), data ) ;
+			}
+		}
+
+		void SaveOrUpdate( string path, string where, FieldValuePair[] fields )
+		{
+			if ( Update( path, where, fields ) == 0 )
+			{
+				Insert( path, fields ) ;
+			}
+		}
+
+		public new void Save()
+		{
+			base.Save() ;
 		}
 	}
 }

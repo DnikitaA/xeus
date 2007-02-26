@@ -15,31 +15,32 @@ namespace xeus.Core
 			if ( now.Date == startTime.Date )
 			{
 				// today
-				if ( ( now - startTime ).Seconds <= 10 )
+				if ( ( now - startTime ).TotalSeconds <= 10 )
 				{
 					return "Right now" ;
 				}
-				else if ( ( now - startTime ).Minutes == 0 )
+				else if ( Math.Round( ( now - startTime ).TotalMinutes, 0 ) == 0 )
 				{
 					// same minute
-					builder.AppendFormat( "{0} sec ago",  ( ( now - startTime ).Seconds / 10 * 10 ) ) ;
+					builder.AppendFormat( "{0} sec ago",  Math.Round( ( now - startTime ).TotalSeconds / 10 * 10, 0 ) ) ;
 				}
-				else if ( ( now - startTime ).Hours == 0 )
+				else if ( Math.Round( ( now - startTime ).TotalHours, 0 ) == 0 )
 				{
-					builder.AppendFormat( "{0} min ago", ( now - startTime ).Minutes ) ;
+					builder.AppendFormat( "{0} min ago", Math.Round( ( now - startTime ).TotalMinutes, 0 ) ) ;
 				}
 				else
 				{
 					builder.AppendFormat( "{0} ago", ( now - startTime ) ) ;
 				}
 			}
-			else if ( ( now.Date - startTime.Date ).Days == 1 )
+			else if ( ( now.Date - startTime.Date ).TotalDays == 1 )
 			{
 				// yesterday
+				builder.AppendFormat( "yesterday {0}", startTime.TimeOfDay ) ;
 			}
 			else
 			{
-				builder.AppendFormat( "{0:D}\n{1} days ago", startTime, ( now.Date - startTime.Date ).Days ) ;
+				builder.AppendFormat( "{0:D}\n{1} days ago", startTime, Math.Round( ( now.Date - startTime.Date ).TotalDays, 0 ) ) ;
 			}
 
 			return builder.ToString() ;
