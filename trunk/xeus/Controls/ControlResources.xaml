@@ -384,13 +384,13 @@
  <DataTemplate x:Key="ChatMessageItem" DataType="{x:Type local:ChatMessage}">
  	<StackPanel>
 	    <DockPanel >
-			<Image Source="{Binding Path=Image}" Width="30" VerticalAlignment="Top" Height="30" x:Name="_avatar"
+			<Image Source="{Binding Path=Image}" Width="40" VerticalAlignment="Top" Height="40" x:Name="_avatar"
 					DockPanel.Dock="Right"/>
 			<TextBlock x:Name="_body" Text="{Binding Path=Body}" Foreground="#FFC5A581" HorizontalAlignment="Stretch"
 			 Margin="0,0,0,0" TextWrapping="WrapWithOverflow" 
 			 		DockPanel.Dock="Right" FontSize="14"/>
 	    </DockPanel>
-		<Border DockPanel.Dock="Left" x:Name="_time" BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2" HorizontalAlignment="Right" Padding="4,2,4,2">
+		<Border DockPanel.Dock="Left" x:Name="_time" BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2" HorizontalAlignment="Right" Padding="4,2,4,2" Opacity="0.6" Margin="4,-4,4,0" Panel.ZIndex="2">
 			<Border.Background>
 				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 					<GradientStop Color="#FF78C2E1" Offset="0"/>
@@ -403,10 +403,16 @@
 					<GradientStop Color="#95FFFFFF" Offset="1"/>
 				</RadialGradientBrush>
 			</Border.OpacityMask>
-			<TextBlock Text="{Binding Path=RelativeTime}" Foreground="#FF323F48" FontSize="10"/>
+			<Border.BitmapEffect>
+				<DropShadowBitmapEffect/>
+			</Border.BitmapEffect>
+			<TextBlock Text="{Binding Path=RelativeTime}" Foreground="#FF323F48" FontSize="10" x:Name="textBlock"/>
 		</Border>
 	</StackPanel>
 	<DataTemplate.Triggers>
+		<Trigger Property="IsMouseOver" SourceName="_time" Value="True">
+			<Setter Property="Text" Value="{Binding Path=Time}" TargetName="textBlock" />
+		</Trigger>
 		<DataTrigger Binding="{Binding Path=SentByMe}" Value="true">
 			<Setter Property="DockPanel.Dock" Value="Left" TargetName="_avatar" />
 			<Setter Property="DockPanel.Dock" Value="Left" TargetName="_body" />
