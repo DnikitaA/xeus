@@ -13,7 +13,7 @@ namespace xeus.Core
 {
 	internal static class Storage
 	{
-		private static string _folder ;
+		private readonly static string _folder ;
 
 		private static BitmapImage _defaultAvatar ;
 		private static BitmapImage _defaultServiceAvatar ;
@@ -24,6 +24,18 @@ namespace xeus.Core
 
 			FileInfo fileInfo = new FileInfo( path ) ;
 			_folder = fileInfo.DirectoryName ;
+		}
+
+		public static DirectoryInfo GetDbFolder()
+		{
+			DirectoryInfo directoryInfo = new DirectoryInfo( _folder + "\\Database" ) ;
+
+			if ( !directoryInfo.Exists )
+			{
+				directoryInfo.Create() ;
+			}
+
+			return directoryInfo ;
 		}
 
 		private static DirectoryInfo GetCacheFolder()
