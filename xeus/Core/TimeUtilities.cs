@@ -33,15 +33,18 @@ namespace xeus.Core
 					builder.AppendFormat( "{0} ago", ( now - startTime ) ) ;
 				}
 			}
-			else if ( ( now.Date - startTime.Date ).TotalDays > 1
-					&& ( now.Date - startTime.Date ).TotalDays < 2 )
+			else if ( ( now.Date - startTime.Date ).TotalDays == 1 )
 			{
 				// yesterday
-				builder.AppendFormat( "yesterday {0}", startTime.TimeOfDay ) ;
+				builder.AppendFormat( "yesterday {0:00}:{1:00}", startTime.TimeOfDay.Hours, startTime.TimeOfDay.Minutes ) ;
+			}
+			else if ( ( now.Date - startTime.Date ).TotalDays < 5 )
+			{
+				builder.AppendFormat( "{0} days ago, {1:00}:{2:00}", Math.Round( ( now.Date - startTime.Date ).TotalDays, 0 ), startTime.TimeOfDay.Hours, startTime.TimeOfDay.Minutes ) ;
 			}
 			else
 			{
-				builder.AppendFormat( "{0:D}\n{1} days ago", startTime, Math.Round( ( now.Date - startTime.Date ).TotalDays, 0 ) ) ;
+				builder.Append( startTime.ToString() ) ;
 			}
 
 			return builder.ToString() ;
