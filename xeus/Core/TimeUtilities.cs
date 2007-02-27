@@ -30,7 +30,8 @@ namespace xeus.Core
 				}
 				else
 				{
-					builder.AppendFormat( "{0} ago", ( now - startTime ) ) ;
+					TimeSpan time = ( now - startTime ) ;
+					builder.AppendFormat( "{0}:{1:00} ago", time.Hours, time.Minutes ) ;
 				}
 			}
 			else if ( ( now.Date - startTime.Date ).TotalDays == 1 )
