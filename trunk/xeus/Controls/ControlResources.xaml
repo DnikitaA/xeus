@@ -388,9 +388,9 @@
 	    <DockPanel >
 			<Image Source="{Binding Path=Image}" Width="40" VerticalAlignment="Top" Height="40" HorizontalAlignment="Right"
 				x:Name="_image" DockPanel.Dock="Right" />
-			<TextBlock x:Name="_body" Text="{Binding Path=Body}" Foreground="#FFC5A581" 
+			<TextBox x:Name="_body" Text="{Binding Path=Body, Mode=OneWay}" Foreground="#FFC5A581" 
 			 Margin="10,0,10,0" TextWrapping="WrapWithOverflow" 
-			 		DockPanel.Dock="Right" FontSize="12" FontFamily="Calibri"/>
+			 		DockPanel.Dock="Right" FontSize="14" Style="{DynamicResource TextBoxStyleBlack}" IsReadOnly="True" IsUndoEnabled="False"/>
 	    </DockPanel>
 	</Grid>
 	<DataTemplate.Triggers>
