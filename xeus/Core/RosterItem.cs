@@ -621,7 +621,7 @@ namespace xeus.Core
 			}
 		}
 
-		public string SubscriptionText
+		public string SubscriptionTypeText
 		{
 			get
 			{
