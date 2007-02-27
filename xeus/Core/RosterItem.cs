@@ -8,6 +8,7 @@ using System.Windows.Threading ;
 using agsXMPP.protocol.Base ;
 using agsXMPP.protocol.client ;
 using agsXMPP.protocol.iq.vcard ;
+using Clifton.Tools.Xml ;
 
 namespace xeus.Core
 {
@@ -38,6 +39,7 @@ namespace xeus.Core
 		private Email _emailPreferred ;
 		private BitmapImage _image ;
 		private bool _hasVCardRecivied = false ;
+		private int _vCardAttempts = 0 ;
 		private bool _hasUnreadMessages = false ;
 
 		public event PropertyChangedEventHandler PropertyChanged ;
@@ -53,10 +55,27 @@ namespace xeus.Core
 		public RosterItem( DataRow row ) : this()
 		{
 			_key = row[ "Key" ] as string ;
+			/*
 			_name = row[ "Name" ] as string ;
 			_fullName = row[ "FullName" ] as string ;
 			_nickName = row[ "NickName" ] as string ;
+			 */
 		}
+
+		public XmlDatabase.FieldValuePair[] GetData()
+		{
+			XmlDatabase.FieldValuePair[] data = new XmlDatabase.FieldValuePair[ 1 ] ;
+
+			data[ 0 ] = new NullFieldValuePair( "Key", Key ) ;
+			/*
+			data[ 1 ] = new NullFieldValuePair( "Name", Name ) ;
+			data[ 2 ] = new NullFieldValuePair( "FullName", FullName ) ;
+			data[ 3 ] = new NullFieldValuePair( "NickName", NickName ) ;
+			data[ 4 ] = new NullFieldValuePair( "Group", Group ) ;*/
+
+			return data ;
+		}
+
 
 		public RosterItem( agsXMPP.protocol.iq.roster.RosterItem rosterItem ) : this()
 		{
@@ -82,6 +101,14 @@ namespace xeus.Core
 			}
 		}
 
+		public bool IsInitialized
+		{
+			get
+			{
+				return ( XmppRosterItem != null ) ;
+			}
+		}
+
 		public agsXMPP.protocol.iq.roster.RosterItem XmppRosterItem
 		{
 			get
@@ -92,6 +119,8 @@ namespace xeus.Core
 			set
 			{
 				_rosterItem = value ;
+
+				Name = _rosterItem.Name ;
 			}
 		}
 
@@ -121,7 +150,7 @@ namespace xeus.Core
 					return NickName ;
 				}
 
-				return ( _rosterItem.Name != null ) ? _rosterItem.Name : _rosterItem.Jid.ToString() ;
+				return ( !String.IsNullOrEmpty( Name ) ) ? Name : Key ;
 			}
 		}
 
@@ -145,23 +174,27 @@ namespace xeus.Core
 		{
 			get
 			{
-				if ( _presence == null || _presence.Type == PresenceType.unavailable )
+				string group ;
+
+				if ( _rosterItem == null || _presence == null || _presence.Type == PresenceType.unavailable )
 				{
-					return "<offline>" ;
+					group = "<offline>" ;
 				}
 				else if ( _rosterItem.Jid.User == null )
 				{
-					return "<services>" ;
+					group = "<services>" ;
 				}
 				else if ( _rosterItem.GetGroups().Count > 0 )
 				{
-					Group group = ( Group ) _rosterItem.GetGroups().Item( 0 ) ;
-					return group.Name ;
+					Group rosterGroup = ( Group ) _rosterItem.GetGroups().Item( 0 ) ;
+					group = rosterGroup.Name ;
 				}
 				else
 				{
-					return "<none>" ;
+					group = "<none>" ;
 				}
+
+				return group ;
 			}
 		}
 
@@ -277,7 +310,7 @@ namespace xeus.Core
 
 				if ( Image == null )
 				{
-					if ( XmppRosterItem.Jid.User == null )
+					if ( !IsInitialized || XmppRosterItem.Jid.User == null )
 					{
 						Image = Storage.GetDefaultServiceAvatar() ;
 					}
@@ -486,6 +519,18 @@ namespace xeus.Core
 			{
 				_hasUnreadMessages = value ;
 				NotifyPropertyChanged( "HasUnreadMessages" ) ;
+			}
+		}
+
+		public int VCardAttempts
+		{
+			get
+			{
+				return _vCardAttempts ;
+			}
+			set
+			{
+				_vCardAttempts = value ;
 			}
 		}
 

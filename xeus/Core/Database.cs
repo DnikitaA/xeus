@@ -45,42 +45,23 @@ namespace xeus.Core
 			}
 		}
 
-		private FieldValuePair[] GetData( RosterItem item )
-		{
-			FieldValuePair[] data = new FieldValuePair[ 4 ] ;
-
-			data[ 0 ] = new NullFieldValuePair( "Key", item.Key ) ;
-			data[ 1 ] = new NullFieldValuePair( "Name", item.Name ) ;
-			data[ 2 ] = new NullFieldValuePair( "FullName", item.FullName ) ;
-			data[ 3 ] = new NullFieldValuePair( "NickName", item.NickName ) ;
-
-			return data ;
-		}
-
-		private FieldValuePair[] GetData( ChatMessage item )
-		{
-			FieldValuePair[] data = new FieldValuePair[ 5 ] ;
-
-			string key = ( item.SentByMe ) ? item.To : item.From ;
-
-			data[ 0 ] = new NullFieldValuePair( "Key", key ) ;
-			data[ 1 ] = new NullFieldValuePair( "From", item.From ) ;
-			data[ 2 ] = new NullFieldValuePair( "To", item.To ) ;
-			data[ 3 ] = new NullFieldValuePair( "Time", item.Time.ToBinary().ToString() ) ;
-			data[ 4 ] = new NullFieldValuePair( "Body", item.Body ) ;
-
-			return data ;
-		}
-
 		public List< RosterItem > ReadRosterItems()
 		{
 			List< RosterItem > rosterItems = new List< RosterItem >( );
 
-			DataTable data = Query( "Roster/RosterItem" ) ;
-
-			foreach ( DataRow row in data.Rows )
+			try
 			{
-				rosterItems.Add( new RosterItem( row ) );
+				DataTable data = Query( "Roster/RosterItem" ) ;
+
+				foreach ( DataRow row in data.Rows )
+				{
+					rosterItems.Add( new RosterItem( row ) ) ;
+				}
+			}
+
+			catch ( Exception e )
+			{
+				Client.Instance.Log( "Error reading Roster items: {0}", e.Message ) ;
 			}
 
 			return rosterItems ;
@@ -100,9 +81,9 @@ namespace xeus.Core
 				}
 			}
 
-			catch ( XPathException )
+			catch ( Exception e )
 			{
-				// ignore
+				Client.Instance.Log( "Error reading messages: {0}", e.Message ) ;
 			}
 
 			return messages ;
@@ -112,11 +93,19 @@ namespace xeus.Core
 		{
 			foreach ( ChatMessage item in messages )
 			{
-				FieldValuePair[] data = GetData( item ) ;
-
-				if ( !item.IsFromDb )
+				try
 				{
-					Insert( "Messages/Message", data ) ;
+					FieldValuePair[] data = item.GetData() ;
+
+					if ( !item.IsFromDb )
+					{
+						Insert( "Messages/Message", data ) ;
+					}
+				}
+
+				catch ( Exception e )
+				{
+					Client.Instance.Log( "Error writing messages: {0}", e.Message ) ;
 				}
 			}
 		}
@@ -125,11 +114,18 @@ namespace xeus.Core
 		{
 			foreach ( RosterItem item in rosterItems )
 			{
-				FieldValuePair[] data = GetData( item ) ;
+				try
+				{
+					FieldValuePair[] data = item.GetData() ;
 
-				SaveOrUpdate( "Roster/RosterItem", string.Format( "@Key='{0}'", item.Key ), data ) ;
+					SaveOrUpdate( "Roster/RosterItem", string.Format( "@Key='{0}'", item.Key ), data ) ;
+					StoreMessages( item.Messages ) ;
+				}
 
-				StoreMessages( item.Messages ) ;
+				catch ( Exception e )
+				{
+					Client.Instance.Log( "Error writing roster items: {0}", e.Message ) ;
+				}
 			}
 		}
 

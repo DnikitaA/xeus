@@ -165,16 +165,19 @@ namespace xeus.Core
 
 		public void SendChatMessage( RosterItem rosterItem, string text )
 		{
-			Message message = new Message();
+			if ( rosterItem.IsInitialized )
+			{
+				Message message = new Message() ;
 
-			message.Type = MessageType.chat;
-			message.To = rosterItem.XmppRosterItem.Jid;
-			message.Body = text;
-			message.From = MyJid ;
-			
-			_xmppConnection.Send( message );
+				message.Type = MessageType.chat ;
+				message.To = rosterItem.XmppRosterItem.Jid ;
+				message.Body = text ;
+				message.From = MyJid ;
 
-			rosterItem.Messages.Add( new ChatMessage( message, rosterItem, DateTime.Now ) ) ;
+				_xmppConnection.Send( message ) ;
+
+				rosterItem.Messages.Add( new ChatMessage( message, rosterItem, DateTime.Now ) ) ;
+			}
 		}
 
 		public void SetMyPresence( ShowType showType )
