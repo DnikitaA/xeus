@@ -38,11 +38,18 @@ namespace xeus.Core
 
 		public Roster()
 		{
+		}
+
+		public void ReadRosterFromDb()
+		{
 			List< RosterItem > dbRosterItems = Database.Instance.ReadRosterItems() ;
 
 			foreach ( RosterItem item in dbRosterItems )
 			{
-				_rosterItemsToRecieveVCard.Enqueue( item );
+				Vcard vcard = Storage.GetVcard( item.Key ) ;
+				item.SetVcard( vcard );
+
+				_items.Add( item );
 			}
 
 			_rosterItemTimer.Elapsed += new ElapsedEventHandler( _rosterItemTimer_Elapsed ) ;
@@ -101,13 +108,35 @@ namespace xeus.Core
 						// this is the server 
 						foreach ( RosterItem rosterItemOfService in _items )
 						{
-							if ( rosterItemOfService.XmppRosterItem.Jid.Server == presence.From.Server
-								&& ( rosterItemOfService.Errors.Count > 0 
-										|| rosterItemOfService.Presence == null ) )
+							if ( rosterItemOfService.IsInitialized )
 							{
-								rosterItemOfService.Errors.Clear();
-								rosterItemOfService.HasVCardRecivied = false ;
-								_rosterItemsToRecieveVCard.Enqueue( rosterItemOfService ) ;
+								if ( rosterItemOfService.XmppRosterItem.Jid.Server == presence.From.Server
+								     && ( rosterItemOfService.Errors.Count > 0
+								          || rosterItemOfService.Presence == null ) )
+								{
+									rosterItemOfService.Errors.Clear() ;
+									rosterItemOfService.HasVCardRecivied = false ;
+									
+									// on error
+									lock ( _lockRosterItems )
+									{
+										bool enqueued = false ;
+
+										foreach ( RosterItem item in _rosterItemsToRecieveVCard )
+										{
+											if ( item.Key == rosterItemOfService.Key )
+											{
+												enqueued = true ;
+												break ;
+											}
+										}
+
+										if ( !enqueued )
+										{
+											_rosterItemsToRecieveVCard.Enqueue( rosterItemOfService ) ;
+										}
+									}
+								}
 							}
 						}
 
@@ -212,12 +241,12 @@ namespace xeus.Core
 				lock ( _lockRosterItems )
 				{
 					// using timer frees the UI - on roster item are called synchronously for all items on startup
-					foreach ( RosterItem existingItem in _rosterItemsToRecieveVCard )
+					foreach ( RosterItem existingItem in _items )
 					{
-						if ( existingItem.Key == item.Jid.Bare )
+						if ( existingItem.Key == item.Jid.Bare
+							&& !existingItem.IsInitialized )
 						{
 							existingItem.XmppRosterItem = item ;
-							return ;
 						}
 					}
 
@@ -239,11 +268,11 @@ namespace xeus.Core
 				{
 					rosterItem = _rosterItemsToRecieveVCard.Dequeue() ;
 
-					if ( rosterItem.HasVCardRecivied )
+					if ( rosterItem.HasVCardRecivied || rosterItem.VCardAttempts > 3 )
 					{
 						return ;
 					}
-					else
+					else if ( rosterItem.IsInitialized )
 					{
 						_rosterItemsToRecieveVCard.Enqueue( rosterItem ) ; // push to the end of the queue
 					}
@@ -261,9 +290,6 @@ namespace xeus.Core
 					rosterItem.Presence = presence ;
 				}
 
-				Vcard vcard = Storage.GetVcard( rosterItem.Key ) ;
-				rosterItem.SetVcard( vcard );
-				
 				if ( FindItem( rosterItem.Key ) == null )
 				{
 					_items.Add( rosterItem ) ;
@@ -272,6 +298,8 @@ namespace xeus.Core
 				// ask for VCard
 				VcardIq viq = new VcardIq( IqType.get, new Jid( rosterItem.Key ) ) ;
 				Client.Instance.SendIqGrabber( viq, new IqCB( VcardResult ), rosterItem.Key ) ;
+
+				rosterItem.VCardAttempts++ ;
 			}
 		}
 

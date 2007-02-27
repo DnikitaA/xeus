@@ -32,6 +32,8 @@ namespace xeus.Controls
 			_roster.ItemTemplate = _rosterItemSmall ;
 
 			_sliderItemSize.ValueChanged += new RoutedPropertyChangedEventHandler< double >( _sliderItemSize_ValueChanged ) ;
+
+			Client.Instance.Roster.ReadRosterFromDb() ;
 		}
 
 		private void SubscribeItems( IList items )

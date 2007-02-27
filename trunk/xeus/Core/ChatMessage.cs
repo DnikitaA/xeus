@@ -3,6 +3,7 @@ using System.ComponentModel ;
 using System.Data ;
 using System.Windows.Media.Imaging ;
 using agsXMPP.protocol.client ;
+using Clifton.Tools.Xml ;
 
 namespace xeus.Core
 {
@@ -38,6 +39,21 @@ namespace xeus.Core
 			_from = message.From.Bare ;
 			_to = message.To.Bare ;
 			_relativeTime = TimeUtilities.FormatRelativeTime( time ) ;
+		}
+
+		public XmlDatabase.FieldValuePair[] GetData()
+		{
+			XmlDatabase.FieldValuePair[] data = new XmlDatabase.FieldValuePair[ 5 ] ;
+
+			string key = ( SentByMe ) ? To : From ;
+
+			data[ 0 ] = new NullFieldValuePair( "Key", key ) ;
+			data[ 1 ] = new NullFieldValuePair( "From", From ) ;
+			data[ 2 ] = new NullFieldValuePair( "To", To ) ;
+			data[ 3 ] = new NullFieldValuePair( "Time", Time.ToBinary().ToString() ) ;
+			data[ 4 ] = new NullFieldValuePair( "Body", Body ) ;
+
+			return data ;
 		}
 
 		public string From
