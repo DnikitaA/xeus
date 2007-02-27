@@ -104,6 +104,10 @@
 			  				TextTrimming="CharacterEllipsis"
 			  				FontFamily="Calibri" Foreground="#FFB8D9F2"
 			  				x:Name="_displayStatus" Margin="76.333,32.393,15,0" FontSize="12" VerticalAlignment="Top" Height="17"/>
+			<TextBlock HorizontalAlignment="Stretch"
+			  				FontFamily="Calibri" Foreground="#FFB97E7A"
+			  				x:Name="_subscription" Margin="76.333,46.893,15,60.367" FontSize="12" VerticalAlignment="Stretch" Height="Auto"
+							Text="{Binding Path=SubscriptionTypeText}"/>
 			<StackPanel Margin="17.333,73,15,16">
 				<TextBlock Text="{Binding Path=LastMessageFrom}" Foreground="#FF9E9E9E" TextWrapping="Wrap" Margin="0,2,0,0"/>
 				<TextBlock Text="{Binding Path=LastMessageTo}" Foreground="#FFD9BD84" TextWrapping="Wrap" Margin="0,4,0,0"/>
@@ -151,7 +155,7 @@
 			Content="{Binding RelativeSource={RelativeSource Self},Path=DataContext}"/>
 		</Grid.ToolTip>
 		
-		<Button Template="{Binding Path=StatusTemplate}" HorizontalAlignment="Left"
+		<Button Template="{Binding Path=StatusTemplate}" HorizontalAlignment="Left" IsEnabled="False"
 			Margin="0,0,0,0" VerticalAlignment="Center" Width="21" Height="22" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" BorderThickness="0,0,0,0" />
 		<Button Template="{DynamicResource ErrorIcon}" Width="12" Height="12"
 					 ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_errorButton"
@@ -386,7 +390,7 @@
 				x:Name="_image" DockPanel.Dock="Right" />
 			<TextBlock x:Name="_body" Text="{Binding Path=Body}" Foreground="#FFC5A581" 
 			 Margin="10,0,10,0" TextWrapping="WrapWithOverflow" 
-			 		DockPanel.Dock="Right" FontSize="14"/>
+			 		DockPanel.Dock="Right" FontSize="12" FontFamily="Calibri"/>
 	    </DockPanel>
 	</Grid>
 	<DataTemplate.Triggers>

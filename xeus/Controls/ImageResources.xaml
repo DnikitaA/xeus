@@ -280,18 +280,13 @@
 		<Ellipse.Fill>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 				<GradientStop Color="#FFB3E5C3" Offset="0"/>
-				<GradientStop Color="#FF046938" Offset="1"/>
+				<GradientStop Color="#FF1B6904" Offset="1"/>
 			</LinearGradientBrush>
 		</Ellipse.Fill>
 		<Ellipse.BitmapEffect>
 			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
 		</Ellipse.BitmapEffect>
 	</Ellipse>
-		<Path Fill="#A5FFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="7.965" Height="9.865" Data="F1 M2.8155,0 C4.3704576,0 5.631,1.2623332 5.631,2.8195 5.631,3.8548267 5.0737605,4.7598181 4.2193031,5.2095542 6.0439386,5.8137364 7.4298534,7.7533073 7.7589998,10.196696 6.480207,11.432182 4.7315388,12.151 2.8149738,12.151 0.93188268,12.151 -0.78912503,11.457072 -2.052,10.248644 -1.7384501,7.8079395 -0.3721537,5.8612647 1.4351363,5.2253799 C0.56834316,4.7777495 0,3.8650908 7.7043339E-08,2.8195 0,1.2623332 1.2605423,0 2.8155,0 z" Canvas.Left="0" Canvas.Top="0">
-			<Path.BitmapEffect>
-				<DropShadowBitmapEffect ShadowDepth="1" Softness="0.2" Opacity="0.3"/>
-			</Path.BitmapEffect>
-		</Path>
 	<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
 	
 <Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
@@ -309,7 +304,7 @@
 	  		<Setter.Value>
 	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 	  				<GradientStop Color="#FFB3F0C1" Offset="0"/>
-	  				<GradientStop Color="#FF2BA252" Offset="1"/>
+	  				<GradientStop Color="#FF51A22B" Offset="1"/>
 	  			</LinearGradientBrush>
 	  		</Setter.Value>
 	  	</Setter>
