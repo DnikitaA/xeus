@@ -244,7 +244,7 @@ namespace xeus.Core
 					foreach ( RosterItem existingItem in _items )
 					{
 						if ( existingItem.Key == item.Jid.Bare
-							&& !existingItem.IsInitialized )
+							/* && !existingItem.IsInitialized*/ )
 						{
 							existingItem.XmppRosterItem = item ;
 						}

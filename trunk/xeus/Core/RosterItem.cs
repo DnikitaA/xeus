@@ -7,6 +7,7 @@ using System.Windows.Media.Imaging ;
 using System.Windows.Threading ;
 using agsXMPP.protocol.Base ;
 using agsXMPP.protocol.client ;
+using agsXMPP.protocol.iq.roster ;
 using agsXMPP.protocol.iq.vcard ;
 using Clifton.Tools.Xml ;
 
@@ -44,6 +45,7 @@ namespace xeus.Core
 
 		private string _lastMessageFrom = "No message sent" ;
 		private string _lastMessageTo = "No message recieved" ;
+		private SubscriptionType _subscriptionType = SubscriptionType.none ;
 
 		public event PropertyChangedEventHandler PropertyChanged ;
 
@@ -60,15 +62,18 @@ namespace xeus.Core
 			_key = row[ "Key" ] as string ;
 			_lastMessageFrom = row[ "LastMessageFrom" ] as string ;
 			_lastMessageTo = row[ "LastMessageTo" ] as string ;
+			_subscriptionType = ( SubscriptionType )Enum.Parse( typeof( SubscriptionType ),
+																row[ "SubscriptionType" ] as string, false ) ;
 		}
 
 		public XmlDatabase.FieldValuePair[] GetData()
 		{
-			XmlDatabase.FieldValuePair[] data = new XmlDatabase.FieldValuePair[ 3 ] ;
+			XmlDatabase.FieldValuePair[] data = new XmlDatabase.FieldValuePair[ 4 ] ;
 
 			data[ 0 ] = new NullFieldValuePair( "Key", Key ) ;
 			data[ 1 ] = new NullFieldValuePair( "LastMessageFrom", LastMessageFrom ) ;
 			data[ 2 ] = new NullFieldValuePair( "LastMessageTo", LastMessageTo ) ;
+			data[ 3 ] = new NullFieldValuePair( "SubscriptionType", SubscriptionType.ToString() ) ;
 
 			return data ;
 		}
@@ -78,6 +83,7 @@ namespace xeus.Core
 		{
 			_rosterItem = rosterItem ;
 			_key = _rosterItem.Jid.Bare ;
+			_subscriptionType = rosterItem.Subscription ;
 		}
 
 		private void _messages_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
@@ -153,6 +159,7 @@ namespace xeus.Core
 				_rosterItem = value ;
 
 				Name = _rosterItem.Name ;
+				SubscriptionType = _rosterItem.Subscription ;
 			}
 		}
 
@@ -593,11 +600,32 @@ namespace xeus.Core
 			}
 		}
 
+		public SubscriptionType SubscriptionType
+		{
+			get
+			{
+				return _subscriptionType ;
+			}
+			set
+			{
+				_subscriptionType = value ;
+				NotifyPropertyChanged( "SubscriptionType" ) ;
+			}
+		}
+
 		private void NotifyPropertyChanged( String info )
 		{
 			if ( PropertyChanged != null )
 			{
 				PropertyChanged( this, new PropertyChangedEventArgs( info ) ) ;
+			}
+		}
+
+		public string SubscriptionText
+		{
+			get
+			{
+				return string.Format( "Subscription: {0}", SubscriptionType ) ;
 			}
 		}
 
