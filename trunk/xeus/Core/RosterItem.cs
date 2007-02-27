@@ -42,6 +42,9 @@ namespace xeus.Core
 		private int _vCardAttempts = 0 ;
 		private bool _hasUnreadMessages = false ;
 
+		private string _lastMessageFrom = "No message sent" ;
+		private string _lastMessageTo = "No message recieved" ;
+
 		public event PropertyChangedEventHandler PropertyChanged ;
 
 		public Presence _presence ;
@@ -55,23 +58,17 @@ namespace xeus.Core
 		public RosterItem( DataRow row ) : this()
 		{
 			_key = row[ "Key" ] as string ;
-			/*
-			_name = row[ "Name" ] as string ;
-			_fullName = row[ "FullName" ] as string ;
-			_nickName = row[ "NickName" ] as string ;
-			 */
+			_lastMessageFrom = row[ "LastMessageFrom" ] as string ;
+			_lastMessageTo = row[ "LastMessageTo" ] as string ;
 		}
 
 		public XmlDatabase.FieldValuePair[] GetData()
 		{
-			XmlDatabase.FieldValuePair[] data = new XmlDatabase.FieldValuePair[ 1 ] ;
+			XmlDatabase.FieldValuePair[] data = new XmlDatabase.FieldValuePair[ 3 ] ;
 
 			data[ 0 ] = new NullFieldValuePair( "Key", Key ) ;
-			/*
-			data[ 1 ] = new NullFieldValuePair( "Name", Name ) ;
-			data[ 2 ] = new NullFieldValuePair( "FullName", FullName ) ;
-			data[ 3 ] = new NullFieldValuePair( "NickName", NickName ) ;
-			data[ 4 ] = new NullFieldValuePair( "Group", Group ) ;*/
+			data[ 1 ] = new NullFieldValuePair( "LastMessageFrom", LastMessageFrom ) ;
+			data[ 2 ] = new NullFieldValuePair( "LastMessageTo", LastMessageTo ) ;
 
 			return data ;
 		}
@@ -90,6 +87,41 @@ namespace xeus.Core
 				case NotifyCollectionChangedAction.Add:
 				case NotifyCollectionChangedAction.Replace:
 					{
+						DateTime maxFrom = DateTime.MinValue ;
+						DateTime maxTo = DateTime.MinValue ;
+						string fromMe = null ;
+						string toMe = null ;
+
+						foreach ( ChatMessage message in e.NewItems )
+						{
+							if ( message.SentByMe )
+							{
+								if ( fromMe == null || maxFrom < message.Time )
+								{
+									fromMe = string.Format( "{0}\n{1}", message.Time, message.Body ) ;
+									maxFrom = message.Time ;
+								}
+							}
+							else
+							{
+								if ( toMe == null || maxTo < message.Time )
+								{
+									toMe = string.Format( "{0}\n{1}", message.Time, message.Body ) ;
+									maxTo = message.Time ;
+								}
+							}
+						}
+
+						if ( fromMe != null )
+						{
+							LastMessageFrom = fromMe ;
+						}
+
+						if ( toMe != null )
+						{
+							LastMessageTo = toMe ;
+						}
+
 						HasUnreadMessages = true ;
 						break ;
 					}
@@ -531,6 +563,33 @@ namespace xeus.Core
 			set
 			{
 				_vCardAttempts = value ;
+			}
+		}
+
+		public string LastMessageFrom
+		{
+			get
+			{
+				return _lastMessageFrom ;
+			}
+			private set
+			{
+				_lastMessageFrom = value ;
+				NotifyPropertyChanged( "LastMessageFrom" ) ;
+			}
+		}
+
+		public string LastMessageTo
+		{
+			get
+			{
+				return _lastMessageTo ;
+			}
+			
+			private set
+			{
+				_lastMessageTo = value ;
+				NotifyPropertyChanged( "LastMessageTo" ) ;
 			}
 		}
 

@@ -55,7 +55,7 @@
 			</Storyboard>
 		</DataTemplate.Resources>
 		<Grid RenderTransformOrigin="0.5,0.5"
-				Height="192" Width="232" Panel.ZIndex="1" x:Name="grid" >
+				Width="232" Panel.ZIndex="1" x:Name="grid" >
 			<Grid.RenderTransform>
 				<TransformGroup>
 					<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -104,32 +104,10 @@
 			  				TextTrimming="CharacterEllipsis"
 			  				FontFamily="Calibri" Foreground="#FFB8D9F2"
 			  				x:Name="_displayStatus" Margin="76.333,32.393,15,0" FontSize="12" VerticalAlignment="Top" Height="17"/>
-			<WrapPanel RenderTransformOrigin="0.5,0.5" Margin="92,73,15,16" VerticalAlignment="Stretch">
-				<WrapPanel.RenderTransform>
-					<TransformGroup>
-						<ScaleTransform ScaleX="1" ScaleY="1"/>
-						<SkewTransform AngleX="0" AngleY="0"/>
-						<RotateTransform Angle="0"/>
-						<TranslateTransform X="0" Y="0"/>
-					</TransformGroup>
-				</WrapPanel.RenderTransform>
-				<TextBlock x:Name="_email" Height="14" FontSize="11" Foreground="#FF929292" Text="{Binding Path=EmailPreferred}" TextAlignment="Left" TextWrapping="Wrap" Width="125"/>
-				<TextBlock Height="14" FontSize="11" Foreground="#FF929292" Text="{Binding Path=Url}" TextAlignment="Left" TextWrapping="Wrap" x:Name="_url" Width="125"/>
-				<TextBlock Height="14" FontSize="11" Foreground="#FF929292" Text="{Binding Path=Description}" TextAlignment="Left" TextWrapping="Wrap" x:Name="_description" Width="125"/>
-				<TextBlock Height="14" FontSize="11" Foreground="#FF929292" Text="{Binding Path=FullName}" TextAlignment="Left" TextWrapping="Wrap" x:Name="_fullName" Width="125"/>
-				<TextBlock Height="14" FontSize="11" Foreground="#FF929292" Text="{Binding Path=Nickname}" TextAlignment="Left" TextWrapping="Wrap" x:Name="_nickname" Width="125"/>
-				<TextBlock Height="14" FontSize="11" Foreground="#FF929292" Text="{Binding Path=Organization}" TextAlignment="Left" TextWrapping="Wrap" x:Name="_organization" Width="125"/>
-				<TextBlock Height="14" FontSize="11" Foreground="#FF929292" Text="{Binding Path=Key}" TextAlignment="Left" TextWrapping="Wrap" x:Name="_id" Width="125"/>
-			</WrapPanel>
-			<WrapPanel HorizontalAlignment="Left" Margin="17.333,73,0,16" VerticalAlignment="Stretch" Width="70.667">
-				<TextBlock x:Name="_emailText" Height="14" FontSize="11" Foreground="#FF656565" Text="E-Mail" TextAlignment="Right" TextWrapping="Wrap" Visibility="Visible" Width="70.667"/>
-				<TextBlock Height="14" FontSize="11" Foreground="#FF656565" Text="Url" TextAlignment="Right" TextWrapping="Wrap" x:Name="_urlText" Width="70.667"/>
-				<TextBlock Height="14" FontSize="11" Foreground="#FF656565" Text="Description" TextAlignment="Right" TextWrapping="Wrap" x:Name="_descriptionText" Width="70.667"/>
-				<TextBlock Height="14" FontSize="11" Foreground="#FF656565" Text="Full Name" TextAlignment="Right" TextWrapping="Wrap" x:Name="_fullNameText" Width="70.667"/>
-				<TextBlock Height="14" FontSize="11" Foreground="#FF656565" Text="Nickname" TextAlignment="Right" TextWrapping="Wrap" x:Name="_nickNameText" Width="70.667"/>
-				<TextBlock Height="14" FontSize="11" Foreground="#FF656565" Text="Organization" TextAlignment="Right" TextWrapping="Wrap" x:Name="_organizationText" Width="70.667"/>
-				<TextBlock Height="14" FontSize="11" Foreground="#FF656565" Text="Id" TextAlignment="Right" TextWrapping="Wrap" x:Name="_idText" Width="70.667"/>
-			</WrapPanel>
+			<StackPanel Margin="17.333,73,15,16">
+				<TextBlock Text="{Binding Path=LastMessageFrom}" Foreground="#FF9E9E9E" TextWrapping="Wrap" Margin="0,2,0,0"/>
+				<TextBlock Text="{Binding Path=LastMessageTo}" Foreground="#FFD9BD84" TextWrapping="Wrap" Margin="0,4,0,0"/>
+			</StackPanel>
 			</Grid>
 		<DataTemplate.Triggers>
 			<Trigger Property="IsVisible" Value="True">
@@ -183,7 +161,7 @@
   		<Border VerticalAlignment="Stretch" Width="Auto" Grid.Column="1"
   		 Height="Auto" Grid.Row="0" Grid.RowSpan="1"
   		 CornerRadius="3,3,3,3" x:Name="_displayNameLabel"
-  		 Visibility="Visible" BorderThickness="1,1,1,1" Margin="2,0,-3,0" d:LayoutOverrides="GridBox">
+  		 Visibility="Visible" BorderThickness="1,1,1,1" Margin="2,0,-3,0" d:LayoutOverrides="GridBox" Opacity="0.8">
 		<Grid Grid.Row="1" Margin="2,0,1,1" HorizontalAlignment="Left" Width="104.31" >     
   			<TextBlock Text="{Binding Path=DisplayName}" HorizontalAlignment="Stretch" Margin="2,0.5,0,0"
   				TextTrimming="CharacterEllipsis"
@@ -382,7 +360,7 @@
   
 
  <DataTemplate x:Key="ChatMessageItem" DataType="{x:Type local:ChatMessage}">
-		<Grid Background="#0CFFFFFF" x:Name="_grid">
+		<Grid Background="#05FFFFFF" x:Name="_grid">
 			<Border BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2"
 			 HorizontalAlignment="Right" Padding="4,2,4,2" Opacity="0.8"
 			 Margin="0,29.7,4,0" Panel.ZIndex="2" VerticalAlignment="Top" x:Name="_timeBorder">
