@@ -3,6 +3,7 @@ using System.Collections.Generic ;
 using System.Timers ;
 using System.Windows ;
 using System.Windows.Controls ;
+using System.Windows.Input ;
 using System.Windows.Media ;
 using System.Windows.Threading ;
 using xeus.Core ;
@@ -239,6 +240,22 @@ namespace xeus.Controls
 					Client.Instance.SendChatMessage( rosterItem, MessageTextBox.Text ) ;
 					MessageTextBox.Text = String.Empty ;
 					_instance._listRefreshTimer.Start() ;
+				}
+			}
+		}
+
+		public static void TextKeyPress( KeyEventArgs e )
+		{
+			if ( MessageTextBox != null )
+			{
+				RosterItem rosterItem = _instance._tabs.SelectedContent as RosterItem ;
+
+				if ( rosterItem != null )
+				{
+					if ( e.Key == Key.Return && Keyboard.IsKeyDown( Key.LeftCtrl ) )
+					{
+						SendMessage() ;
+					}
 				}
 			}
 		}

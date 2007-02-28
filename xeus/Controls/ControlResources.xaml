@@ -109,8 +109,8 @@
 			  				x:Name="_subscription" Margin="76.333,46.893,15,60.367" FontSize="12" VerticalAlignment="Stretch" Height="Auto"
 							Text="{Binding Path=SubscriptionTypeText}"/>
 			<StackPanel Margin="17.333,73,15,16">
-				<TextBlock Text="{Binding Path=LastMessageFrom}" Foreground="#FF9E9E9E" TextWrapping="Wrap" Margin="0,2,0,0"/>
-				<TextBlock Text="{Binding Path=LastMessageTo}" Foreground="#FFD9BD84" TextWrapping="Wrap" Margin="0,4,0,0"/>
+				<TextBlock Text="{Binding Path=LastMessageFrom}" Foreground="#FF9E9E9E" TextWrapping="Wrap" Margin="0,2,0,0" FontSize="9"/>
+				<TextBlock Text="{Binding Path=LastMessageTo}" Foreground="#FFD9BD84" TextWrapping="Wrap" Margin="0,4,0,0" FontSize="9"/>
 			</StackPanel>
 			</Grid>
 		<DataTemplate.Triggers>

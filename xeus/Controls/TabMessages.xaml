@@ -26,7 +26,7 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Bottom" BorderThickness="1,1,1,1" Style="{DynamicResource GridSplitterStyle}"/>
 	        <TextBox VerticalAlignment="Stretch" Height="Auto" Grid.Row="1" Style="{DynamicResource TextBoxStyleBlack}" TextWrapping="Wrap"
-                   Initialized="TextBoxInitialized" x:Name="textBox"/>
+                   Initialized="TextBoxInitialized" x:Name="textBox" Background="#07FFFFFF" KeyDown="OnTextKeyDown" AcceptsReturn="True" AutoWordSelection="True" />
 		<Grid d:IsLayer="True" x:Name="Layer" Grid.ColumnSpan="1" Grid.RowSpan="2">
 			<Button Height="30" Content="Button" HorizontalAlignment="Right" Margin="0,0,5,5" 
 				VerticalAlignment="Bottom" Width="30" Template="{DynamicResource SendIcon}" Click="OnSendClick" x:Name="button" ToolTip="Send Message"/>
