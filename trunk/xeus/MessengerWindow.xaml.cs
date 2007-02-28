@@ -11,7 +11,7 @@ namespace xeus
 	/// <summary>
 	/// Interaction logic for Window1.xaml
 	/// </summary>
-	public partial class MessengerWindow : Window
+	public partial class MessengerWindow : WindowBase
 	{
 
 		NotifyIcon _notifyIcon = new NotifyIcon();

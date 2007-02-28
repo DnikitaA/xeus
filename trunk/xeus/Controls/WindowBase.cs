@@ -12,7 +12,13 @@ namespace xeus.Controls
 		{
 			base.OnMouseLeftButtonDown( e ) ;
 
-			DragMove() ;
+			try
+			{
+				DragMove() ;
+			}
+
+			catch
+			{}
 		}
 	}
 }
