@@ -79,6 +79,7 @@
     <Page Include="Controls\MessageWindow.xaml" />
     <Page Include="Controls\ServicesControl.xaml" />
     <Page Include="Controls\StatusControl.xaml" />
+    <Page Include="Controls\WindowDecoration.xaml" />
     <Page Include="MessengerWindow.xaml" />
     <Page Include="Controls\RosterControl.xaml" />
     <Compile Include="App.xaml.cs">
@@ -91,16 +92,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ControlResource.cs" />
+    <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\MessageWindow.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\OfficeStyleWindow.cs" />
     <Compile Include="Controls\StatusControl.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>StatusControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TabMessages.xaml.cs" />
+    <Compile Include="Controls\TitleBar.cs" />
     <Compile Include="Controls\WindowBase.cs" />
     <Compile Include="Core\ChatMessage.cs" />
     <Compile Include="Core\CountToVisibilityConverter.cs" />
