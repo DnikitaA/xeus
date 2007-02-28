@@ -26,12 +26,17 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Bottom" BorderThickness="1,1,1,1" Style="{DynamicResource GridSplitterStyle}"/>
 	        <TextBox VerticalAlignment="Stretch" Height="Auto" Grid.Row="1" Style="{DynamicResource TextBoxStyleBlack}" TextWrapping="Wrap"
-                   Initialized="TextBoxInitialized"/>
+                   Initialized="TextBoxInitialized" x:Name="textBox"/>
 		<Grid d:IsLayer="True" x:Name="Layer" Grid.ColumnSpan="1" Grid.RowSpan="2">
-			<Button Height="25" Content="Button" HorizontalAlignment="Right" Margin="0,0,5,5" 
-				VerticalAlignment="Bottom" Width="20" Template="{DynamicResource SendIcon}" Click="OnSendClick"/>
+			<Button Height="30" Content="Button" HorizontalAlignment="Right" Margin="0,0,5,5" 
+				VerticalAlignment="Bottom" Width="30" Template="{DynamicResource SendIcon}" Click="OnSendClick" x:Name="button" ToolTip="Send Message"/>
 		</Grid>
     </Grid>	
+		<DataTemplate.Triggers>
+			<Trigger Property="Text" SourceName="textBox" Value="">
+				<Setter Property="Visibility" TargetName="button" Value="Hidden"/>
+			</Trigger>
+		</DataTemplate.Triggers>	
 	</DataTemplate>
 
 	
