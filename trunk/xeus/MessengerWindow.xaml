@@ -1,4 +1,4 @@
-﻿<win:WindowBase
+﻿<local:WindowBase
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:xeus.Controls"
@@ -10,13 +10,14 @@
     Title="xeus"
 	Style="{StaticResource DarkStyleWindow}"
     settings:WindowSettings.Save="True"	
+	ResizeMode="CanResizeWithGrip"
     >
   <Window.Resources>
     <localcore:CountToVisibilityConverter x:Key="_visibilityConverter" />
   </Window.Resources>
 
     <DockPanel LastChildFill="True">
-	<StatusBar DockPanel.Dock="Bottom" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}" Height="30" VerticalAlignment="Bottom">
+	<StatusBar DockPanel.Dock="Bottom" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}" VerticalAlignment="Bottom" Padding="4,4,4,4">
 		<StatusBarItem HorizontalAlignment="Stretch" Margin="0,0,0,0"
 		    	  x:Name="_statusMyStatus" VerticalAlignment="Stretch">
 		    <Button x:Name="_buttonmyStatus" Width="15" Height="15" Template="{Binding Path=StatusTemplate}"  Click="DisplayPopup">		
@@ -41,5 +42,5 @@
 	</StatusBar>
    	<local:RosterControl x:Name="_roster" DockPanel.Dock="Top"/>
   </DockPanel>
-</win:WindowBase>
+</local:WindowBase>
 
