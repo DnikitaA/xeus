@@ -272,22 +272,17 @@ namespace xeus.Core
 				{
 					rosterItem = _rosterItemsToRecieveVCard.Dequeue() ;
 
-					if ( rosterItem.VCardAttempts > 3
-						&& rosterItem.VCardAttempts < 10 )
+					if ( rosterItem.VCardAttempts > 1
+						&& rosterItem.VCardAttempts < 2 )
 					{
 						_rosterItemTimer.Interval = TimerSlow ;
 					}
-					else if ( rosterItem.VCardAttempts > 10
-						&& rosterItem.VCardAttempts < 20 )
-					{
-						_rosterItemTimer.Interval = TimerVerySlow ;
-					}
-					else if ( rosterItem.VCardAttempts > 20 )
+					else if ( rosterItem.VCardAttempts > 2 )
 					{
 						return ;
 					}
 
-					if ( rosterItem.HasVCardRecivied  )
+					if ( rosterItem.HasVCardRecivied )
 					{
 						return ;
 					}

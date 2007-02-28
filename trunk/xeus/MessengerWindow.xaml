@@ -17,10 +17,10 @@
   </Window.Resources>
 
     <DockPanel LastChildFill="True">
-	<StatusBar DockPanel.Dock="Bottom" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}" VerticalAlignment="Bottom" Padding="4,4,4,4">
+	<StatusBar DockPanel.Dock="Bottom" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}" VerticalAlignment="Bottom" Padding="2,2,2,2">
 		<StatusBarItem HorizontalAlignment="Stretch" Margin="0,0,0,0"
 		    	  x:Name="_statusMyStatus" VerticalAlignment="Stretch">
-		    <Button x:Name="_buttonmyStatus" Width="15" Height="15" Template="{Binding Path=StatusTemplate}"  Click="DisplayPopup">		
+		    <Button x:Name="_buttonmyStatus" Width="20" Height="20" Template="{Binding Path=StatusTemplate}"  Click="DisplayPopup">		
 			<Popup x:Name="_statusPopup" AllowsTransparency="True" Placement="MousePoint" StaysOpen="False" Width="85" Height="85">
 				<local:StatusControl x:Name="_statusControl"/>
 			</Popup>
@@ -34,7 +34,7 @@
 			  		<ColumnDefinition Width="15"/>
 			  		<ColumnDefinition Width="*"/>
 			  	</Grid.ColumnDefinitions>
-		  		<Button Grid.Column="0" Margin="0,0,0,0" Template="{DynamicResource MessageIcon}" x:Name="_buttonMessages" Width="15" Height="15"/>
+		  		<Button Grid.Column="0" Margin="0,0,0,0" Template="{DynamicResource MessageIcon}" x:Name="_buttonMessages" Width="20" Height="20"/>
 				<TextBlock Text="{Binding Path=MessageCenter.ChatMessages.Count}" 
 					Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Left" Foreground="#FFFFFFFF" Margin="5,0,0,0" />
 			</Grid>
