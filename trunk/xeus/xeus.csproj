@@ -92,7 +92,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\MessageWindow.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>MessageWindow.xaml</DependentUpon>

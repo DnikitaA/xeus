@@ -222,7 +222,7 @@
   		</Grid.RowDefinitions>
 	    	
   		<Grid d:IsLayer="True" x:Name="Status" Grid.ColumnSpan="1" Grid.RowSpan="3" Panel.ZIndex="3">
-			<Button Template="{StaticResource ErrorIcon}" Width="16.569" Height="16.569"
+			<Button Template="{DynamicResource ErrorIcon}" Width="16.569" Height="16.569"
 			 ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_errorButton" 
 			 HorizontalAlignment="Right" Margin="0,0,1.549,15.819" VerticalAlignment="Bottom" d:LayoutOverrides="Margin" />
 			<Button Template="{Binding Path=StatusTemplate}" HorizontalAlignment="Right"
