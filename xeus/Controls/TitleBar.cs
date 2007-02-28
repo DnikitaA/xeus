@@ -41,9 +41,9 @@ namespace xeus.Controls
 	/// </summary>
 	public class TitleBar : Control
 	{
-		private ImageButton closeButton ;
-		private ImageButton maxButton ;
-		private ImageButton minButton ;
+		private Button closeButton ;
+		private Button maxButton ;
+		private Button minButton ;
 
 		public TitleBar()
 		{
@@ -59,9 +59,9 @@ namespace xeus.Controls
 
 		private void TitleBar_Loaded( object sender, RoutedEventArgs e )
 		{
-			closeButton = ( ImageButton ) Template.FindName( "CloseButton", this ) ;
-			minButton = ( ImageButton ) Template.FindName( "MinButton", this ) ;
-			maxButton = ( ImageButton ) Template.FindName( "MaxButton", this ) ;
+			closeButton = ( Button ) Template.FindName( "CloseButton", this ) ;
+			minButton = ( Button ) Template.FindName( "MinButton", this ) ;
+			maxButton = ( Button ) Template.FindName( "MaxButton", this ) ;
 
 			closeButton.Click += new RoutedEventHandler( CloseButton_Click ) ;
 			minButton.Click += new RoutedEventHandler( MinButton_Click ) ;
@@ -112,17 +112,21 @@ namespace xeus.Controls
 			{
 				if ( window.WindowState == WindowState.Maximized )
 				{
+					/*
 					maxButton.ImageDown = "/images/maxpressed_n.png" ;
 					maxButton.ImageNormal = "/images/max_n.png" ;
 					maxButton.ImageOver = "/images/maxhot_n.png" ;
+					 */
 
 					window.WindowState = WindowState.Normal ;
 				}
 				else
 				{
+					/*
 					maxButton.ImageDown = "/images/normalpress.png" ;
 					maxButton.ImageNormal = "/images/normal.png" ;
 					maxButton.ImageOver = "/images/normalhot.png" ;
+					 */
 
 					window.WindowState = WindowState.Maximized ;
 				}
