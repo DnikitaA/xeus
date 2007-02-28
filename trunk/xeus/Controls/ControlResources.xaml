@@ -147,44 +147,50 @@
 			Margin="3,3,3,3" Width="130" Height="28" ToolTipService.InitialShowDelay="1500"
 			ToolTipService.BetweenShowDelay="1500" >
   		<Grid.ColumnDefinitions>
-  			<ColumnDefinition Width="0.163*"/>
-  			<ColumnDefinition Width="0.837*"/>
+  			<ColumnDefinition Width="0.223*"/>
+  			<ColumnDefinition Width="0.777*"/>
   		</Grid.ColumnDefinitions>
 		<Grid.ToolTip>
 			<ToolTip ContentTemplate="{StaticResource RosterItemTip}" 
 			Content="{Binding RelativeSource={RelativeSource Self},Path=DataContext}"/>
 		</Grid.ToolTip>
 		
-		<Button Template="{Binding Path=StatusTemplate}" HorizontalAlignment="Left" IsEnabled="False"
-			Margin="0,0,0,0" VerticalAlignment="Center" Width="21" Height="22" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" BorderThickness="0,0,0,0" />
-		<Button Template="{DynamicResource ErrorIcon}" Width="12" Height="12"
-					 ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_errorButton"
-					 HorizontalAlignment="Left" Margin="13,0,0,-2.181" VerticalAlignment="Bottom" Grid.ColumnSpan="2"
-					 >
-		</Button>
   		<Border VerticalAlignment="Stretch" Width="Auto" Grid.Column="1"
-  		 Height="Auto" Grid.Row="0" Grid.RowSpan="1"
+  		 Height="Auto" Grid.RowSpan="1"
   		 CornerRadius="3,3,3,3" x:Name="_displayNameLabel"
-  		 Visibility="Visible" BorderThickness="1,1,1,1" Margin="2,0,-3,0" d:LayoutOverrides="GridBox" Opacity="0.8">
-		<Grid Grid.Row="1" Margin="2,0,1,1" HorizontalAlignment="Left" Width="104.31" >     
-  			<TextBlock Text="{Binding Path=DisplayName}" HorizontalAlignment="Stretch" Margin="2,0.5,0,0"
+  		 BorderThickness="1,1,1,1" Grid.ColumnSpan="2" BorderBrush="#FF6E7281">
+  			<Border.Background>
+  				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+  					<GradientStop Color="#FF54687F" Offset="0"/>
+  					<GradientStop Color="#6898AED9" Offset="0.986"/>
+  				</LinearGradientBrush>
+  			</Border.Background>
+  			<Border.OpacityMask>
+  				<RadialGradientBrush>
+  					<GradientStop Color="#FF000000" Offset="0"/>
+  					<GradientStop Color="#C5FFFFFF" Offset="1"/>
+  				</RadialGradientBrush>
+  			</Border.OpacityMask>
+  		</Border>
+		
+		<StackPanel Grid.Column="1" Margin="5,0,2,1" >     
+  			<TextBlock Text="{Binding Path=DisplayName}"
   				TextTrimming="CharacterEllipsis"
   				FontFamily="Calibri" Foreground="#FFDCDCDC"
-  				VerticalAlignment="Top" x:Name="_displayName" FontSize="12"/>
-  			<TextBlock Text="{Binding Path=StatusDescription}" HorizontalAlignment="Stretch"
+  				x:Name="_displayName" FontSize="12" d:LayoutOverrides="Height"/>
+  			<TextBlock Text="{Binding Path=StatusDescription}"
   				TextTrimming="CharacterEllipsis"
   				FontFamily="Calibri" Foreground="#FFB8D9F2"
-  				x:Name="_displayStatus" Margin="2,0,0,0" FontSize="10" VerticalAlignment="Bottom"/>				
-	    </Grid>  
-  		</Border>
+  				x:Name="_displayStatus" FontSize="10"/>				
+	    </StackPanel>
+		
+		<Button Template="{Binding Path=StatusTemplate}" HorizontalAlignment="Stretch" IsEnabled="False"
+			Margin="0,0,0,0" VerticalAlignment="Stretch" Width="22" Height="22" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" BorderThickness="0,0,0,0" d:LayoutOverrides="GridBox" />  
 	</Grid>
 	</Viewbox>
 	<DataTemplate.Triggers>
-		<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}, AncestorLevel=1}, Path=IsSelected}" Value="True">
-			<Setter Property="Background" Value="#9CBAE8FF" TargetName="_displayNameLabel" />
-		</DataTrigger>
-		<DataTrigger Binding="{Binding Path=Errors.Count}" Value="0">
-			<Setter Property="Visibility" Value="Hidden" TargetName="_errorButton" />
+		<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}, AncestorLevel=1}, Path=IsSelected}" Value="False">
+			<Setter Property="Visibility" Value="Hidden" TargetName="_displayNameLabel" />
 		</DataTrigger>
 	</DataTemplate.Triggers>
   </DataTemplate>
@@ -248,7 +254,7 @@
 	       VerticalAlignment="Stretch" Stretch="Uniform" Width="Auto" Height="Auto" Margin="16.337,3.238,16.337,13.168" d:LayoutOverrides="Margin"/>
 	      
   		<Grid SnapsToDevicePixels="False" d:IsLayer="True" x:Name="_frame" Grid.ColumnSpan="1" Grid.RowSpan="3" Panel.ZIndex="-1">
-  			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" Height="Auto" Data="M2.5,0.5 L71.5,0.5 C72.604568,0.5 73.5,1.3954304 73.5,2.5 L73.5,71.5 C73.5,72.604568 72.604568,73.5 71.5,73.5 L2.5,73.5 C1.3954304,73.5 0.5,72.604568 0.5,71.5 L0.5,2.5 C0.5,1.3954304 1.3954304,0.5 2.5,0.5 z" Fill="#5B000000" Margin="11,8.25,5,18.569" d:LayoutOverrides="Margin">
+  			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" Height="Auto" Data="M2.5,0.5 L71.5,0.5 C72.604568,0.5 73.5,1.3954304 73.5,2.5 L73.5,71.5 C73.5,72.604568 72.604568,73.5 71.5,73.5 L2.5,73.5 C1.3954304,73.5 0.5,72.604568 0.5,71.5 L0.5,2.5 C0.5,1.3954304 1.3954304,0.5 2.5,0.5 z" Fill="#5B000000" Margin="9.25,6.75,6.75,20.069">
   				<Path.RenderTransform>
   					<TransformGroup>
   						<ScaleTransform ScaleX="1" ScaleY="1"/>
