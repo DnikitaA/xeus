@@ -14,7 +14,11 @@ namespace xeus.Core
 		private ObservableCollectionDisp< RosterItem > _items =
 			new ObservableCollectionDisp< RosterItem >( App.DispatcherThread ) ;
 
-		private Timer _rosterItemTimer = new Timer( 250 ) ;
+		private const double TimerFast = 250 ;
+		private const double TimerSlow = 500 ;
+		private const double TimerVerySlow = 1000 ;
+
+		private Timer _rosterItemTimer = new Timer( TimerFast ) ;
 		private Queue< RosterItem > _rosterItemsToRecieveVCard = new Queue< RosterItem >( 128 ) ;
 		private object _lockRosterItems = new object() ;
 
@@ -268,11 +272,27 @@ namespace xeus.Core
 				{
 					rosterItem = _rosterItemsToRecieveVCard.Dequeue() ;
 
-					if ( rosterItem.HasVCardRecivied || rosterItem.VCardAttempts > 3 )
+					if ( rosterItem.VCardAttempts > 3
+						&& rosterItem.VCardAttempts < 10 )
+					{
+						_rosterItemTimer.Interval = TimerSlow ;
+					}
+					else if ( rosterItem.VCardAttempts > 10
+						&& rosterItem.VCardAttempts < 20 )
+					{
+						_rosterItemTimer.Interval = TimerVerySlow ;
+					}
+					else if ( rosterItem.VCardAttempts > 20 )
 					{
 						return ;
 					}
-					else if ( rosterItem.IsInitialized )
+
+					if ( rosterItem.HasVCardRecivied  )
+					{
+						return ;
+					}
+					
+					if ( rosterItem.IsInitialized )
 					{
 						_rosterItemsToRecieveVCard.Enqueue( rosterItem ) ; // push to the end of the queue
 					}

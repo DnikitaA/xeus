@@ -222,7 +222,7 @@
   		</Grid.RowDefinitions>
 	    	
   		<Grid d:IsLayer="True" x:Name="Status" Grid.ColumnSpan="1" Grid.RowSpan="3" Panel.ZIndex="3">
-			<Button Template="{DynamicResource ErrorIcon}" Width="16.569" Height="16.569"
+			<Button Template="{StaticResource ErrorIcon}" Width="16.569" Height="16.569"
 			 ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_errorButton" 
 			 HorizontalAlignment="Right" Margin="0,0,1.549,15.819" VerticalAlignment="Bottom" d:LayoutOverrides="Margin" />
 			<Button Template="{Binding Path=StatusTemplate}" HorizontalAlignment="Right"
@@ -344,7 +344,7 @@
   		</Grid.ColumnDefinitions>
 		<Image HorizontalAlignment="Left" Source="{Binding Path=Image}" Grid.Row="0" 
 				VerticalAlignment="Top" Stretch="Uniform" Width="29" Height="25" d:LayoutOverrides="HorizontalAlignment" Grid.ColumnSpan="2"/>
-		<Button x:Name="_unreadMsg" HorizontalAlignment="Left" Margin="13,0.156,0,11.021" Width="14.429" Template="{DynamicResource MessageIcon}" Grid.ColumnSpan="2" VerticalAlignment="Stretch" Height="Auto" Grid.Column="0" d:LayoutOverrides="Margin" />
+		<Button x:Name="_unreadMsg" HorizontalAlignment="Left" Margin="13,0.156,0,11.021" Width="14.429" Template="{StaticResource MessageIcon}" Grid.ColumnSpan="2" VerticalAlignment="Stretch" Height="Auto" Grid.Column="0" d:LayoutOverrides="Margin" />
   		<Border VerticalAlignment="Stretch" Width="Auto" Grid.Column="1"
   		 Height="Auto" Grid.Row="0" Grid.RowSpan="1"
   		 CornerRadius="3,3,3,3" x:Name="_displayNameLabel"
