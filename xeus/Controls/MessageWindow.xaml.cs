@@ -5,7 +5,6 @@ using System.Windows ;
 using System.Windows.Controls ;
 using System.Windows.Media ;
 using System.Windows.Threading ;
-using agsXMPP.protocol.client ;
 using xeus.Core ;
 
 namespace xeus.Controls
@@ -24,7 +23,9 @@ namespace xeus.Controls
 
 
 		private delegate void ScrollToLastItemCallback( ListBox listBox ) ;
+
 		private delegate void DisplayChatCallback( string jid, bool activate ) ;
+
 		private delegate void RefreshTimeCallback() ;
 
 		public MessageWindow()
@@ -33,22 +34,22 @@ namespace xeus.Controls
 
 			_tabs.SelectionChanged += new SelectionChangedEventHandler( _tabs_SelectionChanged ) ;
 			_listRefreshTimer.Elapsed += new ElapsedEventHandler( _listRefreshTimer_Elapsed ) ;
-			_timeRefreshTimer.Elapsed += new ElapsedEventHandler( _timeRefreshTimer_Elapsed );
+			_timeRefreshTimer.Elapsed += new ElapsedEventHandler( _timeRefreshTimer_Elapsed ) ;
 
 			_listRefreshTimer.AutoReset = false ;
-			_listRefreshTimer.Start();
+			_listRefreshTimer.Start() ;
 		}
 
-		void _timeRefreshTimer_Elapsed( object sender, ElapsedEventArgs e )
+		private void _timeRefreshTimer_Elapsed( object sender, ElapsedEventArgs e )
 		{
 			RefreshTime() ;
 		}
 
-		void RefreshTime()
+		private void RefreshTime()
 		{
 			if ( App.DispatcherThread.CheckAccess() )
 			{
-				TabItem selectedItem = ( TabItem )_instance._tabs.SelectedItem ;
+				TabItem selectedItem = ( TabItem ) _instance._tabs.SelectedItem ;
 				RosterItem rosterItem = selectedItem.Content as RosterItem ;
 
 				if ( rosterItem != null )
@@ -113,7 +114,7 @@ namespace xeus.Controls
 
 					foreach ( ChatMessage message in messages )
 					{
-						rosterItem.Messages.Add( message );
+						rosterItem.Messages.Add( message ) ;
 					}
 				}
 
@@ -123,8 +124,8 @@ namespace xeus.Controls
 
 		protected override void OnClosed( EventArgs e )
 		{
-			_timeRefreshTimer.Stop();
-			_listRefreshTimer.Stop();
+			_timeRefreshTimer.Stop() ;
+			_listRefreshTimer.Stop() ;
 
 			_instance = null ;
 
@@ -218,7 +219,7 @@ namespace xeus.Controls
 				}
 
 				_instance._listRefreshTimer.Start() ;
-				_instance._timeRefreshTimer.Start();
+				_instance._timeRefreshTimer.Start() ;
 			}
 			else
 			{
@@ -235,7 +236,7 @@ namespace xeus.Controls
 
 				if ( rosterItem != null )
 				{
-					Client.Instance.SendChatMessage( rosterItem, MessageTextBox.Text );
+					Client.Instance.SendChatMessage( rosterItem, MessageTextBox.Text ) ;
 					MessageTextBox.Text = String.Empty ;
 					_instance._listRefreshTimer.Start() ;
 				}

@@ -59,13 +59,13 @@ namespace xeus.Controls
 
 		private void TitleBar_Loaded( object sender, RoutedEventArgs e )
 		{
-			/*closeButton = ( ImageButton ) Template.FindName( "CloseButton", this ) ;
+			closeButton = ( ImageButton ) Template.FindName( "CloseButton", this ) ;
 			minButton = ( ImageButton ) Template.FindName( "MinButton", this ) ;
 			maxButton = ( ImageButton ) Template.FindName( "MaxButton", this ) ;
 
 			closeButton.Click += new RoutedEventHandler( CloseButton_Click ) ;
 			minButton.Click += new RoutedEventHandler( MinButton_Click ) ;
-			maxButton.Click += new RoutedEventHandler( MaxButton_Click ) ;*/
+			maxButton.Click += new RoutedEventHandler( MaxButton_Click ) ;
 		}
 
 
