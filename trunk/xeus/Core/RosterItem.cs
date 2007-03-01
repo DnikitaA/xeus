@@ -1,4 +1,5 @@
 using System ;
+using System.Collections ;
 using System.Collections.Specialized ;
 using System.ComponentModel ;
 using System.Data ;
@@ -46,6 +47,7 @@ namespace xeus.Core
 		private string _lastMessageFrom = "No message sent" ;
 		private string _lastMessageTo = "No message recieved" ;
 		private SubscriptionType _subscriptionType = SubscriptionType.none ;
+		private string _customName = null ;
 
 		public event PropertyChangedEventHandler PropertyChanged ;
 
@@ -66,11 +68,12 @@ namespace xeus.Core
 																row[ "SubscriptionType" ] as string, false ) ;
 			_fullName = row[ "FullName" ] as string ;
 			_nickName = row[ "NickName" ] as string ;
+			_customName = row[ "CustomName" ] as string ;
 		}
 
 		public XmlDatabase.FieldValuePair[] GetData()
 		{
-			XmlDatabase.FieldValuePair[] data = new XmlDatabase.FieldValuePair[ 6 ] ;
+			XmlDatabase.FieldValuePair[] data = new XmlDatabase.FieldValuePair[ 7 ] ;
 
 			data[ 0 ] = new NullFieldValuePair( "Key", Key ) ;
 			data[ 1 ] = new NullFieldValuePair( "LastMessageFrom", LastMessageFrom ) ;
@@ -78,6 +81,7 @@ namespace xeus.Core
 			data[ 3 ] = new NullFieldValuePair( "SubscriptionType", SubscriptionType.ToString() ) ;
 			data[ 4 ] = new NullFieldValuePair( "FullName", FullName ) ;
 			data[ 5 ] = new NullFieldValuePair( "NickName", NickName ) ;
+			data[ 6 ] = new NullFieldValuePair( "CustomName", CustomName ) ;
 
 			return data ;
 		}
@@ -97,42 +101,11 @@ namespace xeus.Core
 				case NotifyCollectionChangedAction.Add:
 				case NotifyCollectionChangedAction.Replace:
 					{
-						DateTime maxFrom = DateTime.MinValue ;
-						DateTime maxTo = DateTime.MinValue ;
-						string fromMe = null ;
-						string toMe = null ;
-
-						foreach ( ChatMessage message in e.NewItems )
+						if ( SetLastMessages( e.NewItems ) )
 						{
-							if ( message.SentByMe )
-							{
-								if ( fromMe == null || maxFrom < message.Time )
-								{
-									fromMe = string.Format( "{0}\n{1}", message.Time, message.Body ) ;
-									maxFrom = message.Time ;
-								}
-							}
-							else
-							{
-								if ( toMe == null || maxTo < message.Time )
-								{
-									toMe = string.Format( "{0}\n{1}", message.Time, message.Body ) ;
-									maxTo = message.Time ;
-								}
-							}
+							HasUnreadMessages = true ;
 						}
 
-						if ( fromMe != null )
-						{
-							LastMessageFrom = fromMe ;
-						}
-
-						if ( toMe != null )
-						{
-							LastMessageTo = toMe ;
-						}
-
-						HasUnreadMessages = true ;
 						break ;
 					}
 				case NotifyCollectionChangedAction.Reset:
@@ -141,6 +114,50 @@ namespace xeus.Core
 						break ;
 					}
 			}
+		}
+
+		bool SetLastMessages( IList newMessages )
+		{
+			DateTime maxFrom = DateTime.MinValue ;
+			DateTime maxTo = DateTime.MinValue ;
+			string fromMe = null ;
+			string toMe = null ;
+
+			bool newMessagesCame = false ;
+
+			foreach ( ChatMessage message in newMessages )
+			{
+				if ( message.SentByMe )
+				{
+					if ( fromMe == null || maxFrom < message.Time )
+					{
+						fromMe = string.Format( "{0}\n{1}", message.Time, message.Body ) ;
+						maxFrom = message.Time ;
+					}
+				}
+				else
+				{
+					newMessagesCame = true ;
+
+					if ( toMe == null || maxTo < message.Time )
+					{
+						toMe = string.Format( "{0}\n{1}", message.Time, message.Body ) ;
+						maxTo = message.Time ;
+					}
+				}
+			}
+
+			if ( fromMe != null )
+			{
+				LastMessageFrom = fromMe ;
+			}
+
+			if ( toMe != null )
+			{
+				LastMessageTo = toMe ;
+			}
+
+			return newMessagesCame ;
 		}
 
 		public bool IsInitialized
@@ -184,6 +201,10 @@ namespace xeus.Core
 		{
 			get
 			{
+				if ( !String.IsNullOrEmpty( CustomName ) )
+				{
+					return FullName ;
+				}
 				if ( !String.IsNullOrEmpty( FullName ) )
 				{
 					return FullName ;
@@ -630,6 +651,14 @@ namespace xeus.Core
 			get
 			{
 				return string.Format( "Subscription: {0}", SubscriptionType ) ;
+			}
+		}
+
+		public string CustomName
+		{
+			get
+			{
+				return _customName ;
 			}
 		}
 
