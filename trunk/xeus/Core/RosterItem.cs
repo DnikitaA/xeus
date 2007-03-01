@@ -64,16 +64,20 @@ namespace xeus.Core
 			_lastMessageTo = row[ "LastMessageTo" ] as string ;
 			_subscriptionType = ( SubscriptionType )Enum.Parse( typeof( SubscriptionType ),
 																row[ "SubscriptionType" ] as string, false ) ;
+			_fullName = row[ "FullName" ] as string ;
+			_nickName = row[ "NickName" ] as string ;
 		}
 
 		public XmlDatabase.FieldValuePair[] GetData()
 		{
-			XmlDatabase.FieldValuePair[] data = new XmlDatabase.FieldValuePair[ 4 ] ;
+			XmlDatabase.FieldValuePair[] data = new XmlDatabase.FieldValuePair[ 6 ] ;
 
 			data[ 0 ] = new NullFieldValuePair( "Key", Key ) ;
 			data[ 1 ] = new NullFieldValuePair( "LastMessageFrom", LastMessageFrom ) ;
 			data[ 2 ] = new NullFieldValuePair( "LastMessageTo", LastMessageTo ) ;
 			data[ 3 ] = new NullFieldValuePair( "SubscriptionType", SubscriptionType.ToString() ) ;
+			data[ 4 ] = new NullFieldValuePair( "FullName", FullName ) ;
+			data[ 5 ] = new NullFieldValuePair( "NickName", NickName ) ;
 
 			return data ;
 		}

@@ -1,6 +1,7 @@
 using System ;
 using System.Collections.Generic ;
 using System.Data ;
+using System.Xml ;
 using Clifton.Tools.Xml ;
 using xeus.Properties ;
 
@@ -26,10 +27,17 @@ namespace xeus.Core
 			}
 		}
 
+		public Database()
+		{
+			xdoc = null ;
+		}
+
 		private void OpenDatabase()
 		{
 			if ( xdoc == null )
 			{
+				xdoc = new XmlDocument();
+
 				string path = string.Format( "{0}\\{1}", Storage.GetDbFolder(), "Default.xeusdb" ) ;
 
 				try
