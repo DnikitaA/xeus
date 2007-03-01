@@ -37,20 +37,18 @@
 													<ColumnDefinition Width="19"/>
 													<ColumnDefinition Width="*"/>
 												</Grid.ColumnDefinitions>										
-													<Grid x:Name="grid" VerticalAlignment="Center">
+													<Viewbox Margin="4,0,4,0">
+													<Grid x:Name="grid" VerticalAlignment="Center" HorizontalAlignment="Center">
 													<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
 														Canvas.Left="0" x:Name="_circle">
 														<Ellipse.Fill>
 															<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-																<GradientStop Color="#FF8E3A8D" Offset="0"/>
-																<GradientStop Color="#FFB56AB5" Offset="1"/>
+																<GradientStop Color="#FF969696" Offset="0"/>
+																<GradientStop Color="#FF41423E" Offset="1"/>
 															</LinearGradientBrush>
 														</Ellipse.Fill>
-														<Ellipse.BitmapEffect>
-															<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
-														</Ellipse.BitmapEffect>
 													</Ellipse>
-														<Path SnapsToDevicePixels="False" StrokeThickness="1.5" x:Name="arrow" Data="M1,1.5L4.5,5 8,1.5" Stroke="#FFC9C9C9" RenderTransformOrigin="0.5,0.5" d:LayoutOverrides="Width, Height, Margin" HorizontalAlignment="Center" VerticalAlignment="Center">
+														<Path SnapsToDevicePixels="False" StrokeThickness="1.5" x:Name="arrow" Data="M1,1.5L4.5,5 8,1.5" Stroke="#FF000000" RenderTransformOrigin="0.5,0.5" d:LayoutOverrides="Width, Height, Margin" HorizontalAlignment="Center" VerticalAlignment="Center">
 															<Path.RenderTransform>
 																<TransformGroup>
 																	<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -60,10 +58,10 @@
 																</TransformGroup>
 															</Path.RenderTransform>
 														</Path>
-													<Path Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
 													
 												<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" HorizontalAlignment="Center"/>
 													</Grid>
+													</Viewbox>
 												<ContentPresenter SnapsToDevicePixels="True" HorizontalAlignment="Left" Margin="6,0,0,0" VerticalAlignment="Center" Grid.Column="1" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" RecognizesAccessKey="True"/>
 											</Grid>
 										</Border>
@@ -77,6 +75,24 @@
 															<RotateTransform/>
 															<TranslateTransform X="0" Y="0"/>
 														</TransformGroup>
+													</Setter.Value>
+												</Setter>
+												<Setter Property="Fill" TargetName="_circle">
+													<Setter.Value>
+														<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+															<GradientStop Color="#FF909289" Offset="0"/>
+															<GradientStop Color="#FF555553" Offset="1"/>
+														</LinearGradientBrush>
+													</Setter.Value>
+												</Setter>
+											</Trigger>
+											<Trigger Property="IsMouseOver" Value="True">
+												<Setter Property="Fill" TargetName="_circle">
+													<Setter.Value>
+														<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+															<GradientStop Color="#FFC5D1BF" Offset="0"/>
+															<GradientStop Color="#FF646961" Offset="1"/>
+														</LinearGradientBrush>
 													</Setter.Value>
 												</Setter>
 											</Trigger>

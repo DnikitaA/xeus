@@ -1,9 +1,8 @@
 using System ;
 using System.Collections.Generic ;
 using System.Data ;
-using System.Xml ;
-using System.Xml.XPath ;
 using Clifton.Tools.Xml ;
+using xeus.Properties ;
 
 namespace xeus.Core
 {
@@ -27,27 +26,37 @@ namespace xeus.Core
 			}
 		}
 
-		public Database()
+		private void OpenDatabase()
 		{
-			string path = string.Format( "{0}\\{1}", Storage.GetDbFolder(), "Default.xeusdb" ) ;
-
-			try
+			if ( xdoc == null )
 			{
-				RootName = "xeus" ;
-				Load( path ) ;
-			}
+				string path = string.Format( "{0}\\{1}", Storage.GetDbFolder(), "Default.xeusdb" ) ;
 
-			catch ( Exception )
-			{
-				// does not exist
-				RootName = "xeus" ;
-				Create() ;
+				try
+				{
+					RootName = "xeus" ;
+					Load( path ) ;
+				}
+
+				catch ( Exception )
+				{
+					// does not exist
+					RootName = "xeus" ;
+					Create() ;
+				}
 			}
+		}
+
+		private void CloseDatabase()
+		{
+			xdoc = null ;
 		}
 
 		public List< RosterItem > ReadRosterItems()
 		{
-			List< RosterItem > rosterItems = new List< RosterItem >( );
+			OpenDatabase() ;
+
+			List< RosterItem > rosterItems = new List< RosterItem >() ;
 
 			try
 			{
@@ -64,20 +73,33 @@ namespace xeus.Core
 				Client.Instance.Log( "Error reading Roster items: {0}", e.Message ) ;
 			}
 
+			CloseDatabase() ;
+
 			return rosterItems ;
 		}
 
 		public List< ChatMessage > ReadMessages( RosterItem rosterItem )
 		{
-			List< ChatMessage > messages = new List< ChatMessage >();
+			OpenDatabase() ;
+
+			List< ChatMessage > messages = new List< ChatMessage >() ;
 
 			try
 			{
+				int maxMessages = Settings.Default.Roster_MaximumMessagesToLoad ;
+
 				DataTable data = Query( "Messages/Message", string.Format( "@Key='{0}'", rosterItem.Key ) ) ;
+
+				int i = 0 ;
 
 				foreach ( DataRow row in data.Rows )
 				{
-					messages.Add( new ChatMessage( row, rosterItem ) );
+					messages.Add( new ChatMessage( row, rosterItem ) ) ;
+
+					if ( ++i > maxMessages )
+					{
+						break ;
+					}
 				}
 			}
 
@@ -86,11 +108,15 @@ namespace xeus.Core
 				Client.Instance.Log( "Error reading messages: {0}", e.Message ) ;
 			}
 
+			CloseDatabase() ;
+
 			return messages ;
 		}
 
-		void StoreMessages( ObservableCollectionDisp< ChatMessage > messages )
+		private void StoreMessages( ObservableCollectionDisp< ChatMessage > messages )
 		{
+			OpenDatabase() ;
+
 			foreach ( ChatMessage item in messages )
 			{
 				try
@@ -112,6 +138,8 @@ namespace xeus.Core
 
 		public void StoreRosterItems( ObservableCollectionDisp< RosterItem > rosterItems )
 		{
+			OpenDatabase() ;
+
 			foreach ( RosterItem item in rosterItems )
 			{
 				try
@@ -129,7 +157,7 @@ namespace xeus.Core
 			}
 		}
 
-		void SaveOrUpdate( string path, string where, FieldValuePair[] fields )
+		private void SaveOrUpdate( string path, string where, FieldValuePair[] fields )
 		{
 			if ( Update( path, where, fields ) == 0 )
 			{
@@ -139,7 +167,11 @@ namespace xeus.Core
 
 		public new void Save()
 		{
+			OpenDatabase() ;
+
 			base.Save() ;
+
+			CloseDatabase() ;
 		}
 	}
 }
