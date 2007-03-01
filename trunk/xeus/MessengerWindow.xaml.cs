@@ -65,6 +65,11 @@ namespace xeus
 			_statusPopup.IsOpen = true ;
 		}
 
+		public void OpenServices( object sender, RoutedEventArgs e )
+		{
+			ServicesWindow.DisplayServices();
+		}
+
 		private void buttonMessages_Click( object sender, RoutedEventArgs e )
 		{
 			MessageWindow.DisplayChatWindow( null, false ) ;

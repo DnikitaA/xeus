@@ -6,22 +6,7 @@
     xmlns:System="clr-namespace:System;assembly=mscorlib"
     x:Class="xeus.Controls.ControlResource"
     >
-
-  <!-- services -->
-  <CollectionViewSource
-          x:Key="ServicesView"
-          Source="{Binding Path=Services.Items}"
-          />
-
-	<!-- Resource dictionary entries should be defined here. -->
-
-
-  <DataTemplate DataType="{x:Type local:ServiceItem}">
-    <Grid>
-      <TextBlock Text="{Binding Path=Name}" />
-    </Grid>
-  </DataTemplate>
-  
+   
  <!-- roster -->
   <CollectionViewSource x:Key="_rosterView" Source="{Binding Path=Roster.Items}">
     <CollectionViewSource.SortDescriptions>

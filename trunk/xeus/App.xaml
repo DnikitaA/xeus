@@ -20,6 +20,7 @@
   			<ResourceDictionary Source="Controls\TextBoxResource.xaml"/>
   			<ResourceDictionary Source="Controls\SplitterResources.xaml"/>
         <ResourceDictionary Source="Controls\WindowDecoration.xaml" />
+  			<ResourceDictionary Source="Controls\ServiceResources.xaml"/>
       </ResourceDictionary.MergedDictionaries>
   	</ResourceDictionary>
   </Application.Resources>

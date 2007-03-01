@@ -6,8 +6,6 @@
     xmlns:settings="clr-namespace:xeus.Core"
     x:Class="xeus.Controls.MessageWindow"
     Title="message" Height="300" Width="300"
-	WindowStyle="None" AllowsTransparency="True"
-    ResizeMode="CanResizeWithGrip" BorderBrush="#FF1E1E1E" BorderThickness="2,2,2,2"
     settings:WindowSettings.Save="True"	
 	Style="{StaticResource DarkStyleWindow}"
 	Background="{x:Null}"
