@@ -146,7 +146,7 @@ namespace xeus.Core
 
 		public void Connect()
 		{
-			if ( !_xmppConnection.Binded )
+			if ( _xmppConnection.XmppConnectionState == XmppConnectionState.Disconnected )
 			{
 				Log( "Opening connection" ) ;
 
@@ -156,7 +156,7 @@ namespace xeus.Core
 
 		public void Disconnect()
 		{
-			if ( _xmppConnection.Binded )
+			if ( _xmppConnection.XmppConnectionState != XmppConnectionState.Disconnected )
 			{
 				Log( "Disconnecting" ) ;
 

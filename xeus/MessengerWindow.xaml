@@ -36,6 +36,11 @@
 					VerticalAlignment="Stretch" HorizontalAlignment="Left" Foreground="#FFFFFFFF" Grid.Column="1" Margin="3,0,0,0" />
 			</StackPanel>
 		</StatusBarItem>
+		<StatusBarItem 
+		    	  x:Name="_statusServices" VerticalAlignment="Stretch">
+		    <Button x:Name="_buttonmyServices" Width="17" Height="17" Template="{DynamicResource StatusXAway}"
+				Click="OpenServices" ToolTip="Services"/>
+		</StatusBarItem>
 	</StatusBar>
    	<local:RosterControl x:Name="_roster" DockPanel.Dock="Top"/>
   </DockPanel>

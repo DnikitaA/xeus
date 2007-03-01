@@ -1,0 +1,28 @@
+﻿<win:WindowBase
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:local="clr-namespace:xeus.Core"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:win="clr-namespace:xeus.Controls"
+    xmlns:settings="clr-namespace:xeus.Core"
+    x:Class="xeus.Controls.ServicesWindow"
+    Title="disco" Height="300" Width="300"
+    settings:WindowSettings.Save="True"	
+	Style="{StaticResource DarkStyleWindow}"
+	Background="{x:Null}" >
+	
+<win:WindowBase.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ServiceResources.xaml" />
+        <ResourceDictionary Source="ControlResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </win:WindowBase.Resources>
+
+    <DockPanel>
+        
+    	<ListBox
+			ItemsSource="{Binding Source={StaticResource _servicesView}}" ItemTemplate="{DynamicResource ServiceItem}" Style="{DynamicResource ListBoxStyleMessages}"/>
+        
+    </DockPanel>
+</win:WindowBase>

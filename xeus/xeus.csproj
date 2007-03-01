@@ -65,6 +65,7 @@
     <Page Include="Controls\ExpanderResources.xaml" />
     <Page Include="Controls\ImageResources.xaml" />
     <Page Include="Controls\ScrollbarResources.xaml" />
+    <Page Include="Controls\ServiceResources.xaml" />
     <Page Include="Controls\SliderRosterStyle.xaml" />
     <Page Include="Controls\SplitterResources.xaml" />
     <Page Include="Controls\StatusbarResources.xaml" />
@@ -79,6 +80,7 @@
     <Page Include="Controls\ControlResources.xaml" />
     <Page Include="Controls\MessageWindow.xaml" />
     <Page Include="Controls\ServicesControl.xaml" />
+    <Page Include="Controls\ServicesWindow.xaml" />
     <Page Include="Controls\StatusControl.xaml" />
     <Page Include="Controls\WindowDecoration.xaml" />
     <Page Include="MessengerWindow.xaml" />
@@ -98,6 +100,10 @@
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\OfficeStyleWindow.cs" />
+    <Compile Include="Controls\ServicesWindow.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ServicesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StatusControl.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>StatusControl.xaml</DependentUpon>
