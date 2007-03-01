@@ -1,11 +1,9 @@
 using System ;
 using System.IO ;
 using System.Reflection ;
-using System.Runtime.Serialization.Formatters.Binary ;
-using System.Text ;
+using System.Resources ;
 using System.Windows ;
 using System.Windows.Media.Imaging ;
-using System.Xml ;
 using agsXMPP.protocol.iq.vcard ;
 using agsXMPP.Xml.Dom ;
 
@@ -13,7 +11,7 @@ namespace xeus.Core
 {
 	internal static class Storage
 	{
-		private readonly static string _folder ;
+		private static readonly string _folder ;
 
 		private static BitmapImage _defaultAvatar ;
 		private static BitmapImage _defaultServiceAvatar ;
@@ -70,7 +68,7 @@ namespace xeus.Core
 
 			catch ( Exception e )
 			{
-				Client.Instance.Log( e.Message ) ; 
+				Client.Instance.Log( e.Message ) ;
 			}
 		}
 
@@ -82,8 +80,9 @@ namespace xeus.Core
 			{
 				DirectoryInfo directoryInfo = GetCacheFolder() ;
 
-				using ( FileStream fileStream = new FileStream( string.Format( "{0}\\{1:d}", directoryInfo.FullName, jid.GetHashCode() ),
-				                                                FileMode.Open, FileAccess.Read, FileShare.Read ) )
+				using (
+					FileStream fileStream = new FileStream( string.Format( "{0}\\{1:d}", directoryInfo.FullName, jid.GetHashCode() ),
+					                                        FileMode.Open, FileAccess.Read, FileShare.Read ) )
 				{
 					using ( StreamReader streamReader = new StreamReader( fileStream ) )
 					{
@@ -105,7 +104,7 @@ namespace xeus.Core
 
 			catch ( Exception e )
 			{
-				Client.Instance.Log( e.Message ) ; 
+				Client.Instance.Log( e.Message ) ;
 			}
 
 			return vcard ;
@@ -120,12 +119,12 @@ namespace xeus.Core
 
 			try
 			{
-				Uri uri = new Uri( url, UriKind.Absolute );
-				
+				Uri uri = new Uri( url, UriKind.Absolute ) ;
+
 				using ( Stream stream = Application.GetResourceStream( uri ).Stream )
 				{
 					avatarStorage = new BitmapImage() ;
-					avatarStorage.CacheOption = BitmapCacheOption.OnLoad;
+					avatarStorage.CacheOption = BitmapCacheOption.OnLoad ;
 					avatarStorage.BeginInit() ;
 					avatarStorage.StreamSource = stream ;
 					avatarStorage.EndInit() ;
@@ -137,8 +136,8 @@ namespace xeus.Core
 			catch ( Exception e )
 			{
 				Client.Instance.Log( e.Message ) ;
-				return null ; 
-			}			
+				return null ;
+			}
 		}
 
 		public static BitmapImage GetDefaultAvatar()
@@ -161,7 +160,7 @@ namespace xeus.Core
 					MemoryStream memoryStream = new MemoryStream( pic, 0, pic.Length ) ;
 					BitmapImage bitmap = new BitmapImage() ;
 					bitmap.BeginInit() ;
-					bitmap.CacheOption = BitmapCacheOption.OnLoad;
+					bitmap.CacheOption = BitmapCacheOption.OnLoad ;
 					bitmap.StreamSource = memoryStream ;
 					bitmap.EndInit() ;
 					return bitmap ;
@@ -170,7 +169,7 @@ namespace xeus.Core
 				{
 					BitmapImage bitmap = new BitmapImage() ;
 					bitmap.BeginInit() ;
-					bitmap.CacheOption = BitmapCacheOption.OnLoad;
+					bitmap.CacheOption = BitmapCacheOption.OnLoad ;
 					bitmap.UriSource = new Uri( photo.GetTag( "EXTVAL" ) ) ;
 					bitmap.EndInit() ;
 
@@ -181,11 +180,11 @@ namespace xeus.Core
 					byte[] pic = Convert.FromBase64String( photo.Value ) ;
 					MemoryStream memoryStream = new MemoryStream( pic, 0, pic.Length ) ;
 					BitmapImage bitmap = new BitmapImage() ;
-					bitmap.CacheOption = BitmapCacheOption.OnLoad;
+					bitmap.CacheOption = BitmapCacheOption.OnLoad ;
 					bitmap.BeginInit() ;
 					bitmap.StreamSource = memoryStream ;
 					bitmap.EndInit() ;
-					
+
 					return bitmap ;
 				}
 				else
@@ -197,7 +196,7 @@ namespace xeus.Core
 			catch
 			{
 				return null ;
-			}			
+			}
 		}
 	}
 }
