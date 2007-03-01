@@ -222,11 +222,9 @@
   		</Grid.RowDefinitions>
 	    	
   		<Grid d:IsLayer="True" x:Name="Status" Grid.ColumnSpan="1" Grid.RowSpan="3" Panel.ZIndex="3">
-			<Button Template="{DynamicResource ErrorIcon}" Width="16.569" Height="16.569"
-			 ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_errorButton" 
-			 HorizontalAlignment="Right" Margin="0,0,1.549,15.819" VerticalAlignment="Bottom" d:LayoutOverrides="Margin" />
 			<Button Template="{Binding Path=StatusTemplate}" HorizontalAlignment="Right"
-			Margin="0,0.828,1.549,0" VerticalAlignment="Top" Width="22" Height="22" ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" />
+			Margin="0,0.828,1.549,0" VerticalAlignment="Top" Width="22" Height="22"
+			IsEnabled="False" ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" />
  		</Grid>
 	    	
   		<Border Margin="0,1.585,0,-2.388" VerticalAlignment="Stretch" Width="Auto"
@@ -294,9 +292,6 @@
 		</DataTrigger>
 		<DataTrigger Binding="{Binding Path=HasSpecialStatus}" Value="false">
 			<Setter Property="Visibility" Value="Hidden" TargetName="_statusButton" />
-		</DataTrigger>
-		<DataTrigger Binding="{Binding Path=Errors.Count}" Value="0">
-			<Setter Property="Visibility" Value="Hidden" TargetName="_errorButton" />
 		</DataTrigger>
 	</DataTemplate.Triggers>
   </DataTemplate>
