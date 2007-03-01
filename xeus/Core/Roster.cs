@@ -106,14 +106,35 @@ namespace xeus.Core
 
 				if ( rosterItem != null )
 				{
-					if ( presence.From.User == null && presence.Error == null
-							&& presence.Type == PresenceType.available )
+					if ( /* presence.From.User == null && */ presence.Error == null
+							&& presence.Type == PresenceType.available
+							&& rosterItem.IsInitialized )
 					{
-						// this is the server 
+						lock ( _lockRosterItems )
+						{
+							bool enqueued = false ;
+
+							foreach ( RosterItem item in _rosterItemsToRecieveVCard )
+							{
+								if ( item.Key == rosterItem.Key )
+								{
+									enqueued = true ;
+									break ;
+								}
+							}
+
+							if ( !enqueued )
+							{
+								_rosterItemsToRecieveVCard.Enqueue( rosterItem ) ;
+							}
+						}
+
+						/*
 						foreach ( RosterItem rosterItemOfService in _items )
 						{
 							if ( rosterItemOfService.IsInitialized )
 							{
+
 								if ( rosterItemOfService.XmppRosterItem.Jid.Server == presence.From.Server
 								     && ( rosterItemOfService.Errors.Count > 0
 								          || rosterItemOfService.Presence == null ) )
@@ -140,9 +161,10 @@ namespace xeus.Core
 											_rosterItemsToRecieveVCard.Enqueue( rosterItemOfService ) ;
 										}
 									}
-								}
+								
+
 							}
-						}
+						}*/
 
 					}
 					rosterItem.Presence = presence ;
