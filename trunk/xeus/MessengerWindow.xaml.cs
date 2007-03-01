@@ -1,7 +1,8 @@
 using System ;
+using System.ComponentModel ;
+using System.Drawing ;
 using System.Windows ;
 using System.Windows.Forms ;
-using System.Windows.Input ;
 using xeus.Controls ;
 using xeus.Core ;
 using Button=System.Windows.Controls.Button;
@@ -13,17 +14,36 @@ namespace xeus
 	/// </summary>
 	public partial class MessengerWindow : WindowBase
 	{
+		private NotifyIcon _notifyIcon = new NotifyIcon() ;
 
-		NotifyIcon _notifyIcon = new NotifyIcon();
- 
 		public MessengerWindow()
 		{
 			InitializeComponent() ;
+
+			_notifyIcon.Icon = Properties.Resources.xeus ;
+			_notifyIcon.Visible = true ;
+
+			_notifyIcon.MouseClick += new MouseEventHandler( _notifyIcon_MouseClick );
+		}
+
+		void _notifyIcon_MouseClick( object sender, MouseEventArgs e )
+		{
+			if ( e.Button == MouseButtons.Left )
+			{
+				if ( WindowState == WindowState.Minimized )
+				{
+					WindowState = WindowState.Normal ;
+				}
+				else
+				{
+					WindowState = WindowState.Minimized ;
+				}
+			}
 		}
 
 		public void Alert( string text )
 		{
-			_notifyIcon.ShowBalloonTip( 500, "Connection error", text, new ToolTipIcon() );
+			_notifyIcon.ShowBalloonTip( 500, "Connection error", text, new ToolTipIcon() ) ;
 		}
 
 		protected override void OnInitialized( EventArgs e )
@@ -50,19 +70,26 @@ namespace xeus
 			MessageWindow.DisplayChatWindow( null, false ) ;
 		}
 
-		protected override void OnClosing( System.ComponentModel.CancelEventArgs e )
+		protected override void OnClosing( CancelEventArgs e )
 		{
 			SaveData() ;
 
-			base.OnClosing( e );
+			base.OnClosing( e ) ;
 
-			MessageWindow.CloseWindow();
+			MessageWindow.CloseWindow() ;
 		}
 
-		void SaveData()
+		private void SaveData()
 		{
-			Database.Instance.StoreRosterItems( Client.Instance.Roster.Items );
+			Database.Instance.StoreRosterItems( Client.Instance.Roster.Items ) ;
 			Database.Instance.Save() ;
+		}
+
+		protected override void OnClosed( EventArgs e )
+		{
+			base.OnClosed( e );
+
+			_notifyIcon.Dispose();
 		}
 	}
 }

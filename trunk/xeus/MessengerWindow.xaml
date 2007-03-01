@@ -11,6 +11,7 @@
 	Style="{StaticResource DarkStyleWindow}"
     settings:WindowSettings.Save="True"	
 	ResizeMode="CanResizeWithGrip"
+    ShowInTaskbar="False"
     >
   <Window.Resources>
     <localcore:CountToVisibilityConverter x:Key="_visibilityConverter" />
