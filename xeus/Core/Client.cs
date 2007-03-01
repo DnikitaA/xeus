@@ -8,6 +8,7 @@ using agsXMPP.protocol.iq.disco ;
 using agsXMPP.protocol.iq.roster ;
 using agsXMPP.Xml.Dom ;
 using xeus.Core ;
+using xeus.Properties ;
 
 namespace xeus.Core
 {
@@ -80,9 +81,9 @@ namespace xeus.Core
 
 		public void Setup()
 		{
-			_xmppConnection.Username = "testovani" ;
-			_xmppConnection.Password = "hardcore" ;
-			_xmppConnection.Server = "jabber.cz" ;
+			_xmppConnection.Username = Settings.Default.Client_UserName ;
+			_xmppConnection.Password = Settings.Default.Client_Password ;
+			_xmppConnection.Server = Settings.Default.Client_Server ;
 			_xmppConnection.UseCompression = true ;
 			_xmppConnection.UseSSL = true ;
 			_xmppConnection.AutoResolveConnectServer = true ;
