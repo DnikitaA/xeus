@@ -18,10 +18,10 @@
   </Window.Resources>
 
     <DockPanel LastChildFill="True">
-	<StatusBar DockPanel.Dock="Bottom" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}" VerticalAlignment="Bottom" Padding="2,2,2,2">
+	<StatusBar DockPanel.Dock="Bottom" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}" VerticalAlignment="Bottom" Padding="2,4,2,4">
 		<StatusBarItem HorizontalAlignment="Stretch" Margin="0,0,0,0"
 		    	  x:Name="_statusMyStatus" VerticalAlignment="Stretch">
-		    <Button x:Name="_buttonmyStatus" Width="20" Height="20" Template="{Binding Path=StatusTemplate}"  Click="DisplayPopup" ToolTip="My Status">		
+		    <Button x:Name="_buttonmyStatus" Width="17" Height="17" Template="{Binding Path=StatusTemplate}"  Click="DisplayPopup" ToolTip="My Status">		
 			<Popup x:Name="_statusPopup" AllowsTransparency="True" Placement="MousePoint" StaysOpen="False" Width="85" Height="85">
 				<local:StatusControl x:Name="_statusControl"/>
 			</Popup>
@@ -30,15 +30,11 @@
 		<StatusBarItem HorizontalAlignment="Stretch" 
 		    	  x:Name="_statusUnreadMessages" VerticalAlignment="Stretch"
 		          Visibility="{Binding Path=MessageCenter.ChatMessages.Count, Converter={StaticResource _visibilityConverter}}">
-	  		<Grid d:IsLayer="True" x:Name="Status" Grid.ColumnSpan="1" Grid.RowSpan="3" Width="Auto" Height="Auto">
-			  	<Grid.ColumnDefinitions>
-			  		<ColumnDefinition Width="25"/>
-			  		<ColumnDefinition Width="*"/>
-			  	</Grid.ColumnDefinitions>
-		  		<Button Grid.Column="0" Margin="0,0,0,0" Template="{DynamicResource MessageIcon}" x:Name="_buttonMessages" Width="20" Height="20"/>
+	  		<StackPanel Orientation="Horizontal">
+		  		<Button Grid.Column="0" Margin="0,0,0,0" Template="{DynamicResource MessageIcon}" x:Name="_buttonMessages" Width="17" Height="17"/>
 				<TextBlock Text="{Binding Path=MessageCenter.ChatMessages.Count}" 
-					Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Left" Foreground="#FFFFFFFF" Margin="5,0,0,0" />
-			</Grid>
+					VerticalAlignment="Stretch" HorizontalAlignment="Left" Foreground="#FFFFFFFF" Grid.Column="1" Margin="3,0,0,0" />
+			</StackPanel>
 		</StatusBarItem>
 	</StatusBar>
    	<local:RosterControl x:Name="_roster" DockPanel.Dock="Top"/>

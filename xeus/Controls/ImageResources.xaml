@@ -342,6 +342,16 @@
 </ControlTemplate>
 
 <ControlTemplate x:Key="MessageIcon" TargetType="{x:Type Button}">
+	<ControlTemplate.Resources>
+		<Storyboard x:Key="OnRequestBringIntoView">
+			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="viewbox" Storyboard.TargetProperty="(UIElement.Visibility)"
+				RepeatBehavior="Forever" AutoReverse="True" >
+				<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="00:00:00.5000000" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="00:00:01" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+	</ControlTemplate.Resources>
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 	<Viewbox.RenderTransform>
 		<TransformGroup>
@@ -362,8 +372,25 @@
 			</TransformGroup>
 		</Path.RenderTransform>
 	</Path>
+		<Path Opacity="0.9" RenderTransformOrigin="0.890339959425268,0.645409726995465" Fill="#FFFFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Left" Margin="0.917,0.667,0,0" x:Name="path2" VerticalAlignment="Top" Width="6.277" Height="6.391" Data="F1 M6,-5.5443206E-09 L6.7389989,0.1101198 C3.408973,0.76805806 1.002,3.040941 1.002,5.7287774 1.002,6.118423 1.0525831,6.4993482 1.1725329,6.8615327 0.39794999,6.2426252 1.6222344E-08,5.3698635 1.6222344E-08,4.4285002 1.6222344E-08,1.982707 2.6862915,0 6,-5.5443206E-09 z">
+			<Path.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="1" ScaleY="1"/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="0"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</Path.RenderTransform>
+		</Path>
 	</Grid>
 </Viewbox>
+	<ControlTemplate.Triggers>
+		<Trigger Property="Visibility" Value="Visible">
+			<Trigger.EnterActions>
+				<BeginStoryboard x:Name="OnRequestBringIntoView_BeginStoryboard" Storyboard="{StaticResource OnRequestBringIntoView}"/>
+			</Trigger.EnterActions>
+		</Trigger>
+	</ControlTemplate.Triggers>
 </ControlTemplate>
 
 <ControlTemplate x:Key="ErrorIcon" TargetType="{x:Type Button}">
