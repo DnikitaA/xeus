@@ -111,6 +111,7 @@
     <Compile Include="Controls\TabMessages.xaml.cs" />
     <Compile Include="Controls\TitleBar.cs" />
     <Compile Include="Controls\WindowBase.cs" />
+    <Compile Include="Core\AgentItem.cs" />
     <Compile Include="Core\ChatMessage.cs" />
     <Compile Include="Core\CountToVisibilityConverter.cs" />
     <Compile Include="Core\Database.cs" />
