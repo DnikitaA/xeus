@@ -22,7 +22,7 @@ namespace xeus.Core
 		private Queue< RosterItem > _rosterItemsToRecieveVCard = new Queue< RosterItem >( 128 ) ;
 		private object _lockRosterItems = new object() ;
 
-		private Dictionary< string, Presence > _presences = new Dictionary< string, Presence >( 128 ) ;
+		private List< Presence > _presences = new List< Presence >( 128 ) ;
 
 		#region delegates
 
@@ -97,10 +97,6 @@ namespace xeus.Core
 		{
 			if ( App.DispatcherThread.CheckAccess() )
 			{
-				// presence info can arrive before the user item comes into the roster
-				// so presence info has to be kept separately
-				_presences[ presence.From.Bare ] = presence ;
-
 				// if it is already in roster, change status property
 				RosterItem rosterItem = FindItem( presence.From.Bare ) ;
 
@@ -168,6 +164,15 @@ namespace xeus.Core
 
 					}
 					rosterItem.Presence = presence ;
+				}
+				else
+				{
+					// presence info can arrive before the user item comes into the roster
+					// so presence info has to be kept separately
+					lock ( _presences )
+					{
+						_presences.Add( presence );
+					}
 				}
 			}
 			else
@@ -285,9 +290,6 @@ namespace xeus.Core
 		{
 			RosterItem rosterItem = null ;
 
-			_rosterItemTimer.Stop();
-			_rosterItemTimer.Start();
-
 			if ( _rosterItemsToRecieveVCard.Count > 0 )
 			{
 				lock ( _lockRosterItems )
@@ -299,44 +301,61 @@ namespace xeus.Core
 					{
 						_rosterItemTimer.Interval = TimerSlow ;
 					}
-					else if ( rosterItem.VCardAttempts > 2 )
-					{
-						return ;
-					}
 
-					if ( rosterItem.HasVCardRecivied )
-					{
-						return ;
-					}
-					
-					if ( rosterItem.IsInitialized )
+					if ( rosterItem.VCardAttempts <= 2
+							&& !rosterItem.HasVCardRecivied
+							&& rosterItem.IsInitialized )
 					{
 						_rosterItemsToRecieveVCard.Enqueue( rosterItem ) ; // push to the end of the queue
 					}
 				}
 			}
 
+			lock ( _presences )
+			{
+				if ( _presences.Count > 0 )
+				{
+					Presence presence = _presences[ 0 ] ;
+
+					RosterItem item = FindItem( presence.From.Bare );
+
+					if ( item != null )
+					{
+						rosterItem.Presence = presence;
+						_presences.RemoveAt( 0 ) ;
+					}
+				}
+			}
+
 			if ( rosterItem != null )
 			{
-				// check if presence info is already there
+				/*
 				Presence presence ;
-				_presences.TryGetValue( rosterItem.Key, out presence ) ;
+
+				lock( _presences )
+				{
+					// check if presence info is already there
+					_presences.TryGetValue( rosterItem.Key, out presence ) ;
+				}
 
 				if ( presence != null )
 				{
 					rosterItem.Presence = presence ;
-				}
+				}*/
 
 				if ( FindItem( rosterItem.Key ) == null )
 				{
 					_items.Add( rosterItem ) ;
 				}
 
-				// ask for VCard
-				VcardIq viq = new VcardIq( IqType.get, new Jid( rosterItem.Key ) ) ;
-				Client.Instance.SendIqGrabber( viq, new IqCB( VcardResult ), rosterItem.Key ) ;
+				if ( !rosterItem.HasVCardRecivied )
+				{
+					// ask for VCard
+					VcardIq viq = new VcardIq( IqType.get, new Jid( rosterItem.Key ) ) ;
+					Client.Instance.SendIqGrabber( viq, new IqCB( VcardResult ), rosterItem.Key ) ;
 
-				rosterItem.VCardAttempts++ ;
+					rosterItem.VCardAttempts++ ;
+				}
 			}
 		}
 

@@ -7,6 +7,7 @@ using agsXMPP.protocol.client ;
 using agsXMPP.protocol.iq.disco ;
 using agsXMPP.protocol.iq.roster ;
 using agsXMPP.Xml.Dom ;
+using xeus.Controls ;
 using xeus.Core ;
 using xeus.Properties ;
 
@@ -108,7 +109,7 @@ namespace xeus.Core
 
 		void _xmppConnection_OnSocketError( object sender, Exception ex )
 		{
-			_messageCenter.Alert( ex.Message );
+			App.Instance.Window.Alert( ex.Message );
 		}
 
 		bool ClientSocket_OnValidateCertificate( object sender, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors )

@@ -1,0 +1,21 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:xeus.Core"
+	>
+
+	<!-- services -->
+	<CollectionViewSource
+		x:Key="_servicesView"
+		Source="{Binding Path=Services.Items}"
+          />
+   
+	<!-- Resource dictionary entries should be defined here. -->
+	
+  <DataTemplate x:Key="ServiceItem" DataType="{x:Type local:ServiceItem}">
+    <Grid>
+      <TextBlock Text="{Binding Path=Name}" />
+    </Grid>
+  </DataTemplate>
+	
+</ResourceDictionary>

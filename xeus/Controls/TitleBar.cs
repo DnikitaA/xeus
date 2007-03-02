@@ -101,6 +101,11 @@ namespace xeus.Controls
 			Window window = TemplatedParent as Window ;
 			if ( window != null )
 			{
+				if ( !window.ShowInTaskbar )
+				{
+					window.Hide();
+				}
+
 				window.WindowState = WindowState.Minimized ;
 			}
 		}
