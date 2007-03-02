@@ -24,7 +24,7 @@ namespace xeus.Core
 		
 		private Services _services = new Services();
 		private Roster _roster = new Roster(); 
-		private Agent _agent = new Agent();
+		private Agents _agents = new Agents();
 		private MessageCenter _messageCenter = new MessageCenter();
 		private Presence _presence ;
 
@@ -67,18 +67,17 @@ namespace xeus.Core
 			}
 		}
 
-		public Agent Agent
+		public Agents Agents
 		{
 			get
 			{
-				return _agent ;
+				return _agents ;
 			}
 		}
 
 		private Client()
 		{
 			RegisterEvents() ;
-
 		}
 
 		public void Setup()
@@ -91,12 +90,12 @@ namespace xeus.Core
 			_xmppConnection.Priority = 10 ;
 			_xmppConnection.AutoResolveConnectServer = true ;
 
-			//_xmppConnection.ConnectServer = null ;
+			_xmppConnection.ConnectServer = null ;
 			_xmppConnection.Resource = "MiniClient" ;
 			_xmppConnection.SocketConnectionType = SocketConnectionType.Direct ;
 			_xmppConnection.UseStartTLS = true ;
 			_xmppConnection.AutoRoster = true ;
-			//_xmppConnection.Port = 5223 ;
+			_xmppConnection.AutoAgents = false ;
 
 			_xmppConnection.OnRosterEnd += new ObjectHandler( _xmppConnection_OnRosterEnd );
 			_xmppConnection.OnMessage += new XmppClientConnection.MessageHandler( _xmppConnection_OnMessage );
@@ -114,7 +113,7 @@ namespace xeus.Core
 
 		void _xmppConnection_OnXmppConnectionStateChanged( object sender, XmppConnectionState state )
 		{
-			//App.Instance.Window.Alert( ex.Message );
+			App.Instance.Window.Status( state.ToString() );
 		}
 
 		void _xmppConnection_OnSocketError( object sender, Exception ex )
@@ -281,12 +280,12 @@ namespace xeus.Core
 			_xmppConnection.OnLogin += new ObjectHandler( _xmppConnecion_OnLogin ) ;
 
 			_roster.RegisterEvents( _xmppConnection );
-			_agent.RegisterEvents( _xmppConnection );
+			_agents.RegisterEvents( _xmppConnection );
 		}
 
-		public void RequestRooster()
+		public void RequestAgents()
 		{
-			_xmppConnection.RequestRoster();
+			_xmppConnection.RequestAgents();
 		}
 
 		public void SendIqGrabber( IQ iq, IqCB iqCallback, object cbArgument )
@@ -316,6 +315,8 @@ namespace xeus.Core
 		private void _xmppConnecion_OnLogin( object sender )
 		{
 			DiscoverServer() ;
+
+			RequestAgents() ;
 
 			OnLogin() ;
 		}

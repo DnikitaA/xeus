@@ -54,6 +54,11 @@ namespace xeus
 			}
 		}
 
+		public void Status( string text)
+		{
+			
+		}
+
 		public void Alert( string text )
 		{
 			_notifyIcon.ShowBalloonTip( 500, "Connection error", text, ToolTipIcon.Error ) ;

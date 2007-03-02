@@ -2,8 +2,10 @@ using agsXMPP ;
 
 namespace xeus.Core
 {
-	internal class Agent
+	internal class Agents
 	{
+		ObservableCollectionDisp< AgentItem > _items = new ObservableCollectionDisp< AgentItem >( App.DispatcherThread );
+
 		public void RegisterEvents( XmppClientConnection xmppConnecion )
 		{
 			xmppConnecion.OnAgentStart += new ObjectHandler( xmppConnecion_OnAgentStart );
@@ -13,6 +15,7 @@ namespace xeus.Core
 
 		void xmppConnecion_OnAgentItem( object sender, agsXMPP.protocol.iq.agent.Agent agent )
 		{
+			_items.Add( new AgentItem( agent ) );
 		}
 
 		void xmppConnecion_OnAgentEnd( object sender )
@@ -21,6 +24,14 @@ namespace xeus.Core
 
 		void xmppConnecion_OnAgentStart( object sender )
 		{
+		}
+
+		public ObservableCollectionDisp< AgentItem > Items
+		{
+			get
+			{
+				return _items ;
+			}
 		}
 	}
 }
