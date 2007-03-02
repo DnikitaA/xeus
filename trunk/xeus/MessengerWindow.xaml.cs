@@ -35,21 +35,21 @@ namespace xeus
 			{
 				if ( WindowState == WindowState.Minimized )
 				{
-					WindowState = WindowState.Normal ;
-
 					if ( !ShowInTaskbar )
 					{
 						Show();
 					}
+
+					WindowState = WindowState.Normal ;
 				}
 				else
 				{
+					WindowState = WindowState.Minimized ;
+
 					if ( !ShowInTaskbar )
 					{
 						Hide();
 					}
-
-					WindowState = WindowState.Minimized ;
 				}
 			}
 		}

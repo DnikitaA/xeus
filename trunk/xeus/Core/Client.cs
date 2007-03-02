@@ -6,6 +6,7 @@ using agsXMPP.net ;
 using agsXMPP.protocol.client ;
 using agsXMPP.protocol.iq.disco ;
 using agsXMPP.protocol.iq.roster ;
+using agsXMPP.protocol.sasl ;
 using agsXMPP.Xml.Dom ;
 using xeus.Controls ;
 using xeus.Core ;
@@ -86,14 +87,16 @@ namespace xeus.Core
 			_xmppConnection.Password = Settings.Default.Client_Password ;
 			_xmppConnection.Server = Settings.Default.Client_Server ;
 			_xmppConnection.UseCompression = true ;
-			_xmppConnection.UseSSL = true ;
+			_xmppConnection.UseSSL = false ;
+			_xmppConnection.Priority = 10 ;
 			_xmppConnection.AutoResolveConnectServer = true ;
 
-			_xmppConnection.ConnectServer = null ;
-			_xmppConnection.Resource = "xeus" ;
+			//_xmppConnection.ConnectServer = null ;
+			_xmppConnection.Resource = "MiniClient" ;
 			_xmppConnection.SocketConnectionType = SocketConnectionType.Direct ;
 			_xmppConnection.UseStartTLS = true ;
 			_xmppConnection.AutoRoster = true ;
+			//_xmppConnection.Port = 5223 ;
 
 			_xmppConnection.OnRosterEnd += new ObjectHandler( _xmppConnection_OnRosterEnd );
 			_xmppConnection.OnMessage += new XmppClientConnection.MessageHandler( _xmppConnection_OnMessage );
@@ -102,9 +105,16 @@ namespace xeus.Core
 			_xmppConnection.ClientSocket.OnValidateCertificate += new System.Net.Security.RemoteCertificateValidationCallback( ClientSocket_OnValidateCertificate );
 			_xmppConnection.OnSocketError += new ErrorHandler( _xmppConnection_OnSocketError );
 
+			_xmppConnection.OnXmppConnectionStateChanged += new XmppConnection.XmppConnectionStateHandler( _xmppConnection_OnXmppConnectionStateChanged );
+
 			_messageCenter.RegisterEvent( _instance );
 
 			Log( "Setup finished" ) ;
+		}
+
+		void _xmppConnection_OnXmppConnectionStateChanged( object sender, XmppConnectionState state )
+		{
+			//App.Instance.Window.Alert( ex.Message );
 		}
 
 		void _xmppConnection_OnSocketError( object sender, Exception ex )
@@ -119,12 +129,12 @@ namespace xeus.Core
 
 		void _xmppConnection_OnAuthError( object sender, Element e )
 		{
-			//_messageCenter.ErrorMessages.Add( new Message( e.));
+			App.Instance.Window.Alert( e.ToString() );
 		}
 
 		void _xmppConnection_OnXmppError( object sender, Element e )
 		{
-			
+			App.Instance.Window.Alert( e.ToString() );
 		}
 
 		void _xmppConnection_OnMessage( object sender, Message msg )
