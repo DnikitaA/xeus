@@ -10,11 +10,18 @@ namespace xeus.Core
 		private Jid _jid = null ;
 		private DiscoInfo _disco = null ;
 
+		ObservableCollectionDisp< DiscoFeature > _features = new ObservableCollectionDisp< DiscoFeature >( App.DispatcherThread ) ;
+
 		public ServiceItem( string name, Jid jid, DiscoInfo disco )
 		{
 			_name = name ;
 			_jid = jid ;
 			_disco = disco ;
+
+			foreach ( DiscoFeature discoFeature in disco.GetFeatures() )
+			{
+				_features.Add( discoFeature );
+			}
 		}
 
 		public string Name

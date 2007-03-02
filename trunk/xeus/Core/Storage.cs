@@ -154,7 +154,11 @@ namespace xeus.Core
 		{
 			try
 			{
-				if ( photo.HasTag( "BINVAL" ) )
+				if ( photo == null )
+				{
+					return null ;
+				}
+				else if ( photo.HasTag( "BINVAL" ) )
 				{
 					byte[] pic = Convert.FromBase64String( photo.GetTag( "BINVAL" ) ) ;
 					MemoryStream memoryStream = new MemoryStream( pic, 0, pic.Length ) ;

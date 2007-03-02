@@ -374,7 +374,11 @@ namespace xeus.Core
 
 				if ( Image == null )
 				{
-					if ( !IsInitialized || XmppRosterItem.Jid.User == null )
+					if ( !IsInitialized )
+					{
+						Image = Storage.GetDefaultAvatar() ;
+					}
+					else if ( XmppRosterItem.Jid.User == null )
 					{
 						Image = Storage.GetDefaultServiceAvatar() ;
 					}

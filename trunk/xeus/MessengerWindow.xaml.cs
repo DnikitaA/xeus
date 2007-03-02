@@ -1,11 +1,13 @@
 using System ;
 using System.ComponentModel ;
-using System.Drawing ;
 using System.Windows ;
+using System.Windows.Controls.Primitives ;
 using System.Windows.Forms ;
 using xeus.Controls ;
 using xeus.Core ;
 using Button=System.Windows.Controls.Button;
+using Point=System.Drawing.Point;
+using ToolTip=System.Windows.Controls.ToolTip;
 
 namespace xeus
 {
@@ -14,28 +16,39 @@ namespace xeus
 	/// </summary>
 	public partial class MessengerWindow : WindowBase
 	{
-		private NotifyIcon _notifyIcon = new NotifyIcon() ;
+		private NotifyIcon _notifyIcon ;
+		private ToolTip _toolTip = new ToolTip() ;
 
 		public MessengerWindow()
 		{
+			_notifyIcon = new NotifyIcon();
 			InitializeComponent() ;
 
 			_notifyIcon.Icon = Properties.Resources.xeus ;
 			_notifyIcon.Visible = true ;
-
-			_notifyIcon.MouseClick += new MouseEventHandler( _notifyIcon_MouseClick );
+			_notifyIcon.MouseClick += new MouseEventHandler( _notifyIcon_MouseClick ) ;
 		}
 
-		void _notifyIcon_MouseClick( object sender, MouseEventArgs e )
+		private void _notifyIcon_MouseClick( object sender, MouseEventArgs e )
 		{
 			if ( e.Button == MouseButtons.Left )
 			{
 				if ( WindowState == WindowState.Minimized )
 				{
 					WindowState = WindowState.Normal ;
+
+					if ( !ShowInTaskbar )
+					{
+						Show();
+					}
 				}
 				else
 				{
+					if ( !ShowInTaskbar )
+					{
+						Hide();
+					}
+
 					WindowState = WindowState.Minimized ;
 				}
 			}
@@ -43,7 +56,7 @@ namespace xeus
 
 		public void Alert( string text )
 		{
-			_notifyIcon.ShowBalloonTip( 500, "Connection error", text, new ToolTipIcon() ) ;
+			_notifyIcon.ShowBalloonTip( 500, "Connection error", text, ToolTipIcon.Error ) ;
 		}
 
 		protected override void OnInitialized( EventArgs e )
@@ -67,7 +80,7 @@ namespace xeus
 
 		public void OpenServices( object sender, RoutedEventArgs e )
 		{
-			ServicesWindow.DisplayServices();
+			ServicesWindow.DisplayServices() ;
 		}
 
 		private void buttonMessages_Click( object sender, RoutedEventArgs e )
@@ -92,9 +105,9 @@ namespace xeus
 
 		protected override void OnClosed( EventArgs e )
 		{
-			base.OnClosed( e );
+			base.OnClosed( e ) ;
 
-			_notifyIcon.Dispose();
+			_notifyIcon.Dispose() ;
 		}
 	}
 }
