@@ -6,6 +6,7 @@ using agsXMPP ;
 using agsXMPP.net ;
 using agsXMPP.protocol.client ;
 using agsXMPP.protocol.iq.disco ;
+using agsXMPP.protocol.iq.register ;
 using agsXMPP.protocol.iq.roster ;
 using agsXMPP.protocol.sasl ;
 using agsXMPP.Xml.Dom ;
@@ -28,6 +29,8 @@ namespace xeus.Core
 		private Agents _agents = new Agents();
 		private MessageCenter _messageCenter = new MessageCenter();
 		private Presence _presence ;
+
+		System.Timers.Timer _discoTimer = new System.Timers.Timer( 1500 ) ;
 
 		#region delegates
 
@@ -106,10 +109,17 @@ namespace xeus.Core
 			_xmppConnection.OnSocketError += new ErrorHandler( _xmppConnection_OnSocketError );
 
 			_xmppConnection.OnXmppConnectionStateChanged += new XmppConnection.XmppConnectionStateHandler( _xmppConnection_OnXmppConnectionStateChanged );
-
 			_messageCenter.RegisterEvent( _instance );
 
+			_discoTimer.AutoReset = false ;
+			_discoTimer.Elapsed += new System.Timers.ElapsedEventHandler( _discoTimer_Elapsed );
+
 			Log( "Setup finished" ) ;
+		}
+
+		void _discoTimer_Elapsed( object sender, System.Timers.ElapsedEventArgs e )
+		{
+			DiscoRequest() ;
 		}
 
 		void _xmppConnection_OnXmppConnectionStateChanged( object sender, XmppConnectionState state )
@@ -221,12 +231,10 @@ namespace xeus.Core
 
 		public void DiscoverServer()
 		{
-			if ( _services.Items.Count == 0 )
-			{
-				DiscoManager discoManager = new DiscoManager( _xmppConnection ) ;
+			_services.Items.Clear();
 
-				discoManager.DisoverItems( new Jid( _xmppConnection.Server ), new IqCB( OnDiscoServerResult ), null ) ;
-			}
+			DiscoManager discoManager = new DiscoManager( _xmppConnection ) ;
+			discoManager.DisoverItems( new Jid( _xmppConnection.Server ), new IqCB( OnDiscoServerResult ), null ) ;
 		}
 
 		#region disco server events
@@ -258,7 +266,7 @@ namespace xeus.Core
 							}
 						}
 
-						DiscoRequest( itms ) ;
+						_discoTimer.Start();
 					}
 
 				}
@@ -267,50 +275,61 @@ namespace xeus.Core
 			Log( "Server disco finished" ) ;
 		}
 
-		public void DiscoRequest( DiscoItem[] itms )
+
+
+		public void registerService( Jid jid, string userName, string password )
 		{
-			Thread discoThread = new Thread( new ParameterizedThreadStart( AskForDiscoInfo ) );
-			discoThread.Priority = ThreadPriority.Lowest ;
-			discoThread.Start( itms );
+			RegisterIq registerIq = new RegisterIq( IqType.set, jid );
+			registerIq.Query.Username = userName ;
+			registerIq.Query.Password = password ;
+
+			_xmppConnection.IqGrabber.SendIq( registerIq );
 		}
 
-		void AskForDiscoInfo( object data )
+		public void DiscoRequest( ServiceItem serviceItem )
 		{
-			DiscoItem[] itms = ( DiscoItem[] ) data ;
+			DiscoManager dm = new DiscoManager( _xmppConnection ) ;
+			dm.DisoverInformation( serviceItem.Jid, new IqCB( OnDiscoInfoResult ), serviceItem );
+		}
+
+		public void DiscoRequest()
+		{
+			Thread discoThread = new Thread( new ThreadStart( AskForDiscoInfo ) );
+			discoThread.Priority = ThreadPriority.Lowest ;
+			discoThread.Start();
+		}
+
+		void AskForDiscoInfo()
+		{
+			ServiceItem[] serviceItems ;
+
+			lock ( _services )
+			{
+				serviceItems = new ServiceItem[ _services.Items.Count ] ;
+				_services.Items.CopyTo( serviceItems, 0 ) ;
+			}
 
 			DiscoManager dm = new DiscoManager( _xmppConnection ) ;
 
-			foreach ( DiscoItem itm in itms )
+			foreach ( ServiceItem itm in serviceItems )
 			{
-				Thread.Sleep( 100 );
+				Thread.Sleep( 50 );
 
 				if ( itm.Jid != null )
 				{
-					dm.DisoverInformation( itm.Jid, new IqCB( OnDiscoInfoResult ), null );
+					dm.DisoverInformation( itm.Jid, new IqCB( OnDiscoInfoResult ), itm );
 				}
 			}
 		}
 
 		private void OnDiscoInfoResult( object sender, IQ iq, object data )
 		{
+			ServiceItem item = ( ServiceItem ) data ;
+
 			if ( iq.Type == IqType.result && iq.Query is DiscoInfo )
 			{
 				DiscoInfo di = iq.Query as DiscoInfo ;
-
-				if ( di != null )
-				{
-					lock ( _services )
-					{
-						foreach ( ServiceItem item in _services.Items )
-						{
-							if ( item.Jid.Bare == iq.From.Bare )
-							{
-								item.Disco = ( DiscoInfo ) iq.Query ;
-								break ;
-							}
-						}
-					}
-				}
+				item.Disco = di ;
 			}
 		}
 

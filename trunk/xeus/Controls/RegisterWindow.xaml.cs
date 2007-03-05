@@ -8,22 +8,41 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using agsXMPP.protocol.iq.disco ;
-using xeus.Core ;
 
 namespace xeus.Controls
 {
 	/// <summary>
-	/// Interaction logic for ServicesControl.xaml
+	/// Interaction logic for RegisterWindow.xaml
 	/// </summary>
 
-	public partial class ServicesControl : System.Windows.Controls.UserControl
+	public partial class RegisterWindow : WindowBase
 	{
-		public ServicesControl()
+
+		public RegisterWindow()
 		{
 			InitializeComponent();
+		}
+
+		protected void Ok( object sender, EventArgs e )
+		{
+			 DialogResult = true ;
+		}
+
+		public string UserName
+		{
+			get
+			{
+				return _userName.Text ;
+			}
+		}
+
+		public string Password
+		{
+			get
+			{
+				return _password.Password ;
+			}
 		}
 	}
 }

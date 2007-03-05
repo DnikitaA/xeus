@@ -10,20 +10,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using agsXMPP.protocol.iq.disco ;
-using xeus.Core ;
 
 namespace xeus.Controls
 {
 	/// <summary>
-	/// Interaction logic for ServicesControl.xaml
+	/// Interaction logic for DialogBox.xaml
 	/// </summary>
 
-	public partial class ServicesControl : System.Windows.Controls.UserControl
+	public partial class DialogBox : System.Windows.Controls.UserControl
 	{
-		public ServicesControl()
+		public DialogBox()
 		{
 			InitializeComponent();
 		}
+
 	}
 }

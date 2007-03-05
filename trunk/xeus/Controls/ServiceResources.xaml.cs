@@ -10,7 +10,21 @@ namespace xeus.Controls
 	{
 		void OnServiceClick( object sender, EventArgs e )
 		{
-			Client.Instance.Services.RegisterService( ( ( Button )sender ).DataContext as ServiceItem );
+			ServiceItem serviceItem = ( ( Button )sender ).DataContext as ServiceItem ;
+
+			if ( !serviceItem.IsRegistered )
+			{
+				RegisterWindow registerWindow = new RegisterWindow() ;
+
+				//registerWindow.Owner = App.Instance.Window ;
+				registerWindow.ShowDialog() ;
+
+				if ( registerWindow.DialogResult.HasValue && registerWindow.DialogResult.Value )
+				{
+					Client.Instance.Services.RegisterService( serviceItem,
+					                                          registerWindow.UserName, registerWindow.Password ) ;
+				}
+			}
 		}
 	}
 }

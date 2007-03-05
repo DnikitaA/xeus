@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel ;
 using agsXMPP ;
 using agsXMPP.protocol.iq.disco ;
+using agsXMPP.protocol.iq.register ;
 
 namespace xeus.Core
 {
@@ -48,9 +49,15 @@ namespace xeus.Core
 			return filteredServices ;
 		}
 
-		public void RegisterService( ServiceItem service )
+		void OnRegistered( object sender, agsXMPP.protocol.client.IQ iq, object data )
 		{
 			
+		}
+
+
+		public void RegisterService( ServiceItem service, string name, string password )
+		{
+			Client.Instance.registerService( service.Jid, name, password );
 		}
 	}
 }

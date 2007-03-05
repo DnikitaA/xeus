@@ -14,7 +14,7 @@
 
   <Grid>
     <ListBox Name="_services" ItemsSource="{Binding Source={StaticResource ServicesView}}" Margin="8,8,8,8"
-  	Template="{StaticResource ListboxBlackTheme}" Style="{DynamicResource ListBoxStyleMessages}" />
+  	Template="{DynamicResource ListBoxServices}" Style="{DynamicResource ListBoxStyleMessages}" />
   </Grid>
 
 </UserControl>

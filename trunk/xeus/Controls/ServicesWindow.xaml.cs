@@ -25,24 +25,18 @@ namespace xeus.Controls
 		{
 			InitializeComponent();
 
-			_services.SelectionChanged += new SelectionChangedEventHandler( _services_SelectionChanged );
-
 			DataContext = Client.Instance  ;
-		}
 
+			_services.SelectionChanged += new SelectionChangedEventHandler( _services_SelectionChanged );
+		}
 
 		void _services_SelectionChanged( object sender, SelectionChangedEventArgs e )
 		{
-			if ( e.AddedItems.Count> 0 )
-			{
-				/*ServiceItem serviceItem = e.AddedItems[ 0 ] as ServiceItem ;
+			ServiceItem serviceItem = _services.SelectedItem as ServiceItem ;
 
-				if ( serviceItem != null && serviceItem.Disco == null )
-				{
-					DiscoItem discoItem = new DiscoItem();
-					discoItem.Jid = serviceItem.Jid ;
-					Client.Instance.DiscoRequest( new DiscoItem[] { discoItem } ) ;
-				}*/
+			if ( serviceItem != null && serviceItem.Disco == null )
+			{
+				Client.Instance.DiscoRequest( serviceItem );
 			}
 		}
 
