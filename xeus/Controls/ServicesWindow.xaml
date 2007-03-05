@@ -6,8 +6,9 @@
     xmlns:settings="clr-namespace:xeus.Core"
     x:Class="xeus.Controls.ServicesWindow"
     Title="disco" Height="300" Width="300"
-    settings:WindowSettings.Save="True"	
+    settings:WindowSettings.Save="True"
 	Style="{StaticResource DarkStyleWindow}"
+    x:Name="services"
 	Background="{x:Null}" >
 	
 <win:WindowBase.Resources>

@@ -12,6 +12,7 @@
     settings:WindowSettings.Save="True"	
 	ResizeMode="CanResizeWithGrip"
     ShowInTaskbar="False"
+    x:Name="messenger"
     >
   <Window.Resources>
     <localcore:CountToVisibilityConverter x:Key="_visibilityConverter" />

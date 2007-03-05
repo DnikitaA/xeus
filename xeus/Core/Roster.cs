@@ -54,12 +54,7 @@ namespace xeus.Core
 		public void RegisterEvents( XmppClientConnection xmppConnection )
 		{
 			xmppConnection.OnRosterItem += new XmppClientConnection.RosterHandler( xmppConnecion_OnRosterItem ) ;
-			xmppConnection.OnRosterEnd += new ObjectHandler( xmppConnection_OnRosterEnd ) ;
 			xmppConnection.OnPresence += new XmppClientConnection.PresenceHandler( xmppConnection_OnPresence ) ;
-		}
-
-		private void xmppConnection_OnRosterEnd( object sender )
-		{
 		}
 
 		public RosterItem FindItem( string bare )

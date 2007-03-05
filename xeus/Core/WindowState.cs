@@ -15,7 +15,7 @@ namespace xeus.Core
 			WindowSettings _windowSettings ;
 
 			public WindowApplicationSettings( WindowSettings windowSettings )
-				: base( windowSettings.window.PersistId.ToString() )
+				: base( windowSettings.window.Name )
 			{
 				_windowSettings = windowSettings ;
 			}
