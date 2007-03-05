@@ -67,5 +67,17 @@ namespace xeus.Properties {
                 this["Client_Server"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("75")]
+        public int UI_RosterSlider {
+            get {
+                return ((int)(this["UI_RosterSlider"]));
+            }
+            set {
+                this["UI_RosterSlider"] = value;
+            }
+        }
     }
 }

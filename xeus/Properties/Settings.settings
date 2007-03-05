@@ -14,5 +14,8 @@
     <Setting Name="Client_Server" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="UI_RosterSlider" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">75</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

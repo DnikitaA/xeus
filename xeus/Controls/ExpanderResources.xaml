@@ -6,7 +6,7 @@
 <Style TargetType ="{x:Type Expander}">
 	<Setter Property="Template" Value="{DynamicResource ExpanderControlTemplate}"/>
 	<Setter Property="Foreground" Value="#FFD0D0D0"/>
-	<Setter Property="FontSize" Value="15"/>
+	<Setter Property="FontSize" Value="14"/>
 </Style>
 	
 	<ControlTemplate x:Key="ExpanderControlTemplate" TargetType="{x:Type Expander}">
@@ -31,14 +31,14 @@
 							<Setter Property="Template">
 								<Setter.Value>
 									<ControlTemplate TargetType="{x:Type ToggleButton}">
-										<Border Padding="{TemplateBinding Padding}" BorderBrush="#FF393939" BorderThickness="0,0,0,1">
+										<Border Padding="{TemplateBinding Padding}" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4">
 											<Grid SnapsToDevicePixels="False" Background="#00FFFFFF">
 												<Grid.ColumnDefinitions>
 													<ColumnDefinition Width="19"/>
 													<ColumnDefinition Width="*"/>
 												</Grid.ColumnDefinitions>										
 													<Viewbox Margin="4,0,4,0">
-													<Grid x:Name="grid" VerticalAlignment="Center" HorizontalAlignment="Center">
+													<Grid x:Name="grid">
 													<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
 														Canvas.Left="0" x:Name="_circle">
 														<Ellipse.Fill>
@@ -47,6 +47,9 @@
 																<GradientStop Color="#FF41423E" Offset="1"/>
 															</LinearGradientBrush>
 														</Ellipse.Fill>
+														<Ellipse.BitmapEffect>
+															<DropShadowBitmapEffect Direction="321" Opacity="0.495" ShadowDepth="2" Softness="0.37"/>
+														</Ellipse.BitmapEffect>
 													</Ellipse>
 														<Path SnapsToDevicePixels="False" StrokeThickness="1.5" x:Name="arrow" Data="M1,1.5L4.5,5 8,1.5" Stroke="#FF000000" RenderTransformOrigin="0.5,0.5" d:LayoutOverrides="Width, Height, Margin" HorizontalAlignment="Center" VerticalAlignment="Center">
 															<Path.RenderTransform>
@@ -62,7 +65,7 @@
 												<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" HorizontalAlignment="Center"/>
 													</Grid>
 													</Viewbox>
-												<ContentPresenter SnapsToDevicePixels="True" HorizontalAlignment="Left" Margin="6,0,0,0" VerticalAlignment="Center" Grid.Column="1" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" RecognizesAccessKey="True"/>
+												<ContentPresenter SnapsToDevicePixels="True" HorizontalAlignment="Left" Margin="8,4,0,4" VerticalAlignment="Center" Grid.Column="1" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" RecognizesAccessKey="True"/>
 											</Grid>
 										</Border>
 										<ControlTemplate.Triggers>

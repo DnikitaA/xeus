@@ -13,9 +13,16 @@
 	<!-- Resource dictionary entries should be defined here. -->
 	
   <DataTemplate x:Key="ServiceItem" DataType="{x:Type local:ServiceItem}">
-    <Grid>
-      <TextBlock Text="{Binding Path=Name}" />
-    </Grid>
+    <StackPanel Orientation="Horizontal">
+		<Button x:Name="button" />
+		<TextBlock Text="{Binding Path=Name}" FontSize="14" Foreground="#FFA8A8A8" />
+    </StackPanel>
+	
+  	<DataTemplate.Triggers>
+		<DataTrigger Binding="{Binding Path=IsRegistered}" Value="False">
+  			<Setter Property="Visibility" TargetName="button" Value="Hidden"/>
+  		</DataTrigger>
+  	</DataTemplate.Triggers>
   </DataTemplate>
 	
 </ResourceDictionary>

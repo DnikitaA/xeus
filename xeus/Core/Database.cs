@@ -17,53 +17,33 @@ namespace xeus.Core
 
 	internal class Database : XmlDatabase
 	{
-		private static Database _instance = new Database() ;
-
-		public static Database Instance
-		{
-			get
-			{
-				return _instance ;
-			}
-		}
-
 		public Database()
 		{
-			xdoc = null ;
+			OpenDatabase() ;
 		}
 
 		private void OpenDatabase()
 		{
-			if ( xdoc == null )
+			xdoc = new XmlDocument();
+
+			string path = string.Format( "{0}\\{1}", Storage.GetDbFolder(), "Default.xeusdb" ) ;
+
+			try
 			{
-				xdoc = new XmlDocument();
-
-				string path = string.Format( "{0}\\{1}", Storage.GetDbFolder(), "Default.xeusdb" ) ;
-
-				try
-				{
-					RootName = "xeus" ;
-					Load( path ) ;
-				}
-
-				catch ( Exception )
-				{
-					// does not exist
-					RootName = "xeus" ;
-					Create() ;
-				}
+				RootName = "xeus" ;
+				Load( path ) ;
 			}
-		}
 
-		private void CloseDatabase()
-		{
-			xdoc = null ;
+			catch ( Exception )
+			{
+				// does not exist
+				RootName = "xeus" ;
+				Create() ;
+			}
 		}
 
 		public List< RosterItem > ReadRosterItems()
 		{
-			OpenDatabase() ;
-
 			List< RosterItem > rosterItems = new List< RosterItem >() ;
 
 			try
@@ -81,15 +61,11 @@ namespace xeus.Core
 				Client.Instance.Log( "Error reading Roster items: {0}", e.Message ) ;
 			}
 
-			CloseDatabase() ;
-
 			return rosterItems ;
 		}
 
 		public List< ChatMessage > ReadMessages( RosterItem rosterItem )
 		{
-			OpenDatabase() ;
-
 			List< ChatMessage > messages = new List< ChatMessage >() ;
 
 			try
@@ -116,15 +92,11 @@ namespace xeus.Core
 				Client.Instance.Log( "Error reading messages: {0}", e.Message ) ;
 			}
 
-			CloseDatabase() ;
-
 			return messages ;
 		}
 
 		private void StoreMessages( ObservableCollectionDisp< ChatMessage > messages )
 		{
-			OpenDatabase() ;
-
 			foreach ( ChatMessage item in messages )
 			{
 				try
@@ -146,10 +118,13 @@ namespace xeus.Core
 
 		public void StoreRosterItems( ObservableCollectionDisp< RosterItem > rosterItems )
 		{
-			OpenDatabase() ;
-
 			foreach ( RosterItem item in rosterItems )
 			{
+				if ( item.IsService )
+				{
+					continue ;
+				}
+
 				try
 				{
 					FieldValuePair[] data = item.GetData() ;
@@ -171,15 +146,6 @@ namespace xeus.Core
 			{
 				Insert( path, fields ) ;
 			}
-		}
-
-		public new void Save()
-		{
-			OpenDatabase() ;
-
-			base.Save() ;
-
-			CloseDatabase() ;
 		}
 	}
 }
