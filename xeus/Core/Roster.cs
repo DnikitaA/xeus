@@ -1,4 +1,5 @@
 using System.Collections.Generic ;
+using System.Timers ;
 using System.Windows.Threading ;
 using agsXMPP ;
 using agsXMPP.protocol.client ;
@@ -28,8 +29,13 @@ namespace xeus.Core
 
 		#endregion
 
+		Timer _reloadTime = new Timer( 20000 );
+
 		public void ReadRosterFromDb()
 		{
+			_reloadTime.AutoReset = false ;
+			_reloadTime.Elapsed += new ElapsedEventHandler( _reloadTime_Elapsed );
+
 			Database database =  new Database();
 
 			List< RosterItem > dbRosterItems = database.ReadRosterItems() ;
@@ -41,6 +47,11 @@ namespace xeus.Core
 
 				_items.Add( item ) ;
 			}
+		}
+
+		void _reloadTime_Elapsed( object sender, ElapsedEventArgs e )
+		{
+			
 		}
 
 		public ObservableCollectionDisp< RosterItem > Items

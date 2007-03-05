@@ -47,5 +47,10 @@ namespace xeus.Core
 
 			return filteredServices ;
 		}
+
+		public void RegisterService( ServiceItem service )
+		{
+			
+		}
 	}
 }

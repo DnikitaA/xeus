@@ -106,6 +106,9 @@
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\OfficeStyleWindow.cs" />
+    <Compile Include="Controls\ServiceResources.xaml.cs">
+      <DependentUpon>ServiceResources.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ServicesWindow.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>ServicesWindow.xaml</DependentUpon>

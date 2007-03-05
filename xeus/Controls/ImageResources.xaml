@@ -483,7 +483,7 @@
 		Stretch="Fill" Canvas.Left="0" x:Name="_circleBack" Fill="{TemplateBinding Property=Background}" RadiusX="2" RadiusY="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
 	<Rectangle StrokeThickness="1" Width="9" Height="14.004" Canvas.Top="0"
 		Stretch="Fill" Canvas.Left="0" x:Name="_circleBack1" Fill="{TemplateBinding Property=Background}" RadiusX="2" RadiusY="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
-		<Path Fill="#FFA8A6A6" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,1.125" x:Name="_circleBack2" VerticalAlignment="Bottom" Width="8.36" Height="1.78" Data="F1 M4.4191451,12.224 C5.8860507,12.224 7.3173676,12.385383 8.6724443,12.794788 8.4878511,13.535954 7.7985845,14.004 7,14.004 L2,14.004 C1.1859469,14.004 0.48548767,13.517647 0.31214491,12.757585 1.6233113,12.37405 3.0046842,12.224 4.4191451,12.224 z" Canvas.Left="0" Canvas.Top="0"/>
+		<Path Fill="#FF5B5B5B" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,1.125" x:Name="_circleBack2" VerticalAlignment="Bottom" Width="8.36" Height="1.78" Data="F1 M4.4191451,12.224 C5.8860507,12.224 7.3173676,12.385383 8.6724443,12.794788 8.4878511,13.535954 7.7985845,14.004 7,14.004 L2,14.004 C1.1859469,14.004 0.48548767,13.517647 0.31214491,12.757585 1.6233113,12.37405 3.0046842,12.224 4.4191451,12.224 z" Canvas.Left="0" Canvas.Top="0" Opacity="0.495"/>
 	<Rectangle Stroke="#FF9A9A9A" StrokeThickness="1" Margin="0,0,0,0" Width="11" Height="16" Canvas.Top="0"
 		Stretch="Fill" Canvas.Left="0" x:Name="_circle" Opacity="0.65" RadiusX="2" RadiusY="2" HorizontalAlignment="Center" VerticalAlignment="Center">
 		<Rectangle.Fill>
@@ -552,11 +552,25 @@
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" >
 	<Grid x:Name="grid">
 	<Rectangle Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="18" Height="18" Canvas.Top="0"
-		Canvas.Left="0" x:Name="_circle" RadiusX="2" RadiusY="2">
+		Canvas.Left="0" x:Name="_circle" RadiusX="2" RadiusY="2" Fill="{TemplateBinding Property=Background}" >
+		<Rectangle.BitmapEffect>
+			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
+		</Rectangle.BitmapEffect>
+		<Rectangle.LayoutTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="45"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Rectangle.LayoutTransform>
+	</Rectangle>
+	<Rectangle Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="18" Height="18" Canvas.Top="0"
+		Canvas.Left="0" x:Name="_circle1" RadiusX="2" RadiusY="2" Opacity="0.605" >
 		<Rectangle.Fill>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-				<GradientStop Color="#FFE5C9B3" Offset="0"/>
-				<GradientStop Color="#FF715318" Offset="1"/>
+				<GradientStop Color="#FFE3E3E3" Offset="0"/>
+				<GradientStop Color="#7F000000" Offset="1"/>
 			</LinearGradientBrush>
 		</Rectangle.Fill>
 		<Rectangle.BitmapEffect>
@@ -571,7 +585,10 @@
 			</TransformGroup>
 		</Rectangle.LayoutTransform>
 	</Rectangle>
-		<Path Fill="#36FFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,1.556,0,0" x:Name="_circle1" VerticalAlignment="Top" Width="12.929" Height="12.932" Data="F1 M1.8566635,1.7078477E-08 L12.928542,1.7078477E-08 C11.488774,2.2859886 9.5078812,4.7488055 7.1226864,7.1340003 C4.7415257,9.5151615 2.2830045,11.493387 -8.8198576E-08,12.932108 L-8.8198576E-08,1.8566632 C0,0.83125645 0.83125645,0 1.8566635,1.7078477E-08 z" Canvas.Left="0" Canvas.Top="0">
+	<Ellipse Fill="#FFD1D1D1" Margin="9.831,9.832,9.833,9.832"/>
+		<Path Fill="#36FFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,1.556,0,0" VerticalAlignment="Top" Width="12.929" Height="12.932"
+		 Data="F1 M1.8566635,1.7078477E-08 L12.928542,1.7078477E-08 C11.488774,2.2859886 9.5078812,4.7488055 7.1226864,7.1340003 C4.7415257,9.5151615 2.2830045,11.493387 -8.8198576E-08,12.932108 L-8.8198576E-08,1.8566632 C0,0.83125645 0.83125645,0 1.8566635,1.7078477E-08 z"
+		  Canvas.Left="0" Canvas.Top="0">
 			<Path.LayoutTransform>
 				<TransformGroup>
 					<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -586,6 +603,9 @@
 	</Grid>
 </Viewbox>
 	<ControlTemplate.Triggers>
+		<Trigger Property="IsEnabled" Value="False">
+			<Setter Property="Opacity" TargetName="grid" Value="0.3"/>
+		</Trigger>
 		<Trigger Property="Visibility" Value="Visible">
 			<Trigger.EnterActions>
 				<BeginStoryboard Storyboard="{StaticResource PumpStatus}"/>
@@ -593,11 +613,11 @@
 		</Trigger>
 	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
 	  	<Setter Property="Stroke" TargetName="_circle" Value="#FF757575"/>
-	  	<Setter Property="Fill" TargetName="_circle">
+	  	<Setter Property="Fill" TargetName="_circle1">
 	  		<Setter.Value>
 	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-	  				<GradientStop Color="#FFF0CBB3" Offset="0"/>
-	  				<GradientStop Color="#FFA2862B" Offset="1"/>
+	  				<GradientStop Color="#FFE3E3E3" Offset="0"/>
+	  				<GradientStop Color="#7F5F5F5F" Offset="1"/>
 	  			</LinearGradientBrush>
 	  		</Setter.Value>
 	  	</Setter>

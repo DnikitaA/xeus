@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using agsXMPP.protocol.iq.disco ;
 using xeus.Core ;
 
 namespace xeus.Controls
@@ -24,5 +25,6 @@ namespace xeus.Controls
 		{
 			InitializeComponent();
 		}
+
 	}
 }
