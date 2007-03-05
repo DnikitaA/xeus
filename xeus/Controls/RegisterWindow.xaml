@@ -1,0 +1,28 @@
+﻿<win:WindowBase
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:local="clr-namespace:xeus.Core"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:win="clr-namespace:xeus.Controls"
+    xmlns:settings="clr-namespace:xeus.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    x:Class="xeus.Controls.RegisterWindow"
+    Title="register service" Height="232" Width="208"
+    settings:WindowSettings.Save="True"
+	Style="{StaticResource DarkStyleWindow}"
+    x:Name="services"
+	Background="{x:Null}" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" >	
+    <Grid>
+        
+    	<TextBox d:LayoutOverrides="HorizontalAlignment" HorizontalAlignment="Left" Margin="8,68.63,0,0" x:Name="_userName" Style="{DynamicResource TextBoxStyleInDialog}" VerticalAlignment="Top" Width="192" Template="{DynamicResource TextBoxBaseTemplateDialog}" MaxLength="150" TextWrapping="Wrap"/>
+    	<PasswordBox Margin="8,0,8,78" x:Name="_password" MaxLength="150" VerticalAlignment="Bottom" Height="22" Background="#FF282828" Template="{DynamicResource PasswordBoxControlTemplate}" />
+    	<Label HorizontalAlignment="Left" Margin="8,40,0,0" VerticalAlignment="Top" Content="User Name" Foreground="#FF828282"/>
+    	<Label HorizontalAlignment="Left" Margin="8,8,0,0" VerticalAlignment="Top" Content="Register service" Foreground="#FF828282" x:Name="_title"/>
+    	<Label HorizontalAlignment="Left" Margin="8,103.37,0,104" Content="Password" Foreground="#FF828282" d:LayoutOverrides="Height"/>
+        
+    	<Button HorizontalAlignment="Left" Margin="28.133,0,0,32" VerticalAlignment="Bottom" Width="63.867" Height="24" Content="Ok" 
+			Background="#FF7BB5F0" Template="{DynamicResource AButton}" IsDefault="True"
+			Click="Ok"/>
+    	<Button HorizontalAlignment="Right" Margin="0,0,32,32" VerticalAlignment="Bottom" Width="63.867" Height="24" Content="Cancel" Background="#FF7BB5F0" Template="{DynamicResource AButton}" IsCancel="True" IsDefault="False"/>
+        
+    </Grid>
+</win:WindowBase>

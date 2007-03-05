@@ -10,4 +10,34 @@
 		<Setter Property="Foreground" Value="#FFD6C8A0"/>
 		<Setter Property="Text" Value="Blah"/>
 	</Style>
+	<Style x:Key="TextBoxStyleInDialog" TargetType="{x:Type TextBox}">
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="BorderThickness" Value="0,0,0,0"/>
+		<Setter Property="Foreground" Value="#FFE0E0E0"/>
+		<Setter Property="Background" Value="#FF282828"/>
+	</Style>
+	
+	<ControlTemplate x:Key="TextBoxBaseTemplateDialog" TargetType="{x:Type TextBox}">
+		<Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="3,3,3,3">
+			<ScrollViewer x:Name="PART_ContentHost"/>
+		</Border>
+		<ControlTemplate.Triggers>
+			<Trigger Property="IsEnabled" Value="False">
+				<Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+				<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+	
+	<ControlTemplate x:Key="PasswordBoxControlTemplate" TargetType="{x:Type PasswordBox}">
+		<Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="3,3,3,3">
+			<ScrollViewer x:Name="PART_ContentHost"/>
+		</Border>
+		<ControlTemplate.Triggers>
+			<Trigger Property="IsEnabled" Value="False">
+				<Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+				<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
 </ResourceDictionary>

@@ -103,6 +103,7 @@ namespace xeus
 			base.OnClosing( e ) ;
 
 			MessageWindow.CloseWindow() ;
+			ServicesWindow.CloseWindow();
 		}
 
 		private void SaveData()

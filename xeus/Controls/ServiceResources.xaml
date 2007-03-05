@@ -15,7 +15,7 @@
 	<!-- Resource dictionary entries should be defined here. -->
 	
   <DataTemplate x:Key="ServiceItem" DataType="{x:Type local:ServiceItem}">
-  <Grid Width="150" Margin="5,0,0,0">
+  <Grid Width="150" Margin="5,0,0,0" x:Name="_grid">
   	<Button x:Name="button" Template="{DynamicResource OpenServices}" Background="#FF52F965"
   		Click="OnServiceClick" HorizontalAlignment="Left" Width="25.456" Height="Auto" />
 		<Border VerticalAlignment="Stretch" Width="Auto" Grid.Column="0"
@@ -35,8 +35,9 @@
   				</RadialGradientBrush>
   			</Border.OpacityMask>
   		</Border>
+		<Grid x:Name="grid" d:LayoutOverrides="Width" HorizontalAlignment="Left" Margin="31.665,5.31,0,5.31" Width="20" Height="20"/>		
   	<Grid d:IsLayer="True" x:Name="Layer">
-  		<TextBlock Text="{Binding Path=Name}" FontSize="14" Foreground="#FFA8A8A8" TextTrimming="CharacterEllipsis" HorizontalAlignment="Stretch" Margin="35,6,6,6" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Panel.ZIndex="1" x:Name="_text" />
+  		<TextBlock Text="{Binding Path=Name}" FontSize="14" Foreground="#FFA8A8A8" TextTrimming="CharacterEllipsis" HorizontalAlignment="Stretch" Margin="38,4,3,8" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Panel.ZIndex="1" x:Name="_text" d:LayoutOverrides="Margin" />
   	</Grid>
 	
   </Grid>
@@ -48,12 +49,14 @@
   			<Setter Property="Background" TargetName="button" Value="#FF999999"/>
   		</DataTrigger>
 		<DataTrigger Binding="{Binding Path=Disco}" Value="{x:Null}">
-  			<Setter Property="Foreground" TargetName="_text" Value="#FF777777" />
+  			<Setter Property="Opacity" TargetName="_grid" Value="0.3" />
   		</DataTrigger>
 		<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}, AncestorLevel=1}, Path=IsSelected}" Value="False">
 			<Setter Property="Visibility" Value="Hidden" TargetName="_displayNameLabel" />
 		</DataTrigger>
   	</DataTemplate.Triggers>
   </DataTemplate>
+	
+	<ControlTemplate x:Key="ListBoxServices" TargetType="{x:Type ListBox}"/>
 	
 </ResourceDictionary>

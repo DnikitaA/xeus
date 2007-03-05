@@ -79,8 +79,10 @@
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
     <Page Include="Controls\ControlResources.xaml" />
+    <Page Include="Controls\DialogBox.xaml" />
     <Page Include="Controls\InlineSearch.xaml" />
     <Page Include="Controls\MessageWindow.xaml" />
+    <Page Include="Controls\RegisterWindow.xaml" />
     <Page Include="Controls\ServicesControl.xaml" />
     <Page Include="Controls\ServicesWindow.xaml" />
     <Page Include="Controls\StatusControl.xaml" />
@@ -97,6 +99,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\DialogBox.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>DialogBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\InlineSearch.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>InlineSearch.xaml</DependentUpon>
@@ -106,6 +112,10 @@
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\OfficeStyleWindow.cs" />
+    <Compile Include="Controls\RegisterWindow.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>RegisterWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ServiceResources.xaml.cs">
       <DependentUpon>ServiceResources.xaml</DependentUpon>
     </Compile>
