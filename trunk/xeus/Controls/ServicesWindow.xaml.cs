@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading ;
+using agsXMPP.protocol.iq.disco ;
 using xeus.Core ;
 
 namespace xeus.Controls
@@ -24,7 +25,25 @@ namespace xeus.Controls
 		{
 			InitializeComponent();
 
+			_services.SelectionChanged += new SelectionChangedEventHandler( _services_SelectionChanged );
+
 			DataContext = Client.Instance  ;
+		}
+
+
+		void _services_SelectionChanged( object sender, SelectionChangedEventArgs e )
+		{
+			if ( e.AddedItems.Count> 0 )
+			{
+				/*ServiceItem serviceItem = e.AddedItems[ 0 ] as ServiceItem ;
+
+				if ( serviceItem != null && serviceItem.Disco == null )
+				{
+					DiscoItem discoItem = new DiscoItem();
+					discoItem.Jid = serviceItem.Jid ;
+					Client.Instance.DiscoRequest( new DiscoItem[] { discoItem } ) ;
+				}*/
+			}
 		}
 
 		public static ServicesWindow Instance

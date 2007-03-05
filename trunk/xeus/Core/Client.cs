@@ -1,5 +1,6 @@
 using System ;
 using System.ComponentModel ;
+using System.Threading ;
 using System.Windows.Controls ;
 using agsXMPP ;
 using agsXMPP.net ;
@@ -95,7 +96,7 @@ namespace xeus.Core
 			_xmppConnection.SocketConnectionType = SocketConnectionType.Direct ;
 			_xmppConnection.UseStartTLS = true ;
 			_xmppConnection.AutoRoster = true ;
-			_xmppConnection.AutoAgents = false ;
+			_xmppConnection.AutoAgents = true ;
 
 			_xmppConnection.OnRosterEnd += new ObjectHandler( _xmppConnection_OnRosterEnd );
 			_xmppConnection.OnMessage += new XmppClientConnection.MessageHandler( _xmppConnection_OnMessage );
@@ -230,6 +231,7 @@ namespace xeus.Core
 
 		#region disco server events
 
+
 		private void OnDiscoServerResult( object sender, IQ iq, object data )
 		{
 			Log( "Server disco started" ) ;
@@ -245,20 +247,48 @@ namespace xeus.Core
 					{
 						DiscoItem[] itms = items.GetDiscoItems() ;
 
-						DiscoManager dm = new DiscoManager( _xmppConnection ) ;
-
-						foreach ( DiscoItem itm in itms )
+						lock ( _services )
 						{
-							if ( itm.Jid != null )
+							foreach ( DiscoItem itm in itms )
 							{
-								dm.DisoverInformation( itm.Jid, new IqCB( OnDiscoInfoResult ), itm ) ;
+								if ( itm.Jid != null )
+								{
+									_services.Items.Add( new ServiceItem( itm.Jid.Bare, itm.Jid ) ) ;
+								}
 							}
 						}
+
+						DiscoRequest( itms ) ;
 					}
+
 				}
 			}
 
 			Log( "Server disco finished" ) ;
+		}
+
+		public void DiscoRequest( DiscoItem[] itms )
+		{
+			Thread discoThread = new Thread( new ParameterizedThreadStart( AskForDiscoInfo ) );
+			discoThread.Priority = ThreadPriority.Lowest ;
+			discoThread.Start( itms );
+		}
+
+		void AskForDiscoInfo( object data )
+		{
+			DiscoItem[] itms = ( DiscoItem[] ) data ;
+
+			DiscoManager dm = new DiscoManager( _xmppConnection ) ;
+
+			foreach ( DiscoItem itm in itms )
+			{
+				Thread.Sleep( 100 );
+
+				if ( itm.Jid != null )
+				{
+					dm.DisoverInformation( itm.Jid, new IqCB( OnDiscoInfoResult ), null );
+				}
+			}
 		}
 
 		private void OnDiscoInfoResult( object sender, IQ iq, object data )
@@ -269,7 +299,17 @@ namespace xeus.Core
 
 				if ( di != null )
 				{
-					Services.Items.Add( new ServiceItem( iq.From.ToString(), iq.From, di ) );
+					lock ( _services )
+					{
+						foreach ( ServiceItem item in _services.Items )
+						{
+							if ( item.Jid.Bare == iq.From.Bare )
+							{
+								item.Disco = ( DiscoInfo ) iq.Query ;
+								break ;
+							}
+						}
+					}
 				}
 			}
 		}
@@ -317,8 +357,6 @@ namespace xeus.Core
 
 		private void _xmppConnecion_OnLogin( object sender )
 		{
-			RequestAgents() ;
-
 			OnLogin() ;
 		}
 
@@ -361,6 +399,7 @@ namespace xeus.Core
 
 				NotifyPropertyChanged( "MyPresence" ) ;
 				NotifyPropertyChanged( "StatusTemplate" ) ;
+				NotifyPropertyChanged( "IsAvailable" ) ;
 			}
 		}
 
@@ -374,6 +413,14 @@ namespace xeus.Core
 				}
 
 				return null ;
+			}
+		}
+
+		public bool IsAvailable
+		{
+			get
+			{
+				return ( MyPresence != null && MyPresence.Type == PresenceType.available ) ;
 			}
 		}
 

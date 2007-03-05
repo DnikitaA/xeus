@@ -17,16 +17,10 @@ namespace xeus.Core
 
 		private ObservableCollectionDisp< DiscoFeature > _features = new ObservableCollectionDisp< DiscoFeature >( App.DispatcherThread ) ;
 
-		public ServiceItem( string name, Jid jid, DiscoInfo disco )
+		public ServiceItem( string name, Jid jid )
 		{
 			_name = name ;
 			_jid = jid ;
-			_disco = disco ;
-
-			foreach ( DiscoFeature discoFeature in disco.GetFeatures() )
-			{
-				Features.Add( discoFeature );
-			}
 
 			_isRegistered = ( Client.Instance.Roster.FindItem( jid.Bare ) != null ) ;
 		}
@@ -57,6 +51,15 @@ namespace xeus.Core
 			{
 				return _disco ;
 			}
+
+			set
+			{
+				_disco = value ;
+
+				NotifyPropertyChanged( "Disco" );
+				NotifyPropertyChanged( "Features" );
+				NotifyPropertyChanged( "CanRegister" );
+			}
 		}
 
 		public ObservableCollectionDisp< DiscoFeature > Features
@@ -72,6 +75,19 @@ namespace xeus.Core
 			get
 			{
 				return _isRegistered ;
+			}
+		}
+
+		public bool CanRegister
+		{
+			get
+			{
+				if ( _disco == null )
+				{
+					return false ;
+				}
+
+				return _disco.HasFeature( agsXMPP.Uri.IQ_REGISTER ) ;
 			}
 		}
 

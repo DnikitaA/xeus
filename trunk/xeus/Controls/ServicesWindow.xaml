@@ -23,7 +23,7 @@
     <DockPanel>
         
     	<ListBox
-			ItemsSource="{Binding Source={StaticResource _servicesView}}" ItemTemplate="{DynamicResource ServiceItem}" Style="{DynamicResource ListBoxStyleMessages}"/>
+			ItemsSource="{Binding Source={StaticResource _servicesView}}" ItemTemplate="{DynamicResource ServiceItem}" Style="{DynamicResource ListBoxStyleRoster}" x:Name="_services"/>
         
     </DockPanel>
 </win:WindowBase>

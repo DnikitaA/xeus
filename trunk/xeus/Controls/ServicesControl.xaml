@@ -1,7 +1,8 @@
-﻿<UserControl x:Class="xeus.Controls.ServicesControl"
+﻿<UserControl
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:xeus.Core" xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Width="227" Height="89">
+    xmlns:local="clr-namespace:xeus.Core" xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="xeus.Controls.ServicesControl"
+    Width="227" Height="89">
 
   <UserControl.Resources>
     <ResourceDictionary>
@@ -13,7 +14,7 @@
 
   <Grid>
     <ListBox Name="_services" ItemsSource="{Binding Source={StaticResource ServicesView}}" Margin="8,8,8,8"
-  	Template="{StaticResource ListboxBlackTheme}" />
+  	Template="{StaticResource ListboxBlackTheme}" Style="{DynamicResource ListBoxStyleMessages}" />
   </Grid>
 
 </UserControl>
