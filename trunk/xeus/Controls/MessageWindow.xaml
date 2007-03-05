@@ -1,14 +1,15 @@
 ﻿<win:WindowBase
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:local="clr-namespace:xeus.Core"
+	  xmlns:local="clr-namespace:xeus.Core"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:win="clr-namespace:xeus.Controls"
     xmlns:settings="clr-namespace:xeus.Core"
     x:Class="xeus.Controls.MessageWindow"
     Title="message" Height="300" Width="300"
     settings:WindowSettings.Save="True"	
-	Style="{StaticResource DarkStyleWindow}"
-	Background="{x:Null}"
+	  Style="{StaticResource DarkStyleWindow}"
+	  Background="{x:Null}"
+    x:Name="message"
 	>
     <Grid>
     	<TabControl x:Name="_tabs" ContentTemplate="{StaticResource RosterItemMessagesTemplate}" 

@@ -64,6 +64,8 @@ namespace xeus.Controls
 					_instance = new ServicesWindow() ;
 				}
 
+				Client.Instance.DiscoverServer() ;
+
 				_instance.Show() ;
 			}
 			else

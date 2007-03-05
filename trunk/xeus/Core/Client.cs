@@ -86,7 +86,7 @@ namespace xeus.Core
 			_xmppConnection.Password = Settings.Default.Client_Password ;
 			_xmppConnection.Server = Settings.Default.Client_Server ;
 			_xmppConnection.UseCompression = true ;
-			_xmppConnection.UseSSL = false ;
+			_xmppConnection.UseSSL = true ;
 			_xmppConnection.Priority = 10 ;
 			_xmppConnection.AutoResolveConnectServer = true ;
 
@@ -218,11 +218,14 @@ namespace xeus.Core
 			}
 		}
 
-		void DiscoverServer()
+		public void DiscoverServer()
 		{
-			DiscoManager discoManager = new DiscoManager( _xmppConnection ) ;
+			if ( _services.Items.Count == 0 )
+			{
+				DiscoManager discoManager = new DiscoManager( _xmppConnection ) ;
 
-			discoManager.DisoverItems( new Jid( _xmppConnection.Server ), new IqCB( OnDiscoServerResult ), null ) ;
+				discoManager.DisoverItems( new Jid( _xmppConnection.Server ), new IqCB( OnDiscoServerResult ), null ) ;
+			}
 		}
 
 		#region disco server events
@@ -314,8 +317,6 @@ namespace xeus.Core
 
 		private void _xmppConnecion_OnLogin( object sender )
 		{
-			DiscoverServer() ;
-
 			RequestAgents() ;
 
 			OnLogin() ;
