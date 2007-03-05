@@ -2,12 +2,10 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic">
 	<!-- Resource dictionary entries should be defined here. -->
-	<Style x:Key="TextBoxStyleBlack" TargetType="{x:Type TextBox}">
+	<Style x:Key="TextBoxStyleInline" TargetType="{x:Type TextBox}">
 		<Setter Property="FontSize" Value="14"/>
-		<Setter Property="Background" Value="#00D85B5B"/>
-		<Setter Property="BorderThickness" Value="1,1,1,1"/>
-		<Setter Property="BorderBrush" Value="#00D6D6D6"/>
-		<Setter Property="Foreground" Value="#FFD6C8A0"/>
-		<Setter Property="Text" Value="Blah"/>
+		<Setter Property="Background" Value="#00BBBBBB"/>
+		<Setter Property="Foreground" Value="#FFDADADA"/>
+		<Setter Property="BorderBrush" Value="#00B7B7B7"/>
 	</Style>
 </ResourceDictionary>

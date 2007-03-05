@@ -21,6 +21,7 @@
   			<ResourceDictionary Source="Controls\SplitterResources.xaml"/>
         <ResourceDictionary Source="Controls\WindowDecoration.xaml" />
   			<ResourceDictionary Source="Controls\ServiceResources.xaml"/>
+  			<ResourceDictionary Source="Controls\InlineSearchResources.xaml"/>
       </ResourceDictionary.MergedDictionaries>
   	</ResourceDictionary>
   </Application.Resources>

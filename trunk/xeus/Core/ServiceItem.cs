@@ -1,16 +1,21 @@
 using System;
+using System.ComponentModel ;
 using agsXMPP ;
 using agsXMPP.protocol.iq.disco ;
 
 namespace xeus.Core
 {
-	internal class ServiceItem
+	internal class ServiceItem : INotifyPropertyChanged
 	{
 		private string _name = String.Empty ;
 		private Jid _jid = null ;
 		private DiscoInfo _disco = null ;
 
-		ObservableCollectionDisp< DiscoFeature > _features = new ObservableCollectionDisp< DiscoFeature >( App.DispatcherThread ) ;
+		private bool _isRegistered = false ;
+
+		public event PropertyChangedEventHandler PropertyChanged ;
+
+		private ObservableCollectionDisp< DiscoFeature > _features = new ObservableCollectionDisp< DiscoFeature >( App.DispatcherThread ) ;
 
 		public ServiceItem( string name, Jid jid, DiscoInfo disco )
 		{
@@ -20,8 +25,10 @@ namespace xeus.Core
 
 			foreach ( DiscoFeature discoFeature in disco.GetFeatures() )
 			{
-				_features.Add( discoFeature );
+				Features.Add( discoFeature );
 			}
+
+			_isRegistered = ( Client.Instance.Roster.FindItem( jid.Bare ) != null ) ;
 		}
 
 		public string Name
@@ -49,6 +56,30 @@ namespace xeus.Core
 			get
 			{
 				return _disco ;
+			}
+		}
+
+		public ObservableCollectionDisp< DiscoFeature > Features
+		{
+			get
+			{
+				return _features ;
+			}
+		}
+
+		public bool IsRegistered
+		{
+			get
+			{
+				return _isRegistered ;
+			}
+		}
+
+		private void NotifyPropertyChanged( String info )
+		{
+			if ( PropertyChanged != null )
+			{
+				PropertyChanged( this, new PropertyChangedEventArgs( info ) ) ;
 			}
 		}
 	}

@@ -91,7 +91,7 @@ namespace xeus.Core
 			_xmppConnection.AutoResolveConnectServer = true ;
 
 			_xmppConnection.ConnectServer = null ;
-			_xmppConnection.Resource = "MiniClient" ;
+			_xmppConnection.Resource = "xeus" ;
 			_xmppConnection.SocketConnectionType = SocketConnectionType.Direct ;
 			_xmppConnection.UseStartTLS = true ;
 			_xmppConnection.AutoRoster = true ;

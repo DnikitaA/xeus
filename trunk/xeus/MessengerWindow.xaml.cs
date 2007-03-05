@@ -5,6 +5,7 @@ using System.Windows.Controls.Primitives ;
 using System.Windows.Forms ;
 using xeus.Controls ;
 using xeus.Core ;
+using xeus.Properties ;
 using Button=System.Windows.Controls.Button;
 using Point=System.Drawing.Point;
 using ToolTip=System.Windows.Controls.ToolTip;
@@ -68,6 +69,8 @@ namespace xeus
 		{
 			base.OnInitialized( e ) ;
 
+			_roster.InlineSearch = _inlineSearch ;
+
 			DataContext = Client.Instance ;
 
 			Button buttonMessages = _statusBar.FindName( "_buttonMessages" ) as Button ;
@@ -104,13 +107,16 @@ namespace xeus
 
 		private void SaveData()
 		{
-			Database.Instance.StoreRosterItems( Client.Instance.Roster.Items ) ;
-			Database.Instance.Save() ;
+			Database database =  new Database();
+			database.StoreRosterItems( Client.Instance.Roster.Items ) ;
+			database.Save() ;
 		}
 
 		protected override void OnClosed( EventArgs e )
 		{
 			base.OnClosed( e ) ;
+
+			Settings.Default.Save();
 
 			_notifyIcon.Dispose() ;
 		}

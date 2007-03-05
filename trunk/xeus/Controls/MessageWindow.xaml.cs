@@ -111,7 +111,9 @@ namespace xeus.Controls
 			{
 				if ( rosterItem.Messages.Count == 0 )
 				{
-					List< ChatMessage > messages = Database.Instance.ReadMessages( rosterItem ) ;
+					Database database =  new Database();
+
+					List< ChatMessage > messages = database.ReadMessages( rosterItem ) ;
 
 					foreach ( ChatMessage message in messages )
 					{

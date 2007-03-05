@@ -1,6 +1,4 @@
 using System.Collections.Generic ;
-using System.Timers ;
-using System.Windows.Media.Imaging ;
 using System.Windows.Threading ;
 using agsXMPP ;
 using agsXMPP.protocol.client ;
@@ -13,16 +11,6 @@ namespace xeus.Core
 	{
 		private ObservableCollectionDisp< RosterItem > _items =
 			new ObservableCollectionDisp< RosterItem >( App.DispatcherThread ) ;
-
-		private const double TimerFast = 250 ;
-		private const double TimerSlow = 500 ;
-		private const double TimerVerySlow = 1000 ;
-
-		private Timer _rosterItemTimer = new Timer( TimerFast ) ;
-		private Queue< RosterItem > _rosterItemsToRecieveVCard = new Queue< RosterItem >( 128 ) ;
-		private object _lockRosterItems = new object() ;
-
-		private List< Presence > _presences = new List< Presence >( 128 ) ;
 
 		#region delegates
 
@@ -40,23 +28,19 @@ namespace xeus.Core
 
 		#endregion
 
-		public Roster()
-		{
-		}
-
 		public void ReadRosterFromDb()
 		{
-			List< RosterItem > dbRosterItems = Database.Instance.ReadRosterItems() ;
+			Database database =  new Database();
+
+			List< RosterItem > dbRosterItems = database.ReadRosterItems() ;
 
 			foreach ( RosterItem item in dbRosterItems )
 			{
 				Vcard vcard = Storage.GetVcard( item.Key ) ;
-				item.SetVcard( vcard );
+				item.SetVcard( vcard ) ;
 
-				_items.Add( item );
+				_items.Add( item ) ;
 			}
-
-			_rosterItemTimer.Elapsed += new ElapsedEventHandler( _rosterItemTimer_Elapsed ) ;
 		}
 
 		public ObservableCollectionDisp< RosterItem > Items
@@ -70,23 +54,24 @@ namespace xeus.Core
 		public void RegisterEvents( XmppClientConnection xmppConnection )
 		{
 			xmppConnection.OnRosterItem += new XmppClientConnection.RosterHandler( xmppConnecion_OnRosterItem ) ;
-			xmppConnection.OnRosterEnd += new ObjectHandler( xmppConnection_OnRosterEnd );
+			xmppConnection.OnRosterEnd += new ObjectHandler( xmppConnection_OnRosterEnd ) ;
 			xmppConnection.OnPresence += new XmppClientConnection.PresenceHandler( xmppConnection_OnPresence ) ;
 		}
 
-		void xmppConnection_OnRosterEnd( object sender )
+		private void xmppConnection_OnRosterEnd( object sender )
 		{
-			_rosterItemTimer.AutoReset = true ;
-			_rosterItemTimer.Start() ;
 		}
 
 		public RosterItem FindItem( string bare )
 		{
-			foreach ( RosterItem rosterItem in _items )
+			lock ( _items )
 			{
-				if ( rosterItem.Key == bare )
+				foreach ( RosterItem rosterItem in _items )
 				{
-					return rosterItem ;
+					if ( rosterItem.Key == bare )
+					{
+						return rosterItem ;
+					}
 				}
 			}
 
@@ -100,78 +85,13 @@ namespace xeus.Core
 				// if it is already in roster, change status property
 				RosterItem rosterItem = FindItem( presence.From.Bare ) ;
 
-				if ( rosterItem != null )
+				if ( rosterItem != null && presence.Error == null )
 				{
-					if ( /* presence.From.User == null && */ presence.Error == null
-							&& presence.Type == PresenceType.available
-							&& rosterItem.IsInitialized )
-					{
-						lock ( _lockRosterItems )
-						{
-							bool enqueued = false ;
-
-							foreach ( RosterItem item in _rosterItemsToRecieveVCard )
-							{
-								if ( item.Key == rosterItem.Key )
-								{
-									enqueued = true ;
-									break ;
-								}
-							}
-
-							if ( !enqueued )
-							{
-								_rosterItemsToRecieveVCard.Enqueue( rosterItem ) ;
-							}
-						}
-
-						/*
-						foreach ( RosterItem rosterItemOfService in _items )
-						{
-							if ( rosterItemOfService.IsInitialized )
-							{
-
-								if ( rosterItemOfService.XmppRosterItem.Jid.Server == presence.From.Server
-								     && ( rosterItemOfService.Errors.Count > 0
-								          || rosterItemOfService.Presence == null ) )
-								{
-									rosterItemOfService.Errors.Clear() ;
-									rosterItemOfService.HasVCardRecivied = false ;
-									
-									// on error
-									lock ( _lockRosterItems )
-									{
-										bool enqueued = false ;
-
-										foreach ( RosterItem item in _rosterItemsToRecieveVCard )
-										{
-											if ( item.Key == rosterItemOfService.Key )
-											{
-												enqueued = true ;
-												break ;
-											}
-										}
-
-										if ( !enqueued )
-										{
-											_rosterItemsToRecieveVCard.Enqueue( rosterItemOfService ) ;
-										}
-									}
-								
-
-							}
-						}*/
-
-					}
 					rosterItem.Presence = presence ;
-				}
-				else
-				{
-					// presence info can arrive before the user item comes into the roster
-					// so presence info has to be kept separately
-					lock ( _presences )
+
+					if ( !rosterItem.HasVCardRecivied && presence.Type == PresenceType.available )
 					{
-						_presences.Add( presence );
+						AskForVCard( rosterItem.Key ) ;
 					}
 				}
 			}
@@ -242,7 +162,7 @@ namespace xeus.Core
 
 						if ( iq.Vcard != null )
 						{
-							Storage.CacheVCard( iq.Vcard, rosterItem.Key );
+							Storage.CacheVCard( iq.Vcard, rosterItem.Key ) ;
 						}
 					}
 				}
@@ -256,107 +176,43 @@ namespace xeus.Core
 
 		private void xmppConnecion_OnRosterItem( object sender, agsXMPP.protocol.iq.roster.RosterItem item )
 		{
-			RosterItem rosterItem = new RosterItem( item ) ;
+			RosterItem existingRosterItem = FindItem( item.Jid.Bare ) ;
 
 			if ( item.Subscription == SubscriptionType.remove )
 			{
-				RosterItem exisitngRosterItem = FindItem( item.Jid.Bare ) ;
-
-				if ( exisitngRosterItem != null )
+				if ( existingRosterItem != null )
 				{
-					_items.Remove( exisitngRosterItem ) ;
+					lock ( _items )
+					{
+						_items.Remove( existingRosterItem ) ;
+					}
 				}
 			}
 			else
 			{
-				lock ( _lockRosterItems )
+				if ( existingRosterItem != null )
 				{
-					// using timer frees the UI - on roster item are called synchronously for all items on startup
-					foreach ( RosterItem existingItem in _items )
+					existingRosterItem.XmppRosterItem = item ;
+				}
+				else
+				{
+					RosterItem rosterItem = new RosterItem( item ) ;
+
+					lock ( _items )
 					{
-						if ( existingItem.Key == item.Jid.Bare
-							/* && !existingItem.IsInitialized*/ )
-						{
-							existingItem.XmppRosterItem = item ;
-						}
+						_items.Add( rosterItem ) ;
 					}
 
-					_rosterItemsToRecieveVCard.Enqueue( rosterItem ) ;
+					AskForVCard( rosterItem.Key );
 				}
 			}
 		}
 
-		private void _rosterItemTimer_Elapsed( object sender, ElapsedEventArgs e )
+		private void AskForVCard( string jid )
 		{
-			RosterItem rosterItem = null ;
-
-			if ( _rosterItemsToRecieveVCard.Count > 0 )
-			{
-				lock ( _lockRosterItems )
-				{
-					rosterItem = _rosterItemsToRecieveVCard.Dequeue() ;
-
-					if ( rosterItem.VCardAttempts > 1
-						&& rosterItem.VCardAttempts < 2 )
-					{
-						_rosterItemTimer.Interval = TimerSlow ;
-					}
-
-					if ( rosterItem.VCardAttempts <= 2
-							&& !rosterItem.HasVCardRecivied
-							&& rosterItem.IsInitialized )
-					{
-						_rosterItemsToRecieveVCard.Enqueue( rosterItem ) ; // push to the end of the queue
-					}
-				}
-			}
-
-			lock ( _presences )
-			{
-				if ( _presences.Count > 0 )
-				{
-					Presence presence = _presences[ 0 ] ;
-
-					RosterItem item = FindItem( presence.From.Bare );
-
-					if ( item != null )
-					{
-						rosterItem.Presence = presence;
-						_presences.RemoveAt( 0 ) ;
-					}
-				}
-			}
-
-			if ( rosterItem != null )
-			{
-				/*
-				Presence presence ;
-
-				lock( _presences )
-				{
-					// check if presence info is already there
-					_presences.TryGetValue( rosterItem.Key, out presence ) ;
-				}
-
-				if ( presence != null )
-				{
-					rosterItem.Presence = presence ;
-				}*/
-
-				if ( FindItem( rosterItem.Key ) == null )
-				{
-					_items.Add( rosterItem ) ;
-				}
-
-				if ( !rosterItem.HasVCardRecivied )
-				{
-					// ask for VCard
-					VcardIq viq = new VcardIq( IqType.get, new Jid( rosterItem.Key ) ) ;
-					Client.Instance.SendIqGrabber( viq, new IqCB( VcardResult ), rosterItem.Key ) ;
-
-					rosterItem.VCardAttempts++ ;
-				}
-			}
+			// ask for VCard
+			VcardIq viq = new VcardIq( IqType.get, new Jid( jid ) ) ;
+			Client.Instance.SendIqGrabber( viq, new IqCB( VcardResult ), jid ) ;
 		}
 
 		public void DeleteRosterItem( RosterItem rosterItem )

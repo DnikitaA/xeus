@@ -41,7 +41,6 @@ namespace xeus.Core
 		private Email _emailPreferred ;
 		private BitmapImage _image ;
 		private bool _hasVCardRecivied = false ;
-		private int _vCardAttempts = 0 ;
 		private bool _hasUnreadMessages = false ;
 
 		private string _lastMessageFrom = "No message sent" ;
@@ -244,7 +243,7 @@ namespace xeus.Core
 				{
 					group = "<offline>" ;
 				}
-				else if ( _rosterItem.Jid.User == null )
+				else if ( IsService )
 				{
 					group = "<services>" ;
 				}
@@ -378,7 +377,7 @@ namespace xeus.Core
 					{
 						Image = Storage.GetDefaultAvatar() ;
 					}
-					else if ( XmppRosterItem.Jid.User == null )
+					else if ( IsService )
 					{
 						Image = Storage.GetDefaultServiceAvatar() ;
 					}
@@ -467,6 +466,7 @@ namespace xeus.Core
 			{
 				_name = value ;
 				NotifyPropertyChanged( "Name" ) ;
+				NotifyPropertyChanged( "DisplayName" ) ;
 			}
 		}
 
@@ -590,18 +590,6 @@ namespace xeus.Core
 			}
 		}
 
-		public int VCardAttempts
-		{
-			get
-			{
-				return _vCardAttempts ;
-			}
-			set
-			{
-				_vCardAttempts = value ;
-			}
-		}
-
 		public string LastMessageFrom
 		{
 			get
@@ -639,6 +627,7 @@ namespace xeus.Core
 			{
 				_subscriptionType = value ;
 				NotifyPropertyChanged( "SubscriptionType" ) ;
+				NotifyPropertyChanged( "SubscriptionTypeText" ) ;
 			}
 		}
 
@@ -663,6 +652,21 @@ namespace xeus.Core
 			get
 			{
 				return _customName ;
+			}
+
+			set
+			{
+				_customName = value ;
+				NotifyPropertyChanged( "CustomkName" ) ;
+				NotifyPropertyChanged( "DisplayName" ) ;
+			}
+		}
+
+		public bool IsService
+		{
+			get
+			{
+				return ( _rosterItem != null && _rosterItem.Jid.User == null ) ;
 			}
 		}
 

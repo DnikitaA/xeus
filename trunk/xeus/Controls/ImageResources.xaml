@@ -479,26 +479,36 @@
 <ControlTemplate x:Key="WindowButton" TargetType="{x:Type Button}">
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" >
 	<Grid x:Name="grid">
-	<Ellipse StrokeThickness="1" Width="14" Height="14" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0" x:Name="_circleBack" Fill="{TemplateBinding Property=Background}" />
-	<Ellipse Stroke="#FF222222" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0" x:Name="_circle" Opacity="0.65">
-		<Ellipse.Fill>
+	<Rectangle StrokeThickness="1" Width="9" Height="14.004" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0" x:Name="_circleBack" Fill="{TemplateBinding Property=Background}" RadiusX="2" RadiusY="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+	<Rectangle StrokeThickness="1" Width="9" Height="14.004" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0" x:Name="_circleBack1" Fill="{TemplateBinding Property=Background}" RadiusX="2" RadiusY="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+		<Path Fill="#FFA8A6A6" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,1.125" x:Name="_circleBack2" VerticalAlignment="Bottom" Width="8.36" Height="1.78" Data="F1 M4.4191451,12.224 C5.8860507,12.224 7.3173676,12.385383 8.6724443,12.794788 8.4878511,13.535954 7.7985845,14.004 7,14.004 L2,14.004 C1.1859469,14.004 0.48548767,13.517647 0.31214491,12.757585 1.6233113,12.37405 3.0046842,12.224 4.4191451,12.224 z" Canvas.Left="0" Canvas.Top="0"/>
+	<Rectangle Stroke="#FF9A9A9A" StrokeThickness="1" Margin="0,0,0,0" Width="11" Height="16" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle" Opacity="0.65" RadiusX="2" RadiusY="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+		<Rectangle.Fill>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 				<GradientStop Color="White" Offset="0"/>
 				<GradientStop Color="#FF000000" Offset="1"/>
 			</LinearGradientBrush>
-		</Ellipse.Fill>
-		<Ellipse.OpacityMask>
+		</Rectangle.Fill>
+		<Rectangle.OpacityMask>
 			<RadialGradientBrush>
-				<GradientStop Color="#FF000000" Offset="0.704"/>
+				<GradientStop Color="#DD000000" Offset="0.73"/>
 				<GradientStop Color="#9AFFFFFF" Offset="1"/>
 			</RadialGradientBrush>
-		</Ellipse.OpacityMask>
-	</Ellipse>
-	<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
-	
-<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DD5D5D5" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
+		</Rectangle.OpacityMask>
+	</Rectangle>
+		<Path RenderTransformOrigin="0.499999984105429,0.56840223792875" d:LayoutOverrides="VerticalAlignment" Fill="#57D5D5D5" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0.194,0,0" VerticalAlignment="Top" Width="9" Height="5.877" Data="F1 M12.349958,3.0140922E-07 C13.935251,1.1842258E-07 15.453799,0.15912351 16.85,0.46350601 L16.85,3.8770001 C16.85,4.9815693 15.95457,5.8769999 14.85,5.8769999 L9.8500004,5.8769999 C8.7454309,5.8769999 7.8499999,4.9815693 7.8499999,3.8770001 L7.8499999,0.46349052 C9.2461777,0.15911719 10.764697,1.1842258E-07 12.349958,3.0140922E-07 z" Canvas.Left="0" Canvas.Top="0">
+			<Path.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="1" ScaleY="1"/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="180"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</Path.RenderTransform>
+		</Path>
 	</Grid>
 </Viewbox>
 	<ControlTemplate.Triggers>
@@ -541,31 +551,38 @@
 <ControlTemplate x:Key="OpenServices" TargetType="{x:Type Button}">
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" >
 	<Grid x:Name="grid">
-	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
-		Canvas.Left="0" x:Name="_circle">
-		<Ellipse.Fill>
+	<Rectangle Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="18" Height="18" Canvas.Top="0"
+		Canvas.Left="0" x:Name="_circle" RadiusX="2" RadiusY="2">
+		<Rectangle.Fill>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 				<GradientStop Color="#FFE5C9B3" Offset="0"/>
 				<GradientStop Color="#FF715318" Offset="1"/>
 			</LinearGradientBrush>
-		</Ellipse.Fill>
-		<Ellipse.BitmapEffect>
+		</Rectangle.Fill>
+		<Rectangle.BitmapEffect>
 			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
-		</Ellipse.BitmapEffect>
-	</Ellipse>
-		<Path RenderTransformOrigin="0.5,0.5" Fill="#FFD1CECE" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Left" Margin="3.833,4.5,0,3.625" x:Name="_points" VerticalAlignment="Stretch" Data="F1 M2,-5.9604645E-08 C3.1045694,0 4,0.89543051 4,2 C4,3.1045694 3.1045694,4 2,4 0.89543051,4 0,3.1045694 7.4505806E-09,2 0,0.89543051 0.89543051,0 2,-5.9604645E-08 z M4.3369999,-3.875 C5.4415693,-3.875 6.3369999,-2.9795694 6.3369999,-1.875 C6.3369999,-0.77043051 5.4415693,0.125 4.3369999,0.12500006 3.2324305,0.125 2.3369999,-0.77043051 2.3369999,-1.875 2.3369999,-2.9795694 3.2324305,-3.875 4.3369999,-3.875 z M-0.16300011,-3.875 C0.94156951,-3.875 1.837,-2.9795694 1.837,-1.875 C1.837,-0.77043051 0.94156951,0.125 -0.16300011,0.12500006 -1.2675695,0.125 -2.1630001,-0.77043051 -2.1630001,-1.875 -2.1630001,-2.9795694 -1.2675695,-3.875 -0.16300011,-3.875 z" Canvas.Left="0" Canvas.Top="0">
-			<Path.RenderTransform>
+		</Rectangle.BitmapEffect>
+		<Rectangle.LayoutTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="45"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Rectangle.LayoutTransform>
+	</Rectangle>
+		<Path Fill="#36FFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,1.556,0,0" x:Name="_circle1" VerticalAlignment="Top" Width="12.929" Height="12.932" Data="F1 M1.8566635,1.7078477E-08 L12.928542,1.7078477E-08 C11.488774,2.2859886 9.5078812,4.7488055 7.1226864,7.1340003 C4.7415257,9.5151615 2.2830045,11.493387 -8.8198576E-08,12.932108 L-8.8198576E-08,1.8566632 C0,0.83125645 0.83125645,0 1.8566635,1.7078477E-08 z" Canvas.Left="0" Canvas.Top="0">
+			<Path.LayoutTransform>
 				<TransformGroup>
 					<ScaleTransform ScaleX="1" ScaleY="1"/>
 					<SkewTransform AngleX="0" AngleY="0"/>
-					<RotateTransform/>
+					<RotateTransform Angle="45"/>
 					<TranslateTransform X="0" Y="0"/>
 				</TransformGroup>
-			</Path.RenderTransform>
+			</Path.LayoutTransform>
 		</Path>
-	<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
+	<Path Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,2.116" VerticalAlignment="Bottom" Width="5.79" Height="2.703" Data="M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 20.354053,2.3906071 18.697081,5.3514364 16.891001,5.3514367 15.060939,5.3514364 13.383967,2.3735404 12.145675,1.2084982 13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
 	
-<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
 	</Grid>
 </Viewbox>
 	<ControlTemplate.Triggers>
@@ -596,6 +613,36 @@
 					</TransformGroup>
 				</Setter.Value>
 			</Setter>
+		</Trigger>
+	</ControlTemplate.Triggers>
+</ControlTemplate>
+
+<ControlTemplate x:Key="Cancel" TargetType="{x:Type Button}">
+<Viewbox x:Name="viewbox" SnapsToDevicePixels="False">
+	<Path RenderTransformOrigin="0.5,0.5" Fill="#CCAEAEAE" Stretch="Fill" StrokeThickness="1" Width="9.828" Height="9.828" Data="F1 M3.7715001,-2.7715001 L6.0565,-2.7715001 6.0565,0.50000006 9.3280001,0.50000006 9.3280001,2.7850001 6.0565,2.7850001 6.0565,6.0565 3.7715001,6.0565 3.7715001,2.7850001 0.5,2.7850001 0.5,0.50000006 3.7715001,0.50000006 3.7715001,-2.7715001 z" Canvas.Left="3.074" Canvas.Top="3.216" x:Name="path">
+		<Path.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="-1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="-45"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Path.RenderTransform>
+	</Path>
+</Viewbox>
+	<ControlTemplate.Triggers>
+		<Trigger Property="Visibility" Value="Visible">
+			<Trigger.EnterActions>
+				<BeginStoryboard Storyboard="{StaticResource PumpStatus}"/>
+			</Trigger.EnterActions>
+		</Trigger>
+	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
+	  	<Setter Property="Fill" TargetName="path" Value="#CCD19191"/>
+	  </Trigger>
+		<Trigger Property="IsPressed" Value="True">
+			<Setter Property="Fill" TargetName="path" Value="#CCC79292"/>
+			<Setter Property="Margin" TargetName="path" Value="1,1,1,1"/>
+			<Setter Property="ToolTip" TargetName="path" Value="Cancel"/>
 		</Trigger>
 	</ControlTemplate.Triggers>
 </ControlTemplate>

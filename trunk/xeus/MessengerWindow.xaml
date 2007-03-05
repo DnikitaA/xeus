@@ -29,7 +29,7 @@
 		</StatusBarItem>
 		<StatusBarItem 
 		    	  x:Name="_statusServices" VerticalAlignment="Stretch">
-		    <Button x:Name="_buttonmyServices" Width="17" Height="17" Template="{DynamicResource OpenServices}"
+		    <Button x:Name="_buttonmyServices" Width="22" Height="22" Template="{DynamicResource OpenServices}"
 				Click="OpenServices" ToolTip="Services"/>
 		</StatusBarItem>
 			<StatusBarItem HorizontalAlignment="Stretch" 
@@ -40,6 +40,10 @@
 					<TextBlock Text="{Binding Path=MessageCenter.ChatMessages.Count}" 
 						VerticalAlignment="Stretch" HorizontalAlignment="Left" Foreground="#FFFFFFFF" Grid.Column="1" Margin="3,0,0,0" />
 				</StackPanel>
+		</StatusBarItem>
+		<StatusBarItem HorizontalAlignment="Stretch" 
+		    	  x:Name="_statusInlineSearch" VerticalAlignment="Stretch" Panel.ZIndex="1">
+	    	<local:InlineSearch x:Name="_inlineSearch" Height="25" VerticalAlignment="Bottom" Visibility="Hidden"/>
 		</StatusBarItem>
 		</StatusBar>
    	<local:RosterControl x:Name="_roster" DockPanel.Dock="Top"/>

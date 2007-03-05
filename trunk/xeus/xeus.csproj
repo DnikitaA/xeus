@@ -64,6 +64,7 @@
     <Reference Include="System.IdentityModel" />
     <Page Include="Controls\ExpanderResources.xaml" />
     <Page Include="Controls\ImageResources.xaml" />
+    <Page Include="Controls\InlineSearchResources.xaml" />
     <Page Include="Controls\ScrollbarResources.xaml" />
     <Page Include="Controls\ServiceResources.xaml" />
     <Page Include="Controls\SliderRosterStyle.xaml" />
@@ -78,6 +79,7 @@
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
     <Page Include="Controls\ControlResources.xaml" />
+    <Page Include="Controls\InlineSearch.xaml" />
     <Page Include="Controls\MessageWindow.xaml" />
     <Page Include="Controls\ServicesControl.xaml" />
     <Page Include="Controls\ServicesWindow.xaml" />
@@ -95,6 +97,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\InlineSearch.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>InlineSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MessageWindow.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>MessageWindow.xaml</DependentUpon>
@@ -115,6 +121,7 @@
     <Compile Include="Core\ChatMessage.cs" />
     <Compile Include="Core\CountToVisibilityConverter.cs" />
     <Compile Include="Core\Database.cs" />
+    <Compile Include="Core\InlineMethod.cs" />
     <Compile Include="Core\MessageCenter.cs" />
     <Compile Include="Controls\ServicesControl.xaml.cs">
       <SubType>Code</SubType>
