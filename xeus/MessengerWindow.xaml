@@ -34,8 +34,13 @@
 				Click="OpenServices" ToolTip="Services" Background="#FFFFA300"
 				IsEnabled="{Binding Path=IsAvailable}"/>
 		</StatusBarItem>
-		
-			<StatusBarItem HorizontalAlignment="Stretch" 
+		<StatusBarItem 
+		    	  x:Name="_statusAddUser" VerticalAlignment="Stretch">
+		    <Button x:Name="_buttonAddUSer" Width="17" Height="17" Template="{DynamicResource AddNewUser}"
+				Click="AddUser" ToolTip="Add new User" Background="#FFFFA300"
+				IsEnabled="{Binding Path=IsAvailable}"/>
+		</StatusBarItem>
+		<StatusBarItem HorizontalAlignment="Stretch" 
 		    	  x:Name="_statusUnreadMessages" VerticalAlignment="Stretch"
 		          Visibility="{Binding Path=MessageCenter.ChatMessages.Count, Converter={StaticResource _visibilityConverter}}">
 	  			<StackPanel Orientation="Horizontal">

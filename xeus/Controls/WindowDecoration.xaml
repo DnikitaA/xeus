@@ -60,7 +60,6 @@
     <Setter Property="AllowsTransparency" Value="true" />
     <Setter Property="WindowStyle" Value="None" />
     <Setter Property="Background" Value="Transparent" />
-    <Setter Property="ResizeMode" Value="CanResizeWithGrip" />   
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Window}">
@@ -73,9 +72,9 @@
               </DockPanel>
             </Border>
             
-            <Line MouseDown="OnSizeNorth" Name="lnSizeNorth" Stroke="Transparent"   
+            <Line MouseDown="OnSizeNorth" x:Name="lnSizeNorth" Stroke="Transparent"   
               Cursor="SizeNS" X1="10" X2="{TemplateBinding ActualWidth}"
-              Y1="1" Y2="1" StrokeThickness="2"  />
+              Y1="1" Y2="1" StrokeThickness="2" />
                         
             <Line MouseDown="OnSizeSouth" Name="lnSizeSouth" Stroke="Transparent" VerticalAlignment="Bottom" 
                    Cursor="SizeNS" X1="1" X2="{TemplateBinding ActualWidth}" 

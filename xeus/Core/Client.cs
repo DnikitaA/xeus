@@ -277,6 +277,12 @@ namespace xeus.Core
 
 		void OnUnregisterService(object sender, IQ iq, object data)
 		{
+			if ( iq.Error != null )
+			{
+				App.Instance.Window.Alert( iq.Error.ToString() );
+				return ;
+			}
+
 			RegisterIq registerIq = ( RegisterIq ) data ;
 
 			ServiceItem serviceItem = _services.FindItem( registerIq.To.Bare ) ;
@@ -289,6 +295,12 @@ namespace xeus.Core
 
 		void OnRegisterService(object sender, IQ iq, object data)
 		{
+			if ( iq.Error != null )
+			{
+				App.Instance.Window.Alert( iq.Error.ToString() );
+				return ;
+			}
+
 			RegisterIq registerIq = ( RegisterIq ) data ;
 
 			ServiceItem serviceItem = _services.FindItem( registerIq.To.Bare ) ;
@@ -478,6 +490,19 @@ namespace xeus.Core
 			if ( PropertyChanged != null )
 			{
 				PropertyChanged( this, new PropertyChangedEventArgs( info ) ) ;
+			}
+		}
+
+		public void AddUser( string name )
+		{
+			if ( name.Length > 0 )
+			{
+				Jid jid = new Jid( name ) ;
+
+				_xmppConnection.RosterManager.AddRosterItem( jid ) ;
+				
+				// Ask for subscription now
+				_xmppConnection.PresenceManager.Subcribe( jid ) ;
 			}
 		}
 	}

@@ -91,6 +91,19 @@ namespace xeus
 			ServicesWindow.DisplayServices() ;
 		}
 
+		public void AddUser( object sender, RoutedEventArgs e )
+		{
+			AddUser addUser = new AddUser();
+
+			addUser.Owner = this ;
+			addUser.ShowDialog() ;
+
+			if ( addUser.DialogResult.HasValue && addUser.DialogResult.Value )
+			{
+				Client.Instance.AddUser( addUser.Jid ) ;
+			}
+		}
+
 		private void buttonMessages_Click( object sender, RoutedEventArgs e )
 		{
 			MessageWindow.DisplayChatWindow( null, false ) ;
