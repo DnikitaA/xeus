@@ -85,10 +85,10 @@
   				TextTrimming="CharacterEllipsis"
   				FontFamily="Calibri" Foreground="#FFACACAC"
   				VerticalAlignment="Top" x:Name="_displayName" FontSize="15" Height="20" Text="{Binding Path=DisplayName}" />
-			<TextBlock Text="{Binding Path=StatusDescription}" HorizontalAlignment="Stretch"
+			<TextBlock Text="{Binding Path=Key}" HorizontalAlignment="Stretch"
 			  				TextTrimming="CharacterEllipsis"
 			  				FontFamily="Calibri" Foreground="#FFB8D9F2"
-			  				x:Name="_displayStatus" Margin="76.333,32.393,15,0" FontSize="12" VerticalAlignment="Top" Height="17"/>
+			  				x:Name="_displayKey" Margin="76.333,32.393,15,0" FontSize="12" VerticalAlignment="Top" Height="17"/>
 			<TextBlock HorizontalAlignment="Stretch"
 			  				FontFamily="Calibri" Foreground="#FFB97E7A"
 			  				x:Name="_subscription" Margin="76.333,46.893,15,60.367" FontSize="12" VerticalAlignment="Stretch" Height="Auto"
