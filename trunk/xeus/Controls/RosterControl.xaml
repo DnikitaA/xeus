@@ -52,7 +52,14 @@
           </Style>
         </GroupStyle.ContainerStyle>
         </GroupStyle>
-      </ListBox.GroupStyle>      
+      </ListBox.GroupStyle>  
+	<ListBox.ContextMenu>
+	    <ContextMenu>
+	      <MenuItem
+	        Header="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},
+	              Path=PlacementTarget.SelectedIndex}"/>
+	    </ContextMenu>
+	</ListBox.ContextMenu>	      
     </ListBox>
   </DockPanel>
 </UserControl>
