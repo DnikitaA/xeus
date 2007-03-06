@@ -22,7 +22,12 @@ namespace xeus.Core
 			_name = name ;
 			_jid = jid ;
 
-			_isRegistered = ( Client.Instance.Roster.FindItem( jid.Bare ) != null ) ;
+			RefreshStatus() ;
+		}
+
+		public void RefreshStatus()
+		{
+			_isRegistered = ( Client.Instance.Roster.FindItem( _jid.Bare ) != null ) ;
 		}
 
 		public string Name
@@ -75,6 +80,12 @@ namespace xeus.Core
 			get
 			{
 				return _isRegistered ;
+			}
+
+			set
+			{
+				_isRegistered = value ;
+				NotifyPropertyChanged( "IsRegistered" );
 			}
 		}
 

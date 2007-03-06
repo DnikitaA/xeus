@@ -199,7 +199,7 @@ namespace xeus.Controls
 					RosterItem selectedItem = tabItemSelected.Content as RosterItem ;
 
 					if ( rosterItem != null && selectedItem != null
-					     && selectedItem.Key == rosterItem.Key )
+					     && string.Compare( selectedItem.Key, rosterItem.Key, true ) == 0 )
 					{
 						rosterItem.HasUnreadMessages = false ;
 					}
@@ -281,28 +281,6 @@ namespace xeus.Controls
 				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
 				                                  new ScrollToLastItemCallback( ScrollToLastItem ), listBox ) ;
 			}
-		}
-
-		public static Visual EnumVisual< T >( Visual myVisual )
-		{
-			for ( int i = 0; i < VisualTreeHelper.GetChildrenCount( myVisual ); i++ )
-			{
-				Visual childVisual = ( Visual ) VisualTreeHelper.GetChild( myVisual, i ) ;
-
-				if ( childVisual is T )
-				{
-					return childVisual ;
-				}
-
-				Visual control = EnumVisual< T >( childVisual ) ;
-
-				if ( control != null )
-				{
-					return control ;
-				}
-			}
-
-			return null ;
 		}
 
 		public static void DisplayChatWindow( string activateJid, bool activate )

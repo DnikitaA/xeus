@@ -145,7 +145,15 @@ namespace xeus.Controls
 
 		void OnKeyDown( object sender, KeyEventArgs e )
 		{
-			if ( e.Key == Key.Return )
+			if ( e.Key == Key.Delete )
+			{
+				RosterItem rosterItem = _roster.SelectedItem as RosterItem ;
+				if ( rosterItem != null )
+				{
+					Client.Instance.Roster.DeleteRosterItem( rosterItem ) ;
+				}
+			}
+			else if ( e.Key == Key.Return )
 			{
 				RosterItem rosterItem = _roster.SelectedItem as RosterItem ;
 				OpenMessageWindow( rosterItem ) ;

@@ -275,15 +275,45 @@ namespace xeus.Core
 			Log( "Server disco finished" ) ;
 		}
 
+		void OnUnregisterService(object sender, IQ iq, object data)
+		{
+			RegisterIq registerIq = ( RegisterIq ) data ;
 
+			ServiceItem serviceItem = _services.FindItem( registerIq.To.Bare ) ;
 
-		public void registerService( Jid jid, string userName, string password )
+			if ( serviceItem != null )
+			{
+				serviceItem.IsRegistered = true ;
+			}
+		}
+
+		void OnRegisterService(object sender, IQ iq, object data)
+		{
+			RegisterIq registerIq = ( RegisterIq ) data ;
+
+			ServiceItem serviceItem = _services.FindItem( registerIq.To.Bare ) ;
+
+			if ( serviceItem != null )
+			{
+				serviceItem.IsRegistered = true ;
+			}
+		}
+
+		public void UnregisterService( Jid jid )
+		{
+			RegisterIq registerIq = new RegisterIq( IqType.get, jid );
+			registerIq.Query.AddTag( "remove" ) ;
+
+			_xmppConnection.IqGrabber.SendIq( registerIq, OnUnregisterService, registerIq );
+		}
+
+		public void RegisterService( Jid jid, string userName, string password )
 		{
 			RegisterIq registerIq = new RegisterIq( IqType.set, jid );
 			registerIq.Query.Username = userName ;
 			registerIq.Query.Password = password ;
 
-			_xmppConnection.IqGrabber.SendIq( registerIq );
+			_xmppConnection.IqGrabber.SendIq( registerIq, OnRegisterService, registerIq );
 		}
 
 		public void DiscoRequest( ServiceItem serviceItem )

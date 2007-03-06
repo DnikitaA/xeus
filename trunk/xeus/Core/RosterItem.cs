@@ -239,13 +239,13 @@ namespace xeus.Core
 			{
 				string group ;
 
-				if ( _rosterItem == null || _presence == null || _presence.Type == PresenceType.unavailable )
+				if ( IsService )
 				{
-					group = "<offline>" ;
+					group = " Services" ;
 				}
-				else if ( IsService )
+				else if ( _rosterItem == null || _presence == null || _presence.Type == PresenceType.unavailable )
 				{
-					group = "<services>" ;
+					group = " Offline" ;
 				}
 				else if ( _rosterItem.GetGroups().Count > 0 )
 				{
@@ -254,7 +254,7 @@ namespace xeus.Core
 				}
 				else
 				{
-					group = "<none>" ;
+					group = " Ungrouped" ;
 				}
 
 				return group ;

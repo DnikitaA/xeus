@@ -74,7 +74,7 @@ namespace xeus.Core
 			{
 				foreach ( RosterItem rosterItem in _items )
 				{
-					if ( rosterItem.Key == bare )
+					if ( string.Compare( rosterItem.Key, bare, true ) == 0 )
 					{
 						return rosterItem ;
 					}
@@ -223,6 +223,11 @@ namespace xeus.Core
 
 		public void DeleteRosterItem( RosterItem rosterItem )
 		{
+			if ( rosterItem.IsService )
+			{
+				Client.Instance.UnregisterService( new Jid( rosterItem.Key ) );
+			}
+
 			Client.Instance.RosterManager.RemoveRosterItem( new Jid( rosterItem.Key ) ) ;
 		}
 	}

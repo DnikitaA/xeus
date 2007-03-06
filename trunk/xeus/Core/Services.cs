@@ -49,15 +49,30 @@ namespace xeus.Core
 			return filteredServices ;
 		}
 
-		void OnRegistered( object sender, agsXMPP.protocol.client.IQ iq, object data )
+		public ServiceItem FindItem( string bare )
 		{
-			
+			lock ( this )
+			{
+				foreach ( ServiceItem item in _items )
+				{
+					if ( string.Compare( item.Jid.Bare, bare, true ) == 0 )
+					{
+						return item ;
+					}
+				}
+			}
+
+			return null ;
 		}
 
+		public void UnregisterService( ServiceItem service )
+		{
+			Client.Instance.UnregisterService( service.Jid );
+		}
 
 		public void RegisterService( ServiceItem service, string name, string password )
 		{
-			Client.Instance.registerService( service.Jid, name, password );
+			Client.Instance.RegisterService( service.Jid, name, password );
 		}
 	}
 }

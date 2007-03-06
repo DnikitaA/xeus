@@ -668,58 +668,31 @@
 </ControlTemplate>
 
 <ControlTemplate x:Key="AButton" TargetType="{x:Type Button}">
-<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" >
-	<Grid x:Name="grid">
-	<Rectangle StrokeThickness="1" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0" x:Name="_circleBack" Fill="{TemplateBinding Property=Background}" RadiusX="2" RadiusY="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-		<Rectangle.BitmapEffect>
-			<DropShadowBitmapEffect Opacity="0.815" ShadowDepth="1" Softness="0.17"/>
-		</Rectangle.BitmapEffect>
-	</Rectangle>
-	<Rectangle Stroke="#FF9A9A9A" StrokeThickness="1" Margin="0,0,0,0" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0" x:Name="_circle" Opacity="0.65" RadiusX="2" RadiusY="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-		<Rectangle.Fill>
-			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-				<GradientStop Color="White" Offset="0"/>
-				<GradientStop Color="#FF000000" Offset="1"/>
-			</LinearGradientBrush>
-		</Rectangle.Fill>
-		<Rectangle.OpacityMask>
-			<RadialGradientBrush>
-				<GradientStop Color="#DD000000" Offset="0.73"/>
-				<GradientStop Color="#9AFFFFFF" Offset="1"/>
-			</RadialGradientBrush>
-		</Rectangle.OpacityMask>
-	</Rectangle>
-	<ContentPresenter Margin="5,2,5,4" HorizontalAlignment="Center"/>
-		<Path Opacity="0.65" Fill="#19000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Stretch" Margin="0,0,0,0" x:Name="_circle1" VerticalAlignment="Bottom" Height="4.13" Data="F1 M19.330999,13 C26.006199,13 32.367737,13.229283 38.16,13.646648 L38.16,14.13 C38.16,15.23457 37.264568,16.129999 36.16,16.129999 L2.4999995,16.129999 C1.3954304,16.129999 0.5,15.23457 0.50000072,14.13 L0.50000072,13.646754 C6.2928023,13.229336 12.655034,13 19.330999,13 z" Canvas.Left="0" Canvas.Top="0"/>
-		<Path Fill="#33FFFFFF" Stretch="Fill" Margin="0.5,0.5,0.5,0" VerticalAlignment="Top" Height="5.63" Data="F1 M31.871,11.000001 L65.530998,11.000001 C66.635567,11 67.530998,11.895431 67.530998,12.999999 L67.530998,15.983351 C61.738735,16.400715 55.377197,16.629999 48.702,16.629999 C42.026035,16.629999 35.663803,16.400663 29.871,15.983244 L29.871,12.999999 C29.871,11.895431 30.76643,11 31.871,11.000001 z"/>
+<Border 
+	x:Name="_border"
+	BorderThickness="1,1,1,1" 
+	CornerRadius="3,3,3,3" SnapsToDevicePixels="False" BorderBrush="#FF515151" Padding="1,1,1,2" >
+		<Border.Background>
+			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+				<GradientStop Color="#FF696969" Offset="0"/>
+			<GradientStop Color="#FF3E3E3E" Offset="0.981"/>
+		</LinearGradientBrush>
+		</Border.Background>
+	<Border.BitmapEffect>
+		<DropShadowBitmapEffect Direction="312" Opacity="0.625" ShadowDepth="3" Softness="0.46"/>
+	</Border.BitmapEffect>
+	<Grid>
+	<Rectangle VerticalAlignment="Stretch" RadiusX="3" RadiusY="3"
+		Fill="{TemplateBinding Property=Background}"/>
+	<Rectangle Fill="#7FE1E1E1" VerticalAlignment="Top" Height="11" RadiusX="3" RadiusY="3"/>
+	<ContentPresenter Margin="5,2,5,4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 	</Grid>
-</Viewbox>
+</Border>
+
 	<ControlTemplate.Triggers>
-		<Trigger Property="Visibility" Value="Visible">
-			<Trigger.EnterActions>
-				<BeginStoryboard Storyboard="{StaticResource PumpStatus}"/>
-			</Trigger.EnterActions>
-		</Trigger>
-	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
-	  	<Setter Property="Stroke" TargetName="_circle" Value="#FF616161"/>
-	  	<Setter Property="Fill" TargetName="_circle">
-	  		<Setter.Value>
-	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-	  				<GradientStop Color="#FFFFFFFF" Offset="0"/>
-	  				<GradientStop Color="#FF383838" Offset="1"/>
-	  			</LinearGradientBrush>
-	  		</Setter.Value>
-	  	</Setter>
-	  	<Setter Property="BitmapEffect" TargetName="_circle">
-	  		<Setter.Value>
-	  			<OuterGlowBitmapEffect GlowColor="#FFFFFFFF" GlowSize="1" Opacity="0.3"/>
-	  		</Setter.Value>
-	  	</Setter>
-	  </Trigger>
+	  <Trigger Property="Ellipse.IsMouseOver" Value="True"/>
 		<Trigger Property="IsPressed" Value="True">
-			<Setter Property="RenderTransform" TargetName="grid">
+			<Setter Property="RenderTransform" TargetName="_border">
 				<Setter.Value>
 					<TransformGroup>
 						<ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
