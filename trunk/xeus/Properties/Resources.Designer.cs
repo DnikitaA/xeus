@@ -66,5 +66,12 @@ namespace xeus.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap ximple {
+            get {
+                object obj = ResourceManager.GetObject("ximple", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
