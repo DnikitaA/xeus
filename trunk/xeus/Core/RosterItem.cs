@@ -42,6 +42,7 @@ namespace xeus.Core
 		private BitmapImage _image ;
 		private bool _hasVCardRecivied = false ;
 		private bool _hasUnreadMessages = false ;
+		private bool _messagesPreloaded = false ;
 
 		private string _lastMessageFrom = "No message sent" ;
 		private string _lastMessageTo = "No message recieved" ;
@@ -667,6 +668,26 @@ namespace xeus.Core
 			get
 			{
 				return ( _rosterItem != null && _rosterItem.Jid.User == null ) ;
+			}
+		}
+
+		public bool IsServiceRegistered
+		{
+			get
+			{
+				return ( _rosterItem != null && _rosterItem.Jid.Resource == "registered" ) ;
+			}
+		}
+
+		public bool MessagesPreloaded
+		{
+			get
+			{
+				return _messagesPreloaded ;
+			}
+			set
+			{
+				_messagesPreloaded = value ;
 			}
 		}
 

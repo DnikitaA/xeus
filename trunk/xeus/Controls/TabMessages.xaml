@@ -2,43 +2,33 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
 	xmlns:local="clr-namespace:xeus.Core"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:prop="clr-namespace:xeus.Properties"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
   x:Class="xeus.Controls.TabMessages">
 	<!-- Resource dictionary entries should be defined here. -->
 
 	<DataTemplate x:Key="RosterItemMessagesTemplate" DataType="{x:Type local:RosterItem}">
 	<Grid>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*" />
-      </Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="0.278*"/>
-			<RowDefinition Height="0.722*"/>
-		</Grid.RowDefinitions>
+	<DockPanel>
+        <TextBox VerticalAlignment="Stretch" Height="Auto" Grid.Row="1" Style="{DynamicResource TextBoxStyleBlack}" TextWrapping="Wrap"
+                   Initialized="TextBoxInitialized" x:Name="textBox" Background="#07FFFFFF" KeyDown="OnTextKeyDown" AcceptsReturn="True" AutoWordSelection="True" Text="" SpellCheck.IsEnabled="True" MaxLength="1200" MaxLines="300" MinLines="1" DockPanel.Dock="Bottom" />
     <ListBox
       Initialized="ListBoxInitialized"
 			ItemsSource="{Binding Path=Messages}"
 			ItemTemplate="{StaticResource ChatMessageItem}" Style="{DynamicResource ListBoxStyleMessages}"
              BorderThickness="1,1,1,1" VerticalContentAlignment="Stretch" ScrollViewer.CanContentScroll="False"
              ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="#00FFFFFF"
-             x:Name="_listMessages" HorizontalAlignment="Stretch" Margin="0,0,0,4"/>		
-      	<GridSplitter ResizeDirection="Rows"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Bottom" BorderThickness="1,1,1,1" Style="{DynamicResource GridSplitterStyle}"/>
-	        <TextBox VerticalAlignment="Stretch" Height="Auto" Grid.Row="1" Style="{DynamicResource TextBoxStyleBlack}" TextWrapping="Wrap"
-                   Initialized="TextBoxInitialized" x:Name="textBox" Background="#07FFFFFF" KeyDown="OnTextKeyDown" AcceptsReturn="True" AutoWordSelection="True" Text="" SpellCheck.IsEnabled="True" />
-		<Grid d:IsLayer="True" x:Name="Layer" Grid.ColumnSpan="1" Grid.RowSpan="2">
-			<Button Height="30" Content="Button" HorizontalAlignment="Right" Margin="0,0,5,5" 
-				VerticalAlignment="Bottom" Width="30" Template="{DynamicResource SendIcon}" Click="OnSendClick" x:Name="button" ToolTip="Send Message (Ctrl+Enter)"/>
-		</Grid>
-    </Grid>	
+             x:Name="_listMessages" HorizontalAlignment="Stretch" Margin="0,0,0,4" MinHeight="100" DockPanel.Dock="Top"/>		
+    </DockPanel>	
+	<Button Height="30" Content="Button" HorizontalAlignment="Right" Margin="0,0,5,5" 
+			VerticalAlignment="Bottom" Width="30" Template="{DynamicResource SendIcon}" Click="OnSendClick" x:Name="button" ToolTip="Send Message (Ctrl+Enter)"/>
+	</Grid>
 		<DataTemplate.Triggers>
 			<Trigger Property="Text" SourceName="textBox" Value="">
 				<Setter Property="Visibility" TargetName="button" Value="Hidden"/>
 			</Trigger>
 		</DataTemplate.Triggers>	
 	</DataTemplate>
-
 	
 	<Style x:Key="ListBoxStyleMessages" TargetType="{x:Type ListBox}">
 		<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>

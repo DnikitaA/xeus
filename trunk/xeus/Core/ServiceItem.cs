@@ -27,7 +27,9 @@ namespace xeus.Core
 
 		public void RefreshStatus()
 		{
-			_isRegistered = ( Client.Instance.Roster.FindItem( _jid.Bare ) != null ) ;
+			RosterItem rosterItem = Client.Instance.Roster.FindItem( _jid.Bare ) ;
+			
+			_isRegistered = ( rosterItem != null && rosterItem.IsServiceRegistered ) ;
 		}
 
 		public string Name

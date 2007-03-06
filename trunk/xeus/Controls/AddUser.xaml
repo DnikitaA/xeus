@@ -15,6 +15,8 @@
 
     <Label HorizontalAlignment="Left" Margin="8,40,0,0" VerticalAlignment="Top" Content="User Name" Foreground="#FF828282"/>
 
+    <Label HorizontalAlignment="Left" Margin="8,11.37,0,0" VerticalAlignment="Top" Content="Add new User" Foreground="#FF828282"/>
+
     <Button HorizontalAlignment="Left" Margin="29.6,0,0,16" Width="63.867" Content="Ok"
     Background="#FF3980A9" Template="{DynamicResource AButton}" IsDefault="True"
     Click="Ok" Foreground="#FFF2F2F2" VerticalAlignment="Bottom" Height="26"/>
