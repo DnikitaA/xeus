@@ -34,11 +34,39 @@ namespace xeus.Controls
 			InitializeComponent() ;
 
 			_tabs.SelectionChanged += new SelectionChangedEventHandler( _tabs_SelectionChanged ) ;
+			_tabs.MouseDoubleClick += new MouseButtonEventHandler( _tabs_MouseDoubleClick );
 			_listRefreshTimer.Elapsed += new ElapsedEventHandler( _listRefreshTimer_Elapsed ) ;
 			_timeRefreshTimer.Elapsed += new ElapsedEventHandler( _timeRefreshTimer_Elapsed ) ;
 
 			_listRefreshTimer.AutoReset = false ;
 			_listRefreshTimer.Start() ;
+
+			KeyDown += new KeyEventHandler( MessageWindow_KeyDown );
+		}
+
+		void MessageWindow_KeyDown( object sender, KeyEventArgs e )
+		{
+			if ( e.Key == Key.Escape )
+			{
+				_instance.RemoveCurrentTab();
+			}
+		}
+
+		void RemoveCurrentTab()
+		{
+			TabItem selectedItem = ( TabItem ) _instance._tabs.SelectedItem ;
+
+			_tabs.Items.Remove( selectedItem );
+
+			if ( _tabs.Items.Count == 0 )
+			{
+				CloseWindow() ;
+			}
+		}
+
+		void _tabs_MouseDoubleClick( object sender, MouseButtonEventArgs e )
+		{
+			RemoveCurrentTab() ;
 		}
 
 		private void _timeRefreshTimer_Elapsed( object sender, ElapsedEventArgs e )
@@ -105,23 +133,32 @@ namespace xeus.Controls
 		private void _tabs_SelectionChanged( object sender, SelectionChangedEventArgs e )
 		{
 			TabItem selectedItem = ( TabItem ) _tabs.SelectedItem ;
-			RosterItem rosterItem = selectedItem.Content as RosterItem ;
 
-			if ( rosterItem != null )
+			if ( selectedItem != null )
 			{
-				if ( rosterItem.Messages.Count == 0 )
+				RosterItem rosterItem = selectedItem.Content as RosterItem ;
+
+				if ( rosterItem != null )
 				{
-					Database database =  new Database();
-
-					List< ChatMessage > messages = database.ReadMessages( rosterItem ) ;
-
-					foreach ( ChatMessage message in messages )
+					if ( !rosterItem.MessagesPreloaded )
 					{
-						rosterItem.Messages.Add( message ) ;
-					}
-				}
+						Database database = new Database() ;
 
-				rosterItem.HasUnreadMessages = false ;
+						List< ChatMessage > messages = database.ReadMessages( rosterItem ) ;
+
+						int i = 0 ;
+
+						foreach ( ChatMessage chatMessage in messages )
+						{
+							rosterItem.Messages.Insert( i, chatMessage ) ;
+							i++ ;
+						}
+
+						rosterItem.MessagesPreloaded = true ;
+					}
+
+					rosterItem.HasUnreadMessages = false ;
+				}
 			}
 		}
 

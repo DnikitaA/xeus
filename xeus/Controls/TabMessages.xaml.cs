@@ -27,6 +27,5 @@ namespace xeus.Controls
 		{
 			MessageWindow.MessageListBox = sender as ListBox ;
 		}
-
 	}
 }

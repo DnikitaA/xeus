@@ -79,5 +79,17 @@ namespace xeus.Properties {
                 this["UI_RosterSlider"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public int UI_MessageSplitter {
+            get {
+                return ((int)(this["UI_MessageSplitter"]));
+            }
+            set {
+                this["UI_MessageSplitter"] = value;
+            }
+        }
     }
 }
