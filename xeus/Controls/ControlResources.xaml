@@ -7,6 +7,36 @@
     x:Class="xeus.Controls.ControlResource"
     >
    
+<SolidColorBrush x:Key="WindowBackgroundBrush" Color="#FFF" />
+<SolidColorBrush x:Key="SolidBorderBrush" Color="#888" />
+   
+<Style TargetType="ContextMenu">
+  <Setter Property="SnapsToDevicePixels" Value="True"/>
+  <Setter Property="OverridesDefaultStyle" Value="True"/>
+  <Setter Property="Grid.IsSharedSizeScope" Value="true"/>
+  <!--Setter Property="HasDropShadow" Value="True"/-->
+  <Setter Property="Template">
+    <Setter.Value>
+      <ControlTemplate TargetType="ContextMenu">
+        <Border 
+          Name="Border"
+          Background="{StaticResource WindowBackgroundBrush}"
+          BorderBrush="{StaticResource SolidBorderBrush}"
+          BorderThickness="1" >
+          <StackPanel IsItemsHost="True"
+                      KeyboardNavigation.DirectionalNavigation="Cycle"/>
+        </Border>
+        <ControlTemplate.Triggers>
+          <Trigger Property="HasDropShadow" Value="true">
+            <Setter TargetName="Border" Property="Padding" Value="0,3,0,3"/>
+            <Setter TargetName="Border" Property="CornerRadius" Value="4"/>
+          </Trigger>
+        </ControlTemplate.Triggers>
+      </ControlTemplate>
+    </Setter.Value>
+  </Setter>
+</Style>
+   
  <!-- roster -->
   <CollectionViewSource x:Key="_rosterView" Source="{Binding Path=Roster.Items}">
     <CollectionViewSource.SortDescriptions>
