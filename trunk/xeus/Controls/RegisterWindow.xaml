@@ -10,10 +10,11 @@
     settings:WindowSettings.Save="False"
 	Style="{StaticResource DarkStyleWindow}"
     x:Name="services"
-	Background="{x:Null}" ResizeMode="NoResize" ShowInTaskbar="False" >	
+	Background="{x:Null}" ResizeMode="NoResize" >	
     <Grid>
         
-    	<TextBox d:LayoutOverrides="HorizontalAlignment" HorizontalAlignment="Left" Margin="8,68.63,0,0" x:Name="_userName" Style="{DynamicResource TextBoxStyleInDialog}" VerticalAlignment="Top" Width="192" Template="{DynamicResource TextBoxBaseTemplateDialog}" MaxLength="150" TextWrapping="Wrap"/>
+    	<TextBox d:LayoutOverrides="HorizontalAlignment" HorizontalAlignment="Left" Margin="8,68.63,0,0" x:Name="_userName" Style="{DynamicResource TextBoxStyleInDialog}" VerticalAlignment="Top" Width="192" Template="{DynamicResource TextBoxBaseTemplateDialog}" MaxLength="150" TextWrapping="Wrap" MaxLines="1">
+		</TextBox>
     	<PasswordBox Margin="8,0,8,78" x:Name="_password" MaxLength="150" Background="#FF282828" Template="{DynamicResource PasswordBoxControlTemplate}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="22" />
     	<Label HorizontalAlignment="Left" Margin="8,40,0,0" VerticalAlignment="Top" Content="User Name" Foreground="#FF828282"/>
     	<Label HorizontalAlignment="Left" Margin="8,8,0,0" VerticalAlignment="Top" Content="Register service" Foreground="#FF828282" x:Name="_title"/>
@@ -21,8 +22,10 @@
         
     	<Button HorizontalAlignment="Left" Margin="29.6,0,0,32" Width="63.867" Content="Ok" 
 			Background="#FF3980A9" Template="{DynamicResource AButton}" IsDefault="True"
-			Click="Ok" Foreground="#FFF2F2F2" VerticalAlignment="Bottom" Height="26"/>
+			Click="Ok" Foreground="#FFF2F2F2" VerticalAlignment="Bottom" Height="26" x:Name="_ok"/>
+			
     	<Button Margin="0,0,32.133,32" Content="Cancel" Background="#FF5D97B9" Template="{DynamicResource AButton}" IsCancel="True" IsDefault="False" Foreground="#FFF2F2F2" d:LayoutOverrides="Margin" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="63.867" Height="26"/>
         
     </Grid>
+	
 </win:WindowBase>

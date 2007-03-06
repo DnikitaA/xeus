@@ -19,7 +19,7 @@ namespace xeus.Controls
 	{
 		private static ServicesWindow _instance ;
 
-		private delegate void DisplayServicesCallback() ;
+		private delegate void DisplayCallback() ;
 
 		public ServicesWindow()
 		{
@@ -84,7 +84,7 @@ namespace xeus.Controls
 			else
 			{
 				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
-				                                  new DisplayServicesCallback( DisplayServices ) ) ;
+				                                  new DisplayCallback( DisplayServices ) ) ;
 			}
 		}
 	}

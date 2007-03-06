@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
+    <Page Include="Controls\AddUser.xaml" />
     <Page Include="Controls\ControlResources.xaml" />
     <Page Include="Controls\DialogBox.xaml" />
     <Page Include="Controls\InlineSearch.xaml" />
@@ -99,6 +100,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\AddUser.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>AddUser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DialogBox.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>DialogBox.xaml</DependentUpon>

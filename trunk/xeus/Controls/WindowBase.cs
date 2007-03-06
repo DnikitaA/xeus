@@ -8,17 +8,5 @@ namespace xeus.Controls
 	/// </summary>
 	public partial class WindowBase : Window
 	{
-		protected override void OnMouseLeftButtonDown( MouseButtonEventArgs e )
-		{
-			base.OnMouseLeftButtonDown( e ) ;
-
-			try
-			{
-				DragMove() ;
-			}
-
-			catch
-			{}
-		}
 	}
 }

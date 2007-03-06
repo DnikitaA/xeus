@@ -1,8 +1,9 @@
+using System ;
 using System.Collections.Generic;
 using System.Collections.ObjectModel ;
-using agsXMPP ;
 using agsXMPP.protocol.iq.disco ;
 using agsXMPP.protocol.iq.register ;
+using Uri=agsXMPP.Uri;
 
 namespace xeus.Core
 {

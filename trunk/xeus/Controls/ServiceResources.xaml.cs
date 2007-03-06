@@ -16,7 +16,6 @@ namespace xeus.Controls
 			{
 				RegisterWindow registerWindow = new RegisterWindow() ;
 
-				//registerWindow.Owner = App.Instance.Window ;
 				registerWindow.ShowDialog() ;
 
 				if ( registerWindow.DialogResult.HasValue && registerWindow.DialogResult.Value )

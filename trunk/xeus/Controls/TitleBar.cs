@@ -2,6 +2,7 @@ using System.Windows ;
 using System.Windows.Controls ;
 using System.Windows.Input ;
 using System.Windows.Media ;
+using System.Windows.Shapes ;
 
 namespace xeus.Controls
 {
@@ -66,6 +67,38 @@ namespace xeus.Controls
 			closeButton.Click += new RoutedEventHandler( CloseButton_Click ) ;
 			minButton.Click += new RoutedEventHandler( MinButton_Click ) ;
 			maxButton.Click += new RoutedEventHandler( MaxButton_Click ) ;
+
+			Window window = TemplatedParent as Window ;
+
+			if ( window.ResizeMode == ResizeMode.NoResize )
+			{
+				minButton.Visibility = Visibility.Hidden ;
+				maxButton.Visibility = Visibility.Hidden ;
+
+				Line line = ( Line ) window.Template.FindName( "lnSizeNorth", window ) ;
+				line.Visibility = Visibility.Hidden ;
+
+				line = ( Line ) window.Template.FindName( "lnSizeSouth", window ) ;
+				line.Visibility = Visibility.Hidden ;
+
+				line = ( Line ) window.Template.FindName( "lnSizeWest", window ) ;
+				line.Visibility = Visibility.Hidden ;
+
+				line = ( Line ) window.Template.FindName( "lnSizeEast", window ) ;
+				line.Visibility = Visibility.Hidden ;
+
+				Rectangle rectangle = ( Rectangle ) window.Template.FindName( "rectSizeNorthWest", window ) ;
+				rectangle.Visibility = Visibility.Hidden ;
+			
+				rectangle = ( Rectangle ) window.Template.FindName( "rectSizeNorthEast", window ) ;
+				rectangle.Visibility = Visibility.Hidden ;
+
+				rectangle = ( Rectangle ) window.Template.FindName( "rectSizeSouthWest", window ) ;
+				rectangle.Visibility = Visibility.Hidden ;
+
+				rectangle = ( Rectangle ) window.Template.FindName( "rectSizeSouthEast", window ) ;
+				rectangle.Visibility = Visibility.Hidden ;
+			}
 		}
 
 
