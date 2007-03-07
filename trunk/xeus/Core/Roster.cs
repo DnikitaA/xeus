@@ -33,19 +33,22 @@ namespace xeus.Core
 
 		public void ReadRosterFromDb()
 		{
-			_reloadTime.AutoReset = false ;
+			_reloadTime.AutoReset = false;
 			_reloadTime.Elapsed += new ElapsedEventHandler( _reloadTime_Elapsed );
 
-			Database database =  new Database();
+			Database database = new Database();
 
-			List< RosterItem > dbRosterItems = database.ReadRosterItems() ;
+			List<RosterItem> dbRosterItems = database.ReadRosterItems();
 
 			foreach ( RosterItem item in dbRosterItems )
 			{
-				Vcard vcard = Storage.GetVcard( item.Key ) ;
-				item.SetVcard( vcard ) ;
+				Vcard vcard = Storage.GetVcard( item.Key );
+				item.SetVcard( vcard );
 
-				_items.Add( item ) ;
+				lock ( _items )
+				{
+					_items.Add( item );
+				}
 			}
 		}
 

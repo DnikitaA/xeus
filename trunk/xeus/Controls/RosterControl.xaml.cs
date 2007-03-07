@@ -1,8 +1,8 @@
 using System ;
 using System.Collections ;
+using System.Collections.Generic ;
 using System.Collections.Specialized ;
 using System.ComponentModel ;
-using System.Threading ;
 using System.Windows ;
 using System.Windows.Controls ;
 using System.Windows.Data ;
@@ -22,7 +22,7 @@ namespace xeus.Controls
 
 		private ICollectionView _rosterView ;
 		private InlineSearch _inlineSearch ;
-		InlineMethod _inlineMethod = new InlineMethod();
+		private InlineMethod _inlineMethod = new InlineMethod() ;
 
 		private delegate void SelectItemCallback( RosterItem item ) ;
 
@@ -38,14 +38,14 @@ namespace xeus.Controls
 			_roster.ItemTemplate = _rosterItemSmall ;
 
 			_sliderItemSize.ValueChanged += new RoutedPropertyChangedEventHandler< double >( _sliderItemSize_ValueChanged ) ;
-			_inlineMethod.Finished += new InlineMethod.InlineResultHandler( _inlineMethod_Finished );
+			_inlineMethod.Finished += new InlineMethod.InlineResultHandler( _inlineMethod_Finished ) ;
 
-			_roster.SelectionChanged += new SelectionChangedEventHandler( _roster_SelectionChanged );
+			_roster.SelectionChanged += new SelectionChangedEventHandler( _roster_SelectionChanged ) ;
 
 			Client.Instance.Roster.ReadRosterFromDb() ;
 		}
 
-		void _roster_SelectionChanged( object sender, SelectionChangedEventArgs e )
+		private void _roster_SelectionChanged( object sender, SelectionChangedEventArgs e )
 		{
 			/*ListBoxItem item = _roster.ItemContainerGenerator.ContainerFromIndex( _roster.SelectedIndex ) as ListBoxItem;
 			foreach ( object o in _roster.ItemsSource )
@@ -54,17 +54,17 @@ namespace xeus.Controls
 			}*/
 		}
 
-		void _inlineSearch_Closed( bool isEnter )
+		private void _inlineSearch_Closed( bool isEnter )
 		{
 			_roster.Focus() ;
 
-			if ( isEnter )
+			lock ( _displayNamesLock )
 			{
-				
+				_displayNames = null ;
 			}
 		}
 
-		void _inlineMethod_Finished( object result )
+		private void _inlineMethod_Finished( object result )
 		{
 			RosterItem rosterItem = ( RosterItem ) result ;
 			SelectItem( rosterItem ) ;
@@ -81,8 +81,8 @@ namespace xeus.Controls
 				else
 				{
 					_roster.SelectedItem = item ;
-					
-					_roster.ScrollIntoView( item );
+
+					_roster.ScrollIntoView( item ) ;
 					_inlineSearch.NotFound = false ;
 				}
 			}
@@ -107,30 +107,48 @@ namespace xeus.Controls
 					_inlineSearch.Closed -= _inlineSearch_Closed ;
 				}
 				_inlineSearch = value ;
-				_inlineSearch.TextChanged += new TextChangedEventHandler(_inlineSearch_TextChanged);
-				_inlineSearch.Closed += new InlineSearch.ClosedHandler( _inlineSearch_Closed );
+				_inlineSearch.TextChanged += new TextChangedEventHandler( _inlineSearch_TextChanged ) ;
+				_inlineSearch.Closed += new InlineSearch.ClosedHandler( _inlineSearch_Closed ) ;
 			}
 		}
 
-		object SearchInList( ref bool stop, object param )
-		{
-			RosterItem found = null ;
+		object _displayNamesLock = new object();
+		private List< KeyValuePair< string, RosterItem > > _displayNames = null ;
 
-			foreach ( RosterItem rosterItem in Client.Instance.Roster.Items )
+		private object SearchInList( ref bool stop, object param )
+		{
+			lock ( _displayNamesLock )
+			{
+				if ( _displayNames == null )
+				{
+					_displayNames = new List< KeyValuePair< string, RosterItem > >() ;
+
+					foreach ( RosterItem rosterItem in Client.Instance.Roster.Items )
+					{
+						_displayNames.Add( new KeyValuePair< string, RosterItem >( rosterItem.DisplayName.ToUpper().Trim(), rosterItem ) ) ;
+					}
+				}
+			}
+
+			RosterItem found = null ;
+			
+			string toFound = ( ( string ) param ).ToUpper() ;
+
+			foreach ( KeyValuePair< string, RosterItem > displayName in _displayNames )
 			{
 				if ( stop )
 				{
 					return null ;
 				}
 
-				if ( ( ( string )param ) == String.Empty )
+				if ( ( ( string ) param ) == String.Empty )
 				{
 					return null ;
 				}
-				
-				if ( rosterItem.DisplayName.StartsWith( ( string )param, StringComparison.OrdinalIgnoreCase ) )
+
+				if ( displayName.Key.Contains( toFound ) )
 				{
-					found = rosterItem ;
+					found = displayName.Value ;
 					break ;
 				}
 			}
@@ -138,12 +156,12 @@ namespace xeus.Controls
 			return found ;
 		}
 
-		void _inlineSearch_TextChanged( object sender, TextChangedEventArgs e )
+		private void _inlineSearch_TextChanged( object sender, TextChangedEventArgs e )
 		{
-			_inlineMethod.Go( new InlineParam( SearchInList, _inlineSearch.Text ) );
+			_inlineMethod.Go( new InlineParam( SearchInList, _inlineSearch.Text ) ) ;
 		}
 
-		void OnKeyDown( object sender, KeyEventArgs e )
+		private void OnKeyDown( object sender, KeyEventArgs e )
 		{
 			if ( e.Key == Key.Delete )
 			{
@@ -193,7 +211,7 @@ namespace xeus.Controls
 
 						//_rosterView.Refresh() ;
 						Client.Instance.Roster.Items.Remove( ( RosterItem ) sender ) ;
-						Client.Instance.Roster.Items.Add( ( RosterItem ) sender );
+						Client.Instance.Roster.Items.Add( ( RosterItem ) sender ) ;
 						break ;
 					}
 			}
