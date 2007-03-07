@@ -143,11 +143,6 @@ namespace xeus.Controls
 			_inlineMethod.Go( new InlineParam( SearchInList, _inlineSearch.Text ) );
 		}
 
-		void OnContextMenuOpen( object sender, RoutedEventArgs e )
-		{
-			
-		}
-
 		void OnKeyDown( object sender, KeyEventArgs e )
 		{
 			if ( e.Key == Key.Delete )

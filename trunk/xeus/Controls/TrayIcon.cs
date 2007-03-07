@@ -120,5 +120,10 @@ namespace xeus.Controls
 				_messageIconTrans.Dispose();
 			}
 		}
+
+		public void AlertInfo( string text )
+		{
+			_notifyIcon.ShowBalloonTip( 500, "Info", text, ToolTipIcon.Info ) ;			
+		}
 	}
 }
