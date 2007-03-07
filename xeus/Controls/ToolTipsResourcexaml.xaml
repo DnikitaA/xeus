@@ -37,6 +37,7 @@
 		<Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}"/>
 		<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"/>
 		<Setter Property="VerticalContentAlignment" Value="Center"/>
+		<Setter Property="HorizontalContentAlignment" Value="Center"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type ContextMenu}">
@@ -59,17 +60,6 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
-
-<!-- Fill Brushes-->
-
-<LinearGradientBrush x:Key="NormalBrush" StartPoint="0,0" EndPoint="0,1">
-  <GradientBrush.GradientStops>
-    <GradientStopCollection>
-      <GradientStop Color="#FFF" Offset="0.0"/>
-      <GradientStop Color="#CCC" Offset="1.0"/>
-    </GradientStopCollection>
-  </GradientBrush.GradientStops>
-</LinearGradientBrush>
 
 <LinearGradientBrush x:Key="HorizontalNormalBrush" StartPoint="0,0" EndPoint="1,0">
   <GradientBrush.GradientStops>
@@ -291,8 +281,7 @@
         Name="Check"  
         Width="13" Height="13" 
         Visibility="Collapsed"
-        Margin="6,0,6,0" 
-        Background="{StaticResource NormalBrush}"
+        Margin="6,0,6,0"
         BorderThickness="1"
         BorderBrush="{StaticResource NormalBorderBrush}">
         <Path 
@@ -400,9 +389,10 @@
     </Grid>
   </Border>
   <ControlTemplate.Triggers>
+  <!--
     <Trigger Property="Icon" Value="{x:Null}">
       <Setter TargetName="Icon" Property="Visibility" Value="Collapsed"/>
-    </Trigger>
+    </Trigger>-->
     <Trigger Property="IsHighlighted" Value="true">
     	<Setter Property="Background" TargetName="Border" Value="#FFFFFFFF"/>
     </Trigger>
@@ -441,37 +431,4 @@
   </Style.Triggers>
 </Style>
 
-<!--
-	<Style TargetType="{x:Type MenuItem}">
-		<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.MenuBrushKey}}"/>
-		<Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}"/>
-		<Setter Property="FontSize" Value="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}"/>
-		<Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}"/>
-		<Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}"/>
-		<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"/>
-		<Setter Property="VerticalContentAlignment" Value="Center"/>
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="{x:Type MenuItem}">
-					<Border SnapsToDevicePixels="True" BorderBrush="#FF7B7B7B" BorderThickness="2,2,2,2" CornerRadius="3,3,3,3" Padding="2,2,2,2">
-						<Border.OpacityMask>
-							<RadialGradientBrush>
-								<GradientStop Color="#FF000000" Offset="0"/>
-								<GradientStop Color="#B1FFFFFF" Offset="1"/>
-							</RadialGradientBrush>
-						</Border.OpacityMask>
-						<Border.Background>
-							<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-								<GradientStop Color="#FFBBD5EE" Offset="0"/>
-								<GradientStop Color="#FF95B2CD" Offset="1"/>
-							</LinearGradientBrush>
-						</Border.Background>
-						<ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-						<ContentPresenter/>
-					</Border>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
--->
 </ResourceDictionary>

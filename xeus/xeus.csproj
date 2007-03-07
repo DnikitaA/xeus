@@ -154,6 +154,7 @@
     <Compile Include="Core\PresenceTemplate.cs" />
     <Compile Include="Core\Roster.cs" />
     <Compile Include="Core\RosterItem.cs" />
+    <Compile Include="Core\RosterItemCommands.cs" />
     <Compile Include="Core\ServiceItem.cs" />
     <Compile Include="Core\Services.cs" />
     <Compile Include="Core\SizeFromSliderConverterSmall.cs" />

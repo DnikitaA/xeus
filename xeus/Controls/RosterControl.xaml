@@ -11,9 +11,9 @@
         <ResourceDictionary Source="ControlResources.xaml" />
       </ResourceDictionary.MergedDictionaries>
 	  
-	<ContextMenu x:Key="_rosterContextMenu" Opened="OnContextMenuOpen" StaysOpen="true">
+	<ContextMenu x:Key="_rosterItemContextMenu" Opened="OnContextMenuOpen" StaysOpen="true">
 	   <MenuItem Header="Authorization">
-	        <MenuItem Header="Request From"/>
+	      <MenuItem Header="Request From"  Command="local:RosterItemCommands.Add"/>
           <MenuItem Header="Resend To"/>
           <MenuItem Header="Remove From"/>
      </MenuItem>
@@ -38,7 +38,7 @@
              Style="{DynamicResource ListBoxStyleRoster}"
              MouseDoubleClick="OnDoubleClickRosterItem" AllowDrop="True" DockPanel.Dock="Top"
              Drop="RosterControl_Drop" DragOver="RosterControl_DragOver" KeyDown="OnKeyDown" 
-           	 PreviewMouseLeftButtonDown="RosterControl_PreviewMouseLeftButtonDown" Margin="0,0,0,10" FontSize="9" IsTextSearchEnabled="False" ContextMenu="{DynamicResource _rosterContextMenu}">
+           	 PreviewMouseLeftButtonDown="RosterControl_PreviewMouseLeftButtonDown" Margin="0,0,0,10" FontSize="9" IsTextSearchEnabled="False" >
       <ListBox.GroupStyle>
         <GroupStyle>
         <GroupStyle.ContainerStyle>
@@ -52,7 +52,7 @@
                         <TextBlock Text="{Binding Path=Name}"/>
                     </Expander.Header>
                     <Expander.Content>
-                      <ItemsPresenter/>
+                      <ItemsPresenter ContextMenu="{DynamicResource _rosterItemContextMenu}"/>
                     </Expander.Content>
                   </Expander>
                 </ControlTemplate>
