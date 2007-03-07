@@ -112,7 +112,7 @@ namespace xeus.Core
 						}
 						else
 						{
-							App.Instance.Window.Alert( string.Format( "Service {0} became unavailable", rosterItem.Key ) );
+							App.Instance.Window.AlertError( string.Format( "Service {0} became unavailable", rosterItem.Key ) );
 						}
 					}
 
@@ -140,6 +140,7 @@ namespace xeus.Core
 					}
 				case PresenceType.subscribed:
 					{
+						App.Instance.Window.AlertInfo( string.Format( "You were authorized by {0}.", pres.From ) );
 						break ;
 					}
 				case PresenceType.unsubscribe:
@@ -148,6 +149,7 @@ namespace xeus.Core
 					}
 				case PresenceType.unsubscribed:
 					{
+						App.Instance.Window.AlertInfo( string.Format( "{0} removed the authorization from you.", pres.From ) );
 						break ;
 					}
 				default:

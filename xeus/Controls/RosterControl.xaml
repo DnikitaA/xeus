@@ -10,15 +10,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ControlResources.xaml" />
       </ResourceDictionary.MergedDictionaries>
-	  
-	<ContextMenu x:Key="_rosterItemContextMenu" Opened="OnContextMenuOpen" StaysOpen="true">
-	   <MenuItem Header="Authorization">
-	      <MenuItem Header="Request From"  Command="local:RosterItemCommands.Add"/>
-          <MenuItem Header="Resend To"/>
-          <MenuItem Header="Remove From"/>
-     </MenuItem>
-	</ContextMenu>
-	  
+  
     </ResourceDictionary>
   </UserControl.Resources>
 
@@ -51,9 +43,7 @@
                     <Expander.Header>
                         <TextBlock Text="{Binding Path=Name}"/>
                     </Expander.Header>
-                    <Expander.Content>
-                      <ItemsPresenter ContextMenu="{DynamicResource _rosterItemContextMenu}"/>
-                    </Expander.Content>
+                  	<ItemsPresenter/>
                   </Expander>
                 </ControlTemplate>
               </Setter.Value>

@@ -85,9 +85,14 @@ namespace xeus
 			
 		}
 
-		public void Alert( string text )
+		public void AlertError( string text )
 		{
 			_trayIcon.AlertError( text ) ;
+		}
+
+		public void AlertInfo( string text )
+		{
+			_trayIcon.AlertInfo( text ) ;
 		}
 
 		protected override void OnInitialized( EventArgs e )

@@ -10,7 +10,17 @@
 <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#FFF" />
 <SolidColorBrush x:Key="SolidBorderBrush" Color="#888" />
    
-  
+<ContextMenu x:Key="_rosterItemContextMenu" StaysOpen="true">
+   <MenuItem Header="Authorization">
+	      <MenuItem Command="local:RosterItemCommands.AuthRequestFrom"
+	  				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},Path=DataContext}"/>
+          <MenuItem Command="local:RosterItemCommands.AuthSendTo"
+	  				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},Path=DataContext}"/>
+          <MenuItem Command="local:RosterItemCommands.AuthRemoveFrom"
+	  				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},Path=DataContext}"/>
+     </MenuItem>
+</ContextMenu>
+	  
  <!-- roster -->
   <CollectionViewSource x:Key="_rosterView" Source="{Binding Path=Roster.Items}">
     <CollectionViewSource.SortDescriptions>
@@ -130,7 +140,8 @@
 
   <DataTemplate x:Key="RosterItemSmall" DataType="{x:Type local:RosterItem}">
     <Viewbox x:Name="_viewbox"
-		Width="{Binding Path=Value, Converter={StaticResource _sizeFromSliderConverterSmall}, ElementName=_sliderItemSize}">
+		Width="{Binding Path=Value, Converter={StaticResource _sizeFromSliderConverterSmall}, ElementName=_sliderItemSize}"
+		 ContextMenu="{DynamicResource _rosterItemContextMenu}">
   	<Grid x:Name="_rosterItemGridOuter" RenderTransformOrigin="0.5,0.5"
 			Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}"
 			Margin="3,3,3,3" Width="130" Height="28" ToolTipService.InitialShowDelay="1500"
@@ -185,7 +196,7 @@
   </DataTemplate>
   
   <DataTemplate x:Key="RosterItemBig" DataType="{x:Type local:RosterItem}">
-  	<Viewbox x:Name="_viewbox"
+  	<Viewbox x:Name="_viewbox"  ContextMenu="{DynamicResource _rosterItemContextMenu}"
 		Width="{Binding Path=Value, Converter={StaticResource _sizeFromSliderConverterSmall}, ElementName=_sliderItemSize}">
   	<Grid x:Name="_rosterItemGridOuter" RenderTransformOrigin="0.5,0.5"
 			Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}"
