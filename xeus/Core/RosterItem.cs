@@ -658,7 +658,7 @@ namespace xeus.Core
 			set
 			{
 				_customName = value ;
-				NotifyPropertyChanged( "CustomkName" ) ;
+				NotifyPropertyChanged( "CustomName" ) ;
 				NotifyPropertyChanged( "DisplayName" ) ;
 			}
 		}
@@ -675,7 +675,7 @@ namespace xeus.Core
 		{
 			get
 			{
-				return ( _rosterItem != null && _rosterItem.Jid.Resource == "registered" ) ;
+				return ( _rosterItem != null /*&& _rosterItem.Jid.Resource == "registered"*/ ) ;
 			}
 		}
 

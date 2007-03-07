@@ -16,6 +16,8 @@ namespace xeus.Core
 		public event PropertyChangedEventHandler PropertyChanged ;
 
 		private ObservableCollectionDisp< DiscoFeature > _features = new ObservableCollectionDisp< DiscoFeature >( App.DispatcherThread ) ;
+		private string _type = String.Empty ;
+		private string _category = String.Empty ;
 
 		public ServiceItem( string name, Jid jid )
 		{
@@ -41,6 +43,7 @@ namespace xeus.Core
 			set
 			{
 				_name = value ;
+				NotifyPropertyChanged( "Name" );
 			}
 		}
 		
@@ -63,9 +66,50 @@ namespace xeus.Core
 			{
 				_disco = value ;
 
+				DiscoIdentity [] discoIdentities = value.GetIdentities() ;
+
+				if ( discoIdentities != null && discoIdentities.Length > 0 )
+				{
+					if ( !string.IsNullOrEmpty( discoIdentities[ 0 ].Name ) )
+					{
+						Name = discoIdentities[ 0 ].Name ;
+					}
+
+					Type = discoIdentities[ 0 ].Type ;
+					Category = discoIdentities[ 0 ].Category ;
+				}
+
 				NotifyPropertyChanged( "Disco" );
 				NotifyPropertyChanged( "Features" );
 				NotifyPropertyChanged( "CanRegister" );
+			}
+		}
+
+		public string Type
+		{
+			get
+			{
+				return _type ;
+			}
+
+			set
+			{
+				_type = value ;
+				NotifyPropertyChanged( "Type" );
+			}
+		}
+
+		public string Category
+		{
+			get
+			{
+				return _category ;
+			}
+
+			set
+			{
+				_category = value ;
+				NotifyPropertyChanged( "Category" );
 			}
 		}
 

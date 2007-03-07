@@ -384,13 +384,6 @@
 		</Path>
 	</Grid>
 </Viewbox>
-	<ControlTemplate.Triggers>
-		<Trigger Property="Visibility" Value="Visible">
-			<Trigger.EnterActions>
-				<BeginStoryboard x:Name="OnRequestBringIntoView_BeginStoryboard" Storyboard="{StaticResource OnRequestBringIntoView}"/>
-			</Trigger.EnterActions>
-		</Trigger>
-	</ControlTemplate.Triggers>
 </ControlTemplate>
 
 <ControlTemplate x:Key="ErrorIcon" TargetType="{x:Type Button}">

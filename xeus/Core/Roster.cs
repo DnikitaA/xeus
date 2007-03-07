@@ -29,7 +29,7 @@ namespace xeus.Core
 
 		#endregion
 
-		Timer _reloadTime = new Timer( 20000 );
+		Timer _reloadTime = new Timer( 5000 );
 
 		public void ReadRosterFromDb()
 		{
@@ -51,7 +51,16 @@ namespace xeus.Core
 
 		void _reloadTime_Elapsed( object sender, ElapsedEventArgs e )
 		{
-			
+			lock( _items )
+			{
+				foreach ( RosterItem rosterItem in _items )
+				{
+					if ( !rosterItem.HasVCardRecivied )
+					{
+						AskForVCard( rosterItem.Key ) ;
+					}
+				}
+			}
 		}
 
 		public ObservableCollectionDisp< RosterItem > Items
@@ -94,6 +103,18 @@ namespace xeus.Core
 				if ( rosterItem != null && presence.Error == null )
 				{
 					rosterItem.Presence = presence ;
+
+					if ( rosterItem.IsService )
+					{
+						if ( presence.Type == PresenceType.available )
+						{
+							_reloadTime.Start() ;
+						}
+						else
+						{
+							App.Instance.Window.Alert( string.Format( "Service {0} became unavailable", rosterItem.Key ) );
+						}
+					}
 
 					if ( !rosterItem.HasVCardRecivied && presence.Type == PresenceType.available )
 					{
@@ -156,14 +177,13 @@ namespace xeus.Core
 
 				if ( rosterItem != null )
 				{
-					rosterItem.HasVCardRecivied = true ;
-
 					if ( iq.Type == IqType.error || iq.Error != null )
 					{
 						rosterItem.Errors.Add( string.Format( "{0}: {1}", iq.Error.Code, iq.Error.Message ) ) ;
 					}
 					else if ( iq.Type == IqType.result )
 					{
+						rosterItem.HasVCardRecivied = true ;
 						rosterItem.SetVcard( iq.Vcard ) ;
 
 						if ( iq.Vcard != null )
@@ -175,7 +195,7 @@ namespace xeus.Core
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.ApplicationIdle,
 				                                  new VcardResultCallback( VcardResult ), sender, new object[] { iq, data } ) ;
 			}
 		}
