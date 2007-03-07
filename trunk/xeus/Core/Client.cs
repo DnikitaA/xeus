@@ -289,7 +289,7 @@ namespace xeus.Core
 
 			if ( serviceItem != null )
 			{
-				serviceItem.IsRegistered = true ;
+				serviceItem.IsRegistered = false ;
 			}
 		}
 

@@ -134,6 +134,7 @@
     </Compile>
     <Compile Include="Controls\TabMessages.xaml.cs" />
     <Compile Include="Controls\TitleBar.cs" />
+    <Compile Include="Controls\TrayIcon.cs" />
     <Compile Include="Controls\WindowBase.cs" />
     <Compile Include="Core\AgentItem.cs" />
     <Compile Include="Core\ChatMessage.cs" />
@@ -207,6 +208,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\xeus.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\message.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\message_trans.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.WinFX.targets" />

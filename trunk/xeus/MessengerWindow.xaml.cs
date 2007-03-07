@@ -17,52 +17,77 @@ namespace xeus
 	/// </summary>
 	public partial class MessengerWindow : WindowBase
 	{
-		private NotifyIcon _notifyIcon ;
-		private ToolTip _toolTip = new ToolTip() ;
+		private TrayIcon _trayIcon = new TrayIcon() ;
 
 		public MessengerWindow()
 		{
-			_notifyIcon = new NotifyIcon();
 			InitializeComponent() ;
 
-			_notifyIcon.Icon = Properties.Resources.xeus ;
-			_notifyIcon.Visible = true ;
-			_notifyIcon.MouseClick += new MouseEventHandler( _notifyIcon_MouseClick ) ;
+			_trayIcon.NotifyIcon.MouseClick += new MouseEventHandler( _notifyIcon_MouseClick ) ;
+
+			Client.Instance.MessageCenter.ChatMessages.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( ChatMessages_CollectionChanged );
+		}
+
+		void ChatMessages_CollectionChanged( object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e )
+		{
+			if ( Client.Instance.MessageCenter.ChatMessages.Count > 0 )
+			{
+				_trayIcon.State = TrayIcon.TrayState.NewMessage ;
+			}
+			else
+			{
+				_trayIcon.State = TrayIcon.TrayState.Normal ;
+			}
 		}
 
 		private void _notifyIcon_MouseClick( object sender, MouseEventArgs e )
 		{
-			if ( e.Button == MouseButtons.Left )
+			switch ( _trayIcon.State )
 			{
-				if ( WindowState == WindowState.Minimized )
-				{
-					if ( !ShowInTaskbar )
+				case TrayIcon.TrayState.NewMessage:
 					{
-						Show();
+						MessageWindow.DisplayChatWindow( null, false ) ;
+
+						break ;
 					}
-
-					WindowState = WindowState.Normal ;
-				}
-				else
-				{
-					WindowState = WindowState.Minimized ;
-
-					if ( !ShowInTaskbar )
+				case TrayIcon.TrayState.Normal:
 					{
-						Hide();
+						if ( e.Button == MouseButtons.Left )
+						{
+							if ( WindowState == WindowState.Minimized )
+							{
+								if ( !ShowInTaskbar )
+								{
+									Show();
+								}
+
+								WindowState = WindowState.Normal;
+							}
+							else
+							{
+								WindowState = WindowState.Minimized;
+
+								if ( !ShowInTaskbar )
+								{
+									Hide();
+								}
+							}
+						}
+
+						break ;
 					}
-				}
 			}
+
 		}
 
-		public void Status( string text)
+		public void Status( string text )
 		{
 			
 		}
 
 		public void Alert( string text )
 		{
-			_notifyIcon.ShowBalloonTip( 500, "Connection error", text, ToolTipIcon.Error ) ;
+			_trayIcon.AlertError( text ) ;
 		}
 
 		protected override void OnInitialized( EventArgs e )
@@ -76,9 +101,6 @@ namespace xeus
 			Button buttonMessages = _statusBar.FindName( "_buttonMessages" ) as Button ;
 
 			buttonMessages.Click += new RoutedEventHandler( buttonMessages_Click ) ;
-
-			_notifyIcon.Visible = true ;
-			_notifyIcon.Text = "xeus" ;
 		}
 
 		public void DisplayPopup( object sender, RoutedEventArgs e )
@@ -132,7 +154,7 @@ namespace xeus
 
 			Settings.Default.Save();
 
-			_notifyIcon.Dispose() ;
+			_trayIcon.Dispose() ;
 		}
 	}
 }

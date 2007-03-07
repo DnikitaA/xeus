@@ -15,7 +15,7 @@
 	<!-- Resource dictionary entries should be defined here. -->
 	
   <DataTemplate x:Key="ServiceItem" DataType="{x:Type local:ServiceItem}">
-  <Grid Width="150" Margin="5,0,0,0" x:Name="_grid">
+  <Grid Width="250" Margin="5,0,0,0" x:Name="_grid">
   	<Button x:Name="button" Template="{DynamicResource OpenServices}" Background="#FF52F965"
   		Click="OnServiceClick" HorizontalAlignment="Left" Width="25.456" Height="Auto" />
 		<Border VerticalAlignment="Stretch" Width="Auto" Grid.Column="0"
@@ -35,8 +35,11 @@
   				</RadialGradientBrush>
   			</Border.OpacityMask>
   		</Border>		
-  	<Grid d:IsLayer="True" x:Name="Layer">
-  		<TextBlock Text="{Binding Path=Name}" FontSize="14" Foreground="#FFA8A8A8" TextTrimming="CharacterEllipsis" HorizontalAlignment="Stretch" Margin="38,4,3,8" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Panel.ZIndex="1" x:Name="_text" d:LayoutOverrides="Margin" />
+  	<Grid x:Name="Layer" Margin="30,0,0,0">
+		<StackPanel Margin="5,5,5,5">
+  		<TextBlock Text="{Binding Path=Name}" FontSize="12" Foreground="#FFA8A8A8" TextTrimming="CharacterEllipsis" Panel.ZIndex="1" x:Name="_text" />
+  		<TextBlock Text="{Binding Path=Type}" FontSize="12" Foreground="#FFA8A8A8" TextTrimming="CharacterEllipsis" Panel.ZIndex="1" x:Name="_type" />
+		</StackPanel>
   	</Grid>
 	
   </Grid>

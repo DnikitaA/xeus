@@ -82,7 +82,7 @@ namespace xeus.Core
 
 					if ( ++i > maxMessages )
 					{
-						break ;
+						messages.RemoveAt( 0 ) ;
 					}
 				}
 			}

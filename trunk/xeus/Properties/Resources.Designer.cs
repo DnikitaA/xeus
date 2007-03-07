@@ -60,6 +60,20 @@ namespace xeus.Properties {
             }
         }
         
+        internal static System.Drawing.Icon message {
+            get {
+                object obj = ResourceManager.GetObject("message", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon message_trans {
+            get {
+                object obj = ResourceManager.GetObject("message_trans", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         internal static System.Drawing.Icon xeus {
             get {
                 object obj = ResourceManager.GetObject("xeus", resourceCulture);

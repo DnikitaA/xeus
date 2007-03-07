@@ -17,8 +17,5 @@
     <Setting Name="UI_RosterSlider" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">75</Value>
     </Setting>
-    <Setting Name="UI_MessageSplitter" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">200</Value>
-    </Setting>
   </Settings>
 </SettingsFile>
