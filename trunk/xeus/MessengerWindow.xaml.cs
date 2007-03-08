@@ -3,6 +3,7 @@ using System.ComponentModel ;
 using System.Windows ;
 using System.Windows.Controls.Primitives ;
 using System.Windows.Forms ;
+using System.Windows.Threading ;
 using xeus.Controls ;
 using xeus.Core ;
 using xeus.Properties ;
@@ -19,12 +20,20 @@ namespace xeus
 	{
 		private TrayIcon _trayIcon = new TrayIcon() ;
 
+		private delegate void SetStatusCallback( string text ) ;
+
+
 		public MessengerWindow()
 		{
+			Initialized += new EventHandler( MessengerWindow_Initialized );
+
 			InitializeComponent() ;
 
 			_trayIcon.NotifyIcon.MouseClick += new MouseEventHandler( _notifyIcon_MouseClick ) ;
+		}
 
+		void MessengerWindow_Initialized( object sender, EventArgs e )
+		{
 			Client.Instance.MessageCenter.ChatMessages.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( ChatMessages_CollectionChanged );
 		}
 
@@ -82,17 +91,25 @@ namespace xeus
 
 		public void Status( string text )
 		{
-			
+			if ( App.DispatcherThread.CheckAccess() )
+			{
+				_statusStatus.Text = text ;
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new SetStatusCallback( Status ), text ) ;
+			}
 		}
 
-		public void AlertError( string text )
+		public void AlertError( string title, string text )
 		{
-			_trayIcon.AlertError( text ) ;
+			_trayIcon.AlertError( title, text ) ;
 		}
 
-		public void AlertInfo( string text )
+		public void AlertInfo( string title, string text )
 		{
-			_trayIcon.AlertInfo( text ) ;
+			_trayIcon.AlertInfo( title, text ) ;
 		}
 
 		protected override void OnInitialized( EventArgs e )
@@ -118,16 +135,19 @@ namespace xeus
 			ServicesWindow.DisplayServices() ;
 		}
 
-		public void AddUser( object sender, RoutedEventArgs e )
+		public void AddUser()
 		{
-			AddUser addUser = new AddUser();
-
-			addUser.Owner = this ;
-			addUser.ShowDialog() ;
-
-			if ( addUser.DialogResult.HasValue && addUser.DialogResult.Value )
+			if ( Client.Instance.IsAvailable )
 			{
-				Client.Instance.AddUser( addUser.Jid ) ;
+				AddUser addUser = new AddUser() ;
+
+				addUser.Owner = this ;
+				addUser.ShowDialog() ;
+
+				if ( addUser.DialogResult.HasValue && addUser.DialogResult.Value )
+				{
+					Client.Instance.AddUser( addUser.Jid ) ;
+				}
 			}
 		}
 
@@ -150,6 +170,8 @@ namespace xeus
 		{
 			Database database =  new Database();
 			database.StoreRosterItems( Client.Instance.Roster.Items ) ;
+
+			database.StoreGroups( _roster.ExpanderStates ) ;
 			database.Save() ;
 		}
 

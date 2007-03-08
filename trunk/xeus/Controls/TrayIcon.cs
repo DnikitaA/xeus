@@ -103,9 +103,9 @@ namespace xeus.Controls
 			}
 		}
 
-		public void AlertError( string text )
+		public void AlertError( string title, string text )
 		{
-			_notifyIcon.ShowBalloonTip( 500, "Error", text, ToolTipIcon.Error ) ;			
+			_notifyIcon.ShowBalloonTip( 500, title, text, ToolTipIcon.Error ) ;			
 		}
 
 		public void Dispose()
@@ -121,9 +121,9 @@ namespace xeus.Controls
 			}
 		}
 
-		public void AlertInfo( string text )
+		public void AlertInfo( string title, string text )
 		{
-			_notifyIcon.ShowBalloonTip( 500, "Info", text, ToolTipIcon.Info ) ;			
+			_notifyIcon.ShowBalloonTip( 500, title, text, ToolTipIcon.Info ) ;			
 		}
 	}
 }

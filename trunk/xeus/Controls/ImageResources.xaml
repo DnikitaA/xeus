@@ -578,7 +578,7 @@
 			</TransformGroup>
 		</Rectangle.LayoutTransform>
 	</Rectangle>
-	<Ellipse Fill="#FFD1D1D1" Margin="9.831,9.832,9.833,9.832"/>
+	<Rectangle Fill="#FFD1D1D1" Margin="11,7,11,7" RadiusX="2" RadiusY="2"/>
 		<Path Fill="#36FFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,1.556,0,0" VerticalAlignment="Top" Width="12.929" Height="12.932"
 		 Data="F1 M1.8566635,1.7078477E-08 L12.928542,1.7078477E-08 C11.488774,2.2859886 9.5078812,4.7488055 7.1226864,7.1340003 C4.7415257,9.5151615 2.2830045,11.493387 -8.8198576E-08,12.932108 L-8.8198576E-08,1.8566632 C0,0.83125645 0.83125645,0 1.8566635,1.7078477E-08 z"
 		  Canvas.Left="0" Canvas.Top="0">

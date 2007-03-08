@@ -129,7 +129,7 @@ namespace xeus.Core
 
 		void _xmppConnection_OnSocketError( object sender, Exception ex )
 		{
-			App.Instance.Window.AlertError( ex.Message );
+			App.Instance.Window.AlertError( "Network error", ex.Message );
 		}
 
 		bool ClientSocket_OnValidateCertificate( object sender, System.Security.Cryptography.X509Certificates.X509Certificate certificate, System.Security.Cryptography.X509Certificates.X509Chain chain, System.Net.Security.SslPolicyErrors sslPolicyErrors )
@@ -139,12 +139,12 @@ namespace xeus.Core
 
 		void _xmppConnection_OnAuthError( object sender, Element e )
 		{
-			App.Instance.Window.AlertError( e.ToString() );
+			App.Instance.Window.AlertError( "Authorization error", e.ToString() );
 		}
 
 		void _xmppConnection_OnXmppError( object sender, Element e )
 		{
-			App.Instance.Window.AlertError( e.ToString() );
+			App.Instance.Window.AlertError( "Protocol error", e.ToString() );
 		}
 
 		void _xmppConnection_OnMessage( object sender, Message msg )
@@ -222,7 +222,7 @@ namespace xeus.Core
 			if ( approve )
 			{
 				presenceManager.ApproveSubscriptionRequest( jid ) ;
-				App.Instance.Window.AlertInfo( string.Format( "You just authorized {0}.", jid.Bare ) );
+				App.Instance.Window.AlertInfo( "Authorization", string.Format( "You just authorized {0}", jid.Bare ) );
 			}
 			else
 			{
@@ -280,7 +280,7 @@ namespace xeus.Core
 		{
 			if ( iq.Error != null )
 			{
-				App.Instance.Window.AlertError( iq.Error.ToString() );
+				App.Instance.Window.AlertError( "Unregistration error", iq.Error.ToString() );
 				return ;
 			}
 
@@ -298,7 +298,7 @@ namespace xeus.Core
 		{
 			if ( iq.Error != null )
 			{
-				App.Instance.Window.AlertError( iq.Error.ToString() );
+				App.Instance.Window.AlertError( "Registration error", iq.Error.ToString() );
 				return ;
 			}
 

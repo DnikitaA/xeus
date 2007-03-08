@@ -116,6 +116,39 @@ namespace xeus.Core
 			}
 		}
 
+		public void StoreGroups( Dictionary< string, bool > expanderStates )
+		{
+			foreach ( KeyValuePair< string, bool > state in expanderStates )
+			{
+				FieldValuePair [] data = new FieldValuePair [] { new FieldValuePair( "IsExpanded", state.Value.ToString() ),
+																	new FieldValuePair( "Name", state.Key ) } ;
+
+				SaveOrUpdate( "Roster/Groups", string.Format( "@Name='{0}'", state.Key ), data ) ;
+			}
+		}
+
+		public Dictionary< string, bool > ReadGroups()
+		{
+			Dictionary< string, bool > expanderStates = new Dictionary< string, bool >();
+
+			try
+			{
+				DataTable data = Query( "Roster/Groups" ) ;
+
+				foreach ( DataRow row in data.Rows )
+				{
+					expanderStates.Add( ( string )row[ "Name" ], bool.Parse( ( string )row[ "IsExpanded" ] ) ) ;
+				}
+			}
+
+			catch ( Exception e )
+			{
+				Client.Instance.Log( "Error reading groups: {0}", e.Message ) ;
+			}
+			
+			return expanderStates ;
+		}
+
 		public void StoreRosterItems( ObservableCollectionDisp< RosterItem > rosterItems )
 		{
 			foreach ( RosterItem item in rosterItems )

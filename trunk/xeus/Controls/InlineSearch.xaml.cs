@@ -55,7 +55,7 @@ namespace xeus.Controls
 
 		void Close( bool isEnter )
 		{
-			Visibility = Visibility.Hidden ;
+			Visibility = Visibility.Collapsed ;
 			_text.Text = String.Empty ;
 
 			if ( Closed != null )
