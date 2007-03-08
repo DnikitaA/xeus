@@ -1,7 +1,9 @@
 using System ;
 using System.ComponentModel ;
+using System.Diagnostics ;
 using System.Threading ;
 using System.Windows.Controls ;
+using System.Windows.Threading ;
 using agsXMPP ;
 using agsXMPP.net ;
 using agsXMPP.protocol.client ;
@@ -10,6 +12,7 @@ using agsXMPP.protocol.iq.register ;
 using agsXMPP.protocol.iq.roster ;
 using agsXMPP.protocol.sasl ;
 using agsXMPP.Xml.Dom ;
+using Win32_API ;
 using xeus.Controls ;
 using xeus.Core ;
 using xeus.Properties ;
@@ -21,6 +24,7 @@ namespace xeus.Core
 		private static Client _instance = new Client() ;
 
 		public event PropertyChangedEventHandler PropertyChanged ;
+		private delegate void SetPresenceCallback( ShowType showType, bool isIdle ) ;
 
 		XmppClientConnection _xmppConnection = new XmppClientConnection() ;
 		
@@ -31,6 +35,7 @@ namespace xeus.Core
 		private Presence _presence ;
 
 		System.Timers.Timer _discoTimer = new System.Timers.Timer( 1500 ) ;
+		System.Timers.Timer _idleTimer = new System.Timers.Timer( 1000 ) ;
 
 		#region delegates
 
@@ -114,7 +119,36 @@ namespace xeus.Core
 			_discoTimer.AutoReset = false ;
 			_discoTimer.Elapsed += new System.Timers.ElapsedEventHandler( _discoTimer_Elapsed );
 
+			_idleTimer.AutoReset = true ;
+			_idleTimer.Elapsed += new System.Timers.ElapsedEventHandler( _idleTimer_Elapsed );
+			_idleTimer.Start();
+
 			Log( "Setup finished" ) ;
+		}
+
+		private ShowType _nonIdlePresence = ShowType.NONE ;
+		private bool _isIdle = false ;
+
+		void _idleTimer_Elapsed( object sender, System.Timers.ElapsedEventArgs e )
+		{
+			long idleTime = ( Win32.GetTickCount() - Win32.GetLastInputTime() ) ;
+			TimeSpan timeSpan = new TimeSpan( 0, 0, 0, 0, ( int )idleTime );
+
+			if ( timeSpan.TotalMinutes > Settings.Default.Client_IdleMinutesAway )
+			{
+				SetMyPresence( ShowType.xa, true ) ;
+			}
+			else if ( timeSpan.TotalMinutes > Settings.Default.Client_IdleMinutesXA )
+			{
+				SetMyPresence( ShowType.away, true ) ;
+			}
+			else
+			{
+				if ( _isIdle )
+				{
+					SetMyPresence( _nonIdlePresence, false ) ;
+				}
+			}
 		}
 
 		void _discoTimer_Elapsed( object sender, System.Timers.ElapsedEventArgs e )
@@ -162,7 +196,7 @@ namespace xeus.Core
 
 		void _xmppConnection_OnRosterEnd( object sender )
 		{
-			SetMyPresence( ShowType.NONE );
+			SetMyPresence( ShowType.NONE, false );
 		}
 
 		public void Connect()
@@ -202,16 +236,45 @@ namespace xeus.Core
 			}
 		}
 
-		public void SetMyPresence( ShowType showType )
+		public void SetMyPresence( ShowType showType, bool isIdle )
 		{
-			Connect() ;
-
-			if ( _xmppConnection.Authenticated )
+			if ( App.DispatcherThread.CheckAccess() )
 			{
-				_xmppConnection.Show = showType ;
-				_xmppConnection.SendMyPresence();
+				Connect() ;
 
-				MyPresence = new Presence( _xmppConnection.Show, _xmppConnection.Status, _xmppConnection.Priority );
+				if ( _xmppConnection.Authenticated )
+				{
+					if ( isIdle && !_isIdle )
+					{
+						// coming to idle state
+						_nonIdlePresence = _xmppConnection.Show ;
+						_isIdle = true ;
+
+						App.Instance.Window.Status( "Coming to Idle State" ) ;
+					}
+
+					if ( !isIdle && _isIdle )
+					{
+						// coming from idle state
+						_isIdle = false ;
+
+						App.Instance.Window.Status( "Coming from Idle State" ) ;
+					}
+
+					_xmppConnection.Show = showType ;
+					_xmppConnection.SendMyPresence() ;
+
+					_presence = new Presence( _xmppConnection.Show, _xmppConnection.Status, _xmppConnection.Priority ) ;
+
+					NotifyPropertyChanged( "MyPresence" ) ;
+					NotifyPropertyChanged( "StatusTemplate" ) ;
+					NotifyPropertyChanged( "IsAvailable" ) ;
+				}
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new SetPresenceCallback( SetMyPresence ), showType, isIdle ) ;
 			}
 		}
 
@@ -485,15 +548,6 @@ namespace xeus.Core
 			get
 			{
 				return _presence ;
-			}
-
-			set
-			{
-				_presence = value ;
-
-				NotifyPropertyChanged( "MyPresence" ) ;
-				NotifyPropertyChanged( "StatusTemplate" ) ;
-				NotifyPropertyChanged( "IsAvailable" ) ;
 			}
 		}
 

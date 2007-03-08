@@ -178,6 +178,7 @@
     <Compile Include="HtmlToXaml\HtmlSchema.cs" />
     <Compile Include="HtmlToXaml\HtmlTokenType.cs" />
     <Compile Include="HtmlToXaml\HtmlToXamlConverter.cs" />
+    <Compile Include="IdleTime\Win32.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -203,6 +204,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>

@@ -17,5 +17,11 @@
     <Setting Name="UI_RosterSlider" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">75</Value>
     </Setting>
+    <Setting Name="Client_IdleMinutesAway" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="Client_IdleMinutesXA" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

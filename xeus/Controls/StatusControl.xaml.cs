@@ -29,7 +29,7 @@ namespace xeus.Controls
 
 		public void OnStatusOnline( object sender, RoutedEventArgs e )
 		{
-			Client.Instance.SetMyPresence( ShowType.NONE );
+			Client.Instance.SetMyPresence( ShowType.NONE, false );
 			e.Handled = true ;
 			CloseParentPopup() ;
 		}
@@ -53,28 +53,28 @@ namespace xeus.Controls
 
 		public void OnStatusDnd( object sender, RoutedEventArgs e )
 		{
-			Client.Instance.SetMyPresence( ShowType.dnd );
+			Client.Instance.SetMyPresence( ShowType.dnd, false );
 			e.Handled = true ;
 			CloseParentPopup() ;
 		}
 
 		public void OnStatusAway( object sender, RoutedEventArgs e )
 		{
-			Client.Instance.SetMyPresence( ShowType.away );
+			Client.Instance.SetMyPresence( ShowType.away, false );
 			e.Handled = true ;
 			CloseParentPopup() ;
 		}
 
 		public void OnStatusXAway( object sender, RoutedEventArgs e )
 		{
-			Client.Instance.SetMyPresence( ShowType.xa );
+			Client.Instance.SetMyPresence( ShowType.xa, false );
 			e.Handled = true ;
 			CloseParentPopup() ;
 		}
 
 		public void OnStatusFreeForChat( object sender, RoutedEventArgs e )
 		{
-			Client.Instance.SetMyPresence( ShowType.chat );
+			Client.Instance.SetMyPresence( ShowType.chat, false );
 			e.Handled = true ;
 			CloseParentPopup() ;
 		}
