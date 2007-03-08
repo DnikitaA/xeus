@@ -79,5 +79,29 @@ namespace xeus.Properties {
                 this["UI_RosterSlider"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int Client_IdleMinutesAway {
+            get {
+                return ((int)(this["Client_IdleMinutesAway"]));
+            }
+            set {
+                this["Client_IdleMinutesAway"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int Client_IdleMinutesXA {
+            get {
+                return ((int)(this["Client_IdleMinutesXA"]));
+            }
+            set {
+                this["Client_IdleMinutesXA"] = value;
+            }
+        }
     }
 }
