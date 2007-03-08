@@ -38,8 +38,7 @@
 		<StatusBarItem 
 		    	  x:Name="_statusAddUser" VerticalAlignment="Stretch">
 		    <Button x:Name="_buttonAddUSer" Width="17" Height="17" Template="{DynamicResource AddNewUser}"
-				Click="AddUser" ToolTip="Add new User" Background="#FFFFA300"
-				IsEnabled="{Binding Path=IsAvailable}"/>
+				Command="localcore:RosterItemCommands.ContactAdd" Background="#FFFFA300"/>
 		</StatusBarItem>
 		<StatusBarItem HorizontalAlignment="Stretch" 
 		    	  x:Name="_statusUnreadMessages" VerticalAlignment="Stretch"
@@ -52,7 +51,11 @@
 		</StatusBarItem>
 		<StatusBarItem HorizontalAlignment="Stretch" 
 		    	  x:Name="_statusInlineSearch" VerticalAlignment="Stretch" Panel.ZIndex="1">
-	    	<local:InlineSearch x:Name="_inlineSearch" Height="25" VerticalAlignment="Bottom" Visibility="Hidden"/>
+	    	<local:InlineSearch x:Name="_inlineSearch" Height="25" VerticalAlignment="Bottom" Visibility="Collapsed"/>
+		</StatusBarItem>
+		<StatusBarItem HorizontalAlignment="Stretch" 
+		    	  x:Name="_statusText" VerticalAlignment="Stretch" Margin="3,3,5,3" >
+		<TextBlock x:Name="_statusStatus" Foreground="#FFBBBBBB"/>
 		</StatusBarItem>
 		</StatusBar>
    	<local:RosterControl x:Name="_roster" DockPanel.Dock="Top"/>

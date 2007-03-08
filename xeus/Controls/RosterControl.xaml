@@ -39,7 +39,7 @@
             <Setter Property="Template">
               <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GroupItem}">
-                  <Expander IsExpanded="True">
+                  <Expander Loaded="OnLoadExpander" Expanded="OnExpanded" Collapsed="OnCollapsed">
                     <Expander.Header>
                         <TextBlock Text="{Binding Path=Name}"/>
                     </Expander.Header>

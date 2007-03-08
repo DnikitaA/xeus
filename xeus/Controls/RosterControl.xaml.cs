@@ -28,30 +28,25 @@ namespace xeus.Controls
 
 		public RosterControl()
 		{
-			InitializeComponent() ;
+			Initialized += new EventHandler( RosterControl_Initialized );
 
+			InitializeComponent() ;
+		}
+
+		void RosterControl_Initialized( object sender, EventArgs e )
+		{
 			_rosterItemBig = ( DataTemplate ) App.Current.FindResource( "RosterItemBig" ) ;
 			_rosterItemSmall = ( DataTemplate ) App.Current.FindResource( "RosterItemSmall" ) ;
 
-			Client.Instance.Roster.Items.CollectionChanged += new NotifyCollectionChangedEventHandler( Items_CollectionChanged ) ;
-
-			_roster.ItemTemplate = _rosterItemSmall ;
+			SetItemTemplate();
 
 			_sliderItemSize.ValueChanged += new RoutedPropertyChangedEventHandler< double >( _sliderItemSize_ValueChanged ) ;
 			_inlineMethod.Finished += new InlineMethod.InlineResultHandler( _inlineMethod_Finished ) ;
 
-			_roster.SelectionChanged += new SelectionChangedEventHandler( _roster_SelectionChanged ) ;
+			_expanderStates = new Database().ReadGroups() ;
 
+			Client.Instance.Roster.Items.CollectionChanged += new NotifyCollectionChangedEventHandler( Items_CollectionChanged ) ;
 			Client.Instance.Roster.ReadRosterFromDb() ;
-		}
-
-		private void _roster_SelectionChanged( object sender, SelectionChangedEventArgs e )
-		{
-			/*ListBoxItem item = _roster.ItemContainerGenerator.ContainerFromIndex( _roster.SelectedIndex ) as ListBoxItem;
-			foreach ( object o in _roster.ItemsSource )
-			{
-				
-			}*/
 		}
 
 		private void _inlineSearch_Closed( bool isEnter )
@@ -112,6 +107,18 @@ namespace xeus.Controls
 			}
 		}
 
+		public Dictionary< string, bool > ExpanderStates
+		{
+			get
+			{
+				return _expanderStates ;
+			}
+			set
+			{
+				_expanderStates = value ;
+			}
+		}
+
 		object _displayNamesLock = new object();
 		private List< KeyValuePair< string, RosterItem > > _displayNames = null ;
 
@@ -163,15 +170,7 @@ namespace xeus.Controls
 
 		private void OnKeyDown( object sender, KeyEventArgs e )
 		{
-			if ( e.Key == Key.Delete )
-			{
-				RosterItem rosterItem = _roster.SelectedItem as RosterItem ;
-				if ( rosterItem != null )
-				{
-					Client.Instance.Roster.DeleteRosterItem( rosterItem ) ;
-				}
-			}
-			else if ( e.Key == Key.Return )
+			if ( e.Key == Key.Return )
 			{
 				RosterItem rosterItem = _roster.SelectedItem as RosterItem ;
 				OpenMessageWindow( rosterItem ) ;
@@ -180,6 +179,53 @@ namespace xeus.Controls
 			{
 				InlineSearch.SendKey( e.Key ) ;
 			}
+		}
+
+		Dictionary< string, Expander > _expanders = new Dictionary< string, Expander >();
+		private Dictionary< string, bool > _expanderStates = new Dictionary< string, bool >();
+
+		private void OnLoadExpander( object sender, RoutedEventArgs e )
+		{
+			Expander expander = sender as Expander ;
+			CollectionViewGroup viewGroup = expander.DataContext as CollectionViewGroup ;
+			string expanderName = viewGroup.Name.ToString() ;
+			_expanders[ expanderName ] = expander ;
+
+			expander.IsExpanded = IsExpanded( expanderName ) ;
+		}
+
+		void OnExpanded( object sender, RoutedEventArgs e )
+		{
+			Expander expander = sender as Expander ;
+			CollectionViewGroup viewGroup = expander.DataContext as CollectionViewGroup ;
+			string expanderName = viewGroup.Name.ToString() ;
+
+			ExpanderStates[ expanderName ] = true ;
+		}
+
+		void OnCollapsed( object sender, RoutedEventArgs e )
+		{
+			Expander expander = sender as Expander ;
+			CollectionViewGroup viewGroup = expander.DataContext as CollectionViewGroup ;
+			string expanderName = viewGroup.Name.ToString() ;
+
+			ExpanderStates[ expanderName ] = false ;
+		}
+
+		bool IsExpanded( string expanderName )
+		{
+			bool expanded ;
+			
+			if ( ExpanderStates.TryGetValue( expanderName, out expanded ) )
+			{
+				return expanded ;
+			}
+			else
+			{
+				ExpanderStates[ expanderName ] = true ;
+			}
+			
+			return true ;
 		}
 
 		private void SubscribeItems( IList items )
@@ -244,9 +290,9 @@ namespace xeus.Controls
 			}
 		}
 
-		private void _sliderItemSize_ValueChanged( object sender, RoutedPropertyChangedEventArgs< double > e )
+		void SetItemTemplate()
 		{
-			if ( e.NewValue > 100.0 )
+			if ( _sliderItemSize.Value > 100.0 )
 			{
 				if ( _roster.ItemTemplate != _rosterItemBig )
 				{
@@ -260,6 +306,11 @@ namespace xeus.Controls
 					_roster.ItemTemplate = _rosterItemSmall ;
 				}
 			}
+		}
+
+		private void _sliderItemSize_ValueChanged( object sender, RoutedPropertyChangedEventArgs< double > e )
+		{
+			SetItemTemplate();
 		}
 
 		private void OnDoubleClickRosterItem( object sender, MouseButtonEventArgs e )

@@ -11,8 +11,10 @@
 <SolidColorBrush x:Key="SolidBorderBrush" Color="#888" />
    
 <ContextMenu x:Key="_rosterItemContextMenu" StaysOpen="true">
-   <MenuItem Header="Authorization">
-	      <MenuItem Command="local:RosterItemCommands.AuthRequestFrom"
+  <MenuItem Command="local:RosterItemCommands.ContactDelete"
+    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},Path=DataContext}"/>
+  <MenuItem Header="Authorization">
+	        <MenuItem Command="local:RosterItemCommands.AuthRequestFrom"
 	  				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},Path=DataContext}"/>
           <MenuItem Command="local:RosterItemCommands.AuthSendTo"
 	  				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},Path=DataContext}"/>
