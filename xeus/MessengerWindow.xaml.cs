@@ -4,6 +4,8 @@ using System.Windows ;
 using System.Windows.Controls.Primitives ;
 using System.Windows.Forms ;
 using System.Windows.Threading ;
+using agsXMPP.protocol.client ;
+using agsXMPP.protocol.iq.register ;
 using xeus.Controls ;
 using xeus.Core ;
 using xeus.Properties ;
@@ -21,7 +23,7 @@ namespace xeus
 		private TrayIcon _trayIcon = new TrayIcon() ;
 
 		private delegate void SetStatusCallback( string text ) ;
-
+		private delegate void OnRegisterCallback( IQ iq, Register register ) ;
 
 		public MessengerWindow()
 		{
@@ -148,6 +150,29 @@ namespace xeus
 				{
 					Client.Instance.AddUser( addUser.Jid ) ;
 				}
+			}
+		}
+
+		public void OpenRegisterDialog( IQ iq, Register register )
+		{
+			if ( App.DispatcherThread.CheckAccess() )
+			{
+				if ( register != null )
+				{
+					RegisterWindow registerWindow = new RegisterWindow() ;
+
+					registerWindow.ShowDialog() ;
+
+					if ( registerWindow.DialogResult.HasValue && registerWindow.DialogResult.Value )
+					{
+						Client.Instance.FinishRegisterService( iq.From, registerWindow.UserName, registerWindow.Password ) ;
+					}
+				}
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new OnRegisterCallback( OpenRegisterDialog ), iq, register ) ;
 			}
 		}
 

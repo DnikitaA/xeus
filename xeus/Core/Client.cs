@@ -320,7 +320,39 @@ namespace xeus.Core
 			_xmppConnection.IqGrabber.SendIq( registerIq, OnUnregisterService, registerIq );
 		}
 
-		public void RegisterService( Jid jid, string userName, string password )
+		private string _idRegisterServiceToken = String.Empty ;
+
+		void OnRegisterServiceGet( object sender, IQ iq, object data )
+		{
+			_idRegisterServiceToken = String.Empty ;
+
+			Register register = iq.Query as Register ;
+
+			if ( register != null )
+			{
+				App.Instance.Window.OpenRegisterDialog( iq, register );
+			}
+			else
+			{
+				App.Instance.Window.AlertError( "Service", "This is not supported" ) ;
+			}
+		}
+
+		public void RegisterService( Jid jid )
+		{
+			RegisterIq registerIq = new RegisterIq( IqType.get, jid );
+
+			if ( _idRegisterServiceToken == String.Empty )
+			{
+				_xmppConnection.IqGrabber.Remove( _idRegisterServiceToken );
+				_idRegisterServiceToken = String.Empty ;
+			}
+
+			_idRegisterServiceToken = registerIq.Id ;
+			_xmppConnection.IqGrabber.SendIq( registerIq, OnRegisterServiceGet, _idRegisterServiceToken );
+		}
+
+		public void FinishRegisterService( Jid jid, string userName, string password )
 		{
 			RegisterIq registerIq = new RegisterIq( IqType.set, jid );
 			registerIq.Query.Username = userName ;

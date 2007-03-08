@@ -144,6 +144,7 @@ namespace xeus.Core
 				case PresenceType.subscribed:
 					{
 						App.Instance.Window.AlertInfo( "Authorization", string.Format( "You were authorized by {0}", pres.From ) );
+						AskForVCard( pres.From.Bare );
 						break ;
 					}
 				case PresenceType.unsubscribe:

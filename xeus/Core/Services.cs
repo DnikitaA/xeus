@@ -71,9 +71,9 @@ namespace xeus.Core
 			Client.Instance.UnregisterService( service.Jid );
 		}
 
-		public void RegisterService( ServiceItem service, string name, string password )
+		public void RegisterService( ServiceItem service )
 		{
-			Client.Instance.RegisterService( service.Jid, name, password );
+			Client.Instance.RegisterService( service.Jid );
 		}
 	}
 }

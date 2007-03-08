@@ -44,5 +44,13 @@ namespace xeus.Controls
 				return _password.Password ;
 			}
 		}
+
+		public string Instruction
+		{
+			set
+			{
+				_title.Text = value;
+			}
+		}
 	}
 }
