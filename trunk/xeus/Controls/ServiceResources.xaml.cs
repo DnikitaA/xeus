@@ -12,6 +12,8 @@ namespace xeus.Controls
 		{
 			ServiceItem serviceItem = ( ( Button )sender ).DataContext as ServiceItem ;
 
+			Client.Instance.Services.RegisterService( serviceItem ) ;
+			/*
 			if ( !serviceItem.IsRegistered )
 			{
 				RegisterWindow registerWindow = new RegisterWindow() ;
@@ -23,7 +25,7 @@ namespace xeus.Controls
 					Client.Instance.Services.RegisterService( serviceItem,
 					                                          registerWindow.UserName, registerWindow.Password ) ;
 				}
-			}
+			}*/
 		}
 	}
 }

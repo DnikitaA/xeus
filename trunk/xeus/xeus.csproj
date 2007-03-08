@@ -88,6 +88,8 @@
     <Page Include="Controls\ServicesWindow.xaml" />
     <Page Include="Controls\StatusControl.xaml" />
     <Page Include="Controls\WindowDecoration.xaml" />
+    <Page Include="Controls\XFormData.xaml" />
+    <Page Include="Controls\XFormItem.xaml" />
     <Page Include="MessengerWindow.xaml" />
     <Page Include="Controls\RosterControl.xaml" />
     <Compile Include="App.xaml.cs">
@@ -136,6 +138,14 @@
     <Compile Include="Controls\TitleBar.cs" />
     <Compile Include="Controls\TrayIcon.cs" />
     <Compile Include="Controls\WindowBase.cs" />
+    <Compile Include="Controls\XFormData.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>XFormData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\XFormItem.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>XFormItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Core\AgentItem.cs" />
     <Compile Include="Core\ChatMessage.cs" />
     <Compile Include="Core\CountToVisibilityConverter.cs" />

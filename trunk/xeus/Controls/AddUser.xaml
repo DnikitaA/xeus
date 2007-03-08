@@ -6,23 +6,25 @@
     xmlns:settings="clr-namespace:xeus.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="xeus.Controls.AddUser"
-    Title="add user" Height="192" Width="208"
+    Title="add user" Height="168" Width="208"
     settings:WindowSettings.Save="False"
 	Style="{StaticResource DarkStyleWindow}"
     x:Name="services"
 	Background="{x:Null}" ResizeMode="NoResize" >
-  <Grid>
+  <StackPanel Margin="5,5,5,5">
 
-    <Label HorizontalAlignment="Left" Margin="8,40,0,0" VerticalAlignment="Top" Content="User Name" Foreground="#FF828282"/>
+    <Label Content="Add new User" Foreground="#FFB99A75"/>
 
-    <Label HorizontalAlignment="Left" Margin="8,11.37,0,0" VerticalAlignment="Top" Content="Add new User" Foreground="#FF828282"/>
+    <Label Content="User Name" Foreground="#FF828282"/>
 
-    <Button HorizontalAlignment="Left" Margin="29.6,0,0,16" Width="63.867" Content="Ok"
-    Background="#FF3980A9" Template="{DynamicResource AButton}" IsDefault="True"
-    Click="Ok" Foreground="#FFF2F2F2" VerticalAlignment="Bottom" Height="26"/>
-    <Button Margin="0,0,32.133,16" Content="Cancel" Background="#FF5D97B9" Template="{DynamicResource AButton}" IsCancel="True" IsDefault="False" Foreground="#FFF2F2F2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="63.867" Height="26" d:LayoutOverrides="Margin"/>
+  	<TextBox x:Name="_jid" TextWrapping="Wrap" Style="{DynamicResource TextBoxStyleInDialog}" MaxLines="1" TabIndex="0"/>
 
-  	<TextBox Margin="8,68.63,8,0" x:Name="_jid" TextWrapping="Wrap" Style="{DynamicResource TextBoxStyleInDialog}" VerticalAlignment="Top" MaxLines="1"/>
-
-  </Grid>
+	<StackPanel Margin="0,25,0,0" HorizontalAlignment="Center" Orientation="Horizontal">        
+    	<Button Width="63.867" Content="Ok" 
+			Background="#FF3980A9" Template="{DynamicResource AButton}" IsDefault="True"
+			Click="Ok" Foreground="#FFF2F2F2" Height="26" x:Name="_ok" Margin="15,0,15,0" TabIndex="1"/>
+			
+    	<Button Content="Cancel" Background="#FF5D97B9" Template="{DynamicResource AButton}" IsCancel="True" IsDefault="False" Foreground="#FFF2F2F2" Width="63.867" Height="26" Margin="15,0,15,0" TabIndex="2"/>
+    </StackPanel>
+  </StackPanel>
 </win:WindowBase>

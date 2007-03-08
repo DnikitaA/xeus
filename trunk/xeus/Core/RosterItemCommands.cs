@@ -1,6 +1,7 @@
 using System.Windows ;
 using System.Windows.Input ;
 using System.Windows.Threading ;
+using agsXMPP ;
 
 namespace xeus.Core
 {
