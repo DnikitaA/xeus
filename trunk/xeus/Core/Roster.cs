@@ -16,10 +16,13 @@ namespace xeus.Core
 		#region delegates
 
 		private delegate void PresenceCallback( Presence presence ) ;
+		private delegate void OnPresenceCallback( object sender, Presence presence ) ;
 
 		private delegate void VcardResultCallback( object sender, IQ iq, object data ) ;
 
 		public delegate bool PresenceSubscribeVetoHandler( Jid jid ) ;
+
+		public delegate void OnRosterItemCallback( object sender, agsXMPP.protocol.iq.roster.RosterItem item ) ;
 
 		#endregion
 
@@ -30,6 +33,8 @@ namespace xeus.Core
 		#endregion
 
 		Timer _reloadTime = new Timer( 5000 );
+
+		Dictionary< string, Presence > _presences = new Dictionary< string, Presence >( );
 
 		public void ReadRosterFromDb()
 		{
@@ -71,6 +76,15 @@ namespace xeus.Core
 			get
 			{
 				return _items ;
+			}
+		}
+
+		public void AddRemoveItem( RosterItem rosterItem )
+		{
+			lock ( _items )
+			{
+				_items.Remove( rosterItem ) ;
+				_items.Add( rosterItem ) ;
 			}
 		}
 
@@ -124,6 +138,13 @@ namespace xeus.Core
 						AskForVCard( rosterItem.Key ) ;
 					}
 				}
+				else
+				{
+					lock ( _presences )
+					{
+						_presences[ presence.From.Bare ] = presence ;
+					}
+				}
 			}
 			else
 			{
@@ -134,33 +155,42 @@ namespace xeus.Core
 
 		private void xmppConnection_OnPresence( object sender, Presence pres )
 		{
-			switch ( pres.Type )
+			if ( App.DispatcherThread.CheckAccess() )
 			{
-				case PresenceType.subscribe:
-					{
-						Client.Instance.SubscribePresence( pres.From, OnSubscribePresenceVeto( pres.From ) ) ;
-						break ;
-					}
-				case PresenceType.subscribed:
-					{
-						App.Instance.Window.AlertInfo( "Authorization", string.Format( "You were authorized by {0}", pres.From ) );
-						AskForVCard( pres.From.Bare );
-						break ;
-					}
-				case PresenceType.unsubscribe:
-					{
-						break ;
-					}
-				case PresenceType.unsubscribed:
-					{
-						App.Instance.Window.AlertInfo( "Authorization", string.Format( "{0} removed the authorization from you", pres.From ) );
-						break ;
-					}
-				default:
-					{
-						ChangePresence( pres ) ;
-						break ;
-					}
+				switch ( pres.Type )
+				{
+					case PresenceType.subscribe:
+						{
+							Client.Instance.SubscribePresence( pres.From, OnSubscribePresenceVeto( pres.From ) ) ;
+							break ;
+						}
+					case PresenceType.subscribed:
+						{
+							App.Instance.Window.AlertInfo( "Authorization", string.Format( "You were authorized by {0}", pres.From ) ) ;
+							AskForVCard( pres.From.Bare ) ;
+							break ;
+						}
+					case PresenceType.unsubscribe:
+						{
+							break ;
+						}
+					case PresenceType.unsubscribed:
+						{
+							App.Instance.Window.AlertInfo( "Authorization",
+							                               string.Format( "{0} removed the authorization from you", pres.From ) ) ;
+							break ;
+						}
+					default:
+						{
+							ChangePresence( pres ) ;
+							break ;
+						}
+				}
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new OnPresenceCallback( xmppConnection_OnPresence ), sender, pres ) ;
 			}
 		}
 
@@ -208,35 +238,65 @@ namespace xeus.Core
 
 		private void xmppConnecion_OnRosterItem( object sender, agsXMPP.protocol.iq.roster.RosterItem item )
 		{
-			RosterItem existingRosterItem = FindItem( item.Jid.Bare ) ;
-
-			if ( item.Subscription == SubscriptionType.remove )
+			if ( App.DispatcherThread.CheckAccess() )
 			{
-				if ( existingRosterItem != null )
+				RosterItem existingRosterItem = FindItem( item.Jid.Bare ) ;
+
+				Presence presence = null ;
+
+				lock ( _presences )
 				{
-					lock ( _items )
+					if ( _presences.ContainsKey( item.Jid.Bare ) )
 					{
-						_items.Remove( existingRosterItem ) ;
+						presence = _presences[ item.Jid.Bare ] ;
+						_presences.Remove( item.Jid.Bare ) ;
+					}
+				}
+
+
+				if ( item.Subscription == SubscriptionType.remove )
+				{
+					if ( existingRosterItem != null )
+					{
+						lock ( _items )
+						{
+							_items.Remove( existingRosterItem ) ;
+						}
+					}
+				}
+				else
+				{
+					if ( existingRosterItem != null )
+					{
+						existingRosterItem.XmppRosterItem = item ;
+						
+						if ( presence != null )
+						{
+							existingRosterItem.Presence = presence ;
+						}
+					}
+					else
+					{
+						RosterItem rosterItem = new RosterItem( item ) ;
+
+						if ( presence != null )
+						{
+							rosterItem.Presence = presence ;
+						}
+
+						lock ( _items )
+						{
+							_items.Add( rosterItem ) ;
+						}
+
+						AskForVCard( rosterItem.Key ) ;
 					}
 				}
 			}
 			else
 			{
-				if ( existingRosterItem != null )
-				{
-					existingRosterItem.XmppRosterItem = item ;
-				}
-				else
-				{
-					RosterItem rosterItem = new RosterItem( item ) ;
-
-					lock ( _items )
-					{
-						_items.Add( rosterItem ) ;
-					}
-
-					AskForVCard( rosterItem.Key );
-				}
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new OnRosterItemCallback( xmppConnecion_OnRosterItem ), sender, item ) ;
 			}
 		}
 

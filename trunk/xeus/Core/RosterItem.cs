@@ -51,7 +51,7 @@ namespace xeus.Core
 
 		public event PropertyChangedEventHandler PropertyChanged ;
 
-		public Presence _presence ;
+		private Presence _presence ;
 		private string _statusDescription = "Unavailable" ;
 
 		private RosterItem()
@@ -177,10 +177,22 @@ namespace xeus.Core
 
 			set
 			{
+				string group = Group ;
+
 				_rosterItem = value ;
 
 				Name = _rosterItem.Name ;
 				SubscriptionType = _rosterItem.Subscription ;
+
+				if ( Key.StartsWith( "5601" ) )
+				{
+					
+				}
+				
+				if ( group != Group )
+				{
+					NotifyPropertyChanged( "Group" ) ;
+				}
 			}
 		}
 
@@ -242,11 +254,11 @@ namespace xeus.Core
 
 				if ( IsService )
 				{
-					group = " Services" ;
+					group = "@Services" ;
 				}
-				else if ( _rosterItem == null || _presence == null || _presence.Type == PresenceType.unavailable )
+				else if ( !IsInitialized || _presence == null || _presence.Type == PresenceType.unavailable )
 				{
-					group = " Offline" ;
+					group = "@Offline" ;
 				}
 				else if ( _rosterItem.GetGroups().Count > 0 )
 				{
@@ -255,7 +267,7 @@ namespace xeus.Core
 				}
 				else
 				{
-					group = " Ungrouped" ;
+					group = "@Ungrouped" ;
 				}
 
 				return group ;
@@ -279,6 +291,10 @@ namespace xeus.Core
 
 			set
 			{
+				if ( Key.StartsWith( "5601" ) )
+				{
+					
+				}
 				string group = Group ;
 
 				_presence = value ;
