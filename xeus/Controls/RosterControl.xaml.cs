@@ -33,6 +33,78 @@ namespace xeus.Controls
 			InitializeComponent() ;
 		}
 
+		void OnContextMenuOpen( object sender, RoutedEventArgs e )
+		{
+			ContextMenu contextMenu = sender as ContextMenu ;
+
+			if ( contextMenu != null )
+			{
+				MenuItem menuItem = ( MenuItem )contextMenu.Items[ 0 ] ;
+
+				menuItem.Items.Clear();
+
+				
+				foreach ( string group in _expanderStates.Keys )
+				{
+					if ( !group.StartsWith( "@" ) )
+					{
+						MenuItem item = new MenuItem() ;
+						item.Header = group ;
+
+						menuItem.Items.Add( item ) ;
+
+						item.Unloaded += new RoutedEventHandler( item_Unloaded ) ;
+						item.Click += new RoutedEventHandler( item_Click ) ;
+					}
+				}
+
+				MenuItem itemNewGroup = new MenuItem();
+				itemNewGroup.Header = "New group" ;
+				itemNewGroup.Tag = "newGroup" ;
+
+				menuItem.Items.Add( itemNewGroup ) ;
+
+				itemNewGroup.Unloaded += new RoutedEventHandler( item_Unloaded );
+				itemNewGroup.Click += new RoutedEventHandler( item_Click );
+			}
+		}
+
+		void item_Click( object sender, RoutedEventArgs e )
+		{
+			MenuItem item = ( MenuItem ) sender ;
+			RosterItem rosterItem = item.DataContext as RosterItem ;
+
+			if ( rosterItem != null )
+			{
+				if ( item.Tag != null && item.Tag.ToString() == "newGroup" )
+				{
+					AddUser addUser = new AddUser();
+
+					addUser._title.Text = "Add new Group" ;
+					addUser._titleAdd.Text = "Group Name" ;
+					addUser.ShowDialog();
+
+					if ( addUser.DialogResult.HasValue && addUser.DialogResult.Value )
+					{
+						Client.Instance.SetRosterGropup( rosterItem, addUser.Jid );
+					}
+				}
+				else
+				{
+					Client.Instance.SetRosterGropup( rosterItem, item.Header.ToString() );
+				}
+			}
+		}
+
+		void item_Unloaded( object sender, RoutedEventArgs e )
+		{
+			MenuItem item = ( MenuItem ) sender ;
+			
+			item.Unloaded -= new RoutedEventHandler( item_Unloaded );
+			item.Click -= new RoutedEventHandler( item_Click );
+		}
+
+
 		void RosterControl_Initialized( object sender, EventArgs e )
 		{
 			_rosterItemBig = ( DataTemplate ) App.Current.FindResource( "RosterItemBig" ) ;
@@ -181,7 +253,6 @@ namespace xeus.Controls
 			}
 		}
 
-		Dictionary< string, Expander > _expanders = new Dictionary< string, Expander >();
 		private Dictionary< string, bool > _expanderStates = new Dictionary< string, bool >();
 
 		private void OnLoadExpander( object sender, RoutedEventArgs e )
@@ -189,7 +260,6 @@ namespace xeus.Controls
 			Expander expander = sender as Expander ;
 			CollectionViewGroup viewGroup = expander.DataContext as CollectionViewGroup ;
 			string expanderName = viewGroup.Name.ToString() ;
-			_expanders[ expanderName ] = expander ;
 
 			expander.IsExpanded = IsExpanded( expanderName ) ;
 		}
@@ -256,8 +326,7 @@ namespace xeus.Controls
 						}
 
 						//_rosterView.Refresh() ;
-						Client.Instance.Roster.Items.Remove( ( RosterItem ) sender ) ;
-						Client.Instance.Roster.Items.Add( ( RosterItem ) sender ) ;
+						Client.Instance.Roster.AddRemoveItem( ( RosterItem ) sender ) ;
 						break ;
 					}
 			}

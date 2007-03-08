@@ -13,9 +13,9 @@
 	Background="{x:Null}" ResizeMode="NoResize" >
   <StackPanel Margin="5,5,5,5">
 
-    <Label Content="Add new User" Foreground="#FFB99A75"/>
+    <TextBlock x:Name="_title" Text="Add new User" Foreground="#FFB99A75" Margin="0,0,0,10"/>
 
-    <Label Content="User Name" Foreground="#FF828282"/>
+    <TextBlock x:Name="_titleAdd" Text="User Name" Foreground="#FF828282" Margin="0,0,0,8"/>
 
   	<TextBox x:Name="_jid" TextWrapping="Wrap" Style="{DynamicResource TextBoxStyleInDialog}" MaxLines="1" TabIndex="0"/>
 

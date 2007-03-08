@@ -85,21 +85,6 @@ namespace xeus.Controls
 				}
 
 				_state = value ;
-/*
-				switch ( _state )
-				{
-					case TrayState.Normal:
-						{
-							_reloadTime.Stop();
-							_notifyIcon.Icon = _mainIcon ;
-							break ;
-						}
-					case TrayState.NewMessage:
-						{
-							_reloadTime.Start();
-							break ;
-						}
-				}*/
 			}
 		}
 

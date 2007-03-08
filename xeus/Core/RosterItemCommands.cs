@@ -80,7 +80,9 @@ namespace xeus.Core
 			RosterItem rosterItem = e.Parameter as RosterItem ;
 
 			e.Handled = true ;
-			e.CanExecute = ( rosterItem != null && Client.Instance.IsAvailable ) ;
+			e.CanExecute = ( rosterItem != null
+							&& rosterItem.IsInitialized
+							&& Client.Instance.IsAvailable ) ;
 		}
 
 		public static void CanExecuteAuthRequestFrom( object sender, CanExecuteRoutedEventArgs e )
@@ -88,7 +90,9 @@ namespace xeus.Core
 			RosterItem rosterItem = e.Parameter as RosterItem ;
 
 			e.Handled = true ;
-			e.CanExecute = ( rosterItem != null && Client.Instance.IsAvailable ) ;
+			e.CanExecute = ( rosterItem != null
+							&& rosterItem.IsInitialized
+							&& Client.Instance.IsAvailable ) ;
 		}
 
 		public static void CanExecuteAuthSendTo( object sender, CanExecuteRoutedEventArgs e )
@@ -96,7 +100,9 @@ namespace xeus.Core
 			RosterItem rosterItem = e.Parameter as RosterItem ;
 
 			e.Handled = true ;
-			e.CanExecute = ( rosterItem != null && Client.Instance.IsAvailable ) ;
+			e.CanExecute = ( rosterItem != null
+							&& rosterItem.IsInitialized
+							&& Client.Instance.IsAvailable ) ;
 		}
 
 		public static void CanExecuteContactAdd( object sender, CanExecuteRoutedEventArgs e )
@@ -110,14 +116,18 @@ namespace xeus.Core
 			RosterItem rosterItem = e.Parameter as RosterItem ;
 
 			e.Handled = true ;
-			e.CanExecute = ( rosterItem != null && Client.Instance.IsAvailable ) ;
+			e.CanExecute = ( rosterItem != null
+							&& rosterItem.IsInitialized
+							&& Client.Instance.IsAvailable ) ;
 		}
 
 		public static void ExecuteAuthSendTo( object sender, ExecutedRoutedEventArgs e )
 		{
 			RosterItem rosterItem = e.Parameter as RosterItem ;
 
-			if ( rosterItem != null )
+			if ( rosterItem != null
+							&& rosterItem.IsInitialized
+							&& Client.Instance.IsAvailable )
 			{
 				Client.Instance.PresenceManager.ApproveSubscriptionRequest( rosterItem.XmppRosterItem.Jid ) ;
 			}
@@ -129,7 +139,9 @@ namespace xeus.Core
 		{
 			RosterItem rosterItem = e.Parameter as RosterItem ;
 
-			if ( rosterItem != null )
+			if ( rosterItem != null
+							&& rosterItem.IsInitialized
+							&& Client.Instance.IsAvailable )
 			{
 				Client.Instance.PresenceManager.Subcribe( rosterItem.XmppRosterItem.Jid ) ;
 			}
@@ -141,7 +153,9 @@ namespace xeus.Core
 		{
 			RosterItem rosterItem = e.Parameter as RosterItem ;
 
-			if ( rosterItem != null )
+			if ( rosterItem != null
+							&& rosterItem.IsInitialized
+							&& Client.Instance.IsAvailable )
 			{
 				Client.Instance.PresenceManager.RefuseSubscriptionRequest( rosterItem.XmppRosterItem.Jid ) ;
 			}
@@ -160,7 +174,9 @@ namespace xeus.Core
 		{
 			RosterItem rosterItem = e.Parameter as RosterItem ;
 
-			if ( rosterItem != null )
+			if ( rosterItem != null
+							&& rosterItem.IsInitialized
+							&& Client.Instance.IsAvailable )
 			{
 				Client.Instance.Roster.DeleteRosterItem( rosterItem ) ;
 			}

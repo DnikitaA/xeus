@@ -10,7 +10,22 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ControlResources.xaml" />
       </ResourceDictionary.MergedDictionaries>
-  
+	<ContextMenu x:Key="_rosterItemContextMenu" StaysOpen="true"
+		Opened="OnContextMenuOpen">
+		<MenuItem Header="Move To Group">
+		</MenuItem>
+
+	  <MenuItem Command="local:RosterItemCommands.ContactDelete"
+	    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},Path=DataContext}"/>
+	  <MenuItem Header="Authorization">
+		        <MenuItem Command="local:RosterItemCommands.AuthRequestFrom"
+		  				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},Path=DataContext}"/>
+	          <MenuItem Command="local:RosterItemCommands.AuthSendTo"
+		  				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},Path=DataContext}"/>
+	          <MenuItem Command="local:RosterItemCommands.AuthRemoveFrom"
+		  				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},Path=DataContext}"/>
+	     </MenuItem>
+	</ContextMenu>
     </ResourceDictionary>
   </UserControl.Resources>
 

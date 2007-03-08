@@ -25,6 +25,7 @@ namespace xeus.Core
 
 		public event PropertyChangedEventHandler PropertyChanged ;
 		private delegate void SetPresenceCallback( ShowType showType, bool isIdle ) ;
+		private delegate void SetGroupCallback( RosterItem rosterItem, string group ) ;
 
 		XmppClientConnection _xmppConnection = new XmppClientConnection() ;
 		
@@ -590,6 +591,23 @@ namespace xeus.Core
 				
 				// Ask for subscription now
 				_xmppConnection.PresenceManager.Subcribe( jid ) ;
+			}
+		}
+
+		public void SetRosterGropup( RosterItem rosterItem, string group )
+		{
+			if ( App.DispatcherThread.CheckAccess() )
+			{
+				if ( rosterItem.IsInitialized && !rosterItem.IsService )
+				{
+					_xmppConnection.RosterManager.UpdateRosterItem( rosterItem.XmppRosterItem.Jid,
+					                                                rosterItem.NickName, group ) ;
+				}
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new SetGroupCallback( SetRosterGropup ), rosterItem, group ) ;
 			}
 		}
 
