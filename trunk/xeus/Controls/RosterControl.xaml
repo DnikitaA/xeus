@@ -48,7 +48,7 @@
              Style="{DynamicResource ListBoxStyleRoster}"
              MouseDoubleClick="OnDoubleClickRosterItem" AllowDrop="True" DockPanel.Dock="Top"
              Drop="RosterControl_Drop" DragOver="RosterControl_DragOver" KeyDown="OnKeyDown" 
-           	 PreviewMouseLeftButtonDown="RosterControl_PreviewMouseLeftButtonDown" Margin="0,0,0,10" FontSize="9" IsTextSearchEnabled="False" TabIndex="0" >
+           	 PreviewMouseLeftButtonDown="RosterControl_PreviewMouseLeftButtonDown" Margin="0,0,0,10" FontSize="9" IsTextSearchEnabled="False" TabIndex="0" Background="#FF8F8F8F" >
       <ListBox.GroupStyle>
         <GroupStyle>
         <GroupStyle.ContainerStyle>
