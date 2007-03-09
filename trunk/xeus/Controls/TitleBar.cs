@@ -45,6 +45,7 @@ namespace xeus.Controls
 		private Button closeButton ;
 		private Button maxButton ;
 		private Button minButton ;
+		private Path _xeus ;
 
 		public TitleBar()
 		{
@@ -63,12 +64,19 @@ namespace xeus.Controls
 			closeButton = ( Button ) Template.FindName( "CloseButton", this ) ;
 			minButton = ( Button ) Template.FindName( "MinButton", this ) ;
 			maxButton = ( Button ) Template.FindName( "MaxButton", this ) ;
+			_xeus = ( Path ) Template.FindName( "_xeus", this ) ;
 
 			closeButton.Click += new RoutedEventHandler( CloseButton_Click ) ;
 			minButton.Click += new RoutedEventHandler( MinButton_Click ) ;
 			maxButton.Click += new RoutedEventHandler( MaxButton_Click ) ;
 
 			Window window = TemplatedParent as Window ;
+
+			if ( window != null )
+			{
+				window.Activated += new System.EventHandler( window_Activated );
+				window.Deactivated += new System.EventHandler( window_Deactivated );
+			}
 
 			if ( window != null && window.ResizeMode == ResizeMode.NoResize )
 			{
@@ -101,6 +109,15 @@ namespace xeus.Controls
 			}
 		}
 
+		void window_Deactivated( object sender, System.EventArgs e )
+		{
+			_xeus.Fill = Brushes.Black ;
+		}
+
+		void window_Activated( object sender, System.EventArgs e )
+		{
+			_xeus.Fill = Brushes.Gray ;
+		}
 
 		static TitleBar()
 		{
