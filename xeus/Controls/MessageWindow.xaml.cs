@@ -212,6 +212,7 @@ namespace xeus.Controls
 				if ( _instance == null )
 				{
 					_instance = new MessageWindow() ;
+					_instance.Activate() ;
 				}
 
 				TabItem tab = FindTab( jid ) ;
