@@ -1,6 +1,5 @@
 using System.Collections.Generic ;
 using System.Timers ;
-using System.Windows.Threading ;
 using agsXMPP ;
 using agsXMPP.protocol.client ;
 using agsXMPP.protocol.iq.roster ;
@@ -15,14 +14,7 @@ namespace xeus.Core
 
 		#region delegates
 
-		private delegate void PresenceCallback( Presence presence ) ;
-		private delegate void OnPresenceCallback( object sender, Presence presence ) ;
-
-		private delegate void VcardResultCallback( object sender, IQ iq, object data ) ;
-
 		public delegate bool PresenceSubscribeVetoHandler( Jid jid ) ;
-
-		public delegate void OnRosterItemCallback( object sender, agsXMPP.protocol.iq.roster.RosterItem item ) ;
 
 		#endregion
 
@@ -32,34 +24,34 @@ namespace xeus.Core
 
 		#endregion
 
-		Timer _reloadTime = new Timer( 5000 );
+		private Timer _reloadTime = new Timer( 5000 ) ;
 
-		Dictionary< string, Presence > _presences = new Dictionary< string, Presence >( );
+		private Dictionary< string, Presence > _presences = new Dictionary< string, Presence >() ;
 
 		public void ReadRosterFromDb()
 		{
-			_reloadTime.AutoReset = false;
-			_reloadTime.Elapsed += new ElapsedEventHandler( _reloadTime_Elapsed );
+			_reloadTime.AutoReset = false ;
+			_reloadTime.Elapsed += new ElapsedEventHandler( _reloadTime_Elapsed ) ;
 
-			Database database = new Database();
+			Database database = new Database() ;
 
-			List<RosterItem> dbRosterItems = database.ReadRosterItems();
+			List< RosterItem > dbRosterItems = database.ReadRosterItems() ;
 
-			foreach ( RosterItem item in dbRosterItems )
+			lock ( _items._syncObject )
 			{
-				Vcard vcard = Storage.GetVcard( item.Key );
-				item.SetVcard( vcard );
-
-				lock ( _items )
+				foreach ( RosterItem item in dbRosterItems )
 				{
-					_items.Add( item );
+					Vcard vcard = Storage.GetVcard( item.Key ) ;
+					item.SetVcard( vcard ) ;
+
+					_items.Add( item ) ;
 				}
 			}
 		}
 
-		void _reloadTime_Elapsed( object sender, ElapsedEventArgs e )
+		private void _reloadTime_Elapsed( object sender, ElapsedEventArgs e )
 		{
-			lock( _items )
+			lock ( _items._syncObject )
 			{
 				foreach ( RosterItem rosterItem in _items )
 				{
@@ -81,7 +73,7 @@ namespace xeus.Core
 
 		public void AddRemoveItem( RosterItem rosterItem )
 		{
-			lock ( _items )
+			lock ( _items._syncObject )
 			{
 				_items.Remove( rosterItem ) ;
 				_items.Add( rosterItem ) ;
@@ -96,7 +88,7 @@ namespace xeus.Core
 
 		public RosterItem FindItem( string bare )
 		{
-			lock ( _items )
+			lock ( _items._syncObject )
 			{
 				foreach ( RosterItem rosterItem in _items )
 				{
@@ -112,85 +104,70 @@ namespace xeus.Core
 
 		private void ChangePresence( Presence presence )
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			// if it is already in roster, change status property
+			RosterItem rosterItem = FindItem( presence.From.Bare ) ;
+
+			if ( rosterItem != null && presence.Error == null )
 			{
-				// if it is already in roster, change status property
-				RosterItem rosterItem = FindItem( presence.From.Bare ) ;
+				rosterItem.Presence = presence ;
 
-				if ( rosterItem != null && presence.Error == null )
+				if ( rosterItem.IsService )
 				{
-					rosterItem.Presence = presence ;
-
-					if ( rosterItem.IsService )
+					if ( presence.Type == PresenceType.available )
 					{
-						if ( presence.Type == PresenceType.available )
-						{
-							_reloadTime.Start() ;
-						}
-						else
-						{
-							App.Instance.Window.AlertError( "Service problem", string.Format( "Service {0} became unavailable", rosterItem.Key ) );
-						}
+						_reloadTime.Start() ;
 					}
-
-					if ( !rosterItem.HasVCardRecivied && presence.Type == PresenceType.available )
+					else
 					{
-						AskForVCard( rosterItem.Key ) ;
+						App.Instance.Window.AlertError( "Service problem",
+						                                string.Format( "Service {0} became unavailable", rosterItem.Key ) ) ;
 					}
 				}
-				else
+
+				if ( !rosterItem.HasVCardRecivied && presence.Type == PresenceType.available )
 				{
-					lock ( _presences )
-					{
-						_presences[ presence.From.Bare ] = presence ;
-					}
+					AskForVCard( rosterItem.Key ) ;
 				}
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
-				                                  new PresenceCallback( ChangePresence ), presence, new object[] { } ) ;
+				lock ( _presences )
+				{
+					_presences[ presence.From.Bare ] = presence ;
+				}
 			}
 		}
 
 		private void xmppConnection_OnPresence( object sender, Presence pres )
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			switch ( pres.Type )
 			{
-				switch ( pres.Type )
-				{
-					case PresenceType.subscribe:
-						{
-							Client.Instance.SubscribePresence( pres.From, OnSubscribePresenceVeto( pres.From ) ) ;
-							break ;
-						}
-					case PresenceType.subscribed:
-						{
-							App.Instance.Window.AlertInfo( "Authorization", string.Format( "You were authorized by {0}", pres.From ) ) ;
-							AskForVCard( pres.From.Bare ) ;
-							break ;
-						}
-					case PresenceType.unsubscribe:
-						{
-							break ;
-						}
-					case PresenceType.unsubscribed:
-						{
-							App.Instance.Window.AlertInfo( "Authorization",
-							                               string.Format( "{0} removed the authorization from you", pres.From ) ) ;
-							break ;
-						}
-					default:
-						{
-							ChangePresence( pres ) ;
-							break ;
-						}
-				}
-			}
-			else
-			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
-				                                  new OnPresenceCallback( xmppConnection_OnPresence ), sender, pres ) ;
+				case PresenceType.subscribe:
+					{
+						Client.Instance.SubscribePresence( pres.From, OnSubscribePresenceVeto( pres.From ) ) ;
+						break ;
+					}
+				case PresenceType.subscribed:
+					{
+						App.Instance.Window.AlertInfo( "Authorization", string.Format( "You were authorized by {0}", pres.From ) ) ;
+						AskForVCard( pres.From.Bare ) ;
+						break ;
+					}
+				case PresenceType.unsubscribe:
+					{
+						break ;
+					}
+				case PresenceType.unsubscribed:
+					{
+						App.Instance.Window.AlertInfo( "Authorization",
+						                               string.Format( "{0} removed the authorization from you", pres.From ) ) ;
+						break ;
+					}
+				default:
+					{
+						ChangePresence( pres ) ;
+						break ;
+					}
 			}
 		}
 
@@ -206,42 +183,34 @@ namespace xeus.Core
 
 		private void VcardResult( object sender, IQ iq, object data )
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			// if it is already in roster, change status property
+			RosterItem rosterItem = FindItem( ( string ) data ) ;
+
+			if ( rosterItem != null )
 			{
-				// if it is already in roster, change status property
-				RosterItem rosterItem = FindItem( ( string ) data ) ;
-
-				if ( rosterItem != null )
+				if ( iq.Type == IqType.error || iq.Error != null )
 				{
-					if ( iq.Type == IqType.error || iq.Error != null )
-					{
-						rosterItem.Errors.Add( string.Format( "{0}: {1}", iq.Error.Code, iq.Error.Message ) ) ;
-					}
-					else if ( iq.Type == IqType.result )
-					{
-						rosterItem.HasVCardRecivied = true ;
-						rosterItem.SetVcard( iq.Vcard ) ;
+					rosterItem.Errors.Add( string.Format( "{0}: {1}", iq.Error.Code, iq.Error.Message ) ) ;
+				}
+				else if ( iq.Type == IqType.result )
+				{
+					rosterItem.HasVCardRecivied = true ;
+					rosterItem.SetVcard( iq.Vcard ) ;
 
-						if ( iq.Vcard != null )
-						{
-							Storage.CacheVCard( iq.Vcard, rosterItem.Key ) ;
-						}
+					if ( iq.Vcard != null )
+					{
+						Storage.CacheVCard( iq.Vcard, rosterItem.Key ) ;
 					}
 				}
-			}
-			else
-			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.ApplicationIdle,
-				                                  new VcardResultCallback( VcardResult ), sender, new object[] { iq, data } ) ;
 			}
 		}
 
 		private void xmppConnecion_OnRosterItem( object sender, agsXMPP.protocol.iq.roster.RosterItem item )
 		{
-			if ( App.DispatcherThread.CheckAccess() )
-			{
-				RosterItem existingRosterItem = FindItem( item.Jid.Bare ) ;
+			RosterItem existingRosterItem = FindItem( item.Jid.Bare ) ;
 
+			lock ( _items._syncObject )
+			{
 				Presence presence = null ;
 
 				lock ( _presences )
@@ -258,10 +227,7 @@ namespace xeus.Core
 				{
 					if ( existingRosterItem != null )
 					{
-						lock ( _items )
-						{
-							_items.Remove( existingRosterItem ) ;
-						}
+						_items.Remove( existingRosterItem ) ;
 					}
 				}
 				else
@@ -269,7 +235,7 @@ namespace xeus.Core
 					if ( existingRosterItem != null )
 					{
 						existingRosterItem.XmppRosterItem = item ;
-						
+
 						if ( presence != null )
 						{
 							existingRosterItem.Presence = presence ;
@@ -284,19 +250,11 @@ namespace xeus.Core
 							rosterItem.Presence = presence ;
 						}
 
-						lock ( _items )
-						{
-							_items.Add( rosterItem ) ;
-						}
+						_items.Add( rosterItem ) ;
 
 						AskForVCard( rosterItem.Key ) ;
 					}
 				}
-			}
-			else
-			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
-				                                  new OnRosterItemCallback( xmppConnecion_OnRosterItem ), sender, item ) ;
 			}
 		}
 
@@ -311,10 +269,20 @@ namespace xeus.Core
 		{
 			if ( rosterItem.IsService )
 			{
-				Client.Instance.UnregisterService( new Jid( rosterItem.Key ) );
+				Client.Instance.UnregisterService( new Jid( rosterItem.Key ) ) ;
 			}
 
-			Client.Instance.RosterManager.RemoveRosterItem( new Jid( rosterItem.Key ) ) ;
+			if ( rosterItem.IsInitialized )
+			{
+				Client.Instance.RosterManager.RemoveRosterItem( new Jid( rosterItem.Key ) ) ;
+			}
+			else
+			{
+				lock ( _items._syncObject )
+				{
+					_items.Remove( rosterItem ) ;
+				}
+			}
 		}
 	}
 }

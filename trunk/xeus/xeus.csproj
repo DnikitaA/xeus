@@ -159,6 +159,7 @@
     <Compile Include="Core\Agent.cs" />
     <Compile Include="Core\Client.cs" />
     <Compile Include="Core\DisplayNameFontSizeConverter.cs" />
+    <Compile Include="Core\NotifyInfoDispatcher.cs" />
     <Compile Include="Core\ObservableCollectionDisp.cs" />
     <Compile Include="Core\OpacityStatusConverter.cs" />
     <Compile Include="Core\PresenceTemplate.cs" />

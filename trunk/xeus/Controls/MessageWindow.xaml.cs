@@ -83,9 +83,12 @@ namespace xeus.Controls
 
 				if ( rosterItem != null )
 				{
-					foreach ( ChatMessage message in rosterItem.Messages )
+					lock ( rosterItem.Messages._syncObject )
 					{
-						message.RelativeTime = TimeUtilities.FormatRelativeTime( message.Time ) ;
+						foreach ( ChatMessage message in rosterItem.Messages )
+						{
+							message.RelativeTime = TimeUtilities.FormatRelativeTime( message.Time ) ;
+						}
 					}
 				}
 			}
@@ -150,7 +153,11 @@ namespace xeus.Controls
 
 						foreach ( ChatMessage chatMessage in messages )
 						{
-							rosterItem.Messages.Insert( i, chatMessage ) ;
+							lock ( rosterItem.Messages._syncObject )
+							{
+								rosterItem.Messages.Insert( i, chatMessage ) ;
+							}
+
 							i++ ;
 						}
 

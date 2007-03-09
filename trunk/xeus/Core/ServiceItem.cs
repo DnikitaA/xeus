@@ -5,15 +5,13 @@ using agsXMPP.protocol.iq.disco ;
 
 namespace xeus.Core
 {
-	public class ServiceItem : INotifyPropertyChanged
+	internal class ServiceItem : NotifyInfoDispatcher
 	{
 		private string _name = String.Empty ;
 		private Jid _jid = null ;
 		private DiscoInfo _disco = null ;
 
 		private bool _isRegistered = false ;
-
-		public event PropertyChangedEventHandler PropertyChanged ;
 
 		private ObservableCollectionDisp< DiscoFeature > _features = new ObservableCollectionDisp< DiscoFeature >( App.DispatcherThread ) ;
 		private string _type = String.Empty ;
@@ -145,14 +143,6 @@ namespace xeus.Core
 				}
 
 				return _disco.HasFeature( agsXMPP.Uri.IQ_REGISTER ) ;
-			}
-		}
-
-		private void NotifyPropertyChanged( String info )
-		{
-			if ( PropertyChanged != null )
-			{
-				PropertyChanged( this, new PropertyChangedEventArgs( info ) ) ;
 			}
 		}
 	}

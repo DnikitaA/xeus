@@ -7,7 +7,7 @@ using Clifton.Tools.Xml ;
 
 namespace xeus.Core
 {
-	internal class ChatMessage : INotifyPropertyChanged
+	internal class ChatMessage : NotifyInfoDispatcher
 	{
 		private string _from ;
 		private string _to ;
@@ -16,8 +16,6 @@ namespace xeus.Core
 		private string _relativeTime ;
 		private string _body ;
 		private bool _isFromDb = false ;
-
-		public event PropertyChangedEventHandler PropertyChanged ;
 
 		public ChatMessage( DataRow row, RosterItem rosterItem )
 		{
@@ -130,14 +128,6 @@ namespace xeus.Core
 			get
 			{
 				return _isFromDb ;
-			}
-		}
-
-		private void NotifyPropertyChanged( String info )
-		{
-			if ( PropertyChanged != null )
-			{
-				PropertyChanged( this, new PropertyChangedEventArgs( info ) ) ;
 			}
 		}
 	}

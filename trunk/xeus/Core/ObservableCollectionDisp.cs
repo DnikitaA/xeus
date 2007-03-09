@@ -6,6 +6,8 @@ namespace xeus.Core
 {
 	public class ObservableCollectionDisp< T > : ObservableCollection< T >
 	{
+		public readonly object _syncObject = new object();
+
 		private Dispatcher dispatcherUIThread ;
 
 		private delegate void SetItemCallback( int index, T item ) ;

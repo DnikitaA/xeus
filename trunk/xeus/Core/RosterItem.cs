@@ -15,7 +15,7 @@ using Clifton.Tools.Xml ;
 namespace xeus.Core
 {
 	[Serializable]
-	internal class RosterItem : INotifyPropertyChanged, IDisposable
+	internal class RosterItem : NotifyInfoDispatcher, IDisposable
 	{
 		private ObservableCollectionDisp< ChatMessage > _messages =
 			new ObservableCollectionDisp< ChatMessage >( App.DispatcherThread ) ;
@@ -23,7 +23,7 @@ namespace xeus.Core
 		private ObservableCollectionDisp< string > _errors =
 			new ObservableCollectionDisp< string >( App.DispatcherThread ) ;
 
-		private delegate void SetVcardCallback( Vcard vcard ) ;
+		public delegate void VcardHandler( Vcard vcard ) ;
 
 		private agsXMPP.protocol.iq.roster.RosterItem _rosterItem ;
 		private string _statusText = "Unavailable" ;
@@ -48,8 +48,6 @@ namespace xeus.Core
 		private string _lastMessageTo = "No message recieved" ;
 		private SubscriptionType _subscriptionType = SubscriptionType.none ;
 		private string _customName = String.Empty ;
-
-		public event PropertyChangedEventHandler PropertyChanged ;
 
 		private Presence _presence ;
 		private string _statusDescription = "Unavailable" ;
@@ -184,11 +182,6 @@ namespace xeus.Core
 				Name = _rosterItem.Name ;
 				SubscriptionType = _rosterItem.Subscription ;
 
-				if ( Key.StartsWith( "5601" ) )
-				{
-					
-				}
-				
 				if ( group != Group )
 				{
 					NotifyPropertyChanged( "Group" ) ;
@@ -396,6 +389,7 @@ namespace xeus.Core
 			}
 		}
 
+		// image has to be always created in Dispatcher thread!!!
 		public void SetVcard( Vcard vcard )
 		{
 			if ( App.DispatcherThread.CheckAccess() )
@@ -436,7 +430,7 @@ namespace xeus.Core
 			else
 			{
 				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
-				                                  new SetVcardCallback( SetVcard ), vcard ) ;
+				                                  new VcardHandler( SetVcard ), vcard ) ;
 			}
 		}
 
@@ -617,9 +611,11 @@ namespace xeus.Core
 			{
 				return _hasVCardRecivied ;
 			}
+
 			set
 			{
 				_hasVCardRecivied = value ;
+				NotifyPropertyChanged( "HasVCardRecivied" ) ;
 			}
 		}
 
@@ -677,14 +673,6 @@ namespace xeus.Core
 			}
 		}
 
-		private void NotifyPropertyChanged( String info )
-		{
-			if ( PropertyChanged != null )
-			{
-				PropertyChanged( this, new PropertyChangedEventArgs( info ) ) ;
-			}
-		}
-
 		public string SubscriptionTypeText
 		{
 			get
@@ -720,7 +708,7 @@ namespace xeus.Core
 		{
 			get
 			{
-				return ( _rosterItem != null /*&& _rosterItem.Jid.Resource == "registered"*/ ) ;
+				return ( _rosterItem != null ) ;
 			}
 		}
 
