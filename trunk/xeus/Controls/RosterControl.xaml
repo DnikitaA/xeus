@@ -17,7 +17,10 @@
 		<Separator/>
 		  <MenuItem Command="local:RosterItemCommands.ContactDelete"
 		    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},Path=DataContext}"/>
-		  <MenuItem Header="Authorization">
+      <MenuItem Command="local:RosterItemCommands.ContactRename"
+        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},Path=DataContext}"/>
+    <Separator/>
+    <MenuItem Header="Authorization">
 		        <MenuItem Command="local:RosterItemCommands.AuthRequestFrom"
 		  				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},Path=DataContext}"/>
 	          <MenuItem Command="local:RosterItemCommands.AuthSendTo"

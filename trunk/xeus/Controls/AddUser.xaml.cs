@@ -25,6 +25,7 @@ namespace xeus.Controls
 
 			_title.Text = title ;
 			_titleAdd.Text = text ;
+			_jid.Focus() ;
 		}
 
 		public string Value

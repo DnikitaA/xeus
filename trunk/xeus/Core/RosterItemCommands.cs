@@ -2,6 +2,7 @@ using System.Windows ;
 using System.Windows.Input ;
 using System.Windows.Threading ;
 using agsXMPP ;
+using xeus.Controls ;
 
 namespace xeus.Core
 {
@@ -14,6 +15,7 @@ namespace xeus.Core
 
 		private static RoutedUICommand _contactAdd = new RoutedUICommand( "Add New Contact", "contactAdd", typeof ( RosterItemCommands ) ) ;
 		private static RoutedUICommand _contactDelete = new RoutedUICommand( "Delete Contact", "contactDelete", typeof ( RosterItemCommands ) ) ;
+		private static RoutedUICommand _contactRename = new RoutedUICommand( "Rename Contact", "contactRename", typeof ( RosterItemCommands ) ) ;
 
 		public static RoutedUICommand AuthSendTo
 		{
@@ -55,6 +57,14 @@ namespace xeus.Core
 			}
 		}
 
+		public static RoutedUICommand ContactRename
+		{
+			get
+			{
+				return _contactRename ;
+			}
+		}
+
 		static RosterItemCommands()
 		{
 			_dispatcher = Dispatcher.CurrentDispatcher ;
@@ -73,6 +83,9 @@ namespace xeus.Core
 
 			Application.Current.MainWindow.CommandBindings.Add(
 				new CommandBinding( _contactDelete, ExecuteContactDelete, CanExecuteContactDelete ) ) ;
+
+			Application.Current.MainWindow.CommandBindings.Add(
+				new CommandBinding( _contactRename, ExecuteContactRename, CanExecuteContactRename ) ) ;
 		}
 
 		public static void CanExecuteAuthRemoveFrom( object sender, CanExecuteRoutedEventArgs e )
@@ -117,6 +130,14 @@ namespace xeus.Core
 
 			e.Handled = true ;
 			e.CanExecute = ( rosterItem != null && Client.Instance.IsAvailable ) ;
+		}
+
+		public static void CanExecuteContactRename( object sender, CanExecuteRoutedEventArgs e )
+		{
+			RosterItem rosterItem = e.Parameter as RosterItem ;
+
+			e.Handled = true ;
+			e.CanExecute = ( rosterItem != null ) ;
 		}
 
 		public static void ExecuteAuthSendTo( object sender, ExecutedRoutedEventArgs e )
@@ -175,6 +196,25 @@ namespace xeus.Core
 			if ( rosterItem != null && Client.Instance.IsAvailable )
 			{
 				Client.Instance.Roster.DeleteRosterItem( rosterItem ) ;
+			}
+
+			e.Handled = true ;
+		}
+
+		public static void ExecuteContactRename( object sender, ExecutedRoutedEventArgs e )
+		{
+			RosterItem rosterItem = e.Parameter as RosterItem ;
+
+			if ( rosterItem != null )
+			{
+				AskForSingleValue askForSingleValue = new AskForSingleValue( "Rename Contact", "Custom Name" );
+
+				askForSingleValue.ShowDialog();
+
+				if ( askForSingleValue.DialogResult.HasValue && askForSingleValue.DialogResult.Value )
+				{
+					rosterItem.CustomName = askForSingleValue.Value ;
+				}
 			}
 
 			e.Handled = true ;

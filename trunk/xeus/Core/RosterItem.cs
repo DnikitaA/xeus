@@ -463,9 +463,15 @@ namespace xeus.Core
 			}
 			set
 			{
+				string oldDisplayName = DisplayName ;
+
 				_fullName = value ;
 				NotifyPropertyChanged( "FullName" ) ;
-				NotifyPropertyChanged( "DisplayName" ) ;
+
+				if ( oldDisplayName != DisplayName )
+				{
+					NotifyPropertyChanged( "DisplayName" ) ;
+				}
 			}
 		}
 
@@ -477,9 +483,15 @@ namespace xeus.Core
 			}
 			set
 			{
+				string oldDisplayName = DisplayName ;
+
 				_nickName = value ;
 				NotifyPropertyChanged( "NickName" ) ;
-				NotifyPropertyChanged( "DisplayName" ) ;
+
+				if ( oldDisplayName != DisplayName )
+				{
+					NotifyPropertyChanged( "DisplayName" ) ;
+				}
 			}
 		}
 
@@ -504,9 +516,15 @@ namespace xeus.Core
 			}
 			set
 			{
+				string oldDisplayName = DisplayName ;
+
 				_name = value ;
 				NotifyPropertyChanged( "Name" ) ;
-				NotifyPropertyChanged( "DisplayName" ) ;
+
+				if ( oldDisplayName != DisplayName )
+				{
+					NotifyPropertyChanged( "DisplayName" ) ;
+				}	
 			}
 		}
 
@@ -690,9 +708,16 @@ namespace xeus.Core
 
 			set
 			{
+				string oldDisplayName = DisplayName ;
+
 				_customName = value ;
+
+				if ( oldDisplayName != DisplayName )
+				{
+					NotifyPropertyChanged( "DisplayName" ) ;
+				}
+
 				NotifyPropertyChanged( "CustomName" ) ;
-				NotifyPropertyChanged( "DisplayName" ) ;
 			}
 		}
 
