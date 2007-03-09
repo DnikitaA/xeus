@@ -29,6 +29,11 @@ namespace xeus
 
 		protected static App _theApp ;
 
+		public App()
+		{
+			_theApp = this ;
+		}
+
 		public static App Instance
 		{
 			get
@@ -39,7 +44,6 @@ namespace xeus
 
 		protected override void OnStartup( StartupEventArgs e )
 		{
-			_theApp = this ;
 			_window = new MessengerWindow() ;
 
 			base.OnStartup( e ) ;

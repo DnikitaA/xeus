@@ -141,14 +141,14 @@ namespace xeus
 		{
 			if ( Client.Instance.IsAvailable )
 			{
-				AddUser addUser = new AddUser() ;
+				AskForSingleValue askForSingleValue = new AskForSingleValue( "Add new User", "User Name" ) ;
 
-				addUser.Owner = this ;
-				addUser.ShowDialog() ;
+				askForSingleValue.Owner = this ;
+				askForSingleValue.ShowDialog() ;
 
-				if ( addUser.DialogResult.HasValue && addUser.DialogResult.Value )
+				if ( askForSingleValue.DialogResult.HasValue && askForSingleValue.DialogResult.Value )
 				{
-					Client.Instance.AddUser( addUser.Jid ) ;
+					Client.Instance.AddUser( askForSingleValue.Value ) ;
 				}
 			}
 		}

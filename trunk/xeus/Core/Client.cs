@@ -21,17 +21,17 @@ namespace xeus.Core
 {
 	internal class Client : IDisposable, INotifyPropertyChanged
 	{
-		private static Client _instance = new Client() ;
+		private static readonly Client _instance = new Client() ;
 
 		public event PropertyChangedEventHandler PropertyChanged ;
 		private delegate void SetPresenceCallback( ShowType showType, bool isIdle ) ;
 		private delegate void SetGroupCallback( RosterItem rosterItem, string group ) ;
 
 		XmppClientConnection _xmppConnection = new XmppClientConnection() ;
-		
+
 		private Services _services = new Services();
 		private Roster _roster = new Roster(); 
-		private Agents _agents = new Agents();
+		// private Agents _agents = new Agents();
 		private MessageCenter _messageCenter = new MessageCenter();
 		private Presence _presence ;
 
@@ -77,21 +77,23 @@ namespace xeus.Core
 			}
 		}
 
+		/*
 		public Agents Agents
 		{
 			get
 			{
 				return _agents ;
 			}
-		}
+		}*/
 
 		private Client()
 		{
-			RegisterEvents() ;
 		}
 
 		public void Setup()
 		{
+			RegisterEvents() ;
+
 			_xmppConnection.Username = Settings.Default.Client_UserName ;
 			_xmppConnection.Password = Settings.Default.Client_Password ;
 			_xmppConnection.Server = Settings.Default.Client_Server ;
@@ -481,7 +483,7 @@ namespace xeus.Core
 			_xmppConnection.OnLogin += new ObjectHandler( _xmppConnecion_OnLogin ) ;
 
 			_roster.RegisterEvents( _xmppConnection );
-			_agents.RegisterEvents( _xmppConnection );
+			//_agents.RegisterEvents( _xmppConnection );
 		}
 
 		public void RequestAgents()

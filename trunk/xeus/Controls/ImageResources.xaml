@@ -672,7 +672,7 @@
 		</LinearGradientBrush>
 		</Border.Background>
 	<Border.BitmapEffect>
-		<DropShadowBitmapEffect Direction="312" Opacity="0.625" ShadowDepth="3" Softness="0.46"/>
+		<DropShadowBitmapEffect Direction="312" Opacity="0.625" ShadowDepth="1" Softness="0.46"/>
 	</Border.BitmapEffect>
 	<Grid>
 	<Rectangle VerticalAlignment="Stretch" RadiusX="3" RadiusY="3"

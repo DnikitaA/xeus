@@ -37,7 +37,7 @@
 		</StatusBarItem>
 		<StatusBarItem 
 		    	  x:Name="_statusAddUser" VerticalAlignment="Stretch">
-		    <Button x:Name="_buttonAddUSer" Width="17" Height="17" Template="{DynamicResource AddNewUser}"
+		    <Button x:Name="_buttonAddUser" Width="17" Height="17" Template="{DynamicResource AddNewUser}"
 				Command="localcore:RosterItemCommands.ContactAdd" Background="#FFFFA300"/>
 		</StatusBarItem>
 		<StatusBarItem HorizontalAlignment="Stretch" 

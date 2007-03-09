@@ -32,6 +32,9 @@
           			<GradientStop Color="#5F222222" Offset="1"/>
           		</LinearGradientBrush>
           	</Border.Background>
+			<Grid>
+			<Rectangle Opacity="0.045" Fill="{TemplateBinding Property=Background}" RadiusX="2" RadiusY="2" Margin="2,2,2,2"
+				/>
             <DockPanel Margin="0,5,0,5">
               <Button Grid.Column="4" x:Name="CloseButton"
                     Width="16" Height="16" Template="{DynamicResource WindowButton}" Background="#FFF4866E" DockPanel.Dock="Right" Margin="0,0,5,0" />
@@ -50,6 +53,7 @@
             		</Path.RenderTransform>
             	</Path>
             </DockPanel>
+			</Grid>
           </Border>
         </ControlTemplate>
       </Setter.Value>

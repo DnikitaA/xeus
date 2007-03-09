@@ -127,6 +127,19 @@ namespace xeus.Core
 			}
 		}
 
+		new public void Save()
+		{
+			try
+			{
+				base.Save();
+			}
+
+			catch
+			{
+				
+			}
+		}
+
 		public Dictionary< string, bool > ReadGroups()
 		{
 			Dictionary< string, bool > expanderStates = new Dictionary< string, bool >();

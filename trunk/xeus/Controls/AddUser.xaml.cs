@@ -16,15 +16,18 @@ namespace xeus.Controls
 	/// Interaction logic for AddUser.xaml
 	/// </summary>
 
-	public partial class AddUser : WindowBase
+	public partial class AskForSingleValue : WindowBase
 	{
 
-		public AddUser()
+		public AskForSingleValue( string title, string text )
 		{
 			InitializeComponent();
+
+			_title.Text = title ;
+			_titleAdd.Text = text ;
 		}
 
-		public string Jid
+		public string Value
 		{
 			get
 			{
