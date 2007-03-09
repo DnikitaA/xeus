@@ -34,42 +34,6 @@ namespace xeus.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Client_UserName {
-            get {
-                return ((string)(this["Client_UserName"]));
-            }
-            set {
-                this["Client_UserName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Client_Password {
-            get {
-                return ((string)(this["Client_Password"]));
-            }
-            set {
-                this["Client_Password"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Client_Server {
-            get {
-                return ((string)(this["Client_Server"]));
-            }
-            set {
-                this["Client_Server"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("75")]
         public int UI_RosterSlider {
             get {
@@ -101,6 +65,42 @@ namespace xeus.Properties {
             }
             set {
                 this["Client_IdleMinutesXA"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Client_UserName {
+            get {
+                return ((string)(this["Client_UserName"]));
+            }
+            set {
+                this["Client_UserName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Client_Password {
+            get {
+                return ((string)(this["Client_Password"]));
+            }
+            set {
+                this["Client_Password"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Client_Server {
+            get {
+                return ((string)(this["Client_Server"]));
+            }
+            set {
+                this["Client_Server"] = value;
             }
         }
     }
