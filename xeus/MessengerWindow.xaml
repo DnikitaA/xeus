@@ -15,23 +15,28 @@
     x:Name="messenger"
     Icon="images/xeus.ico"
     >
-  <Window.Resources>
+  <local:WindowBase.Resources>
     <localcore:CountToVisibilityConverter x:Key="_visibilityConverter" />
 
-    <Style TargetType="Separator" x:Key="{x:Static StatusBar.SeparatorStyleKey}">
+    <Style x:Key="{x:Static StatusBar.SeparatorStyleKey}" TargetType="Separator">
       <Setter Property="Height" Value="15"/>
       <Setter Property="Margin" Value="4,4,4,4"/>
       <Setter Property="Template">
         <Setter.Value>
           <ControlTemplate TargetType="Separator">
-            <Border BorderBrush="#FF666666"
-                    BorderThickness="1,1,1,1" d:IsHidden="True"/>
+            <StackPanel
+                    d:IsHidden="True" Margin="5,0,5,0">
+            	<Rectangle Fill="#FFFFFFFF" StrokeThickness="0" Width="3" RadiusX="2" RadiusY="2" Opacity="0.22" Height="3" SnapsToDevicePixels="True" Margin="3,1,3,1"/>
+            	<Rectangle Fill="#FFFFFFFF" StrokeThickness="0" Width="3" RadiusX="2" RadiusY="2" Opacity="0.22" Height="3" SnapsToDevicePixels="True" Margin="3,1,3,1"/>
+            	<Rectangle Fill="#FFFFFFFF" StrokeThickness="0" Width="3" RadiusX="2" RadiusY="2" Opacity="0.22" Height="3" SnapsToDevicePixels="True" Margin="3,1,3,1"/>
+            	<Rectangle Fill="#FFFFFFFF" StrokeThickness="0" Width="3" RadiusX="2" RadiusY="2" Opacity="0.22" Height="3" SnapsToDevicePixels="True" Margin="3,1,3,1"/>
+            </StackPanel>
           </ControlTemplate>
         </Setter.Value>
       </Setter>
     </Style>
 
-  </Window.Resources>
+  </local:WindowBase.Resources>
 
     <DockPanel LastChildFill="True">
 	<StatusBar DockPanel.Dock="Bottom" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}" VerticalAlignment="Bottom" Padding="2,4,2,4">
