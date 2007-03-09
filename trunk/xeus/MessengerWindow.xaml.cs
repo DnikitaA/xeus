@@ -206,9 +206,9 @@ namespace xeus
 
 		protected override void OnClosed( EventArgs e )
 		{
-			base.OnClosed( e ) ;
-
 			Settings.Default.Save();
+
+			base.OnClosed( e ) ;
 
 			_trayIcon.Dispose() ;
 		}
