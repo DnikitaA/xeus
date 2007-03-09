@@ -13,38 +13,54 @@
 	ResizeMode="CanResizeWithGrip"
     ShowInTaskbar="False"
     x:Name="messenger"
+    Icon="images/xeus.ico"
     >
   <Window.Resources>
     <localcore:CountToVisibilityConverter x:Key="_visibilityConverter" />
+
+    <Style TargetType="Separator" x:Key="{x:Static StatusBar.SeparatorStyleKey}">
+      <Setter Property="Height" Value="15"/>
+      <Setter Property="Margin" Value="4,4,4,4"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Separator">
+            <Border BorderBrush="#FF666666"
+                    BorderThickness="1,1,1,1" d:IsHidden="True"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
   </Window.Resources>
 
     <DockPanel LastChildFill="True">
 	<StatusBar DockPanel.Dock="Bottom" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}" VerticalAlignment="Bottom" Padding="2,4,2,4">
 		<StatusBarItem HorizontalAlignment="Stretch" Margin="0,0,0,0"
 		    	  x:Name="_statusMyStatus" VerticalAlignment="Stretch">
-		    <Button x:Name="_buttonmyStatus" Width="17" Height="17" Template="{Binding Path=StatusTemplate}" Click="DisplayPopup" ToolTip="My Status"
+		    <Button x:Name="_buttonmyStatus" Width="20" Height="20" Template="{Binding Path=StatusTemplate}" Click="DisplayPopup" ToolTip="My Status"
 				IsEnabled="{Binding Path=IsAvailable}">
 			<Popup x:Name="_statusPopup" AllowsTransparency="True" Placement="MousePoint" StaysOpen="False" Width="85" Height="85">
 				<local:StatusControl x:Name="_statusControl"/>
 			</Popup>
 			</Button>
 		</StatusBarItem>
+    <StatusBarItem
+		    	  x:Name="_statusAddUser" VerticalAlignment="Stretch">
+      <Button x:Name="_buttonAddUser" Width="20" Height="20" Template="{DynamicResource AddNewUser}"
+      Command="localcore:RosterItemCommands.ContactAdd" ToolTip="Add new User" Background="#FFFFA300"/>
+    </StatusBarItem>
+    <Separator/>
 		<StatusBarItem 
 		    	  x:Name="_statusServices" VerticalAlignment="Stretch">
-		    <Button x:Name="_buttonmyServices" Width="21" Height="21" Template="{DynamicResource OpenServices}"
+		    <Button x:Name="_buttonmyServices" Width="24" Height="24" Template="{DynamicResource OpenServices}"
 				Click="OpenServices" ToolTip="Services" Background="#FFFFA300"
 				IsEnabled="{Binding Path=IsAvailable}"/>
-		</StatusBarItem>
-		<StatusBarItem 
-		    	  x:Name="_statusAddUser" VerticalAlignment="Stretch">
-		    <Button x:Name="_buttonAddUser" Width="17" Height="17" Template="{DynamicResource AddNewUser}"
-				Command="localcore:RosterItemCommands.ContactAdd" Background="#FFFFA300"/>
 		</StatusBarItem>
 		<StatusBarItem HorizontalAlignment="Stretch" 
 		    	  x:Name="_statusUnreadMessages" VerticalAlignment="Stretch"
 		          Visibility="{Binding Path=MessageCenter.ChatMessages.Count, Converter={StaticResource _visibilityConverter}}">
 	  			<StackPanel Orientation="Horizontal">
-			  		<Button Grid.Column="0" Margin="0,0,0,0" Template="{DynamicResource MessageIcon}" x:Name="_buttonMessages" Width="17" Height="17"/>
+			  		<Button Grid.Column="0" Margin="0,0,0,0" Template="{DynamicResource MessageIcon}" x:Name="_buttonMessages" Width="20" Height="20"/>
 					<TextBlock Text="{Binding Path=MessageCenter.ChatMessages.Count}" 
 						VerticalAlignment="Stretch" HorizontalAlignment="Left" Foreground="#FFFFFFFF" Grid.Column="1" Margin="3,0,0,0" />
 				</StackPanel>

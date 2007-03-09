@@ -10,6 +10,7 @@
 	  Style="{StaticResource DarkStyleWindow}"
 	  Background="{x:Null}"
     x:Name="message"
+    Icon="../images/message.ico"
 	>
     <Grid>
     	<TabControl x:Name="_tabs" ContentTemplate="{StaticResource RosterItemMessagesTemplate}" 
