@@ -5,7 +5,7 @@ using agsXMPP.protocol.iq.disco ;
 
 namespace xeus.Core
 {
-	internal class ServiceItem : INotifyPropertyChanged
+	public class ServiceItem : INotifyPropertyChanged
 	{
 		private string _name = String.Empty ;
 		private Jid _jid = null ;

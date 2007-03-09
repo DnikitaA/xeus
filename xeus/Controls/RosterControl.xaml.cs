@@ -42,11 +42,10 @@ namespace xeus.Controls
 				MenuItem menuItem = ( MenuItem )contextMenu.Items[ 0 ] ;
 
 				menuItem.Items.Clear();
-
 				
 				foreach ( string group in _expanderStates.Keys )
 				{
-					if ( !group.StartsWith( "@" ) )
+					if ( !RosterItem.IsSystemGroup( group ) )
 					{
 						MenuItem item = new MenuItem() ;
 						item.Header = group ;
@@ -58,14 +57,17 @@ namespace xeus.Controls
 					}
 				}
 
-				MenuItem itemNewGroup = new MenuItem();
-				itemNewGroup.Header = "New group" ;
-				itemNewGroup.Tag = "newGroup" ;
+				if ( Client.Instance.IsAvailable )
+				{
+					MenuItem itemNewGroup = new MenuItem() ;
+					itemNewGroup.Header = "New group" ;
+					itemNewGroup.Tag = "newGroup" ;
 
-				menuItem.Items.Add( itemNewGroup ) ;
+					menuItem.Items.Add( itemNewGroup ) ;
 
-				itemNewGroup.Unloaded += new RoutedEventHandler( item_Unloaded );
-				itemNewGroup.Click += new RoutedEventHandler( item_Click );
+					itemNewGroup.Unloaded += new RoutedEventHandler( item_Unloaded ) ;
+					itemNewGroup.Click += new RoutedEventHandler( item_Click ) ;
+				}
 			}
 		}
 
@@ -78,15 +80,13 @@ namespace xeus.Controls
 			{
 				if ( item.Tag != null && item.Tag.ToString() == "newGroup" )
 				{
-					AddUser addUser = new AddUser();
+					AskForSingleValue askForSingleValue = new AskForSingleValue( "Add new Group", "Group Name" );
 
-					addUser._title.Text = "Add new Group" ;
-					addUser._titleAdd.Text = "Group Name" ;
-					addUser.ShowDialog();
+					askForSingleValue.ShowDialog();
 
-					if ( addUser.DialogResult.HasValue && addUser.DialogResult.Value )
+					if ( askForSingleValue.DialogResult.HasValue && askForSingleValue.DialogResult.Value )
 					{
-						Client.Instance.SetRosterGropup( rosterItem, addUser.Jid );
+						Client.Instance.SetRosterGropup( rosterItem, askForSingleValue.Value );
 					}
 				}
 				else
@@ -361,7 +361,7 @@ namespace xeus.Controls
 
 		void SetItemTemplate()
 		{
-			if ( _sliderItemSize.Value > 100.0 )
+			if ( _sliderItemSize.Value > 150.0 )
 			{
 				if ( _roster.ItemTemplate != _rosterItemBig )
 				{

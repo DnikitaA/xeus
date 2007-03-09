@@ -16,7 +16,7 @@ namespace xeus.Core
 			{
 				double sliderValue = ( double )value ;
 
-				if ( sliderValue <= 100.0 )
+				if ( sliderValue <= 150.0 )
 				{
 					// small item
 					return sliderValue + 80.0 ;

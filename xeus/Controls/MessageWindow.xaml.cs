@@ -335,6 +335,11 @@ namespace xeus.Controls
 			}
 
 			DisplayChat( activateJid, activate ) ;
+
+			if ( MessageTextBox != null )
+			{
+				MessageTextBox.Focus() ;
+			}
 		}
 	}
 }

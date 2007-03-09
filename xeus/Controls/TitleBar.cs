@@ -70,7 +70,7 @@ namespace xeus.Controls
 
 			Window window = TemplatedParent as Window ;
 
-			if ( window.ResizeMode == ResizeMode.NoResize )
+			if ( window != null && window.ResizeMode == ResizeMode.NoResize )
 			{
 				minButton.Visibility = Visibility.Hidden ;
 				maxButton.Visibility = Visibility.Hidden ;

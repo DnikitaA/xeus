@@ -7,7 +7,7 @@ using Uri=agsXMPP.Uri;
 
 namespace xeus.Core
 {
-	internal class Services
+	public class Services
 	{
 		ObservableCollectionDisp< ServiceItem > _items = new ObservableCollectionDisp< ServiceItem >( App.DispatcherThread );
 

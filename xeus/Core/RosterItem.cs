@@ -47,7 +47,7 @@ namespace xeus.Core
 		private string _lastMessageFrom = "No message sent" ;
 		private string _lastMessageTo = "No message recieved" ;
 		private SubscriptionType _subscriptionType = SubscriptionType.none ;
-		private string _customName = null ;
+		private string _customName = String.Empty ;
 
 		public event PropertyChangedEventHandler PropertyChanged ;
 
@@ -209,24 +209,36 @@ namespace xeus.Core
 			}
 		}
 
+		bool IsTrimmedEmpty( string text )
+		{
+			if ( text == null )
+			{
+				return true ;
+			}
+			else
+			{
+				return text.Trim() == String.Empty ;
+			}
+		}
+
 		public string DisplayName
 		{
 			get
 			{
-				if ( !String.IsNullOrEmpty( CustomName ) )
+				if ( !IsTrimmedEmpty( CustomName ) )
+				{
+					return CustomName ;
+				}
+				if ( !IsTrimmedEmpty( FullName ) )
 				{
 					return FullName ;
 				}
-				if ( !String.IsNullOrEmpty( FullName ) )
-				{
-					return FullName ;
-				}
-				else if ( !String.IsNullOrEmpty( NickName ) )
+				else if ( !IsTrimmedEmpty( NickName ) )
 				{
 					return NickName ;
 				}
 
-				return ( !String.IsNullOrEmpty( Name ) ) ? Name : Key ;
+				return ( !IsTrimmedEmpty( Name ) ) ? Name : Key ;
 			}
 		}
 
@@ -246,6 +258,23 @@ namespace xeus.Core
 			}
 		}
 
+		public static bool IsSystemGroup( string group )
+		{
+			switch ( group )
+			{
+				case "Services":
+				case "Offline":
+				case "Ungrouped":
+					{
+						return true ;
+					}
+				default:
+					{
+						return false ;
+					}
+			}
+		}
+
 		public string Group
 		{
 			get
@@ -254,11 +283,11 @@ namespace xeus.Core
 
 				if ( IsService )
 				{
-					group = "@Services" ;
+					group = "Services" ;
 				}
 				else if ( !IsInitialized || _presence == null || _presence.Type == PresenceType.unavailable )
 				{
-					group = "@Offline" ;
+					group = "Offline" ;
 				}
 				else if ( _rosterItem.GetGroups().Count > 0 )
 				{
@@ -267,7 +296,7 @@ namespace xeus.Core
 				}
 				else
 				{
-					group = "@Ungrouped" ;
+					group = "Ungrouped" ;
 				}
 
 				return group ;
