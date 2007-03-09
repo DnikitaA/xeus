@@ -194,7 +194,11 @@ namespace xeus
 		private void SaveData()
 		{
 			Database database =  new Database();
-			database.StoreRosterItems( Client.Instance.Roster.Items ) ;
+			
+			lock ( Client.Instance.Roster.Items._syncObject )
+			{
+				database.StoreRosterItems( Client.Instance.Roster.Items ) ;
+			}
 
 			database.StoreGroups( _roster.ExpanderStates ) ;
 			database.Save() ;

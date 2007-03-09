@@ -116,9 +116,7 @@ namespace xeus.Core
 			RosterItem rosterItem = e.Parameter as RosterItem ;
 
 			e.Handled = true ;
-			e.CanExecute = ( rosterItem != null
-							&& rosterItem.IsInitialized
-							&& Client.Instance.IsAvailable ) ;
+			e.CanExecute = ( rosterItem != null && Client.Instance.IsAvailable ) ;
 		}
 
 		public static void ExecuteAuthSendTo( object sender, ExecutedRoutedEventArgs e )
@@ -174,9 +172,7 @@ namespace xeus.Core
 		{
 			RosterItem rosterItem = e.Parameter as RosterItem ;
 
-			if ( rosterItem != null
-							&& rosterItem.IsInitialized
-							&& Client.Instance.IsAvailable )
+			if ( rosterItem != null && Client.Instance.IsAvailable )
 			{
 				Client.Instance.Roster.DeleteRosterItem( rosterItem ) ;
 			}

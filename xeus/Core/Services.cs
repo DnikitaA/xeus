@@ -7,10 +7,11 @@ using Uri=agsXMPP.Uri;
 
 namespace xeus.Core
 {
-	public class Services
+	internal class Services
 	{
 		ObservableCollectionDisp< ServiceItem > _items = new ObservableCollectionDisp< ServiceItem >( App.DispatcherThread );
 
+		/*
 		public ObservableCollectionDisp< ServiceItem > SearchEngines
 		{
 			get
@@ -25,7 +26,7 @@ namespace xeus.Core
 			{
 				return GetServicesBySupports( Uri.BYTESTREAMS ) ;
 			}
-		}
+		}*/
 
 		public ObservableCollectionDisp< ServiceItem > Items
 		{
@@ -35,6 +36,7 @@ namespace xeus.Core
 			}
 		}
 
+		/*
 		private ObservableCollectionDisp< ServiceItem > GetServicesBySupports( string filter )
 		{
 			ObservableCollectionDisp< ServiceItem > filteredServices = new ObservableCollectionDisp< ServiceItem >( App.DispatcherThread ) ;
@@ -48,11 +50,11 @@ namespace xeus.Core
 			}
 
 			return filteredServices ;
-		}
+		}*/
 
 		public ServiceItem FindItem( string bare )
 		{
-			lock ( this )
+			lock ( _items._syncObject )
 			{
 				foreach ( ServiceItem item in _items )
 				{

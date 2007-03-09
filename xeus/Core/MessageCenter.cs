@@ -62,7 +62,10 @@ namespace xeus.Core
 			{
 				ChatMessage message = Client.Instance.MessageCenter.ChatMessages[ i ] ;
 
-				rosterItem.Messages.Add( message ) ;
+				lock ( rosterItem.Messages._syncObject )
+				{
+					rosterItem.Messages.Add( message ) ;
+				}
 
 				Client.Instance.MessageCenter.ChatMessages.Remove( message ) ;
 			}
@@ -74,12 +77,20 @@ namespace xeus.Core
 			{
 				case MessageType.normal:
 					{
-						_normalMessages.Add( msg );
+						lock ( _normalMessages._syncObject )
+						{
+							_normalMessages.Add( msg ) ;
+						}
+
 						break ;
 					}
 				case MessageType.headline:
 					{
-						_hedlineMessages.Add( msg );
+						lock ( _hedlineMessages._syncObject )
+						{
+							_hedlineMessages.Add( msg ) ;
+						}
+
 						break ;
 					}
 				case MessageType.chat:
@@ -88,19 +99,30 @@ namespace xeus.Core
 
 						if ( MessageWindow.IsOpen() )
 						{
-							rosterItem.Messages.Add( new ChatMessage( msg, rosterItem, DateTime.Now ) );
+							lock ( rosterItem.Messages._syncObject )
+							{
+								rosterItem.Messages.Add( new ChatMessage( msg, rosterItem, DateTime.Now ) ) ;
+							}
+
 							MessageWindow.DisplayChatWindow( rosterItem.Key, false );
 						}
 						else
 						{
-							_chatMessages.Add( new ChatMessage( msg, rosterItem, DateTime.Now ) ) ;
+							lock ( _chatMessages._syncObject )
+							{
+								_chatMessages.Add( new ChatMessage( msg, rosterItem, DateTime.Now ) ) ;
+							}
 						}
 
 						break ;
 					}
 				case MessageType.error:
 					{
-						_errorMessages.Add( msg );
+						lock ( _errorMessages._syncObject )
+						{
+							_errorMessages.Add( msg ) ;
+						}
+
 						break ;
 					}
 				case MessageType.groupchat:

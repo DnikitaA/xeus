@@ -202,9 +202,12 @@ namespace xeus.Controls
 				{
 					_displayNames = new List< KeyValuePair< string, RosterItem > >() ;
 
-					foreach ( RosterItem rosterItem in Client.Instance.Roster.Items )
+					lock ( Client.Instance.Roster.Items._syncObject )
 					{
-						_displayNames.Add( new KeyValuePair< string, RosterItem >( rosterItem.DisplayName.ToUpper().Trim(), rosterItem ) ) ;
+						foreach ( RosterItem rosterItem in Client.Instance.Roster.Items )
+						{
+							_displayNames.Add( new KeyValuePair< string, RosterItem >( rosterItem.DisplayName.ToUpper().Trim(), rosterItem ) ) ;
+						}
 					}
 				}
 			}

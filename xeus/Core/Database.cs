@@ -176,7 +176,11 @@ namespace xeus.Core
 					FieldValuePair[] data = item.GetData() ;
 
 					SaveOrUpdate( "Roster/RosterItem", string.Format( "@Key='{0}'", item.Key ), data ) ;
-					StoreMessages( item.Messages ) ;
+
+					lock ( item.Messages._syncObject )
+					{
+						StoreMessages( item.Messages ) ;
+					}
 				}
 
 				catch ( Exception e )
