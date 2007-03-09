@@ -80,6 +80,7 @@ namespace xeus.Core
 						lock ( _normalMessages._syncObject )
 						{
 							_normalMessages.Add( msg ) ;
+							App.Instance.Window.AlertInfo( "Message", msg.Body );
 						}
 
 						break ;
@@ -89,6 +90,7 @@ namespace xeus.Core
 						lock ( _hedlineMessages._syncObject )
 						{
 							_hedlineMessages.Add( msg ) ;
+							App.Instance.Window.AlertInfo( "Headline", msg.Body );
 						}
 
 						break ;
@@ -121,6 +123,7 @@ namespace xeus.Core
 						lock ( _errorMessages._syncObject )
 						{
 							_errorMessages.Add( msg ) ;
+							App.Instance.Window.AlertError( "Error", msg.Body );
 						}
 
 						break ;
