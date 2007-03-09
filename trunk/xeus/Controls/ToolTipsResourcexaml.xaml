@@ -172,7 +172,7 @@
   <Setter Property="Template">
     <Setter.Value>
       <ControlTemplate TargetType="Separator">
-        <Border BorderBrush="#FF223E6B"
+        <Border BorderBrush="#FF999999"
                 BorderThickness="0,0,0,1" SnapsToDevicePixels="True" d:IsHidden="True"/>
       </ControlTemplate>
     </Setter.Value>
