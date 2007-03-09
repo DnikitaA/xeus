@@ -22,6 +22,8 @@ namespace xeus.Controls
 		public RegisterWindow()
 		{
 			InitializeComponent();
+
+			_userName.Focus() ;
 		}
 
 		protected void Ok( object sender, EventArgs e )

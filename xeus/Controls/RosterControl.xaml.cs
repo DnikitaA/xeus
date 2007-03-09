@@ -59,8 +59,13 @@ namespace xeus.Controls
 
 				if ( Client.Instance.IsAvailable )
 				{
+					if ( menuItem.Items.Count > 0 )
+					{
+						menuItem.Items.Add( new Separator() ) ;
+					}
+
 					MenuItem itemNewGroup = new MenuItem() ;
-					itemNewGroup.Header = "New group" ;
+					itemNewGroup.Header = "Create New group" ;
 					itemNewGroup.Tag = "newGroup" ;
 
 					menuItem.Items.Add( itemNewGroup ) ;
@@ -322,6 +327,7 @@ namespace xeus.Controls
 			switch ( e.PropertyName )
 			{
 				case "Group":
+				case "DisplayName":
 					{
 						if ( _rosterView == null )
 						{
