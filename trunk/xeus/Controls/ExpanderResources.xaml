@@ -65,11 +65,11 @@
 												<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" HorizontalAlignment="Center"/>
 													</Grid>
 													</Viewbox>
-												<Border Margin="5,3,3,3" Grid.Column="1" HorizontalAlignment="Left" x:Name="border" BorderBrush="#FF202020" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" RenderTransformOrigin="0.5,0.5">
+												<Border Margin="5,3,3,3" Grid.Column="1" HorizontalAlignment="Left" x:Name="border" BorderBrush="#FF202020" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" SnapsToDevicePixels="True">
 													<Border.Background>
 														<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-															<GradientStop Color="#FF736482" Offset="0"/>
-															<GradientStop Color="#FF575757" Offset="1"/>
+															<GradientStop Color="#FF3C4457" Offset="0"/>
+															<GradientStop Color="#FF484848" Offset="1"/>
 														</LinearGradientBrush>
 													</Border.Background>
 													<Border.BitmapEffect>
@@ -81,14 +81,6 @@
 															<GradientStop Color="#9BFFFFFF" Offset="1"/>
 														</RadialGradientBrush>
 													</Border.OpacityMask>
-													<Border.RenderTransform>
-														<TransformGroup>
-															<ScaleTransform ScaleX="1" ScaleY="1"/>
-															<SkewTransform AngleX="0" AngleY="0"/>
-															<RotateTransform Angle="0"/>
-															<TranslateTransform X="0" Y="0"/>
-														</TransformGroup>
-													</Border.RenderTransform>
 													<Grid>
 														<Rectangle Opacity="0.2" Fill="#FFFFFFFF" RadiusX="3" RadiusY="3" Margin="1,1,1,0" VerticalAlignment="Top" Height="12"/>
 														<ContentPresenter SnapsToDevicePixels="True" Grid.Column="1" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" RecognizesAccessKey="True" VerticalAlignment="Center" Margin="8,2,8,2"/>
@@ -141,8 +133,8 @@
 												<Setter Property="Background" TargetName="border">
 													<Setter.Value>
 														<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-															<GradientStop Color="#FF7F5A82" Offset="0"/>
-															<GradientStop Color="#FF757575" Offset="1"/>
+															<GradientStop Color="#FF565979" Offset="0"/>
+															<GradientStop Color="#FF635F63" Offset="1"/>
 														</LinearGradientBrush>
 													</Setter.Value>
 												</Setter>
@@ -154,7 +146,7 @@
 						</Style>
 					</ToggleButton.Style>
 				</ToggleButton>
-				<ContentPresenter Focusable="False" Visibility="Collapsed" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" x:Name="ExpandSite" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" DockPanel.Dock="Bottom" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"/>
+				<ContentPresenter Focusable="False" Visibility="Collapsed" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" x:Name="ExpandSite" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" DockPanel.Dock="Bottom" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" Margin="0,0,0,10"/>
 			</DockPanel>
 		</Border>
 		<ControlTemplate.Triggers>
