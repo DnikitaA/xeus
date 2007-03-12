@@ -38,6 +38,7 @@
 				<TranslateTransform X="0" Y="0"/>
 			</TransformGroup>
 		</Grid.RenderTransform>
+		<!--
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
 		Stretch="Fill" Canvas.Left="0" x:Name="_circle" RenderTransformOrigin="0.5,0.5">
 		<Ellipse.Fill>
@@ -45,6 +46,27 @@
 				<GradientStop Color="#FFD07B7B" Offset="0"/>
 				<GradientStop Color="#FF7A0C0C" Offset="1"/>
 			</LinearGradientBrush>
+		</Ellipse.Fill>
+		<Ellipse.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="0"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Ellipse.RenderTransform>
+		<Ellipse.BitmapEffect>
+			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
+		</Ellipse.BitmapEffect>
+	</Ellipse>
+	-->
+	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle" RenderTransformOrigin="0.5,0.5">
+		<Ellipse.Fill>
+			<RadialGradientBrush>
+				<GradientStop Color="#FFE89393" Offset="0"/>
+				<GradientStop Color="#B2DF1E1E" Offset="1"/>
+			</RadialGradientBrush>
 		</Ellipse.Fill>
 		<Ellipse.RenderTransform>
 			<TransformGroup>
@@ -79,13 +101,12 @@
 			</Trigger.EnterActions>
 		</Trigger>
 	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
-	  	<Setter Property="Stroke" TargetName="_circle" Value="#FF757575"/>
 	  	<Setter Property="Fill" TargetName="_circle">
 	  		<Setter.Value>
-	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-	  				<GradientStop Color="#FFF0B3B3" Offset="0"/>
-	  				<GradientStop Color="#FFA22B2B" Offset="1"/>
-	  			</LinearGradientBrush>
+	  			<RadialGradientBrush>
+	  				<GradientStop Color="#FFF2DFDF" Offset="0"/>
+	  				<GradientStop Color="#B2DF1E1E" Offset="1"/>
+	  			</RadialGradientBrush>
 	  		</Setter.Value>
 	  	</Setter>
 	  </Trigger>
@@ -107,18 +128,26 @@
 <ControlTemplate x:Key="StatusAway" TargetType="{x:Type Button}">
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.498,0.51" >
 <Grid x:Name="grid">
-	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0" x:Name="_circle">
+<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle" RenderTransformOrigin="0.5,0.5">
 		<Ellipse.Fill>
-			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-				<GradientStop Color="#FF7BA3D0" Offset="0"/>
-				<GradientStop Color="#FF19304F" Offset="1"/>
-			</LinearGradientBrush>
+			<RadialGradientBrush>
+				<GradientStop Color="#FFA0C9E8" Offset="0"/>
+				<GradientStop Color="#991E8BDF" Offset="1"/>
+			</RadialGradientBrush>
 		</Ellipse.Fill>
+		<Ellipse.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="0"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Ellipse.RenderTransform>
 		<Ellipse.BitmapEffect>
 			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
 		</Ellipse.BitmapEffect>
-	</Ellipse>
+	</Ellipse>	
 <Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="0" Height="0" Data="M22.628,30.472" Canvas.Left="0" Canvas.Top="0" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center" Fill="#FFFFFFFF"/>
 	<Path RenderTransformOrigin="-0.005,1" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" Fill="#77FFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Right" Margin="0,0.873,5.26,0" VerticalAlignment="Top" Width="4.953" Height="6.775" Data="M9.6690085,7.3294421 L7.5224369,1.111383 C9.407529,0.39091502 10.510661,0.30183072 12.012052,1.2959933 z">
 		<Path.RenderTransform>
@@ -141,13 +170,12 @@
 			</Trigger.EnterActions>
 		</Trigger>
 	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
-	  	<Setter Property="Stroke" TargetName="_circle" Value="#FF757575"/>
 	  	<Setter Property="Fill" TargetName="_circle">
 	  		<Setter.Value>
-	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-	  				<GradientStop Color="#FFB3D0F0" Offset="0"/>
-	  				<GradientStop Color="#FF2B5DA2" Offset="1"/>
-	  			</LinearGradientBrush>
+	  			<RadialGradientBrush>
+	  				<GradientStop Color="#FFE3EDF4" Offset="0"/>
+	  				<GradientStop Color="#991E8BDF" Offset="1"/>
+	  			</RadialGradientBrush>
 	  		</Setter.Value>
 	  	</Setter>
 	  </Trigger>
@@ -169,18 +197,26 @@
 <ControlTemplate x:Key="StatusFreeForChat" TargetType="{x:Type Button}">
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.498,0.51" >
 <Grid x:Name="grid">
-	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0" x:Name="_circle">
+<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle" RenderTransformOrigin="0.5,0.5">
 		<Ellipse.Fill>
-			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-				<GradientStop Color="#FF9CE582" Offset="0"/>
-				<GradientStop Color="#FF2B5F18" Offset="1"/>
-			</LinearGradientBrush>
+			<RadialGradientBrush>
+				<GradientStop Color="#FFC1F092" Offset="0"/>
+				<GradientStop Color="#B25DB00A" Offset="1"/>
+			</RadialGradientBrush>
 		</Ellipse.Fill>
+		<Ellipse.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="0"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Ellipse.RenderTransform>
 		<Ellipse.BitmapEffect>
 			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
 		</Ellipse.BitmapEffect>
-	</Ellipse>
+	</Ellipse>	
 	<Path SnapsToDevicePixels="False" Fill="#CCFFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Left" Margin="3.23,3.656,0,0" VerticalAlignment="Top" Width="9.932" Height="7.897" Data="F1 M5.0282145,-6.4830003 C8.1051111,-6.4830003 10.599428,-4.5002933 10.599428,-2.0545003 C10.599428,0.39129266 8.1051111,2.3739996 5.0282145,2.3739996 L4.1343474,2.2548513 0.49999991,4.5000005 1.4259897,1.2588339 C0.20860633,0.49111211 -0.54299998,-0.71192384 -0.54299998,-2.0545003 -0.54299998,-4.5002933 1.9513177,-6.4830003 5.0282145,-6.4830003 z"/>
 <Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
 	<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
@@ -193,13 +229,12 @@
 			</Trigger.EnterActions>
 		</Trigger>
 	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
-	  	<Setter Property="Stroke" TargetName="_circle" Value="#FF757575"/>
 	  	<Setter Property="Fill" TargetName="_circle">
 	  		<Setter.Value>
-	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-	  				<GradientStop Color="#FFB8F0B3" Offset="0"/>
-	  				<GradientStop Color="#FF2BA247" Offset="1"/>
-	  			</LinearGradientBrush>
+	  			<RadialGradientBrush>
+	  				<GradientStop Color="#FFFCFEFA" Offset="0"/>
+	  				<GradientStop Color="#B25DB00A" Offset="1"/>
+	  			</RadialGradientBrush>
 	  		</Setter.Value>
 	  	</Setter>
 	  </Trigger>
@@ -221,19 +256,27 @@
 <ControlTemplate x:Key="StatusXAway" TargetType="{x:Type Button}">
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" >
 	<Grid x:Name="grid">
-	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
-		Canvas.Left="0" x:Name="_circle">
+<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle" RenderTransformOrigin="0.5,0.5">
 		<Ellipse.Fill>
-			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-				<GradientStop Color="#FFE5B3E4" Offset="0"/>
-				<GradientStop Color="#FF711870" Offset="1"/>
-			</LinearGradientBrush>
+			<RadialGradientBrush>
+				<GradientStop Color="#FFF2A1C9" Offset="0"/>
+				<GradientStop Color="#B2DF1E7C" Offset="1"/>
+			</RadialGradientBrush>
 		</Ellipse.Fill>
+		<Ellipse.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="0"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Ellipse.RenderTransform>
 		<Ellipse.BitmapEffect>
 			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
 		</Ellipse.BitmapEffect>
-	</Ellipse>
-		<Path RenderTransformOrigin="0,0" Fill="#FFE7E7E7" Stretch="Fill" Height="9.123" Data="M3.609375,20.441914 C4.1822915,20.441914 4.6513672,20.608418 5.0166016,20.941425 C5.3818359,21.274433 5.5644531,21.695169 5.5644531,22.203632 C5.5644531,22.719257 5.3836265,23.145365 5.0219727,23.481953 C4.6603189,23.818541 4.1894531,23.986835 3.609375,23.986835 C3.0364583,23.986835 2.563802,23.813169 2.1914063,23.465839 C1.8190104,23.118509 1.6328125,22.697773 1.6328125,22.203632 C1.6328125,21.688007 1.8208008,21.265482 2.1967773,20.936054 C2.5727539,20.606627 3.0436199,20.441914 3.609375,20.441914 z M1.8046876,8.3354683 L5.3710938,8.3354683 L4.9521484,18.94875 L2.2021484,18.94875 z" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="3">
+	</Ellipse>	
+		<Path Opacity="0.5" RenderTransformOrigin="0.500000008585687,0.500000008585687" Fill="#FFD9D9D9" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0" x:Name="_circle1" VerticalAlignment="Center" Width="11.913" Height="11.97" Data="F1 M4.3861003,1.5576732 L14.442327,11.6139 C13.867111,12.87093 12.87093,13.867111 11.6139,14.442327 L1.5576732,4.3861003 C2.1328888,3.12907 3.12907,2.1328888 4.3861003,1.5576732 z" Canvas.Left="0" Canvas.Top="0">
 			<Path.RenderTransform>
 				<TransformGroup>
 					<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -255,13 +298,12 @@
 			</Trigger.EnterActions>
 		</Trigger>
 	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
-	  	<Setter Property="Stroke" TargetName="_circle" Value="#FF757575"/>
 	  	<Setter Property="Fill" TargetName="_circle">
 	  		<Setter.Value>
-	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-	  				<GradientStop Color="#FFDDB3F0" Offset="0"/>
-	  				<GradientStop Color="#FFA22BA1" Offset="1"/>
-	  			</LinearGradientBrush>
+	  			<RadialGradientBrush>
+	  				<GradientStop Color="#FFF4E5EC" Offset="0"/>
+	  				<GradientStop Color="#B2DF1E7C" Offset="1"/>
+	  			</RadialGradientBrush>
 	  		</Setter.Value>
 	  	</Setter>
 	  </Trigger>
@@ -283,18 +325,26 @@
 <ControlTemplate x:Key="StatusOnline" TargetType="{x:Type Button}">
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" >
 	<Grid x:Name="grid">
-	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0" x:Name="_circle">
+<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle" RenderTransformOrigin="0.5,0.5">
 		<Ellipse.Fill>
-			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-				<GradientStop Color="#FFB3E5C3" Offset="0"/>
-				<GradientStop Color="#FF1B6904" Offset="1"/>
-			</LinearGradientBrush>
+			<RadialGradientBrush>
+				<GradientStop Color="#FFA4C794" Offset="0"/>
+				<GradientStop Color="#B25BDF1E" Offset="1"/>
+			</RadialGradientBrush>
 		</Ellipse.Fill>
+		<Ellipse.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="0"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Ellipse.RenderTransform>
 		<Ellipse.BitmapEffect>
 			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
 		</Ellipse.BitmapEffect>
-	</Ellipse>
+	</Ellipse>	
 	<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
 	
 <Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
@@ -307,13 +357,12 @@
 			</Trigger.EnterActions>
 		</Trigger>
 	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
-	  	<Setter Property="Stroke" TargetName="_circle" Value="#FF757575"/>
 	  	<Setter Property="Fill" TargetName="_circle">
 	  		<Setter.Value>
-	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-	  				<GradientStop Color="#FFB3F0C1" Offset="0"/>
-	  				<GradientStop Color="#FF51A22B" Offset="1"/>
-	  			</LinearGradientBrush>
+	  			<RadialGradientBrush>
+	  				<GradientStop Color="#FFDAE8D4" Offset="0"/>
+	  				<GradientStop Color="#B25BDF1E" Offset="1"/>
+	  			</RadialGradientBrush>
 	  		</Setter.Value>
 	  	</Setter>
 	  </Trigger>
@@ -389,18 +438,26 @@
 <ControlTemplate x:Key="ErrorIcon" TargetType="{x:Type Button}">
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox">
 	<Grid>
-	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0">
+<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle1" RenderTransformOrigin="0.5,0.5">
 		<Ellipse.Fill>
-			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-				<GradientStop Color="#FFD0B87B" Offset="0"/>
-				<GradientStop Color="#FF7A600C" Offset="1"/>
-			</LinearGradientBrush>
+			<RadialGradientBrush>
+				<GradientStop Color="#FFF29F9F" Offset="0"/>
+				<GradientStop Color="#B2DF1E1E" Offset="1"/>
+			</RadialGradientBrush>
 		</Ellipse.Fill>
+		<Ellipse.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="0"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Ellipse.RenderTransform>
 		<Ellipse.BitmapEffect>
 			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
 		</Ellipse.BitmapEffect>
-	</Ellipse>
+	</Ellipse>	
 		<Path RenderTransformOrigin="0,0" Fill="#FFD7D7D7" Stretch="Fill" HorizontalAlignment="Center" Margin="0,0,0,3.757" VerticalAlignment="Bottom" Data="M1.8046875,10.220957 C2.0911458,10.220957 2.3256836,10.304209 2.5083008,10.470713 C2.690918,10.637217 2.7822266,10.847585 2.7822266,11.101816 C2.7822266,11.359629 2.6918132,11.572682 2.5109863,11.740976 C2.3301594,11.90927 2.0947266,11.993418 1.8046875,11.993418 C1.5182291,11.993418 1.281901,11.906585 1.0957031,11.73292 C0.90950519,11.559255 0.81640625,11.348886 0.81640625,11.101816 C0.81640625,10.844004 0.91040039,10.632741 1.0983887,10.468027 C1.286377,10.303313 1.5218099,10.220957 1.8046875,10.220957 z M0.90234381,4.1677341 L2.6855469,4.1677341 L2.4760742,9.4743748 L1.1010742,9.4743748 z">
 			<Path.RenderTransform>
 				<TransformGroup>
@@ -421,13 +478,21 @@
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox">
 	<Grid x:Name="grid">
 	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0" x:Name="_circle">
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle" RenderTransformOrigin="0.5,0.5" Opacity="0.5">
 		<Ellipse.Fill>
-			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-				<GradientStop Color="#FFD0B17B" Offset="0"/>
-				<GradientStop Color="#FF7A480C" Offset="1"/>
-			</LinearGradientBrush>
+			<RadialGradientBrush>
+				<GradientStop Color="#FFFFFFFF" Offset="0"/>
+				<GradientStop Color="#B2DFA81E" Offset="1"/>
+			</RadialGradientBrush>
 		</Ellipse.Fill>
+		<Ellipse.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="0"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Ellipse.RenderTransform>
 		<Ellipse.BitmapEffect>
 			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
 		</Ellipse.BitmapEffect>
@@ -443,17 +508,7 @@
 				<BeginStoryboard Storyboard="{StaticResource PumpStatus}"/>
 			</Trigger.EnterActions>
 		</Trigger>
-	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
-	  	<Setter Property="Stroke" TargetName="_circle" Value="#FF757575"/>
-	  	<Setter Property="Fill" TargetName="_circle">
-	  		<Setter.Value>
-	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-	  				<GradientStop Color="#FFF0DAB3" Offset="0"/>
-	  				<GradientStop Color="#FFA2402B" Offset="1"/>
-	  			</LinearGradientBrush>
-	  		</Setter.Value>
-	  	</Setter>
-	  </Trigger>
+	  <Trigger Property="Ellipse.IsMouseOver" Value="True"/>
 		<Trigger Property="IsPressed" Value="True">
 			<Setter Property="RenderTransform" TargetName="grid">
 				<Setter.Value>
@@ -472,36 +527,25 @@
 <ControlTemplate x:Key="WindowButton" TargetType="{x:Type Button}">
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" >
 	<Grid x:Name="grid">
-	<Rectangle StrokeThickness="1" Width="9" Height="14.004" Canvas.Top="0"
+	<Rectangle StrokeThickness="1" Width="6" Height="14" Canvas.Top="0"
 		Stretch="Fill" Canvas.Left="0" x:Name="_circleBack" Fill="{TemplateBinding Property=Background}" RadiusX="2" RadiusY="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
-	<Rectangle StrokeThickness="1" Width="9" Height="14.004" Canvas.Top="0"
+	<Rectangle StrokeThickness="1" Width="6" Height="14" Canvas.Top="0"
 		Stretch="Fill" Canvas.Left="0" x:Name="_circleBack1" Fill="{TemplateBinding Property=Background}" RadiusX="2" RadiusY="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
-		<Path Fill="#FF5B5B5B" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,1.125" x:Name="_circleBack2" VerticalAlignment="Bottom" Width="8.36" Height="1.78" Data="F1 M4.4191451,12.224 C5.8860507,12.224 7.3173676,12.385383 8.6724443,12.794788 8.4878511,13.535954 7.7985845,14.004 7,14.004 L2,14.004 C1.1859469,14.004 0.48548767,13.517647 0.31214491,12.757585 1.6233113,12.37405 3.0046842,12.224 4.4191451,12.224 z" Canvas.Left="0" Canvas.Top="0" Opacity="0.495"/>
-	<Rectangle Stroke="#FF9A9A9A" StrokeThickness="1" Margin="0,0,0,0" Width="11" Height="16" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0" x:Name="_circle" Opacity="0.65" RadiusX="2" RadiusY="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+	<Rectangle Stroke="#FF000000" StrokeThickness="1" Margin="0,0,0,0" Width="6" Height="14" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle" Opacity="0.65" RadiusX="1" RadiusY="1" HorizontalAlignment="Center" VerticalAlignment="Center">
 		<Rectangle.Fill>
-			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-				<GradientStop Color="White" Offset="0"/>
-				<GradientStop Color="#FF000000" Offset="1"/>
+			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+				<GradientStop Color="#FF010101" Offset="0"/>
+				<GradientStop Color="#FF8C8C8C" Offset="1"/>
 			</LinearGradientBrush>
 		</Rectangle.Fill>
 		<Rectangle.OpacityMask>
-			<RadialGradientBrush>
+			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 				<GradientStop Color="#DD000000" Offset="0.73"/>
 				<GradientStop Color="#9AFFFFFF" Offset="1"/>
-			</RadialGradientBrush>
+			</LinearGradientBrush>
 		</Rectangle.OpacityMask>
 	</Rectangle>
-		<Path RenderTransformOrigin="0.499999984105429,0.56840223792875" d:LayoutOverrides="VerticalAlignment" Fill="#57D5D5D5" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0.194,0,0" VerticalAlignment="Top" Width="9" Height="5.877" Data="F1 M12.349958,3.0140922E-07 C13.935251,1.1842258E-07 15.453799,0.15912351 16.85,0.46350601 L16.85,3.8770001 C16.85,4.9815693 15.95457,5.8769999 14.85,5.8769999 L9.8500004,5.8769999 C8.7454309,5.8769999 7.8499999,4.9815693 7.8499999,3.8770001 L7.8499999,0.46349052 C9.2461777,0.15911719 10.764697,1.1842258E-07 12.349958,3.0140922E-07 z" Canvas.Left="0" Canvas.Top="0">
-			<Path.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform ScaleX="1" ScaleY="1"/>
-					<SkewTransform AngleX="0" AngleY="0"/>
-					<RotateTransform Angle="180"/>
-					<TranslateTransform X="0" Y="0"/>
-				</TransformGroup>
-			</Path.RenderTransform>
-		</Path>
 	</Grid>
 </Viewbox>
 	<ControlTemplate.Triggers>
@@ -514,9 +558,9 @@
 	  	<Setter Property="Stroke" TargetName="_circle" Value="#FF616161"/>
 	  	<Setter Property="Fill" TargetName="_circle">
 	  		<Setter.Value>
-	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-	  				<GradientStop Color="#FFFFFFFF" Offset="0"/>
-	  				<GradientStop Color="#FF383838" Offset="1"/>
+	  			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+	  				<GradientStop Color="#FF0D0D0D" Offset="0"/>
+	  				<GradientStop Color="#FF868585" Offset="1"/>
 	  			</LinearGradientBrush>
 	  		</Setter.Value>
 	  	</Setter>
@@ -702,18 +746,26 @@
 <ControlTemplate x:Key="AddNewUser" TargetType="{x:Type Button}">
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.498,0.51" >
 <Grid x:Name="grid">
-	<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0" x:Name="_circle">
+<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle" RenderTransformOrigin="0.5,0.5">
 		<Ellipse.Fill>
-			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-				<GradientStop Color="#FFE8574C" Offset="0"/>
-				<GradientStop Color="#FF7F0000" Offset="1"/>
-			</LinearGradientBrush>
+			<RadialGradientBrush>
+				<GradientStop Color="#FFF4BCBC" Offset="0"/>
+				<GradientStop Color="#B2DF1E1E" Offset="1"/>
+			</RadialGradientBrush>
 		</Ellipse.Fill>
+		<Ellipse.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="0"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Ellipse.RenderTransform>
 		<Ellipse.BitmapEffect>
 			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
 		</Ellipse.BitmapEffect>
-	</Ellipse>
+	</Ellipse>	
 	<Path Fill="#FFEAEAEA" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0" x:Name="_circle1" VerticalAlignment="Center" Width="7" Height="8.424" Data="F1 M3.5000002,0 C5.4329967,0 7.0000005,1.5670034 7.0000005,3.5 7.0000005,4.7318325 6.3636284,5.815032 5.3667536,6.3848801 7.2996287,7.1104708 8.6619997,8.9811363 8.6619997,11.17 L8.39713,12.481953 C6.9135985,12.823858 5.2519326,12.995 3.5000002,12.995 1.7480673,12.995 0.086401284,12.823858 -1.3971292,12.481953 -1.6012928,12.079926 -1.6620001,11.632052 -1.6619998,11.17 -1.6620001,8.9811363 -0.29962915,7.1104708 1.6332469,6.3848801 C0.63637179,5.815032 0,4.7318325 8.4616062E-08,3.5 0,1.5670034 1.5670035,0 3.5000002,0 z" Canvas.Left="0" Canvas.Top="0"/>
 <Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
 	<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
@@ -729,13 +781,12 @@
 			</Trigger.EnterActions>
 		</Trigger>
 	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
-	  	<Setter Property="Stroke" TargetName="_circle" Value="#FF757575"/>
 	  	<Setter Property="Fill" TargetName="_circle">
 	  		<Setter.Value>
-	  			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-	  				<GradientStop Color="#FFF0B3B3" Offset="0"/>
-	  				<GradientStop Color="#FFA22B2B" Offset="1"/>
-	  			</LinearGradientBrush>
+	  			<RadialGradientBrush>
+	  				<GradientStop Color="#FFFCF8F8" Offset="0"/>
+	  				<GradientStop Color="#B2DF1E1E" Offset="1"/>
+	  			</RadialGradientBrush>
 	  		</Setter.Value>
 	  	</Setter>
 	  </Trigger>

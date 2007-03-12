@@ -207,13 +207,11 @@ namespace xeus.Core
 
 			if ( rosterItem != null )
 			{
-				AskForSingleValue askForSingleValue = new AskForSingleValue( "Rename Contact", "Custom Name" );
+				string contactName = SingleValueDialog.ContactNameDialog( App.Instance.Window, rosterItem.Image );
 
-				askForSingleValue.ShowDialog();
-
-				if ( askForSingleValue.DialogResult.HasValue && askForSingleValue.DialogResult.Value )
+				if ( !string.IsNullOrEmpty( contactName ) )
 				{
-					rosterItem.CustomName = askForSingleValue.Value ;
+					rosterItem.CustomName = contactName ;
 				}
 			}
 

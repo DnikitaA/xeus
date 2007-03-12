@@ -13,11 +13,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle( "xeus" )]
-[assembly: AssemblyDescription( "" )]
+[assembly: AssemblyDescription( "xmpp (jabber) clinet" )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "" )]
 [assembly: AssemblyProduct( "xeus" )]
-[assembly: AssemblyCopyright( "Copyright @  2007" )]
+[assembly: AssemblyCopyright( "Copyright Petr Valach @  2007" )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]
 [assembly: ComVisible( false )]
@@ -60,3 +60,4 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 [assembly: AssemblyVersion( "1.0.*" )]
+[assembly: GuidAttribute( "369421BB-D235-4fb6-9EB8-6FAB832A9A76" )]

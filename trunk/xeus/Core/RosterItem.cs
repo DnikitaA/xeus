@@ -44,8 +44,8 @@ namespace xeus.Core
 		private bool _hasUnreadMessages = false ;
 		private bool _messagesPreloaded = false ;
 
-		private string _lastMessageFrom = "No message sent" ;
-		private string _lastMessageTo = "No message recieved" ;
+		private ChatMessage _lastMessageFrom ;
+		private ChatMessage _lastMessageTo ;
 		private SubscriptionType _subscriptionType = SubscriptionType.none ;
 		private string _customName = String.Empty ;
 
@@ -55,13 +55,18 @@ namespace xeus.Core
 		private RosterItem()
 		{
 			_messages.CollectionChanged += new NotifyCollectionChangedEventHandler( _messages_CollectionChanged ) ;
+
+#if DEBUG
+			_presence = new Presence( ShowType.xa, "aaaa" ) ;
+#endif
+
 		}
 
 		public RosterItem( DataRow row ) : this()
 		{
 			_key = row[ "Key" ] as string ;
-			_lastMessageFrom = row[ "LastMessageFrom" ] as string ;
-			_lastMessageTo = row[ "LastMessageTo" ] as string ;
+			/*_lastMessageFrom = row[ "LastMessageFrom" ] as string ;
+			_lastMessageTo = row[ "LastMessageTo" ] as string ;*/
 			_subscriptionType = ( SubscriptionType )Enum.Parse( typeof( SubscriptionType ),
 																row[ "SubscriptionType" ] as string, false ) ;
 			_fullName = row[ "FullName" ] as string ;
@@ -74,8 +79,8 @@ namespace xeus.Core
 			XmlDatabase.FieldValuePair[] data = new XmlDatabase.FieldValuePair[ 7 ] ;
 
 			data[ 0 ] = new NullFieldValuePair( "Key", Key ) ;
-			data[ 1 ] = new NullFieldValuePair( "LastMessageFrom", LastMessageFrom ) ;
-			data[ 2 ] = new NullFieldValuePair( "LastMessageTo", LastMessageTo ) ;
+			data[ 1 ] = new NullFieldValuePair( "LastMessageFrom", "" ) ;
+			data[ 2 ] = new NullFieldValuePair( "LastMessageTo", "" ) ;
 			data[ 3 ] = new NullFieldValuePair( "SubscriptionType", SubscriptionType.ToString() ) ;
 			data[ 4 ] = new NullFieldValuePair( "FullName", FullName ) ;
 			data[ 5 ] = new NullFieldValuePair( "NickName", NickName ) ;
@@ -118,8 +123,8 @@ namespace xeus.Core
 		{
 			DateTime maxFrom = DateTime.MinValue ;
 			DateTime maxTo = DateTime.MinValue ;
-			string fromMe = null ;
-			string toMe = null ;
+			ChatMessage fromMe = null ;
+			ChatMessage toMe = null ;
 
 			bool newMessagesCame = false ;
 
@@ -129,7 +134,7 @@ namespace xeus.Core
 				{
 					if ( fromMe == null || maxFrom < message.Time )
 					{
-						fromMe = string.Format( "{0}\n{1}", message.Time, message.Body ) ;
+						fromMe = message ;
 						maxFrom = message.Time ;
 					}
 				}
@@ -139,7 +144,7 @@ namespace xeus.Core
 
 					if ( toMe == null || maxTo < message.Time )
 					{
-						toMe = string.Format( "{0}\n{1}", message.Time, message.Body ) ;
+						toMe = message ;
 						maxTo = message.Time ;
 					}
 				}
@@ -300,7 +305,11 @@ namespace xeus.Core
 		{
 			get
 			{
+#if DEBUG
+				return "I am idle for 10 minutes bla a to je konec vseho" ;
+#else
 				return _statusDescription ;
+#endif
 			}
 		}
 
@@ -313,10 +322,6 @@ namespace xeus.Core
 
 			set
 			{
-				if ( Key.StartsWith( "5601" ) )
-				{
-					
-				}
 				string group = Group ;
 
 				_presence = value ;
@@ -438,7 +443,7 @@ namespace xeus.Core
 		{
 			get
 			{
-				return _statusText ;
+				return "I am idle for 10 minutes" ;
 			}
 		}
 
@@ -650,27 +655,28 @@ namespace xeus.Core
 			}
 		}
 
-		public string LastMessageFrom
+		public ChatMessage LastMessageFrom
 		{
 			get
 			{
 				return _lastMessageFrom ;
 			}
-			private set
+
+			set
 			{
 				_lastMessageFrom = value ;
 				NotifyPropertyChanged( "LastMessageFrom" ) ;
 			}
 		}
 
-		public string LastMessageTo
+		public ChatMessage LastMessageTo
 		{
 			get
 			{
 				return _lastMessageTo ;
 			}
 			
-			private set
+			set
 			{
 				_lastMessageTo = value ;
 				NotifyPropertyChanged( "LastMessageTo" ) ;

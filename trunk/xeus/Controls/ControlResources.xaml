@@ -44,7 +44,7 @@
 			</Storyboard>
 		</DataTemplate.Resources>
 		<Grid RenderTransformOrigin="0.5,0.5"
-				Width="300" Panel.ZIndex="1" x:Name="grid" >
+				Width="300" Panel.ZIndex="10" x:Name="grid" >
 			<Grid.RenderTransform>
 				<TransformGroup>
 					<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -98,8 +98,56 @@
 			  				x:Name="_subscription" Margin="76.333,46.893,15,60.367" FontSize="12" VerticalAlignment="Stretch" Height="Auto"
 							Text="{Binding Path=SubscriptionTypeText}"/>
 			<StackPanel Margin="17.333,73,15,16">
-				<TextBlock Text="{Binding Path=LastMessageFrom}" Foreground="#FF9E9E9E" TextWrapping="Wrap" Margin="0,2,0,0" FontSize="11"/>
-				<TextBlock Text="{Binding Path=LastMessageTo}" Foreground="#FFD9BD84" TextWrapping="Wrap" Margin="0,4,0,0" FontSize="11"/>
+				<Grid Background="#05FFFFFF" x:Name="_gridFrom">
+							<Border BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2"
+							 HorizontalAlignment="Right" Padding="4,2,4,2" Opacity="0.8"
+							 Margin="0,29.7,4,0" Panel.ZIndex="2" VerticalAlignment="Top" x:Name="_timeBorder">
+								<Border.Background>
+									<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+										<GradientStop Color="#FF78C2E1" Offset="0"/>
+										<GradientStop Color="#FFCEE4EB" Offset="1"/>
+									</LinearGradientBrush>
+								</Border.Background>
+								<Border.OpacityMask>
+									<RadialGradientBrush>
+										<GradientStop Color="#FF000000" Offset="0"/>
+										<GradientStop Color="#95FFFFFF" Offset="1"/>
+									</RadialGradientBrush>
+								</Border.OpacityMask>
+								<Border.BitmapEffect>
+									<DropShadowBitmapEffect/>
+								</Border.BitmapEffect>
+								<TextBlock Text="{Binding Path=LastMessageFrom.Time}" Foreground="#FF323F48" FontSize="10" x:Name="_time" />
+							</Border>
+					<TextBox x:Name="_body" Text="{Binding Path=LastMessageFrom.Body, Mode=OneWay}" Foreground="#FFC5A581" 
+						TextWrapping="WrapWithOverflow" 
+						FontSize="14" Style="{DynamicResource TextBoxStyleBlack}" IsReadOnly="True" IsUndoEnabled="False" Margin="0,0,20,0" Width="Auto" Height="Auto"/>
+					</Grid>	
+				<Grid Background="#05FFFFFF" x:Name="_gridTo">
+							<Border BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2"
+							 HorizontalAlignment="Right" Padding="4,2,4,2" Opacity="0.8"
+							 Margin="0,29.7,4,0" Panel.ZIndex="2" VerticalAlignment="Top" x:Name="_timeBorderTo">
+								<Border.Background>
+									<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+										<GradientStop Color="#FF78C2E1" Offset="0"/>
+										<GradientStop Color="#FFCEE4EB" Offset="1"/>
+									</LinearGradientBrush>
+								</Border.Background>
+								<Border.OpacityMask>
+									<RadialGradientBrush>
+										<GradientStop Color="#FF000000" Offset="0"/>
+										<GradientStop Color="#95FFFFFF" Offset="1"/>
+									</RadialGradientBrush>
+								</Border.OpacityMask>
+								<Border.BitmapEffect>
+									<DropShadowBitmapEffect/>
+								</Border.BitmapEffect>
+								<TextBlock Text="{Binding Path=LastMessageTo.Time}" Foreground="#FF323F48" FontSize="10" x:Name="_timeTo" />
+							</Border>
+					<TextBox x:Name="_bodyTo" Text="{Binding Path=LastMessageFrom.Body, Mode=OneWay}" Foreground="#FFC5A581" 
+						TextWrapping="WrapWithOverflow" 
+						FontSize="14" Style="{DynamicResource TextBoxStyleBlack}" IsReadOnly="True" IsUndoEnabled="False" Margin="0,0,20,0" Width="Auto" Height="Auto"/>
+					</Grid>	
 			</StackPanel>
 			</Grid>
 		<DataTemplate.Triggers>
@@ -163,15 +211,14 @@
   			</Border.OpacityMask>
   		</Border>
 		
-		<StackPanel Grid.Column="1" Margin="5,0,2,1" >     
+		<StackPanel Grid.Column="1" Margin="5,0,2,0" d:LayoutOverrides="Margin" >     
   			<TextBlock Text="{Binding Path=DisplayName}"
   				TextTrimming="CharacterEllipsis"
   				FontFamily="Calibri" Foreground="#FFDCDCDC"
   				x:Name="_displayName" FontSize="12" d:LayoutOverrides="Height"/>
   			<TextBlock Text="{Binding Path=StatusDescription}"
-  				TextTrimming="CharacterEllipsis"
   				FontFamily="Calibri" Foreground="#FFB8D9F2"
-  				x:Name="_displayStatus" FontSize="10"/>				
+  				x:Name="_displayStatus" FontSize="10" TextTrimming="CharacterEllipsis"/>				
 	    </StackPanel>
 		
 		<Button Template="{Binding Path=StatusTemplate}" HorizontalAlignment="Stretch" IsEnabled="False"
@@ -211,7 +258,7 @@
   			<RowDefinition Height="0.185*"/>
   		</Grid.RowDefinitions>
 	    	
-  		<Grid d:IsLayer="True" x:Name="Status" Grid.ColumnSpan="1" Grid.RowSpan="3" Panel.ZIndex="3">
+  		<Grid d:IsLayer="True" x:Name="Status" Grid.ColumnSpan="1" Grid.RowSpan="3" Panel.ZIndex="3" Margin="0,1,0,-1">
 			<Button Template="{Binding Path=StatusTemplate}" HorizontalAlignment="Right"
 			Margin="0,0.828,1.549,0" VerticalAlignment="Top" Width="22" Height="22"
 			IsEnabled="False" ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" />
@@ -222,10 +269,10 @@
   		 CornerRadius="3,3,3,3" x:Name="_displayNameLabel"
   		 Visibility="Visible" BorderThickness="1,1,1,1">
 	      
-  			<TextBlock Text="{Binding Path=DisplayName}" HorizontalAlignment="Stretch" Margin="0,0,0,0"
+  			<TextBlock Text="{Binding Path=DisplayName}"
   				TextTrimming="CharacterEllipsis"  				
   				FontFamily="Calibri" Foreground="#FFDCDCDC"
-  				Grid.Row="2" VerticalAlignment="Stretch" TextAlignment="Center" x:Name="_displayName" Width="90"/>
+  				Grid.Row="2" TextAlignment="Center" x:Name="_displayName" VerticalAlignment="Center" FontSize="10"/>
 	      
   		</Border>
 	    	
@@ -355,7 +402,6 @@
 	</DataTemplate.Triggers>
   </DataTemplate>
   
-
  <DataTemplate x:Key="ChatMessageItem" DataType="{x:Type local:ChatMessage}">
 		<Grid Background="#05FFFFFF" x:Name="_grid">
 			<Border BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2"

@@ -34,18 +34,6 @@ namespace xeus.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("75")]
-        public int UI_RosterSlider {
-            get {
-                return ((int)(this["UI_RosterSlider"]));
-            }
-            set {
-                this["UI_RosterSlider"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("3")]
         public int Client_IdleMinutesAway {
             get {
@@ -101,6 +89,18 @@ namespace xeus.Properties {
             }
             set {
                 this["Client_Server"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        public int UI_RosterSlider {
+            get {
+                return ((int)(this["UI_RosterSlider"]));
+            }
+            set {
+                this["UI_RosterSlider"] = value;
             }
         }
     }

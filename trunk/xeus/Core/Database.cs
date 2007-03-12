@@ -52,7 +52,22 @@ namespace xeus.Core
 
 				foreach ( DataRow row in data.Rows )
 				{
-					rosterItems.Add( new RosterItem( row ) ) ;
+					RosterItem rosterItem = new RosterItem( row ) ;
+					rosterItems.Add( rosterItem ) ;
+
+					DataTable dataMsg = Query( "Roster/LastMessagesFrom", string.Format( "@Key='{0}'", rosterItem.Key ) ) ;
+
+					if ( dataMsg.Rows.Count > 0 )
+					{
+						rosterItem.LastMessageFrom = new ChatMessage( dataMsg.Rows[ 0 ], rosterItem );
+					}
+
+					dataMsg = Query( "Roster/LastMessagesTo", string.Format( "@Key='{0}'", rosterItem.Key ) ) ;
+
+					if ( dataMsg.Rows.Count > 0 )
+					{
+						rosterItem.LastMessageTo = new ChatMessage( dataMsg.Rows[ 0 ], rosterItem );
+					}
 				}
 			}
 
@@ -180,6 +195,7 @@ namespace xeus.Core
 					lock ( item.Messages._syncObject )
 					{
 						StoreMessages( item.Messages ) ;
+						StoreLastMessages( item ) ;
 					}
 				}
 
@@ -187,6 +203,23 @@ namespace xeus.Core
 				{
 					Client.Instance.Log( "Error writing roster items: {0}", e.Message ) ;
 				}
+			}
+		}
+
+		private void StoreLastMessages( RosterItem rosterItem )
+		{
+			FieldValuePair[] data ;
+
+			if ( rosterItem.LastMessageFrom != null )
+			{
+				data = rosterItem.LastMessageFrom.GetData() ;
+				SaveOrUpdate( "Roster/LastMessagesFrom", string.Format( "@Key='{0}'", rosterItem.Key ), data ) ;
+			}
+
+			if ( rosterItem.LastMessageTo != null )
+			{
+				data = rosterItem.LastMessageTo.GetData() ;
+				SaveOrUpdate( "Roster/LastMessagesTo", string.Format( "@Key='{0}'", rosterItem.Key ), data ) ;
 			}
 		}
 

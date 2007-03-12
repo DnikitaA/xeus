@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Controls ;
 using agsXMPP.protocol.client ;
 
 namespace xeus.Core
 {
-	static class PresenceTemplate
+	internal static class PresenceTemplate
 	{
 		private static ControlTemplate _templateDnd ;
 		private static ControlTemplate _templateAway ;
@@ -17,64 +14,63 @@ namespace xeus.Core
 
 		public static ControlTemplate GetStatusTemplate( Presence presence )
 		{
-				if ( presence == null || presence.Type == PresenceType.unavailable )
+			if ( presence == null || presence.Type == PresenceType.unavailable )
+			{
+				if ( _templateOffline == null )
 				{
-					if ( _templateOffline == null )
-					{
-						_templateOffline = ( ControlTemplate ) App.Instance.FindResource( "StatusOffline" ) ;
-					}
-
-					return _templateOffline ;
+					_templateOffline = ( ControlTemplate ) App.Instance.FindResource( "StatusOffline" ) ;
 				}
 
-				switch ( presence.Show )
-				{
-					case ShowType.dnd:
-						{
-							if ( _templateDnd == null )
-							{
-								_templateDnd = ( ControlTemplate ) App.Instance.FindResource( "StatusDnd" ) ;
-							}
-							return _templateDnd ;
-						}
+				return _templateOffline ;
+			}
 
-					case ShowType.away:
+			switch ( presence.Show )
+			{
+				case ShowType.dnd:
+					{
+						if ( _templateDnd == null )
 						{
-							if ( _templateAway == null )
-							{
-								_templateAway = ( ControlTemplate ) App.Instance.FindResource( "StatusAway" ) ;
-							}
-							return _templateAway ;
+							_templateDnd = ( ControlTemplate ) App.Instance.FindResource( "StatusDnd" ) ;
 						}
+						return _templateDnd ;
+					}
 
-					case ShowType.chat:
+				case ShowType.away:
+					{
+						if ( _templateAway == null )
 						{
-							if ( _templateFreeForChat == null )
-							{
-								_templateFreeForChat = ( ControlTemplate ) App.Instance.FindResource( "StatusFreeForChat" ) ;
-							}
-							return _templateFreeForChat ;
+							_templateAway = ( ControlTemplate ) App.Instance.FindResource( "StatusAway" ) ;
 						}
+						return _templateAway ;
+					}
 
-					case ShowType.xa:
+				case ShowType.chat:
+					{
+						if ( _templateFreeForChat == null )
 						{
-							if ( _templateXAway == null )
-							{
-								_templateXAway = ( ControlTemplate ) App.Instance.FindResource( "StatusXAway" ) ;
-							}
-							return _templateXAway ;
+							_templateFreeForChat = ( ControlTemplate ) App.Instance.FindResource( "StatusFreeForChat" ) ;
 						}
+						return _templateFreeForChat ;
+					}
 
-					default:
+				case ShowType.xa:
+					{
+						if ( _templateXAway == null )
 						{
-							if ( _templateOnline == null )
-							{
-								_templateOnline = ( ControlTemplate ) App.Instance.FindResource( "StatusOnline" ) ;
-							}
-							return _templateOnline ;
+							_templateXAway = ( ControlTemplate ) App.Instance.FindResource( "StatusXAway" ) ;
 						}
-				}			
+						return _templateXAway ;
+					}
+
+				default:
+					{
+						if ( _templateOnline == null )
+						{
+							_templateOnline = ( ControlTemplate ) App.Instance.FindResource( "StatusOnline" ) ;
+						}
+						return _templateOnline ;
+					}
+			}
 		}
-
 	}
 }

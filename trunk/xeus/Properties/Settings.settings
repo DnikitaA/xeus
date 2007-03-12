@@ -5,9 +5,6 @@
     <Setting Name="Roster_MaximumMessagesToLoad" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">40</Value>
     </Setting>
-    <Setting Name="UI_RosterSlider" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">75</Value>
-    </Setting>
     <Setting Name="Client_IdleMinutesAway" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">3</Value>
     </Setting>
@@ -22,6 +19,9 @@
     </Setting>
     <Setting Name="Client_Server" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="UI_RosterSlider" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">80</Value>
     </Setting>
   </Settings>
 </SettingsFile>

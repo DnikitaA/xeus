@@ -44,6 +44,7 @@ namespace xeus.Core
 		#region events
 
 		public event LoginHandler LoggedIn ;
+		public event LoginHandler LoginError ;
 		public event MessageHandler Message ;
 
 		#endregion
@@ -175,6 +176,11 @@ namespace xeus.Core
 		private void _xmppConnection_OnAuthError( object sender, Element e )
 		{
 			App.Instance.Window.AlertError( "Authorization error", e.ToString() ) ;
+
+			if ( LoginError != null )
+			{
+				LoginError() ;
+			}
 		}
 
 		private void _xmppConnection_OnXmppError( object sender, Element e )
@@ -565,6 +571,9 @@ namespace xeus.Core
 		{
 			get
 			{
+#if DEBUG
+				return true ;
+#endif
 				return ( MyPresence != null && MyPresence.Type == PresenceType.available ) ;
 			}
 		}
