@@ -331,6 +331,9 @@ namespace xeus.Controls
 						if ( _rosterView == null )
 						{
 							_rosterView = CollectionViewSource.GetDefaultView( _roster.ItemsSource ) ;
+
+							ListCollectionView listCollectionView = ( ListCollectionView ) _rosterView ;
+							listCollectionView.CustomSort = new RosterSort() ;
 						}
 
 						//_rosterView.Refresh() ;

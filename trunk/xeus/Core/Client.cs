@@ -571,9 +571,6 @@ namespace xeus.Core
 		{
 			get
 			{
-#if DEBUG
-				return true ;
-#endif
 				return ( MyPresence != null && MyPresence.Type == PresenceType.available ) ;
 			}
 		}

@@ -55,11 +55,6 @@ namespace xeus.Core
 		private RosterItem()
 		{
 			_messages.CollectionChanged += new NotifyCollectionChangedEventHandler( _messages_CollectionChanged ) ;
-
-#if DEBUG
-			_presence = new Presence( ShowType.xa, "aaaa" ) ;
-#endif
-
 		}
 
 		public RosterItem( DataRow row ) : this()
@@ -305,11 +300,7 @@ namespace xeus.Core
 		{
 			get
 			{
-#if DEBUG
-				return "I am idle for 10 minutes bla a to je konec vseho" ;
-#else
 				return _statusDescription ;
-#endif
 			}
 		}
 

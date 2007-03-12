@@ -38,9 +38,6 @@ namespace xeus
 		{
 			Client.Instance.MessageCenter.ChatMessages.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( ChatMessages_CollectionChanged );
 			Client.Instance.LoginError += new Client.LoginHandler( Instance_LoginError );
-#if DEBUG
-			Instance_LoginError() ;
-#endif
 		}
 
 		void Instance_LoginError()
