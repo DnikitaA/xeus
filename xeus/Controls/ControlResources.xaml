@@ -13,10 +13,15 @@
   
  <!-- roster -->
   <CollectionViewSource x:Key="_rosterView" Source="{Binding Path=Roster.Items}">
-    <CollectionViewSource.SortDescriptions>
+    <!--
+	<CollectionViewSource.SortDescriptions>
+      <scm:SortDescription PropertyName="Group" />
       <scm:SortDescription PropertyName="DisplayName" />
       <scm:SortDescription PropertyName="StatusText" />
-    </CollectionViewSource.SortDescriptions>    <CollectionViewSource.GroupDescriptions>
+    </CollectionViewSource.SortDescriptions>
+	-->
+	
+	<CollectionViewSource.GroupDescriptions>
 		<PropertyGroupDescription PropertyName="Group"/>
     </CollectionViewSource.GroupDescriptions>
   </CollectionViewSource>
