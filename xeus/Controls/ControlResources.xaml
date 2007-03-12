@@ -149,7 +149,7 @@
 								</Border.BitmapEffect>
 								<TextBlock Text="{Binding Path=LastMessageTo.Time}" Foreground="#FF323F48" FontSize="10" x:Name="_timeTo" />
 							</Border>
-					<TextBlock x:Name="_bodyTo" Text="{Binding Path=LastMessageTo.Body, Mode=OneWay}" Foreground="#FFC5A581" 
+					<TextBlock x:Name="_bodyTo" Text="{Binding Path=LastMessageTo.Body, Mode=OneWay}" Foreground="#FFE7E7E7" 
 						TextWrapping="WrapWithOverflow" 
 						FontSize="14" Margin="0,0,20,0" Width="Auto" Height="Auto"/>
 					</Grid>	
