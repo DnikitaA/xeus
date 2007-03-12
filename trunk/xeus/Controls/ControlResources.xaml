@@ -29,10 +29,17 @@
 	<DataTemplate x:Key="RosterItemTip" DataType="{x:Type local:RosterItem}">
 		<DataTemplate.Resources>
 			<Storyboard x:Key="Flash">
-				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="grid" Storyboard.TargetProperty="(UIElement.Opacity)">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00" Value="#FF797878"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.3000000" Value="#FF0F0F0F"/>
+				</ColorAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00" Value="#FFC1C1C1"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.3000000" Value="#FF2A2A2A"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.Opacity)">
 					<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.1"/>
-					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1"/>
-					<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0.95"/>
 				</DoubleAnimationUsingKeyFrames>
 			</Storyboard>
 		</DataTemplate.Resources>
@@ -46,16 +53,13 @@
 						<TranslateTransform X="0" Y="0"/>
 					</TransformGroup>
 				</Grid.RenderTransform>
-				<Border MinHeight="65" Opacity="0.8" VerticalAlignment="Top" BorderBrush="#FF464646" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4">
+				<Border MinHeight="65" Opacity="0.98" x:Name="border" VerticalAlignment="Top" BorderBrush="#FF3C3C3C" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4">
 					<Border.Background>
 						<ImageBrush Viewport="0,0,10,10"
 							ViewportUnits="Absolute"
 							TileMode="Tile" Stretch="None" ImageSource="/Images/stripes.png"/>
 					</Border.Background>
-					<Border.BitmapEffect>
-						<DropShadowBitmapEffect Opacity="0.5" ShadowDepth="2"/>
-					</Border.BitmapEffect>
-					<Border SnapsToDevicePixels="True" x:Name="rectangle" MinHeight="65" Opacity="0.9" CornerRadius="3,3,3,3" >
+					<Border SnapsToDevicePixels="True" x:Name="rectangle" MinHeight="65" Opacity="0.92" CornerRadius="3,3,3,3" >
 						<Border.Background>
 							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 								<GradientStop Color="#FF0F0F0F" Offset="0"/>
@@ -65,12 +69,6 @@
 						<Border.BitmapEffect>
 							<DropShadowBitmapEffect Direction="274" Opacity="0.335" ShadowDepth="1" Softness="0.37"/>
 						</Border.BitmapEffect>
-						<Border.OpacityMask>
-							<RadialGradientBrush>
-								<GradientStop Color="#FF000000" Offset="0"/>
-								<GradientStop Color="#F2FFFFFF" Offset="1"/>
-							</RadialGradientBrush>
-						</Border.OpacityMask>
 						<StackPanel MaxHeight="400" MaxWidth="400" Margin="10,70,10,10">
 							<Grid Background="#05FFFFFF" x:Name="_gridFrom" Visibility="Visible" >
 								<Border BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2"
