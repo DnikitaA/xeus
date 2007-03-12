@@ -43,7 +43,7 @@
 		<StatusBarItem HorizontalAlignment="Stretch" Margin="0,0,0,0"
 		    	  x:Name="_statusMyStatus" VerticalAlignment="Stretch">
 		    <Button x:Name="_buttonmyStatus" Width="20" Height="20" Template="{Binding Path=StatusTemplate}" Click="DisplayPopup" ToolTip="My Status"
-				IsEnabled="{Binding Path=IsAvailable}">
+				>
 			<Popup x:Name="_statusPopup" AllowsTransparency="True" Placement="MousePoint" StaysOpen="False" Width="85" Height="85">
 				<local:StatusControl x:Name="_statusControl"/>
 			</Popup>

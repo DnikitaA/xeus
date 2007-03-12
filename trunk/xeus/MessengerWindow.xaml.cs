@@ -22,6 +22,7 @@ namespace xeus
 	{
 		private TrayIcon _trayIcon = new TrayIcon() ;
 
+		private delegate void ManualLoginCallback() ;
 		private delegate void SetStatusCallback( string text ) ;
 		private delegate void OnRegisterCallback( IQ iq, Register register ) ;
 
@@ -37,15 +38,34 @@ namespace xeus
 		void MessengerWindow_Initialized( object sender, EventArgs e )
 		{
 			Client.Instance.MessageCenter.ChatMessages.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( ChatMessages_CollectionChanged );
-			Client.Instance.LoginError += new Client.LoginHandler( Instance_LoginError );
+			Client.Instance.LoginError += new Client.LoginHandler( OnLoginError );
 		}
 
-		void Instance_LoginError()
+		void ManualLogin()
 		{
-			LoginDialog loginDialog = new LoginDialog();
+			if ( App.DispatcherThread.CheckAccess() )
+			{
+				LoginDialog loginDialog = new LoginDialog();
 
-			//loginDialog.Owner = this ;
-			loginDialog.ShowDialog() ;
+				loginDialog.Owner = this ;
+				loginDialog.ShowDialog() ;
+
+				if ( loginDialog.DialogResult.HasValue && loginDialog.DialogResult.Value )
+				{
+					Settings.Default.Client_Password = loginDialog.Password ;
+					Client.Instance.Connect( loginDialog.RegisterAccount, loginDialog.Password ) ;
+				}
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new ManualLoginCallback( ManualLogin ) ) ;
+			}
+		}
+
+		void OnLoginError()
+		{
+			ManualLogin() ;
 		}
 
 		void ChatMessages_CollectionChanged( object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e )

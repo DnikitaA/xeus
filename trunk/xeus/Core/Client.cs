@@ -206,12 +206,18 @@ namespace xeus.Core
 			SetMyPresence( ShowType.NONE, false ) ;
 		}
 
-		public void Connect()
+		public void Connect( bool registerNewAccount, string newPassword )
 		{
-			if ( _xmppConnection.XmppConnectionState == XmppConnectionState.Disconnected )
+			if ( _xmppConnection.XmppConnectionState != XmppConnectionState.Connected )
 			{
 				Log( "Opening connection" ) ;
 
+				if ( newPassword != null )
+				{
+					_xmppConnection.Password = newPassword ;
+				}
+
+				_xmppConnection.RegisterAccount = registerNewAccount ;
 				_xmppConnection.Open() ;
 			}
 		}
@@ -248,7 +254,7 @@ namespace xeus.Core
 
 		public void SetMyPresence( ShowType showType, bool isIdle )
 		{
-			Connect() ;
+			Connect( false, null ) ;
 
 			if ( _xmppConnection.Authenticated )
 			{
@@ -277,6 +283,13 @@ namespace xeus.Core
 				NotifyPropertyChanged( "MyPresence" ) ;
 				NotifyPropertyChanged( "StatusTemplate" ) ;
 				NotifyPropertyChanged( "IsAvailable" ) ;
+			}
+			else
+			{
+				if ( LoginError != null )
+				{
+					LoginError() ;
+				}
 			}
 		}
 

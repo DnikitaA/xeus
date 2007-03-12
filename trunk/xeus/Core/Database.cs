@@ -1,6 +1,7 @@
 using System ;
 using System.Collections.Generic ;
 using System.Data ;
+using System.IO ;
 using System.Xml ;
 using Clifton.Tools.Xml ;
 using xeus.Properties ;
@@ -22,16 +23,22 @@ namespace xeus.Core
 			OpenDatabase() ;
 		}
 
+		string Path
+		{
+			get
+			{
+				return string.Format( "{0}\\{1}", Storage.GetDbFolder(), "Default.xeusdb" ) ;
+			}
+		}
+
 		private void OpenDatabase()
 		{
 			xdoc = new XmlDocument();
 
-			string path = string.Format( "{0}\\{1}", Storage.GetDbFolder(), "Default.xeusdb" ) ;
-
 			try
 			{
 				RootName = "xeus" ;
-				Load( path ) ;
+				Load( Path ) ;
 			}
 
 			catch ( Exception )
@@ -146,12 +153,24 @@ namespace xeus.Core
 		{
 			try
 			{
-				base.Save();
+				// do backup
+				string backupPath = string.Format( "{0}.backup", Path ) ;
+				File.Delete( backupPath ) ;
+				File.Copy( Path, backupPath ) ;
 			}
 
 			catch
 			{
 				
+			}
+
+			try
+			{
+				base.Save();
+			}
+
+			catch
+			{
 			}
 		}
 

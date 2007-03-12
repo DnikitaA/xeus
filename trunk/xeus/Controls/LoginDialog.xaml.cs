@@ -27,5 +27,21 @@ namespace xeus.Controls
 		{
 			 DialogResult = true ;
 		}
+
+		public bool RegisterAccount
+		{
+			get
+			{
+				return _expanderNewAccount.IsExpanded ;
+			}
+		}
+
+		public string Password
+		{
+			get
+			{
+				return _password.Password ;
+			}
+		}
 	}
 }

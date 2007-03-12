@@ -51,7 +51,7 @@ namespace xeus
 			_window.Show() ;
 
 			Client.Instance.Setup() ;
-			Client.Instance.Connect() ;
+			Client.Instance.Connect( false, null ) ;
 		}
 
 		protected override void OnExit( ExitEventArgs e )
