@@ -44,7 +44,7 @@
 			</Storyboard>
 		</DataTemplate.Resources>
 		<Grid RenderTransformOrigin="0.5,0.5"
-				Width="300" Panel.ZIndex="10" x:Name="grid" >
+				Panel.ZIndex="10" x:Name="grid" >
 			<Grid.RenderTransform>
 				<TransformGroup>
 					<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -85,19 +85,19 @@
 			</Rectangle>
 			<Image HorizontalAlignment="Left" Source="{Binding Path=Image}" Grid.Row="0" 
 				VerticalAlignment="Top" Stretch="Uniform" Width="47" Height="49.334" Margin="17.333,14.666,0,0" d:LayoutOverrides="GridBox" Panel.ZIndex="1"/>
-			<TextBlock Margin="76.333,14.393,15,0"
+			<TextBlock Margin="76.333,12.393,15,0"
   				TextTrimming="CharacterEllipsis"
   				FontFamily="Calibri" Foreground="#FFACACAC"
-  				VerticalAlignment="Top" x:Name="_displayName" FontSize="15" Height="20" Text="{Binding Path=DisplayName}" />
+  				VerticalAlignment="Top" x:Name="_displayName" FontSize="16" Text="{Binding Path=DisplayName}" />
 			<TextBlock Text="{Binding Path=Key}" HorizontalAlignment="Stretch"
 			  				TextTrimming="CharacterEllipsis"
 			  				FontFamily="Calibri" Foreground="#FFB8D9F2"
-			  				x:Name="_displayKey" Margin="76.333,32.393,15,0" FontSize="12" VerticalAlignment="Top" Height="17"/>
+			  				x:Name="_displayKey" Margin="76.333,32.393,15,0" FontSize="14" VerticalAlignment="Top"/>
 			<TextBlock HorizontalAlignment="Stretch"
 			  				FontFamily="Calibri" Foreground="#FFB97E7A"
-			  				x:Name="_subscription" Margin="76.333,46.893,15,60.367" FontSize="12" VerticalAlignment="Stretch" Height="Auto"
+			  				x:Name="_subscription" Margin="76.333,47.893,15,59.367" FontSize="14" VerticalAlignment="Stretch"
 							Text="{Binding Path=SubscriptionTypeText}"/>
-			<StackPanel Margin="17.333,73,15,16">
+			<StackPanel Margin="17.333,73,15,16" MaxHeight="400" MaxWidth="400">
 				<Grid Background="#05FFFFFF" x:Name="_gridFrom">
 							<Border BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2"
 							 HorizontalAlignment="Right" Padding="4,2,4,2" Opacity="0.8"
@@ -119,9 +119,9 @@
 								</Border.BitmapEffect>
 								<TextBlock Text="{Binding Path=LastMessageFrom.Time}" Foreground="#FF323F48" FontSize="10" x:Name="_time" />
 							</Border>
-					<TextBox x:Name="_body" Text="{Binding Path=LastMessageFrom.Body, Mode=OneWay}" Foreground="#FFC5A581" 
+					<TextBlock x:Name="_body" Text="{Binding Path=LastMessageFrom.Body, Mode=OneWay}" Foreground="#FFC5A581" 
 						TextWrapping="WrapWithOverflow" 
-						FontSize="14" Style="{DynamicResource TextBoxStyleBlack}" IsReadOnly="True" IsUndoEnabled="False" Margin="0,0,20,0" Width="Auto" Height="Auto"/>
+						FontSize="14" Margin="0,0,20,0" Width="Auto" Height="Auto"/>
 					</Grid>	
 				<Grid Background="#05FFFFFF" x:Name="_gridTo">
 							<Border BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2"
@@ -144,9 +144,9 @@
 								</Border.BitmapEffect>
 								<TextBlock Text="{Binding Path=LastMessageTo.Time}" Foreground="#FF323F48" FontSize="10" x:Name="_timeTo" />
 							</Border>
-					<TextBox x:Name="_bodyTo" Text="{Binding Path=LastMessageFrom.Body, Mode=OneWay}" Foreground="#FFC5A581" 
+					<TextBlock x:Name="_bodyTo" Text="{Binding Path=LastMessageTo.Body, Mode=OneWay}" Foreground="#FFC5A581" 
 						TextWrapping="WrapWithOverflow" 
-						FontSize="14" Style="{DynamicResource TextBoxStyleBlack}" IsReadOnly="True" IsUndoEnabled="False" Margin="0,0,20,0" Width="Auto" Height="Auto"/>
+						FontSize="14" Margin="0,0,20,0" Width="Auto" Height="Auto"/>
 					</Grid>	
 			</StackPanel>
 			</Grid>
@@ -156,6 +156,12 @@
 					<BeginStoryboard Storyboard="{StaticResource Flash}"/>
 				</Trigger.EnterActions>
 			</Trigger>
+ 			<DataTrigger Binding="{Binding Path=LastMessageTo}" Value="{x:Null}">
+					<Setter Property="Visibility" Value="Collapsed" TargetName="_gridTo"/>
+        	</DataTrigger>			
+ 			<DataTrigger Binding="{Binding Path=LastMessageFrom}" Value="{x:Null}">
+					<Setter Property="Visibility" Value="Collapsed" TargetName="_gridFrom"/>
+        	</DataTrigger>			
 		</DataTemplate.Triggers>
 	</DataTemplate>	
 
