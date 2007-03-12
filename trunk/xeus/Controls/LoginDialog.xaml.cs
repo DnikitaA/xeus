@@ -21,6 +21,8 @@ namespace xeus.Controls
 		public LoginDialog()
 		{
 			InitializeComponent();
+
+			EnableOk() ;
 		}
 	
 		protected void Ok( object sender, EventArgs e )
@@ -42,6 +44,24 @@ namespace xeus.Controls
 			{
 				return _password.Password ;
 			}
+		}
+
+		void EnableOk()
+		{
+			if ( _expanderNewAccount.IsExpanded
+					&& ( _password.Password.Trim() == String.Empty
+						|| _password.Password != _confirmPassword.Password ) )
+			{
+				_ok.IsEnabled = false ;
+				return ;
+			}
+
+			_ok.IsEnabled = true ;
+		}
+
+		protected void OnPasswordCheck( object sender, RoutedEventArgs eventArgs )
+		{
+			EnableOk() ;
 		}
 	}
 }

@@ -53,7 +53,7 @@ namespace xeus
 				if ( loginDialog.DialogResult.HasValue && loginDialog.DialogResult.Value )
 				{
 					Settings.Default.Client_Password = loginDialog.Password ;
-					Client.Instance.Connect( loginDialog.RegisterAccount, loginDialog.Password ) ;
+					Client.Instance.Connect( loginDialog.RegisterAccount ) ;
 				}
 			}
 			else

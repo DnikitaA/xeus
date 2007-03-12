@@ -34,127 +34,116 @@
 					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1"/>
 					<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
 				</DoubleAnimationUsingKeyFrames>
-				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
-					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="#FF535353"/>
-					<SplineColorKeyFrame KeyTime="00:00:00.3000000" Value="#FF424242"/>
-				</ColorAnimationUsingKeyFrames>
-				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Color)">
-					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="#FF484848"/>
-					<SplineColorKeyFrame KeyTime="00:00:00.3000000" Value="#FF2E2E2E"/>
-				</ColorAnimationUsingKeyFrames>
-				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Offset)">
-					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.986"/>
-					<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
-				</DoubleAnimationUsingKeyFrames>
 			</Storyboard>
 		</DataTemplate.Resources>
-		<Grid RenderTransformOrigin="0.5,0.5"
-				Panel.ZIndex="10" x:Name="grid" >
-			<Grid.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform ScaleX="1" ScaleY="1"/>
-					<SkewTransform AngleX="0" AngleY="0"/>
-					<RotateTransform Angle="0"/>
-					<TranslateTransform X="0" Y="0"/>
-				</TransformGroup>
-			</Grid.RenderTransform>
-			<Path Opacity="0.825" SnapsToDevicePixels="True" Fill="#FFFFFFFF" Stretch="Fill" Stroke="#FF3E3E3E" Margin="8,8,8,0" x:Name="rectangleTop" VerticalAlignment="Top" Width="Auto" Height="61" Data="F1 M4.4999995,0.50000107 L211.5,0.50000107 C213.70914,0.5 215.5,2.2908609 215.5,4.4999986 L215.5,60.5 0.50000215,60.5 0.50000215,4.4999986 C0.5,2.2908609 2.2908609,0.5 4.4999995,0.50000107 z">
-				<Path.BitmapEffect>
-					<DropShadowBitmapEffect Direction="274" Opacity="0.335" ShadowDepth="1" Softness="0.37"/>
-				</Path.BitmapEffect>
-			</Path>
-			<Rectangle Width="Auto" Height="Auto" RadiusX="5" RadiusY="5" Margin="8,8,8,8" Stroke="#FF000000" Opacity="0.605">
-				<Rectangle.Fill>
-					<ImageBrush Viewport="0,0,10,10"
-			      				ViewportUnits="Absolute"
-				   				TileMode="Tile" Stretch="None" ImageSource="/Images/stripes.png"/>
-				</Rectangle.Fill>
-				<Rectangle.OpacityMask>
-					<RadialGradientBrush>
-						<GradientStop Color="#FF000000" Offset="0"/>
-						<GradientStop Color="#77323232" Offset="1"/>
-						<GradientStop Color="#7B5B5B5B" Offset="0.812"/>
-					</RadialGradientBrush>
-				</Rectangle.OpacityMask>
-			</Rectangle>
-			<Rectangle SnapsToDevicePixels="True" Width="Auto" Height="Auto" RadiusX="4" RadiusY="4" Margin="8,8,8,8" Stroke="#FF3E3E3E" Opacity="0.825" x:Name="rectangle" >
-				<Rectangle.Fill>
-					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-						<GradientStop Color="#FF2C2C2C" Offset="0"/>
-						<GradientStop Color="#FF484848" Offset="0.986"/>
-					</LinearGradientBrush>
-				</Rectangle.Fill>
-				<Rectangle.BitmapEffect>
-					<DropShadowBitmapEffect Direction="274" Opacity="0.335" ShadowDepth="1" Softness="0.37"/>
-				</Rectangle.BitmapEffect>
-			</Rectangle>
-			<Image HorizontalAlignment="Left" Source="{Binding Path=Image}" Grid.Row="0" 
-				VerticalAlignment="Top" Stretch="Uniform" Width="47" Height="49.334" Margin="17.333,14.666,0,0" d:LayoutOverrides="GridBox" Panel.ZIndex="1"/>
-			<TextBlock Margin="76.333,12.393,15,0"
-  				TextTrimming="CharacterEllipsis"
-  				FontFamily="Calibri" Foreground="#FFACACAC"
-  				VerticalAlignment="Top" x:Name="_displayName" FontSize="16" Text="{Binding Path=DisplayName}" />
-			<TextBlock Text="{Binding Path=Key}" HorizontalAlignment="Stretch"
-			  				TextTrimming="CharacterEllipsis"
-			  				FontFamily="Calibri" Foreground="#FFB8D9F2"
-			  				x:Name="_displayKey" Margin="76.333,32.393,15,0" FontSize="14" VerticalAlignment="Top"/>
-			<TextBlock HorizontalAlignment="Stretch"
-			  				FontFamily="Calibri" Foreground="#FFB97E7A"
-			  				x:Name="_subscription" Margin="76.333,47.893,15,59.367" FontSize="14" VerticalAlignment="Stretch"
-							Text="{Binding Path=SubscriptionTypeText}"/>
-			<StackPanel Margin="17.333,73,15,16" MaxHeight="400" MaxWidth="400">
-				<Grid Background="#05FFFFFF" x:Name="_gridFrom">
-							<Border BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2"
-							 HorizontalAlignment="Right" Padding="4,2,4,2" Opacity="0.8"
-							 Margin="0,29.7,4,0" Panel.ZIndex="2" VerticalAlignment="Top" x:Name="_timeBorder">
-								<Border.Background>
-									<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-										<GradientStop Color="#FF78C2E1" Offset="0"/>
-										<GradientStop Color="#FFCEE4EB" Offset="1"/>
-									</LinearGradientBrush>
-								</Border.Background>
-								<Border.OpacityMask>
-									<RadialGradientBrush>
-										<GradientStop Color="#FF000000" Offset="0"/>
-										<GradientStop Color="#95FFFFFF" Offset="1"/>
-									</RadialGradientBrush>
-								</Border.OpacityMask>
-								<Border.BitmapEffect>
-									<DropShadowBitmapEffect/>
-								</Border.BitmapEffect>
-								<TextBlock Text="{Binding Path=LastMessageFrom.Time}" Foreground="#FF323F48" FontSize="10" x:Name="_time" />
-							</Border>
-					<TextBlock x:Name="_body" Text="{Binding Path=LastMessageFrom.Body, Mode=OneWay}" Foreground="#FFC5A581" 
-						TextWrapping="WrapWithOverflow" 
-						FontSize="14" Margin="0,0,20,0" Width="Auto" Height="Auto"/>
-					</Grid>	
-				<Grid Background="#05FFFFFF" x:Name="_gridTo">
-							<Border BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2"
-							 HorizontalAlignment="Right" Padding="4,2,4,2" Opacity="0.8"
-							 Margin="0,29.7,4,0" Panel.ZIndex="2" VerticalAlignment="Top" x:Name="_timeBorderTo">
-								<Border.Background>
-									<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-										<GradientStop Color="#FF78C2E1" Offset="0"/>
-										<GradientStop Color="#FFCEE4EB" Offset="1"/>
-									</LinearGradientBrush>
-								</Border.Background>
-								<Border.OpacityMask>
-									<RadialGradientBrush>
-										<GradientStop Color="#FF000000" Offset="0"/>
-										<GradientStop Color="#95FFFFFF" Offset="1"/>
-									</RadialGradientBrush>
-								</Border.OpacityMask>
-								<Border.BitmapEffect>
-									<DropShadowBitmapEffect/>
-								</Border.BitmapEffect>
-								<TextBlock Text="{Binding Path=LastMessageTo.Time}" Foreground="#FF323F48" FontSize="10" x:Name="_timeTo" />
-							</Border>
-					<TextBlock x:Name="_bodyTo" Text="{Binding Path=LastMessageTo.Body, Mode=OneWay}" Foreground="#FFE7E7E7" 
-						TextWrapping="WrapWithOverflow" 
-						FontSize="14" Margin="0,0,20,0" Width="Auto" Height="Auto"/>
-					</Grid>	
-			</StackPanel>
+			<Grid RenderTransformOrigin="0.5,0.5"
+				Panel.ZIndex="10" x:Name="grid" MinHeight="60" DockPanel.Dock="Top" Opacity="0.9" >
+				<Grid.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform ScaleX="1" ScaleY="1"/>
+						<SkewTransform AngleX="0" AngleY="0"/>
+						<RotateTransform Angle="0"/>
+						<TranslateTransform X="0" Y="0"/>
+					</TransformGroup>
+				</Grid.RenderTransform>
+				<Path SnapsToDevicePixels="True" Fill="#FF2A2A2A" Stretch="Fill" x:Name="rectangleTop" Data="F1 M4.4999995,0.50000107 L211.5,0.50000107 C213.70914,0.5 215.5,2.2908609 215.5,4.4999986 L215.5,60.5 0.50000215,60.5 0.50000215,4.4999986 C0.5,2.2908609 2.2908609,0.5 4.4999995,0.50000107 z" d:LayoutOverrides="Margin" Margin="0,0,0,52.35">
+					<Path.BitmapEffect>
+						<DropShadowBitmapEffect Direction="274" Opacity="0.335" ShadowDepth="1" Softness="0.37"/>
+					</Path.BitmapEffect>
+				</Path>
+				<Border MinHeight="65" VerticalAlignment="Top" BorderBrush="#FF2A2A2A" BorderThickness="2,2,2,2" CornerRadius="4,4,4,4">
+					<Border.Background>
+						<ImageBrush Viewport="0,0,10,10"
+							ViewportUnits="Absolute"
+							TileMode="Tile" Stretch="None" ImageSource="/Images/stripes.png"/>
+					</Border.Background>
+					<Border.OpacityMask>
+						<RadialGradientBrush>
+							<GradientStop Color="#FF000000" Offset="0"/>
+							<GradientStop Color="#77323232" Offset="1"/>
+							<GradientStop Color="#7B5B5B5B" Offset="0.812"/>
+						</RadialGradientBrush>
+					</Border.OpacityMask>
+					<Border SnapsToDevicePixels="True" x:Name="rectangle" MinHeight="65" BorderBrush="#FF3A3A3A" BorderThickness="2,2,2,2" CornerRadius="4,4,4,4" >
+						<Border.Background>
+							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+								<GradientStop Color="#FF2C2C2C" Offset="0"/>
+								<GradientStop Color="#FF484848" Offset="0.986"/>
+							</LinearGradientBrush>
+						</Border.Background>
+						<Border.BitmapEffect>
+							<DropShadowBitmapEffect Direction="274" Opacity="0.335" ShadowDepth="1" Softness="0.37"/>
+						</Border.BitmapEffect>
+						<StackPanel MaxHeight="400" MaxWidth="400" Margin="0,70,0,0">
+							<Grid Background="#05FFFFFF" x:Name="_gridFrom" Visibility="Visible" >
+								<Border BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2"
+									HorizontalAlignment="Right" Padding="4,2,4,2" Opacity="0.8"
+									Margin="0,29.7,4,0" Panel.ZIndex="2" VerticalAlignment="Top" x:Name="_timeBorder">
+									<Border.Background>
+										<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+											<GradientStop Color="#FF78C2E1" Offset="0"/>
+											<GradientStop Color="#FFCEE4EB" Offset="1"/>
+										</LinearGradientBrush>
+									</Border.Background>
+									<Border.OpacityMask>
+										<RadialGradientBrush>
+											<GradientStop Color="#FF000000" Offset="0"/>
+											<GradientStop Color="#95FFFFFF" Offset="1"/>
+										</RadialGradientBrush>
+									</Border.OpacityMask>
+									<Border.BitmapEffect>
+										<DropShadowBitmapEffect/>
+									</Border.BitmapEffect>
+									<TextBlock Text="{Binding Path=LastMessageFrom.Time}" Foreground="#FF323F48" FontSize="10" x:Name="_time" />
+								</Border>
+								<TextBlock x:Name="_body" Text="adfasdadadsgasdf" Foreground="#FFC5A581" 
+									TextWrapping="WrapWithOverflow" 
+									FontSize="14" Margin="0,0,20,0" Width="Auto" Height="Auto"/>
+							</Grid>	
+							<Grid Background="#05FFFFFF" x:Name="_gridTo" Visibility="Visible">
+								<Border BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2"
+									HorizontalAlignment="Right" Padding="4,2,4,2" Opacity="0.8"
+									Margin="0,29.7,4,0" Panel.ZIndex="2" VerticalAlignment="Top" x:Name="_timeBorderTo">
+									<Border.Background>
+										<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+											<GradientStop Color="#FF78C2E1" Offset="0"/>
+											<GradientStop Color="#FFCEE4EB" Offset="1"/>
+										</LinearGradientBrush>
+									</Border.Background>
+									<Border.OpacityMask>
+										<RadialGradientBrush>
+											<GradientStop Color="#FF000000" Offset="0"/>
+											<GradientStop Color="#95FFFFFF" Offset="1"/>
+										</RadialGradientBrush>
+									</Border.OpacityMask>
+									<Border.BitmapEffect>
+										<DropShadowBitmapEffect/>
+									</Border.BitmapEffect>
+									<TextBlock Text="{Binding Path=LastMessageTo.Time}" Foreground="#FF323F48" FontSize="10" x:Name="_timeTo" />
+								</Border>
+								<TextBlock x:Name="_bodyTo" Text="{Binding Path=LastMessageTo.Body, Mode=OneWay}" Foreground="#FFE7E7E7" 
+									TextWrapping="WrapWithOverflow" 
+									FontSize="14" Margin="0,0,20,0" Width="Auto" Height="Auto"/>
+							</Grid>	
+						</StackPanel>
+					</Border>
+				</Border>
+				<Image HorizontalAlignment="Left" Source="{Binding Path=Image}" Grid.Row="0" 
+					VerticalAlignment="Top" Stretch="Uniform" Width="47" Height="49.334" Margin="17.333,14.666,0,0" d:LayoutOverrides="GridBox" Panel.ZIndex="1"/>
+				<TextBlock Margin="76.333,12.393,15,0"
+					TextTrimming="CharacterEllipsis"
+					FontFamily="Calibri" Foreground="#FFACACAC"
+					VerticalAlignment="Top" x:Name="_displayName" FontSize="16" Text="{Binding Path=DisplayName}" />
+				<TextBlock Text="{Binding Path=Key}" HorizontalAlignment="Stretch"
+					TextTrimming="CharacterEllipsis"
+					FontFamily="Calibri" Foreground="#FFB8D9F2"
+					x:Name="_displayKey" Margin="76.333,32.393,15,0" FontSize="14" VerticalAlignment="Top"/>
+				<TextBlock HorizontalAlignment="Stretch"
+					FontFamily="Calibri" Foreground="#FFB97E7A"
+					x:Name="_subscription" Margin="76.333,47.893,15,59.367" FontSize="14" VerticalAlignment="Top"
+					Text="{Binding Path=SubscriptionTypeText}"/>
 			</Grid>
+
 		<DataTemplate.Triggers>
 			<Trigger Property="IsVisible" Value="True">
 				<Trigger.EnterActions>
@@ -226,7 +215,7 @@
   			<TextBlock Text="{Binding Path=DisplayName}"
   				TextTrimming="CharacterEllipsis"
   				FontFamily="Calibri" Foreground="#FFDCDCDC"
-  				x:Name="_displayName" FontSize="12" d:LayoutOverrides="Height"/>
+  				x:Name="_displayName" FontSize="12" d:LayoutOverrides="Height"/>     
   			<TextBlock Text="{Binding Path=StatusDescription}"
   				FontFamily="Calibri" Foreground="#FFB8D9F2"
   				x:Name="_displayStatus" FontSize="10" TextTrimming="CharacterEllipsis"/>				
@@ -283,7 +272,7 @@
   			<TextBlock Text="{Binding Path=DisplayName}"
   				TextTrimming="CharacterEllipsis"  				
   				FontFamily="Calibri" Foreground="#FFDCDCDC"
-  				Grid.Row="2" TextAlignment="Center" x:Name="_displayName" VerticalAlignment="Center" FontSize="10"/>
+  				Grid.Row="2" TextAlignment="Center" x:Name="_displayName" VerticalAlignment="Center" FontSize="12"/>
 	      
   		</Border>
 	    	
