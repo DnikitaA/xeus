@@ -1,0 +1,52 @@
+﻿<win:WindowBase
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  	xmlns:local="clr-namespace:xeus.Core"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:win="clr-namespace:xeus.Controls"
+    xmlns:settings="clr-namespace:xeus.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+	xmlns:prop="clr-namespace:xeus.Properties"
+    x:Class="xeus.Controls.LoginDialog"
+    Title="add user" Width="301"
+    settings:WindowSettings.Save="False"
+	  Style="{StaticResource DarkStyleWindow}"
+    x:Name="login"
+	  Background="{x:Null}" ResizeMode="NoResize" Margin="5,5,5,5" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" Height="339" >
+  
+  <Grid>
+	<StackPanel Margin="5,5,5,67">
+		<TextBlock x:Name="_labelServer" Text="Server" Foreground="#FF828282" Height="14.63" Width="301" Margin="0,5,0,0"/>
+		<TextBox x:Name="_server" TextWrapping="Wrap" 
+		 Style="{DynamicResource TextBoxStyleInDialog}" MaxLines="1"
+		 TabIndex="0" Height="20.62" Width="301" Margin="0,5,0,0">
+			 <TextBox.Text>
+	    		    <Binding Path="Client_Server" Source="{x:Static prop:Settings.Default}" Mode="TwoWay"/>
+	         </TextBox.Text>
+		 </TextBox>
+		<TextBlock x:Name="_labelUserName" Text="Login Name" Foreground="#FF828282" Height="14.63" Width="301" Margin="0,5,0,0"/>
+		<TextBox x:Name="_userName" TextWrapping="Wrap" 
+		 Style="{DynamicResource TextBoxStyleInDialog}" MaxLines="1"
+		 TabIndex="0" Height="20.62" Width="301" Margin="0,5,0,0">
+			 <TextBox.Text>
+	    		    <Binding Path="Client_UserName" Source="{x:Static prop:Settings.Default}" Mode="TwoWay"/>
+	         </TextBox.Text>
+		 </TextBox>
+		<TextBlock x:Name="_labelPassword" Text="Password" Foreground="#FF828282" Height="14.63" Width="301" Margin="0,5,0,0"/>
+		<PasswordBox x:Name="_password" TabIndex="0" Height="20" Background="#FF282828" Template="{DynamicResource PasswordBoxControlTemplate}" Width="301" Margin="0,5,0,0">
+		</PasswordBox>
+		<Expander Foreground="#FFFFFFFF" Template="{DynamicResource ExpanderControlTemplate}" Header="Create new Account" Width="291" Margin="0,10,0,0">
+			<StackPanel>
+				<TextBlock x:Name="_labelConfirmPassword" Text="Confirm Password" Foreground="#FF828282" FontSize="11" Margin="0,5,0,0"/>
+				<PasswordBox x:Name="_confirmPassword" TabIndex="0" Height="20" Background="#FF282828" Template="{DynamicResource PasswordBoxControlTemplate}" Margin="0,5,0,0"/>
+			</StackPanel>
+		</Expander>
+	</StackPanel>
+  	<StackPanel Orientation="Horizontal" d:LayoutOverrides="Width" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="26" Margin="0,0,0,26">        
+  		<Button Width="63.867" Content="Ok" 
+  			Background="#FF3980A9" Template="{DynamicResource AButton}" IsDefault="True"
+  			Click="Ok" Foreground="#FFF2F2F2" Height="26" x:Name="_ok" Margin="5,0,5,0" TabIndex="1"/>
+			
+  		<Button Content="Cancel" Background="#FF5D97B9" Template="{DynamicResource AButton}" IsCancel="True" IsDefault="False" Foreground="#FFF2F2F2" Width="63.867" Height="26" Margin="5,0,5,0" TabIndex="2"/>
+  	</StackPanel>
+  </Grid>  
+</win:WindowBase>

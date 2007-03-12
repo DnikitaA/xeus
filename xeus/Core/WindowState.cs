@@ -93,7 +93,7 @@ namespace xeus.Core
 		/// </summary>
 		protected virtual void LoadWindowState()
 		{
-			Settings.Reload() ;
+			// Settings.Reload() ;
 			if ( Settings.Location != Rect.Empty )
 			{
 				window.Left = Settings.Location.Left ;

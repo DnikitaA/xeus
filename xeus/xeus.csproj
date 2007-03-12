@@ -22,6 +22,7 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <PublishUrl>Publish\</PublishUrl>
+    <ApplicationIcon>Images\xeus.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -78,14 +79,15 @@
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
-    <Page Include="Controls\AddUser.xaml" />
     <Page Include="Controls\ControlResources.xaml" />
     <Page Include="Controls\DialogBox.xaml" />
     <Page Include="Controls\InlineSearch.xaml" />
+    <Page Include="Controls\LoginDialog.xaml" />
     <Page Include="Controls\MessageWindow.xaml" />
     <Page Include="Controls\RegisterWindow.xaml" />
     <Page Include="Controls\ServicesControl.xaml" />
     <Page Include="Controls\ServicesWindow.xaml" />
+    <Page Include="Controls\SingleValueDialog.xaml" />
     <Page Include="Controls\StatusControl.xaml" />
     <Page Include="Controls\WindowDecoration.xaml" />
     <Page Include="Controls\XFormData.xaml" />
@@ -102,10 +104,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\AddUser.xaml.cs">
-      <SubType>Code</SubType>
-      <DependentUpon>AddUser.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\DialogBox.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>DialogBox.xaml</DependentUpon>
@@ -113,6 +111,10 @@
     <Compile Include="Controls\InlineSearch.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>InlineSearch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LoginDialog.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>LoginDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\MessageWindow.xaml.cs">
       <SubType>Code</SubType>
@@ -129,6 +131,9 @@
     <Compile Include="Controls\ServicesWindow.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>ServicesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SingleValueDialog.xaml.cs">
+      <DependentUpon>SingleValueDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\StatusControl.xaml.cs">
       <SubType>Code</SubType>

@@ -37,6 +37,18 @@ namespace xeus
 		void MessengerWindow_Initialized( object sender, EventArgs e )
 		{
 			Client.Instance.MessageCenter.ChatMessages.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( ChatMessages_CollectionChanged );
+			Client.Instance.LoginError += new Client.LoginHandler( Instance_LoginError );
+#if DEBUG
+			Instance_LoginError() ;
+#endif
+		}
+
+		void Instance_LoginError()
+		{
+			LoginDialog loginDialog = new LoginDialog();
+
+			//loginDialog.Owner = this ;
+			loginDialog.ShowDialog() ;
 		}
 
 		void ChatMessages_CollectionChanged( object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e )
@@ -141,14 +153,11 @@ namespace xeus
 		{
 			if ( Client.Instance.IsAvailable )
 			{
-				AskForSingleValue askForSingleValue = new AskForSingleValue( "Add new User", "User Name" ) ;
+				string userName = SingleValueDialog.AddUserDialog( this ) ;
 
-				askForSingleValue.Owner = this ;
-				askForSingleValue.ShowDialog() ;
-
-				if ( askForSingleValue.DialogResult.HasValue && askForSingleValue.DialogResult.Value )
+				if ( !string.IsNullOrEmpty( userName ) )
 				{
-					Client.Instance.AddUser( askForSingleValue.Value ) ;
+					Client.Instance.AddUser( userName ) ;
 				}
 			}
 		}
@@ -183,6 +192,7 @@ namespace xeus
 
 		protected override void OnClosing( CancelEventArgs e )
 		{
+			Settings.Default.Save();
 			SaveData() ;
 
 			base.OnClosing( e ) ;
@@ -206,8 +216,6 @@ namespace xeus
 
 		protected override void OnClosed( EventArgs e )
 		{
-			Settings.Default.Save();
-
 			base.OnClosed( e ) ;
 
 			_trayIcon.Dispose() ;

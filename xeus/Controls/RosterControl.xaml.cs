@@ -9,6 +9,7 @@ using System.Windows.Data ;
 using System.Windows.Input ;
 using System.Windows.Threading ;
 using xeus.Core ;
+using xeus.Properties ;
 
 namespace xeus.Controls
 {
@@ -85,13 +86,11 @@ namespace xeus.Controls
 			{
 				if ( item.Tag != null && item.Tag.ToString() == "newGroup" )
 				{
-					AskForSingleValue askForSingleValue = new AskForSingleValue( "Add new Group", "Group Name" );
+					string groupName = SingleValueDialog.AddGroupDialog( App.Instance.Window );
 
-					askForSingleValue.ShowDialog();
-
-					if ( askForSingleValue.DialogResult.HasValue && askForSingleValue.DialogResult.Value )
+					if ( !string.IsNullOrEmpty( groupName ) )
 					{
-						Client.Instance.SetRosterGropup( rosterItem, askForSingleValue.Value );
+						Client.Instance.SetRosterGropup( rosterItem, groupName );
 					}
 				}
 				else

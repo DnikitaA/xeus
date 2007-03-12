@@ -13,29 +13,16 @@ using System.Windows.Shapes;
 namespace xeus.Controls
 {
 	/// <summary>
-	/// Interaction logic for AddUser.xaml
+	/// Interaction logic for LoginDialog.xaml
 	/// </summary>
 
-	public partial class AskForSingleValue : WindowBase
+	public partial class LoginDialog
 	{
-
-		public AskForSingleValue( string title, string text )
+		public LoginDialog()
 		{
 			InitializeComponent();
-
-			_title.Text = title ;
-			_titleAdd.Text = text ;
-			_jid.Focus() ;
 		}
-
-		public string Value
-		{
-			get
-			{
-				return _jid.Text ;
-			}
-		}
-
+	
 		protected void Ok( object sender, EventArgs e )
 		{
 			 DialogResult = true ;
