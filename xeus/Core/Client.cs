@@ -90,9 +90,6 @@ namespace xeus.Core
 		{
 			RegisterEvents() ;
 
-			_xmppConnection.Username = Settings.Default.Client_UserName ;
-			_xmppConnection.Password = Settings.Default.Client_Password ;
-			_xmppConnection.Server = Settings.Default.Client_Server ;
 			_xmppConnection.UseCompression = true ;
 			_xmppConnection.UseSSL = true ;
 			_xmppConnection.Priority = 10 ;
@@ -112,6 +109,7 @@ namespace xeus.Core
 			_xmppConnection.ClientSocket.OnValidateCertificate +=
 				new RemoteCertificateValidationCallback( ClientSocket_OnValidateCertificate ) ;
 			_xmppConnection.OnSocketError += new ErrorHandler( _xmppConnection_OnSocketError ) ;
+			_xmppConnection.OnClose += new ObjectHandler( _xmppConnection_OnClose );
 
 			_xmppConnection.OnXmppConnectionStateChanged +=
 				new XmppConnection.XmppConnectionStateHandler( _xmppConnection_OnXmppConnectionStateChanged ) ;
@@ -157,6 +155,15 @@ namespace xeus.Core
 			DiscoRequest() ;
 		}
 
+		void _xmppConnection_OnClose( object sender )
+		{
+			_presence = null ;
+
+			NotifyPropertyChanged( "MyPresence" ) ;
+			NotifyPropertyChanged( "StatusTemplate" ) ;
+			NotifyPropertyChanged( "IsAvailable" ) ;
+		}
+
 		private void _xmppConnection_OnXmppConnectionStateChanged( object sender, XmppConnectionState state )
 		{
 			App.Instance.Window.Status( state.ToString() ) ;
@@ -176,6 +183,11 @@ namespace xeus.Core
 		private void _xmppConnection_OnAuthError( object sender, Element e )
 		{
 			App.Instance.Window.AlertError( "Authorization error", e.ToString() ) ;
+
+			if ( _xmppConnection.XmppConnectionState != XmppConnectionState.Disconnected )
+			{
+				_xmppConnection.Close() ;
+			}
 
 			if ( LoginError != null )
 			{
@@ -206,18 +218,17 @@ namespace xeus.Core
 			SetMyPresence( ShowType.NONE, false ) ;
 		}
 
-		public void Connect( bool registerNewAccount, string newPassword )
+		public void Connect( bool registerNewAccount )
 		{
-			if ( _xmppConnection.XmppConnectionState != XmppConnectionState.Connected )
+			if ( _xmppConnection.XmppConnectionState == XmppConnectionState.Disconnected )
 			{
 				Log( "Opening connection" ) ;
-
-				if ( newPassword != null )
-				{
-					_xmppConnection.Password = newPassword ;
-				}
-
+				
 				_xmppConnection.RegisterAccount = registerNewAccount ;
+
+				_xmppConnection.Username = Settings.Default.Client_UserName ;
+				_xmppConnection.Password = Settings.Default.Client_Password ;
+				_xmppConnection.Server = Settings.Default.Client_Server ;
 				_xmppConnection.Open() ;
 			}
 		}
@@ -254,7 +265,7 @@ namespace xeus.Core
 
 		public void SetMyPresence( ShowType showType, bool isIdle )
 		{
-			Connect( false, null ) ;
+			Connect( false ) ;
 
 			if ( _xmppConnection.Authenticated )
 			{
@@ -496,7 +507,6 @@ namespace xeus.Core
 			_xmppConnection.OnLogin += new ObjectHandler( _xmppConnecion_OnLogin ) ;
 
 			_roster.RegisterEvents( _xmppConnection ) ;
-			//_agents.RegisterEvents( _xmppConnection );
 		}
 
 		public void RequestAgents()

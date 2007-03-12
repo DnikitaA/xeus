@@ -727,6 +727,9 @@
 </Border>
 
 	<ControlTemplate.Triggers>
+		<Trigger Property="IsEnabled" Value="False">
+			<Setter Property="Opacity" TargetName="_border" Value="0.5"/>
+		</Trigger>
 	  <Trigger Property="Ellipse.IsMouseOver" Value="True"/>
 		<Trigger Property="IsPressed" Value="True">
 			<Setter Property="RenderTransform" TargetName="_border">
