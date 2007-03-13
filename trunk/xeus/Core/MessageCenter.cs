@@ -1,6 +1,7 @@
 using System ;
 using System.Windows.Markup ;
 using agsXMPP.protocol.client ;
+using agsXMPP.protocol.extensions.chatstates ;
 using xeus.Controls ;
 
 namespace xeus.Core
@@ -77,12 +78,20 @@ namespace xeus.Core
 			{
 				case MessageType.normal:
 					{
-						lock ( _normalMessages._syncObject )
+						if ( msg.Chatstate != Chatstate.None )
 						{
-							_normalMessages.Add( msg ) ;
+							App.Instance.Window.AlertInfo( "Typing",
+								string.Format( "'{0}' is typing '{1}'", msg.From, msg.Chatstate ) );
 						}
+						else
+						{
+							lock ( _normalMessages._syncObject )
+							{
+								_normalMessages.Add( msg ) ;
+							}
 
-						App.Instance.Window.AlertInfo( "Message", msg.Body );
+							App.Instance.Window.AlertInfo( "Message", msg.Body );
+						}
 
 						break ;
 					}

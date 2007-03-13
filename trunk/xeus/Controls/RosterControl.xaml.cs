@@ -284,6 +284,8 @@ namespace xeus.Controls
 		{
 			if ( e.Key == Key.Return )
 			{
+				e.Handled = true ;
+
 				RosterItem rosterItem = _roster.SelectedItem as RosterItem ;
 				OpenMessageWindow( rosterItem ) ;
 			}

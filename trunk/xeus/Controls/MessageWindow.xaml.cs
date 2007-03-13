@@ -6,6 +6,7 @@ using System.Windows.Controls ;
 using System.Windows.Input ;
 using System.Windows.Media ;
 using System.Windows.Threading ;
+using agsXMPP.protocol.extensions.chatstates ;
 using xeus.Core ;
 
 namespace xeus.Controls
@@ -21,13 +22,17 @@ namespace xeus.Controls
 
 		private Timer _listRefreshTimer = new Timer( 150 ) ;
 		private Timer _timeRefreshTimer = new Timer( 10000 ) ;
+		private Timer _timerNoTyping = new Timer( 10000 ) ;
 
+		private Chatstate _chatstate = Chatstate.None ;
 
 		private delegate void ScrollToLastItemCallback( ListBox listBox ) ;
 
 		private delegate void DisplayChatCallback( string jid, bool activate ) ;
 
 		private delegate void RefreshTimeCallback() ;
+
+		private delegate void SendChatStateCallback( Chatstate chatstate ) ;
 
 		public MessageWindow()
 		{
@@ -37,11 +42,52 @@ namespace xeus.Controls
 			_tabs.MouseDoubleClick += new MouseButtonEventHandler( _tabs_MouseDoubleClick );
 			_listRefreshTimer.Elapsed += new ElapsedEventHandler( _listRefreshTimer_Elapsed ) ;
 			_timeRefreshTimer.Elapsed += new ElapsedEventHandler( _timeRefreshTimer_Elapsed ) ;
+			_timerNoTyping.Elapsed += new ElapsedEventHandler( _timerNoTyping_Elapsed );
 
 			_listRefreshTimer.AutoReset = false ;
 			_listRefreshTimer.Start() ;
 
 			KeyDown += new KeyEventHandler( MessageWindow_KeyDown );
+		}
+
+		void _timerNoTyping_Elapsed( object sender, ElapsedEventArgs e )
+		{
+			ChangeChatState( Chatstate.paused ) ;
+		}
+
+		void ChangeChatState( Chatstate chatstate )
+		{
+			if ( App.DispatcherThread.CheckAccess() )
+			{
+				if ( _chatstate == chatstate )
+				{
+					return;
+				}
+
+				switch ( chatstate )
+				{
+					case Chatstate.paused:
+					case Chatstate.gone:
+						{
+							_timerNoTyping.Stop();
+							break;
+						}
+					case Chatstate.composing:
+						{
+							_timerNoTyping.Start();
+							break;
+						}
+				}
+
+				SendChatState( chatstate );
+
+				_chatstate = chatstate;
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+												  new SendChatStateCallback( ChangeChatState ), chatstate );
+			}
 		}
 
 		void MessageWindow_KeyDown( object sender, KeyEventArgs e )
@@ -135,10 +181,22 @@ namespace xeus.Controls
 
 		private void _tabs_SelectionChanged( object sender, SelectionChangedEventArgs e )
 		{
-			TabItem selectedItem = ( TabItem ) _tabs.SelectedItem ;
-
-			if ( selectedItem != null )
+			if ( e.RemovedItems.Count > 0 )
 			{
+				TabItem unselectedItem = ( TabItem ) e.RemovedItems[ 0 ] ;
+
+				RosterItem rosterItem = unselectedItem.Content as RosterItem ;
+
+				if ( rosterItem != null )
+				{
+					ChangeChatState( Chatstate.gone );
+				}
+			}	
+			
+			if ( e.AddedItems.Count > 0 )
+			{
+				TabItem selectedItem = ( TabItem ) e.AddedItems[ 0 ] ;
+
 				RosterItem rosterItem = selectedItem.Content as RosterItem ;
 
 				if ( rosterItem != null )
@@ -167,10 +225,13 @@ namespace xeus.Controls
 					rosterItem.HasUnreadMessages = false ;
 				}
 			}
+
 		}
 
 		protected override void OnClosed( EventArgs e )
 		{
+			SendChatState( Chatstate.gone ) ;
+
 			_timeRefreshTimer.Stop() ;
 			_listRefreshTimer.Stop() ;
 
@@ -196,7 +257,9 @@ namespace xeus.Controls
 		{
 			foreach ( TabItem tab in _instance._tabs.Items )
 			{
-				if ( ( string ) tab.Tag == jid )
+				RosterItem item = tab.Content as RosterItem ;
+
+				if ( item.Key == jid )
 				{
 					return tab ;
 				}
@@ -231,7 +294,6 @@ namespace xeus.Controls
 					tab = new TabItem() ;
 					tab.Header = rosterItem ;
 					tab.Content = rosterItem ;
-					tab.Tag = jid ;
 
 					_instance._tabs.Items.Add( tab ) ;
 				}
@@ -268,6 +330,11 @@ namespace xeus.Controls
 
 				_instance._listRefreshTimer.Start() ;
 				_instance._timeRefreshTimer.Start() ;
+
+				if ( MessageTextBox != null )
+				{
+					MessageTextBox.Focus() ;
+				}
 			}
 			else
 			{
@@ -276,15 +343,38 @@ namespace xeus.Controls
 			}
 		}
 
+		public static void SendChatState( Chatstate chatstate )
+		{
+			if ( MessageTextBox != null )
+			{
+				TabItem selectedItem = ( TabItem ) _instance._tabs.SelectedItem ;
+				RosterItem rosterItem = _instance._tabs.SelectedContent as RosterItem ;
+
+				if ( rosterItem != null && selectedItem != null )
+				{
+					Client.Instance.SendChatState( rosterItem, chatstate, ( string ) selectedItem.Tag ) ;
+				}
+			}
+		}
+
 		public static void SendMessage()
 		{
 			if ( MessageTextBox != null )
 			{
+				TabItem selectedItem = ( TabItem ) _instance._tabs.SelectedItem ;
 				RosterItem rosterItem = _instance._tabs.SelectedContent as RosterItem ;
 
 				if ( rosterItem != null )
 				{
-					Client.Instance.SendChatMessage( rosterItem, MessageTextBox.Text ) ;
+					if ( selectedItem.Tag == null )
+					{
+						selectedItem.Tag = rosterItem.GenerateChatThreadId() ;
+					}
+
+					Client.Instance.SendChatMessage( rosterItem, MessageTextBox.Text, ( string )selectedItem.Tag ) ;
+
+					_instance.ChangeChatState( Chatstate.paused ) ;
+
 					MessageTextBox.Text = String.Empty ;
 					_instance._listRefreshTimer.Start() ;
 				}
@@ -303,6 +393,10 @@ namespace xeus.Controls
 					{
 						SendMessage() ;
 					}
+					else if ( e.Key >= Key.D0 && e.Key <= Key.Z )
+					{
+						_instance.ChangeChatState( Chatstate.composing ) ;
+					}
 				}
 			}
 		}
@@ -318,7 +412,18 @@ namespace xeus.Controls
 			{
 				if ( listBox != null && listBox.Items.Count > 0 )
 				{
-					listBox.ScrollIntoView( listBox.Items[ listBox.Items.Count - 1 ] ) ;
+					ChatMessage chatMessage = listBox.Items[ listBox.Items.Count - 1 ] as ChatMessage ;
+
+					_instance.ChangeChatState( Chatstate.active );
+
+					TabItem selectedItem = ( TabItem ) _instance._tabs.SelectedItem ;
+
+					if ( !string.IsNullOrEmpty( chatMessage.ThreadId ) )
+					{
+						selectedItem.Tag = chatMessage.ThreadId ;
+					}
+
+					listBox.ScrollIntoView( chatMessage ) ;
 				}
 			}
 			else
@@ -343,11 +448,6 @@ namespace xeus.Controls
 			}
 
 			DisplayChat( activateJid, activate ) ;
-
-			if ( MessageTextBox != null )
-			{
-				MessageTextBox.Focus() ;
-			}
 		}
 	}
 }

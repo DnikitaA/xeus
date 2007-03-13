@@ -11,7 +11,7 @@
 	<Grid>
 	<DockPanel>
         <TextBox VerticalAlignment="Stretch" Height="Auto" Grid.Row="1" Style="{DynamicResource TextBoxStyleBlack}" TextWrapping="Wrap"
-                   Initialized="TextBoxInitialized" x:Name="textBox" Background="#07FFFFFF" KeyDown="OnTextKeyDown" AcceptsReturn="True" AutoWordSelection="True" Text="" SpellCheck.IsEnabled="True" MaxLength="1200" MaxLines="300" MinLines="1" DockPanel.Dock="Bottom" TabIndex="0" />
+                   Initialized="TextBoxInitialized" x:Name="textBox" Background="#07FFFFFF" KeyDown="OnTextKeyDown" AcceptsReturn="True" AutoWordSelection="True" Text="" SpellCheck.IsEnabled="True" MaxLength="10000" MaxLines="1000" MinLines="1" DockPanel.Dock="Bottom" TabIndex="0" />
     <ListBox
       Initialized="ListBoxInitialized"
 			ItemsSource="{Binding Path=Messages}"
