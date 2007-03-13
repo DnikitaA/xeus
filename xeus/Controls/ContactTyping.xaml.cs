@@ -21,13 +21,9 @@ namespace xeus.Controls
 
 	public partial class ContactTyping : System.Windows.Controls.UserControl
 	{
-		private Storyboard _storyboard = null ;
-
 		public ContactTyping()
 		{
 			InitializeComponent();
-
-			_storyboard = Resources[ "TimeLineWriteText" ] as Storyboard ;
 		}
 
 		public string UserName
@@ -46,18 +42,18 @@ namespace xeus.Controls
 				{
 					case Chatstate.active:
 						{
-							_storyboard.Stop( this );
+							Opacity = 0.5 ;
 							Visibility = Visibility.Visible ;
 							break ;
 						}
 					case Chatstate.composing:
 						{
-							_storyboard.Begin( this, true );
+							Opacity = 1.0 ;
+							Visibility = Visibility.Visible ;
 							break ;
 						}
 					default:
 						{
-							_storyboard.Stop( this );
 							Visibility = Visibility.Hidden ;
 							break ;
 						}

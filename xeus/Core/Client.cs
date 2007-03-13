@@ -118,7 +118,6 @@ namespace xeus.Core
 
 			_xmppConnection.OnRegisterInformation += new RegisterEventHandler( _xmppConnection_OnRegisterInformation );
 			_xmppConnection.OnRegistered += new ObjectHandler( _xmppConnection_OnRegistered );
-			_xmppConnection.OnIq += new agsXMPP.Xml.StreamHandler( _xmppConnection_OnIq );
 
 			_messageCenter.RegisterEvent( _instance ) ;
 
@@ -130,10 +129,6 @@ namespace xeus.Core
 			_idleTimer.Start() ;
 
 			Log( "Setup finished" ) ;
-		}
-
-		void _xmppConnection_OnIq( object sender, Node e )
-		{
 		}
 
 		void _xmppConnection_OnRegistered( object sender )
@@ -498,6 +493,12 @@ namespace xeus.Core
 			dm.DisoverInformation( serviceItem.Jid, new IqCB( OnDiscoInfoResult ), serviceItem ) ;
 		}
 
+		public void DiscoRequest( RosterItem rosterItem )
+		{
+			DiscoManager dm = new DiscoManager( _xmppConnection ) ;
+			dm.DisoverInformation( rosterItem.XmppRosterItem.Jid, new IqCB( OnDiscoInfoResult ), rosterItem ) ;
+		}
+
 		public void DiscoRequest()
 		{
 			Thread discoThread = new Thread( new ThreadStart( AskForDiscoInfo ) ) ;
@@ -530,12 +531,26 @@ namespace xeus.Core
 
 		private void OnDiscoInfoResult( object sender, IQ iq, object data )
 		{
-			ServiceItem item = ( ServiceItem ) data ;
+			ServiceItem item = data as ServiceItem ;
 
-			if ( iq.Type == IqType.result && iq.Query is DiscoInfo )
+			if ( item != null )
 			{
-				DiscoInfo di = iq.Query as DiscoInfo ;
-				item.Disco = di ;
+				if ( iq.Type == IqType.result && iq.Query is DiscoInfo )
+				{
+					DiscoInfo di = iq.Query as DiscoInfo ;
+					item.Disco = di ;
+				}
+			}
+
+			RosterItem rosterItem = data as RosterItem ;
+			
+			if ( rosterItem != null )
+			{
+				if ( iq.Type == IqType.result && iq.Query is DiscoInfo )
+				{
+					DiscoInfo di = iq.Query as DiscoInfo ;
+					rosterItem.Disco = di ;
+				}
 			}
 		}
 

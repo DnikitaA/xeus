@@ -131,7 +131,7 @@ namespace xeus.Core
 				}
 				else if ( presence.Type == PresenceType.available )
 				{
-					Client.Instance.SendChatState( rosterItem, Chatstate.active, rosterItem.GenerateChatThreadId() );
+					Client.Instance.DiscoRequest( rosterItem );
 				}
 
 				if ( !rosterItem.HasVCardRecivied && presence.Type == PresenceType.available )
