@@ -80,8 +80,7 @@ namespace xeus.Core
 					{
 						if ( msg.Chatstate != Chatstate.None )
 						{
-							App.Instance.Window.AlertInfo( "Typing",
-								string.Format( "'{0}' is typing '{1}'", msg.From, msg.Chatstate ) );
+							MessageWindow.ContactIsTyping( msg.From.Bare, msg.Chatstate );
 						}
 						else
 						{
@@ -110,6 +109,12 @@ namespace xeus.Core
 						RosterItem rosterItem = Client.Instance.Roster.FindItem( msg.From.Bare ) ;
 
 						ChatMessage message = new ChatMessage( msg, rosterItem, DateTime.Now ) ;
+
+						if ( msg.Chatstate != Chatstate.None )
+						{
+							// reply
+							Client.Instance.SendChatState( rosterItem, Chatstate.active, rosterItem.GenerateChatThreadId() );
+						}
 
 						if ( MessageWindow.IsOpen() )
 						{

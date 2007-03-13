@@ -2,8 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  xmlns:local="clr-namespace:xeus.Core"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:win="clr-namespace:xeus.Controls"
     xmlns:settings="clr-namespace:xeus.Core"
+	xmlns:win="clr-namespace:xeus.Controls"
     x:Class="xeus.Controls.MessageWindow"
     Title="message" Height="300" Width="300"
     settings:WindowSettings.Save="True"	
@@ -12,8 +12,14 @@
     x:Name="message"
     Icon="../images/message.ico"
 	>
-    <Grid>
+    <DockPanel>
+		<StatusBar DockPanel.Dock="Bottom" Style="{DynamicResource StatusBarStyleBlack}">
+			<StatusBarItem HorizontalAlignment="Stretch" 
+			    	  x:Name="_statusTyping" VerticalAlignment="Stretch" Panel.ZIndex="1">
+		    	<win:ContactTyping x:Name="_typing" VerticalAlignment="Bottom" Visibility="Hidden"/>
+			</StatusBarItem>
+		</StatusBar>
     	<TabControl x:Name="_tabs" ContentTemplate="{StaticResource RosterItemMessagesTemplate}" 
-			Margin="8,8,8,8" Style="{DynamicResource TabControlStyle}" />
-	</Grid>
+			Margin="8,8,8,8" Style="{DynamicResource TabControlStyle}" DockPanel.Dock="Top" />
+	</DockPanel>
 </win:WindowBase>
