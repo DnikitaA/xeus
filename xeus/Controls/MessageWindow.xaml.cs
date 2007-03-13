@@ -85,9 +85,9 @@ namespace xeus.Controls
 				{
 					lock ( rosterItem.Messages._syncObject )
 					{
-						foreach ( ChatMessage message in rosterItem.Messages )
+						foreach ( ChatMessage chatMessage in rosterItem.Messages )
 						{
-							message.RelativeTime = TimeUtilities.FormatRelativeTime( message.Time ) ;
+							chatMessage.RelativeTime = TimeUtilities.FormatRelativeTime( chatMessage.Time ) ;
 						}
 					}
 				}
