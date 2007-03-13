@@ -84,6 +84,7 @@ namespace xeus.Core
 
 							if ( rosterItem != null )
 							{
+								//Client.Instance.SendChatState( rosterItem, Chatstate.active, rosterItem.GenerateChatThreadId() );
 								MessageWindow.ContactIsTyping( rosterItem.DisplayName, msg.Chatstate ) ;
 							}
 						}
@@ -115,10 +116,11 @@ namespace xeus.Core
 
 						ChatMessage message = new ChatMessage( msg, rosterItem, DateTime.Now ) ;
 
-						if ( msg.Chatstate != Chatstate.None )
+						if ( msg.Chatstate != Chatstate.None
+								&& string.IsNullOrEmpty( msg.Body ) )
 						{
-							// reply
-							Client.Instance.SendChatState( rosterItem, Chatstate.active, rosterItem.GenerateChatThreadId() );
+							//Client.Instance.SendChatState( rosterItem, Chatstate.active, rosterItem.GenerateChatThreadId() );
+							MessageWindow.ContactIsTyping( rosterItem.DisplayName, msg.Chatstate ) ;
 						}
 
 						if ( MessageWindow.IsOpen() )
