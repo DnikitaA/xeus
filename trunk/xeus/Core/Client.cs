@@ -1,4 +1,5 @@
 using System ;
+using System.Diagnostics ;
 using System.Net.Security ;
 using System.Security.Cryptography.X509Certificates ;
 using System.Threading ;
@@ -273,6 +274,8 @@ namespace xeus.Core
 				message.Chatstate = chatState ;
 				message.Thread = threadId ;
 
+				Trace.WriteLine( message.Thread );
+
 				_xmppConnection.Send( message ) ;
 			}
 		}
@@ -289,6 +292,8 @@ namespace xeus.Core
 				message.From = MyJid ;
 				message.Chatstate = Chatstate.active ;
 				message.Thread = threadId ;
+
+				Trace.WriteLine( message.Thread );
 
 				_xmppConnection.Send( message ) ;
 

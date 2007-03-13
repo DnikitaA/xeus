@@ -1,5 +1,6 @@
 using System ;
 using System.Collections.Generic ;
+using System.Diagnostics ;
 using System.Timers ;
 using System.Windows ;
 using System.Windows.Controls ;
@@ -59,6 +60,11 @@ namespace xeus.Controls
 		{
 			if ( App.DispatcherThread.CheckAccess() )
 			{
+				if ( chatstate == Chatstate.composing )
+				{
+					_timerNoTyping.Start();					
+				}
+
 				if ( _chatstate == chatstate )
 				{
 					return;
@@ -72,14 +78,11 @@ namespace xeus.Controls
 							_timerNoTyping.Stop();
 							break;
 						}
-					case Chatstate.composing:
-						{
-							_timerNoTyping.Start();
-							break;
-						}
 				}
 
 				SendChatState( chatstate );
+
+				Trace.WriteLine( chatstate ) ;
 
 				_chatstate = chatstate;
 			}
@@ -124,16 +127,19 @@ namespace xeus.Controls
 		{
 			if ( App.DispatcherThread.CheckAccess() )
 			{
-				TabItem selectedItem = ( TabItem ) _instance._tabs.SelectedItem ;
-				RosterItem rosterItem = selectedItem.Content as RosterItem ;
-
-				if ( rosterItem != null )
+				if ( _instance != null && _instance._tabs != null )
 				{
-					lock ( rosterItem.Messages._syncObject )
+					TabItem selectedItem = ( TabItem ) _instance._tabs.SelectedItem ;
+					RosterItem rosterItem = selectedItem.Content as RosterItem ;
+
+					if ( rosterItem != null )
 					{
-						foreach ( ChatMessage chatMessage in rosterItem.Messages )
+						lock ( rosterItem.Messages._syncObject )
 						{
-							chatMessage.RelativeTime = TimeUtilities.FormatRelativeTime( chatMessage.Time ) ;
+							foreach ( ChatMessage chatMessage in rosterItem.Messages )
+							{
+								chatMessage.RelativeTime = TimeUtilities.FormatRelativeTime( chatMessage.Time ) ;
+							}
 						}
 					}
 				}
@@ -168,6 +174,7 @@ namespace xeus.Controls
 			{
 				return _textBox ;
 			}
+
 			set
 			{
 				_textBox = value ;
@@ -223,6 +230,8 @@ namespace xeus.Controls
 					}
 
 					rosterItem.HasUnreadMessages = false ;
+
+					ChangeChatState( Chatstate.active ) ;
 				}
 			}
 
@@ -230,7 +239,7 @@ namespace xeus.Controls
 
 		protected override void OnClosed( EventArgs e )
 		{
-			SendChatState( Chatstate.gone ) ;
+			ChangeChatState( Chatstate.gone ) ;
 
 			_timeRefreshTimer.Stop() ;
 			_listRefreshTimer.Stop() ;
@@ -345,7 +354,8 @@ namespace xeus.Controls
 
 		public static void SendChatState( Chatstate chatstate )
 		{
-			if ( MessageTextBox != null )
+			if ( MessageTextBox != null && _instance != null && _instance._tabs != null
+					&& Client.Instance != null && Client.Instance.IsAvailable )
 			{
 				TabItem selectedItem = ( TabItem ) _instance._tabs.SelectedItem ;
 				RosterItem rosterItem = _instance._tabs.SelectedContent as RosterItem ;
@@ -413,8 +423,6 @@ namespace xeus.Controls
 				if ( listBox != null && listBox.Items.Count > 0 )
 				{
 					ChatMessage chatMessage = listBox.Items[ listBox.Items.Count - 1 ] as ChatMessage ;
-
-					_instance.ChangeChatState( Chatstate.active );
 
 					TabItem selectedItem = ( TabItem ) _instance._tabs.SelectedItem ;
 
