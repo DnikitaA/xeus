@@ -65,7 +65,7 @@
 		<Ellipse.Fill>
 			<RadialGradientBrush>
 				<GradientStop Color="#FFE89393" Offset="0"/>
-				<GradientStop Color="#B2DF1E1E" Offset="1"/>
+				<GradientStop Color="#B2D53636" Offset="1"/>
 			</RadialGradientBrush>
 		</Ellipse.Fill>
 		<Ellipse.RenderTransform>
@@ -133,7 +133,7 @@
 		<Ellipse.Fill>
 			<RadialGradientBrush>
 				<GradientStop Color="#FFA0C9E8" Offset="0"/>
-				<GradientStop Color="#991E8BDF" Offset="1"/>
+				<GradientStop Color="#994595D3" Offset="1"/>
 			</RadialGradientBrush>
 		</Ellipse.Fill>
 		<Ellipse.RenderTransform>
@@ -202,7 +202,7 @@
 		<Ellipse.Fill>
 			<RadialGradientBrush>
 				<GradientStop Color="#FFC1F092" Offset="0"/>
-				<GradientStop Color="#B25DB00A" Offset="1"/>
+				<GradientStop Color="#B26BA433" Offset="1"/>
 			</RadialGradientBrush>
 		</Ellipse.Fill>
 		<Ellipse.RenderTransform>
@@ -261,7 +261,7 @@
 		<Ellipse.Fill>
 			<RadialGradientBrush>
 				<GradientStop Color="#FFF2A1C9" Offset="0"/>
-				<GradientStop Color="#B2DF1E7C" Offset="1"/>
+				<GradientStop Color="#B2CB3F83" Offset="1"/>
 			</RadialGradientBrush>
 		</Ellipse.Fill>
 		<Ellipse.RenderTransform>
@@ -330,7 +330,7 @@
 		<Ellipse.Fill>
 			<RadialGradientBrush>
 				<GradientStop Color="#FFA4C794" Offset="0"/>
-				<GradientStop Color="#B25BDF1E" Offset="1"/>
+				<GradientStop Color="#B266CB37" Offset="1"/>
 			</RadialGradientBrush>
 		</Ellipse.Fill>
 		<Ellipse.RenderTransform>
@@ -674,6 +674,27 @@
 	</ControlTemplate.Triggers>
 </ControlTemplate>
 
+<ControlTemplate x:Key="FindNext" TargetType="{x:Type Button}">
+<Viewbox x:Name="viewbox" SnapsToDevicePixels="False">
+	<Path RenderTransformOrigin="0.5,0.5" Fill="#CCAEAEAE" Stretch="Fill" StrokeThickness="1" Data="M4.5761719,3.4529562 L4.6621094,3.4529562 L9.5498047,7.970046 L4.6621094,12.503249 L4.5761719,12.503249 L4.5761719,10.139968 L0.23095703,10.139968 L0.23095703,5.8054953 L4.5761719,5.8054953 z" Canvas.Left="3.074" Canvas.Top="3.216" x:Name="path"/>
+</Viewbox>
+	<ControlTemplate.Triggers>
+		<Trigger Property="Visibility" Value="Visible">
+			<Trigger.EnterActions>
+				<BeginStoryboard Storyboard="{StaticResource PumpStatus}"/>
+			</Trigger.EnterActions>
+		</Trigger>
+	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
+	  	<Setter Property="Fill" TargetName="path" Value="#CC91A6D1"/>
+	  </Trigger>
+		<Trigger Property="IsPressed" Value="True">
+			<Setter Property="Fill" TargetName="path" Value="#CC92ABC7"/>
+			<Setter Property="Margin" TargetName="path" Value="1,1,1,1"/>
+			<Setter Property="ToolTip" TargetName="path" Value="Cancel"/>
+		</Trigger>
+	</ControlTemplate.Triggers>
+</ControlTemplate>
+
 <ControlTemplate x:Key="Cancel" TargetType="{x:Type Button}">
 <Viewbox x:Name="viewbox" SnapsToDevicePixels="False">
 	<Path RenderTransformOrigin="0.5,0.5" Fill="#CCAEAEAE" Stretch="Fill" StrokeThickness="1" Width="9.828" Height="9.828" Data="F1 M3.7715001,-2.7715001 L6.0565,-2.7715001 6.0565,0.50000006 9.3280001,0.50000006 9.3280001,2.7850001 6.0565,2.7850001 6.0565,6.0565 3.7715001,6.0565 3.7715001,2.7850001 0.5,2.7850001 0.5,0.50000006 3.7715001,0.50000006 3.7715001,-2.7715001 z" Canvas.Left="3.074" Canvas.Top="3.216" x:Name="path">
@@ -754,7 +775,7 @@
 		<Ellipse.Fill>
 			<RadialGradientBrush>
 				<GradientStop Color="#FFF4BCBC" Offset="0"/>
-				<GradientStop Color="#B2DF1E1E" Offset="1"/>
+				<GradientStop Color="#B2D54848" Offset="1"/>
 			</RadialGradientBrush>
 		</Ellipse.Fill>
 		<Ellipse.RenderTransform>

@@ -9,42 +9,25 @@
    
 <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#FFF" />
 <SolidColorBrush x:Key="SolidBorderBrush" Color="#888" />
-   
-  
- <!-- roster -->
+
+
   <CollectionViewSource x:Key="_rosterView" Source="{Binding Path=Roster.Items}">
-    <!--
-	<CollectionViewSource.SortDescriptions>
-      <scm:SortDescription PropertyName="Group" />
-      <scm:SortDescription PropertyName="DisplayName" />
-      <scm:SortDescription PropertyName="StatusText" />
-    </CollectionViewSource.SortDescriptions>
-	-->
-	
-	<CollectionViewSource.GroupDescriptions>
-		<PropertyGroupDescription PropertyName="Group"/>
+    <CollectionViewSource.GroupDescriptions>
+      <PropertyGroupDescription PropertyName="Group"/>
     </CollectionViewSource.GroupDescriptions>
   </CollectionViewSource>
-	
-	<DataTemplate x:Key="RosterItemTip" DataType="{x:Type local:RosterItem}">
+
+  <DataTemplate x:Key="RosterItemTip" DataType="{x:Type local:RosterItem}">
 		<DataTemplate.Resources>
-			<Storyboard x:Key="Flash">
-				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)">
-					<SplineColorKeyFrame KeyTime="00:00:00" Value="#FF797878"/>
-					<SplineColorKeyFrame KeyTime="00:00:00.3000000" Value="#FF0F0F0F"/>
-				</ColorAnimationUsingKeyFrames>
-				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle" Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
-					<SplineColorKeyFrame KeyTime="00:00:00" Value="#FFC1C1C1"/>
-					<SplineColorKeyFrame KeyTime="00:00:00.3000000" Value="#FF2A2A2A"/>
-				</ColorAnimationUsingKeyFrames>
-				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.Opacity)">
-					<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.1"/>
-					<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0.95"/>
+			<Storyboard x:Key="Timeline1">
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="grid" Storyboard.TargetProperty="(UIElement.Opacity)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0.9"/>
 				</DoubleAnimationUsingKeyFrames>
 			</Storyboard>
 		</DataTemplate.Resources>
 			<Grid RenderTransformOrigin="0.5,0.5"
-				Panel.ZIndex="10" x:Name="grid" MinHeight="60" DockPanel.Dock="Top" >
+				Panel.ZIndex="10" x:Name="grid" MinHeight="60" DockPanel.Dock="Top" Opacity="0.9" Margin="5,5,5,5" >
 				<Grid.RenderTransform>
 					<TransformGroup>
 						<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -53,27 +36,21 @@
 						<TranslateTransform X="0" Y="0"/>
 					</TransformGroup>
 				</Grid.RenderTransform>
-				<Border MinHeight="65" Opacity="0.98" x:Name="border" VerticalAlignment="Top" BorderBrush="#FF3C3C3C" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4">
+				<Border MinHeight="65" x:Name="border" VerticalAlignment="Top" BorderBrush="#FF242424" CornerRadius="3,3,3,3" SnapsToDevicePixels="True">
 					<Border.Background>
 						<ImageBrush Viewport="0,0,10,10"
 							ViewportUnits="Absolute"
 							TileMode="Tile" Stretch="None" ImageSource="/Images/stripes.png"/>
 					</Border.Background>
-					<Border SnapsToDevicePixels="True" x:Name="rectangle" MinHeight="65" Opacity="0.92" CornerRadius="3,3,3,3" >
-						<Border.Background>
-							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-								<GradientStop Color="#FF0F0F0F" Offset="0"/>
-								<GradientStop Color="#FF2A2A2A" Offset="0.986"/>
-							</LinearGradientBrush>
-						</Border.Background>
-						<Border.BitmapEffect>
-							<DropShadowBitmapEffect Direction="274" Opacity="0.335" ShadowDepth="1" Softness="0.37"/>
-						</Border.BitmapEffect>
+					<Border.BitmapEffect>
+						<DropShadowBitmapEffect ShadowDepth="2"/>
+					</Border.BitmapEffect>
+					<Border x:Name="rectangle" MinHeight="65" Opacity="0.92" Margin="-1,-1,-1,-1" Background="#FF0B0B0B" CornerRadius="3,3,3,3" >
 						<StackPanel MaxHeight="400" MaxWidth="400" Margin="10,70,10,10">
-							<Grid Background="#05FFFFFF" x:Name="_gridFrom" Visibility="Visible" >
+							<Grid Background="#05FFFFFF" x:Name="_gridTo" Visibility="Visible" >
 								<Border BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2"
 									HorizontalAlignment="Right" Padding="4,2,4,2" Opacity="0.8"
-									Margin="0,2,4,0" Panel.ZIndex="2" VerticalAlignment="Top" x:Name="_timeBorder">
+									Margin="0,0,4,0" Panel.ZIndex="2" VerticalAlignment="Top" x:Name="_timeBorder">
 									<Border.Background>
 										<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 											<GradientStop Color="#FF78C2E1" Offset="0"/>
@@ -89,16 +66,16 @@
 									<Border.BitmapEffect>
 										<DropShadowBitmapEffect/>
 									</Border.BitmapEffect>
-									<TextBlock Text="{Binding Path=LastMessageFrom.Time}" Foreground="#FF323F48" FontSize="10" x:Name="_time" />
+									<TextBlock Text="{Binding Path=LastMessageTo.Time}" Foreground="#FF323F48" FontSize="10" x:Name="_time" />
 								</Border>
-								<TextBlock x:Name="_body" Text="adfasdadadsgasdf" Foreground="#FFC5A581" 
+								<TextBlock x:Name="_body" Text="{Binding Path=LastMessageTo.Body, Mode=OneWay}" Foreground="#FFC5A581" 
 									TextWrapping="WrapWithOverflow" 
-									FontSize="14" Margin="0,0,20,0" Width="Auto" Height="Auto"/>
+									FontSize="14" Margin="0,13,20,0" Width="Auto" Height="Auto"/>
 							</Grid>	
-							<Grid Background="#05FFFFFF" x:Name="_gridTo" Visibility="Visible">
+							<Grid Background="#05FFFFFF" x:Name="_gridFrom" Visibility="Visible">
 								<Border BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2"
 									HorizontalAlignment="Right" Padding="4,2,4,2" Opacity="0.8"
-									Margin="0,2,4,0" Panel.ZIndex="2" VerticalAlignment="Top" x:Name="_timeBorderTo">
+									Margin="0,0,4,0" Panel.ZIndex="2" VerticalAlignment="Top" x:Name="_timeBorderTo">
 									<Border.Background>
 										<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 											<GradientStop Color="#FF78C2E1" Offset="0"/>
@@ -114,17 +91,17 @@
 									<Border.BitmapEffect>
 										<DropShadowBitmapEffect/>
 									</Border.BitmapEffect>
-									<TextBlock Text="{Binding Path=LastMessageTo.Time}" Foreground="#FF323F48" FontSize="10" x:Name="_timeTo" />
+									<TextBlock Text="{Binding Path=LastMessageFrom.Time}" Foreground="#FF323F48" FontSize="10" x:Name="_timeTo" />
 								</Border>
-								<TextBlock x:Name="_bodyTo" Text="{Binding Path=LastMessageTo.Body, Mode=OneWay}" Foreground="#FFE7E7E7" 
+								<TextBlock x:Name="_bodyTo" Text="{Binding Path=LastMessageFrom.Body, Mode=OneWay}" Foreground="#FFE7E7E7" 
 									TextWrapping="WrapWithOverflow" 
-									FontSize="14" Margin="0,0,20,0" Width="Auto" Height="Auto"/>
+									FontSize="14" Margin="0,13,20,0" Width="Auto" Height="Auto"/>
 							</Grid>	
 						</StackPanel>
 					</Border>
 				</Border>
 				<Image HorizontalAlignment="Left" Source="{Binding Path=Image}" Grid.Row="0" 
-					VerticalAlignment="Top" Stretch="Uniform" Width="47" Height="49.334" Margin="17.333,14.666,0,0" d:LayoutOverrides="GridBox" Panel.ZIndex="1"/>
+					VerticalAlignment="Top" Stretch="Uniform" Width="48" Height="48" Margin="17.333,14.666,0,0" d:LayoutOverrides="GridBox" Panel.ZIndex="1" SnapsToDevicePixels="True"/>
 				<TextBlock Margin="76.333,12.393,15,0"
 					TextTrimming="CharacterEllipsis"
 					FontFamily="Calibri" Foreground="#FFACACAC"
@@ -135,14 +112,14 @@
 					x:Name="_displayKey" Margin="76.333,32.393,15,0" FontSize="14" VerticalAlignment="Top"/>
 				<TextBlock HorizontalAlignment="Stretch"
 					FontFamily="Calibri" Foreground="#FFB97E7A"
-					x:Name="_subscription" Margin="76.333,47.893,15,59.367" FontSize="14" VerticalAlignment="Top"
+					x:Name="_subscription" Margin="76.333,49.893,15,0" FontSize="14" VerticalAlignment="Top"
 					Text="{Binding Path=SubscriptionTypeText}"/>
 			</Grid>
 
 		<DataTemplate.Triggers>
 			<Trigger Property="IsVisible" Value="True">
 				<Trigger.EnterActions>
-					<BeginStoryboard Storyboard="{StaticResource Flash}"/>
+					<BeginStoryboard Storyboard="{StaticResource Timeline1}"/>
 				</Trigger.EnterActions>
 			</Trigger>
  			<DataTrigger Binding="{Binding Path=LastMessageTo}" Value="{x:Null}">

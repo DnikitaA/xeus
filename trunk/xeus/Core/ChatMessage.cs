@@ -129,6 +129,11 @@ namespace xeus.Core
 			{
 				return _isFromDb ;
 			}
+
+			set
+			{
+				_isFromDb = value ;
+			}
 		}
 	}
 }

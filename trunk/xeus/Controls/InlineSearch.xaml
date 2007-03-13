@@ -8,6 +8,8 @@
 	    <StackPanel Orientation="Horizontal">
 	            <TextBox x:Name="_text" Style="{DynamicResource TextBoxStyleInline}" MaxLength="50" MinWidth="100" Margin="3,0,0,0"
 					TextChanged="OnTextChanged" FontSize="12"/>
+				<Button Margin="4,0,3,0" x:Name="_next" Background="#FFFF1600" Click="OnNext"
+					Template="{DynamicResource FindNext}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="17" Height="17"/>
 				<Button Margin="4,0,3,0" x:Name="_close" Background="#FFFF1600" Click="OnCancel"
 					Template="{DynamicResource Cancel}" HorizontalAlignment="Left" VerticalAlignment="Center" Width="17" Height="17"/>
 	    </StackPanel>

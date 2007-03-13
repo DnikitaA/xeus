@@ -80,8 +80,9 @@ namespace xeus.Core
 						lock ( _normalMessages._syncObject )
 						{
 							_normalMessages.Add( msg ) ;
-							App.Instance.Window.AlertInfo( "Message", msg.Body );
 						}
+
+						App.Instance.Window.AlertInfo( "Message", msg.Body );
 
 						break ;
 					}
@@ -99,11 +100,16 @@ namespace xeus.Core
 					{
 						RosterItem rosterItem = Client.Instance.Roster.FindItem( msg.From.Bare ) ;
 
+						ChatMessage message = new ChatMessage( msg, rosterItem, DateTime.Now ) ;
+
+						Database database = new Database();
+						database.InsertMessage( message );
+
 						if ( MessageWindow.IsOpen() )
 						{
 							lock ( rosterItem.Messages._syncObject )
 							{
-								rosterItem.Messages.Add( new ChatMessage( msg, rosterItem, DateTime.Now ) ) ;
+								rosterItem.Messages.Add( message ) ;
 							}
 
 							MessageWindow.DisplayChatWindow( rosterItem.Key, false );
@@ -112,7 +118,7 @@ namespace xeus.Core
 						{
 							lock ( _chatMessages._syncObject )
 							{
-								_chatMessages.Add( new ChatMessage( msg, rosterItem, DateTime.Now ) ) ;
+								_chatMessages.Add( message ) ;
 							}
 						}
 
@@ -123,8 +129,9 @@ namespace xeus.Core
 						lock ( _errorMessages._syncObject )
 						{
 							_errorMessages.Add( msg ) ;
-							App.Instance.Window.AlertError( "Error", msg.Body );
 						}
+
+						App.Instance.Window.AlertError( "Error", msg.Body );
 
 						break ;
 					}

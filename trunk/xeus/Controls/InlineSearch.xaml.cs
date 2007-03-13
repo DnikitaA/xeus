@@ -43,6 +43,10 @@ namespace xeus.Controls
 			{
 				Close( true ) ;
 			}
+			else if ( e.Key == Key.PageDown )
+			{
+				OnNext( this, null ) ;
+			}
 		}
 
 		void OnTextChanged( Object sender, TextChangedEventArgs e )
@@ -67,6 +71,14 @@ namespace xeus.Controls
 		void OnCancel( Object sender, RoutedEventArgs e )
 		{
 			Close( false ) ;
+		}
+
+		void OnNext( Object sender, RoutedEventArgs e )
+		{
+			if ( TextChanged != null )
+			{
+				TextChanged( sender, null ) ;
+			}
 		}
 
 		public void SendKey( Key key )

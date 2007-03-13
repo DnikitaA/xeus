@@ -119,16 +119,42 @@ namespace xeus.Core
 
 		private void StoreMessages( ObservableCollectionDisp< ChatMessage > messages )
 		{
-			foreach ( ChatMessage item in messages )
+			lock ( messages._syncObject )
 			{
+				foreach ( ChatMessage item in messages )
+				{
+					if ( !item.IsFromDb )
+					{
+						try
+						{
+							FieldValuePair[] data = item.GetData() ;
+
+							Insert( "Messages/Message", data ) ;
+						}
+
+						catch ( Exception e )
+						{
+							Client.Instance.Log( "Error writing messages: {0}", e.Message ) ;
+						}
+					}
+				}
+			}
+		}
+
+		public void InsertMessage( ChatMessage message )
+		{
+			lock ( message )
+			{
+				FieldValuePair[] data = message.GetData() ;
+
 				try
 				{
-					FieldValuePair[] data = item.GetData() ;
-
-					if ( !item.IsFromDb )
+					if ( !message.IsFromDb )
 					{
 						Insert( "Messages/Message", data ) ;
 					}
+
+					message.IsFromDb = true ;
 				}
 
 				catch ( Exception e )
@@ -211,11 +237,8 @@ namespace xeus.Core
 
 					SaveOrUpdate( "Roster/RosterItem", string.Format( "@Key='{0}'", item.Key ), data ) ;
 
-					lock ( item.Messages._syncObject )
-					{
-						StoreMessages( item.Messages ) ;
-						StoreLastMessages( item ) ;
-					}
+					StoreMessages( item.Messages ) ;
+					StoreLastMessages( item ) ;
 				}
 
 				catch ( Exception e )
