@@ -197,6 +197,8 @@ namespace xeus.Controls
 
 		object _displayNamesLock = new object();
 		private List< KeyValuePair< string, RosterItem > > _displayNames = null ;
+		private string lastSearch = String.Empty ;
+		private RosterItem _lastFoundItem = null ;
 
 		private object SearchInList( ref bool stop, object param )
 		{
@@ -220,25 +222,56 @@ namespace xeus.Controls
 			
 			string toFound = ( ( string ) param ).ToUpper() ;
 
-			foreach ( KeyValuePair< string, RosterItem > displayName in _displayNames )
+			bool searchNext = ( lastSearch == toFound ) ;
+
+			lastSearch = toFound ;
+
+			if ( searchNext && _lastFoundItem != null )
 			{
-				if ( stop )
-				{
-					return null ;
-				}
+				bool fromHere = false ;
 
-				if ( ( ( string ) param ) == String.Empty )
+				foreach ( KeyValuePair< string, RosterItem > displayName in _displayNames )
 				{
-					return null ;
-				}
+					if ( stop )
+					{
+						return null ;
+					}
 
-				if ( displayName.Key.Contains( toFound ) )
+					if ( fromHere && ExpanderStates[ displayName.Value.Group ] && displayName.Key.Contains( toFound ) )
+					{
+						found = displayName.Value ;
+						break ;
+					}
+
+					if ( _lastFoundItem == displayName.Value )
+					{
+						fromHere = true ;
+					}
+				}
+			}
+			else
+			{
+				foreach ( KeyValuePair< string, RosterItem > displayName in _displayNames )
 				{
-					found = displayName.Value ;
-					break ;
+					if ( stop )
+					{
+						return null ;
+					}
+
+					if ( ( ( string ) param ) == String.Empty )
+					{
+						return null ;
+					}
+
+					if ( ExpanderStates[ displayName.Value.Group ] && displayName.Key.Contains( toFound ) )
+					{
+						found = displayName.Value ;
+						break ;
+					}
 				}
 			}
 
+			_lastFoundItem = found ;
 			return found ;
 		}
 
