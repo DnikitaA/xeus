@@ -24,6 +24,7 @@ namespace xeus.Controls
 		private Timer _listRefreshTimer = new Timer( 150 ) ;
 		private Timer _timeRefreshTimer = new Timer( 10000 ) ;
 		private Timer _timerNoTyping = new Timer( 5000 ) ;
+		private Timer _timerNoTyping2 = new Timer( 20000 ) ;
 
 		private Chatstate _chatstate = Chatstate.None ;
 
@@ -46,11 +47,17 @@ namespace xeus.Controls
 			_listRefreshTimer.Elapsed += new ElapsedEventHandler( _listRefreshTimer_Elapsed ) ;
 			_timeRefreshTimer.Elapsed += new ElapsedEventHandler( _timeRefreshTimer_Elapsed ) ;
 			_timerNoTyping.Elapsed += new ElapsedEventHandler( _timerNoTyping_Elapsed );
+			_timerNoTyping2.Elapsed += new ElapsedEventHandler( _timerNoTyping2_Elapsed );
 
 			_listRefreshTimer.AutoReset = false ;
 			_listRefreshTimer.Start() ;
 
 			KeyDown += new KeyEventHandler( MessageWindow_KeyDown );
+		}
+
+		void _timerNoTyping2_Elapsed( object sender, ElapsedEventArgs e )
+		{
+			ChangeChatState( Chatstate.inactive ) ;
 		}
 
 		void _timerNoTyping_Elapsed( object sender, ElapsedEventArgs e )
@@ -82,6 +89,7 @@ namespace xeus.Controls
 				if ( chatstate == Chatstate.composing )
 				{
 					_timerNoTyping.Start();					
+					_timerNoTyping2.Stop();
 				}
 
 				if ( _chatstate == chatstate )
@@ -92,9 +100,15 @@ namespace xeus.Controls
 				switch ( chatstate )
 				{
 					case Chatstate.paused:
+						{
+							_timerNoTyping.Stop();
+							_timerNoTyping2.Start();
+							break;
+						}
 					case Chatstate.gone:
 						{
 							_timerNoTyping.Stop();
+							_timerNoTyping2.Stop();
 							break;
 						}
 				}
@@ -258,10 +272,17 @@ namespace xeus.Controls
 
 		protected override void OnClosed( EventArgs e )
 		{
+			ChangeChatState( Chatstate.inactive ) ;
 			ChangeChatState( Chatstate.gone ) ;
 
 			_timeRefreshTimer.Stop() ;
+			_timeRefreshTimer.Dispose();
 			_listRefreshTimer.Stop() ;
+			_listRefreshTimer.Dispose();
+			_timerNoTyping.Stop();
+			_timerNoTyping.Dispose();
+			_timerNoTyping2.Stop();
+			_timerNoTyping2.Dispose();
 
 			base.OnClosed( e ) ;
 

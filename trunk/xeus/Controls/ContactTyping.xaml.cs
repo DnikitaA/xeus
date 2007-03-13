@@ -42,7 +42,7 @@ namespace xeus.Controls
 				{
 					case Chatstate.active:
 						{
-							Opacity = 0.5 ;
+							Opacity = 0.25 ;
 							Visibility = Visibility.Visible ;
 							break ;
 						}
