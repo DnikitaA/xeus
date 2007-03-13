@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging ;
 using System.Windows.Threading ;
 using agsXMPP.protocol.Base ;
 using agsXMPP.protocol.client ;
+using agsXMPP.protocol.iq.disco ;
 using agsXMPP.protocol.iq.roster ;
 using agsXMPP.protocol.iq.vcard ;
 using Clifton.Tools.Xml ;
@@ -51,6 +52,7 @@ namespace xeus.Core
 
 		private Presence _presence ;
 		private string _statusDescription = "Unavailable" ;
+		private DiscoInfo _disco ;
 
 		private RosterItem()
 		{
@@ -65,6 +67,19 @@ namespace xeus.Core
 			_fullName = row[ "FullName" ] as string ;
 			_nickName = row[ "NickName" ] as string ;
 			_customName = row[ "CustomName" ] as string ;
+		}
+
+		public DiscoInfo Disco
+		{
+			get
+			{
+				return _disco ;
+			}
+
+			set
+			{
+				_disco = value ;
+			}
 		}
 
 		public string GenerateChatThreadId()

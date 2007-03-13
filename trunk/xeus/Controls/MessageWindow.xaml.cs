@@ -64,7 +64,7 @@ namespace xeus.Controls
 			{
 				if ( _instance != null && _instance._statusTyping != null )
 				{
-					_instance._typing.UserName = userName ;
+					_instance._typing.UserName = string.Format( "'{0}' is typing a Message", userName ) ;
 					_instance._typing.Chatstate = chatstate ;
 				}
 			}

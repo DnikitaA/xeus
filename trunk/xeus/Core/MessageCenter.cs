@@ -80,7 +80,12 @@ namespace xeus.Core
 					{
 						if ( msg.Chatstate != Chatstate.None )
 						{
-							MessageWindow.ContactIsTyping( msg.From.Bare, msg.Chatstate );
+							RosterItem rosterItem = Client.Instance.Roster.FindItem( msg.From.Bare ) ;
+
+							if ( rosterItem != null )
+							{
+								MessageWindow.ContactIsTyping( rosterItem.DisplayName, msg.Chatstate ) ;
+							}
 						}
 						else
 						{
