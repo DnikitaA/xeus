@@ -16,6 +16,7 @@ namespace xeus.Core
 		private string _relativeTime ;
 		private string _body ;
 		private bool _isFromDb = false ;
+		private string _threadId = null ;
 
 		public ChatMessage( DataRow row, RosterItem rosterItem )
 		{
@@ -31,6 +32,7 @@ namespace xeus.Core
 
 		public ChatMessage( Message message, RosterItem rosterItem, DateTime time )
 		{
+			_threadId = message.Thread ;
 			_body = message.Body ;
 			_time = time ;
 			_rosterItem = rosterItem ;
@@ -67,6 +69,14 @@ namespace xeus.Core
 			get
 			{
 				return _body ;
+			}
+		}
+
+		public string ThreadId
+		{
+			get
+			{
+				return _threadId ;
 			}
 		}
 

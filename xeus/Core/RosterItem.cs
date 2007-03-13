@@ -67,6 +67,11 @@ namespace xeus.Core
 			_customName = row[ "CustomName" ] as string ;
 		}
 
+		public string GenerateChatThreadId()
+		{
+			return ( Key + "_" + Client.Instance.MyJid.Bare ).GetHashCode().ToString() ;
+		}
+
 		public XmlDatabase.FieldValuePair[] GetData()
 		{
 			XmlDatabase.FieldValuePair[] data = new XmlDatabase.FieldValuePair[ 7 ] ;

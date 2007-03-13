@@ -7,6 +7,7 @@ using System.Windows.Controls ;
 using agsXMPP ;
 using agsXMPP.net ;
 using agsXMPP.protocol.client ;
+using agsXMPP.protocol.extensions.chatstates ;
 using agsXMPP.protocol.iq.disco ;
 using agsXMPP.protocol.iq.register ;
 using agsXMPP.protocol.iq.roster ;
@@ -113,6 +114,11 @@ namespace xeus.Core
 
 			_xmppConnection.OnXmppConnectionStateChanged +=
 				new XmppConnection.XmppConnectionStateHandler( _xmppConnection_OnXmppConnectionStateChanged ) ;
+
+			_xmppConnection.OnRegisterInformation += new RegisterEventHandler( _xmppConnection_OnRegisterInformation );
+			_xmppConnection.OnRegistered += new ObjectHandler( _xmppConnection_OnRegistered );
+			_xmppConnection.OnIq += new agsXMPP.Xml.StreamHandler( _xmppConnection_OnIq );
+
 			_messageCenter.RegisterEvent( _instance ) ;
 
 			_discoTimer.AutoReset = false ;
@@ -123,6 +129,18 @@ namespace xeus.Core
 			_idleTimer.Start() ;
 
 			Log( "Setup finished" ) ;
+		}
+
+		void _xmppConnection_OnIq( object sender, Node e )
+		{
+		}
+
+		void _xmppConnection_OnRegistered( object sender )
+		{
+		}
+
+		void _xmppConnection_OnRegisterInformation( object sender, RegisterEventArgs args )
+		{
 		}
 
 		private ShowType _nonIdlePresence = ShowType.NONE ;
@@ -243,7 +261,23 @@ namespace xeus.Core
 			}
 		}
 
-		public void SendChatMessage( RosterItem rosterItem, string text )
+		public void SendChatState( RosterItem rosterItem, Chatstate chatState, string threadId )
+		{
+			if ( rosterItem.IsInitialized )
+			{
+				Message message = new Message() ;
+
+				message.Type = MessageType.chat ;
+				message.To = rosterItem.XmppRosterItem.Jid ;
+				message.From = MyJid ;
+				message.Chatstate = chatState ;
+				message.Thread = threadId ;
+
+				_xmppConnection.Send( message ) ;
+			}
+		}
+
+		public void SendChatMessage( RosterItem rosterItem, string text, string threadId )
 		{
 			if ( rosterItem.IsInitialized )
 			{
@@ -253,6 +287,8 @@ namespace xeus.Core
 				message.To = rosterItem.XmppRosterItem.Jid ;
 				message.Body = text ;
 				message.From = MyJid ;
+				message.Chatstate = Chatstate.active ;
+				message.Thread = threadId ;
 
 				_xmppConnection.Send( message ) ;
 
