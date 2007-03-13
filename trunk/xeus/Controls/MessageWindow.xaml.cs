@@ -105,6 +105,7 @@ namespace xeus.Controls
 							_timerNoTyping2.Start();
 							break;
 						}
+					case Chatstate.inactive:
 					case Chatstate.gone:
 						{
 							_timerNoTyping.Stop();
@@ -407,7 +408,7 @@ namespace xeus.Controls
 						selectedItem.Tag = rosterItem.GenerateChatThreadId() ;
 					}
 
-					Client.Instance.SendChatState( rosterItem, chatstate, ( string ) selectedItem.Tag ) ;
+					Client.Instance.SendChatState( rosterItem, chatstate ) ;
 				}
 			}
 		}
@@ -426,9 +427,9 @@ namespace xeus.Controls
 						selectedItem.Tag = rosterItem.GenerateChatThreadId() ;
 					}
 
-					Client.Instance.SendChatMessage( rosterItem, MessageTextBox.Text, ( string )selectedItem.Tag ) ;
+					Client.Instance.SendChatMessage( rosterItem, MessageTextBox.Text ) ;
 
-					_instance.ChangeChatState( Chatstate.paused ) ;
+					_instance.ChangeChatState( Chatstate.inactive ) ;
 
 					MessageTextBox.Text = String.Empty ;
 					_instance._listRefreshTimer.Start() ;

@@ -12,8 +12,6 @@
 	</UserControl.Triggers>
     <StackPanel Orientation="Horizontal">
     <Image IsEnabled="False" Width="17" Height="17" Source="..\Images\avatar.png"/>
-    	<Border Background="#FF171717" BorderBrush="#FF3C3C3C" BorderThickness="1,1,1,1" CornerRadius="2,2,2,2" Margin="5,0,0,0" Padding="5,0,5,0">
-    		<TextBlock IsEnabled="False" x:Name="_userName" FontSize="12" Foreground="#FFD7D7D7" MinWidth="20"/>
-    	</Border>
+    	<TextBlock IsEnabled="False" x:Name="_userName" FontSize="12" Foreground="#FFD7D7D7" Margin="5,0,0,0" VerticalAlignment="Center"/>
     </StackPanel>
 </UserControl>

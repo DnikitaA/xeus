@@ -84,7 +84,6 @@ namespace xeus.Core
 
 							if ( rosterItem != null )
 							{
-								//Client.Instance.SendChatState( rosterItem, Chatstate.active, rosterItem.GenerateChatThreadId() );
 								MessageWindow.ContactIsTyping( rosterItem.DisplayName, msg.Chatstate ) ;
 							}
 						}
@@ -116,27 +115,30 @@ namespace xeus.Core
 
 						ChatMessage message = new ChatMessage( msg, rosterItem, DateTime.Now ) ;
 
-						if ( msg.Chatstate != Chatstate.None
-								&& string.IsNullOrEmpty( msg.Body ) )
+						if ( string.IsNullOrEmpty( msg.Body ) )
 						{
-							//Client.Instance.SendChatState( rosterItem, Chatstate.active, rosterItem.GenerateChatThreadId() );
-							MessageWindow.ContactIsTyping( rosterItem.DisplayName, msg.Chatstate ) ;
-						}
-
-						if ( MessageWindow.IsOpen() )
-						{
-							lock ( rosterItem.Messages._syncObject )
+							if ( msg.Chatstate != Chatstate.None )
 							{
-								rosterItem.Messages.Add( message ) ;
+								MessageWindow.ContactIsTyping( rosterItem.DisplayName, msg.Chatstate ) ;
 							}
-
-							MessageWindow.DisplayChatWindow( rosterItem.Key, false );
 						}
 						else
 						{
-							lock ( _chatMessages._syncObject )
+							if ( MessageWindow.IsOpen() )
 							{
-								_chatMessages.Add( message ) ;
+								lock ( rosterItem.Messages._syncObject )
+								{
+									rosterItem.Messages.Add( message ) ;
+								}
+
+								MessageWindow.DisplayChatWindow( rosterItem.Key, false ) ;
+							}
+							else
+							{
+								lock ( _chatMessages._syncObject )
+								{
+									_chatMessages.Add( message ) ;
+								}
 							}
 						}
 

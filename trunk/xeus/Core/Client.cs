@@ -257,7 +257,7 @@ namespace xeus.Core
 			}
 		}
 
-		public void SendChatState( RosterItem rosterItem, Chatstate chatState, string threadId )
+		public void SendChatState( RosterItem rosterItem, Chatstate chatState )
 		{
 			if ( rosterItem.IsInitialized )
 			{
@@ -267,7 +267,6 @@ namespace xeus.Core
 				message.To = rosterItem.XmppRosterItem.Jid ;
 				message.From = MyJid ;
 				message.Chatstate = chatState ;
-				// message.Thread = threadId ;
 
 				Trace.WriteLine( message.Thread );
 
@@ -275,7 +274,7 @@ namespace xeus.Core
 			}
 		}
 
-		public void SendChatMessage( RosterItem rosterItem, string text, string threadId )
+		public void SendChatMessage( RosterItem rosterItem, string text )
 		{
 			if ( rosterItem.IsInitialized )
 			{
@@ -286,7 +285,6 @@ namespace xeus.Core
 				message.Body = text ;
 				message.From = MyJid ;
 				message.Chatstate = Chatstate.active ;
-				// message.Thread = threadId ;
 
 				Trace.WriteLine( message.Thread );
 
