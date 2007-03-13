@@ -41,8 +41,9 @@ namespace xeus.Controls
 				switch ( value )
 				{
 					case Chatstate.active:
+					case Chatstate.paused:
 						{
-							Opacity = 0.25 ;
+							Opacity = 0.15 ;
 							Visibility = Visibility.Visible ;
 							break ;
 						}
