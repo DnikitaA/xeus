@@ -21,7 +21,8 @@
              x:Name="_listMessages" HorizontalAlignment="Stretch" Margin="0,0,0,4" MinHeight="100" DockPanel.Dock="Top" TabIndex="1"/>		
     </DockPanel>	
 	<Button Height="30" Content="Button" HorizontalAlignment="Right" Margin="0,0,5,5" 
-			VerticalAlignment="Bottom" Width="30" Template="{DynamicResource SendIcon}" Click="OnSendClick" x:Name="button" ToolTip="Send Message (Ctrl+Enter)"/>
+			VerticalAlignment="Bottom" Width="30" Template="{DynamicResource SendIcon}"
+			Click="OnSendClick" x:Name="button" ToolTip="Send Message (Ctrl+Enter)"/>
 	</Grid>
 		<DataTemplate.Triggers>
 			<Trigger Property="Text" SourceName="textBox" Value="">
