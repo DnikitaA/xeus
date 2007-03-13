@@ -23,7 +23,7 @@ namespace xeus.Controls
 
 		private Timer _listRefreshTimer = new Timer( 150 ) ;
 		private Timer _timeRefreshTimer = new Timer( 10000 ) ;
-		private Timer _timerNoTyping = new Timer( 10000 ) ;
+		private Timer _timerNoTyping = new Timer( 5000 ) ;
 
 		private Chatstate _chatstate = Chatstate.None ;
 
@@ -32,6 +32,8 @@ namespace xeus.Controls
 		private delegate void DisplayChatCallback( string jid, bool activate ) ;
 
 		private delegate void RefreshTimeCallback() ;
+
+		private delegate void ContactIsTypingCallback( string userName, Chatstate chatstate ) ;
 
 		private delegate void SendChatStateCallback( Chatstate chatstate ) ;
 
@@ -54,6 +56,23 @@ namespace xeus.Controls
 		void _timerNoTyping_Elapsed( object sender, ElapsedEventArgs e )
 		{
 			ChangeChatState( Chatstate.paused ) ;
+		}
+
+		public static void ContactIsTyping( string userName, Chatstate chatstate )
+		{
+			if ( App.DispatcherThread.CheckAccess() )
+			{
+				if ( _instance != null && _instance._statusTyping != null )
+				{
+					_instance._typing.UserName = userName ;
+					_instance._typing.Chatstate = chatstate ;
+				}
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+												  new ContactIsTypingCallback( ContactIsTyping ), userName, chatstate );
+			}		
 		}
 
 		void ChangeChatState( Chatstate chatstate )
@@ -244,9 +263,9 @@ namespace xeus.Controls
 			_timeRefreshTimer.Stop() ;
 			_listRefreshTimer.Stop() ;
 
-			_instance = null ;
-
 			base.OnClosed( e ) ;
+
+			_instance = null ;
 		}
 
 		public static bool IsOpen()
@@ -362,6 +381,11 @@ namespace xeus.Controls
 
 				if ( rosterItem != null && selectedItem != null )
 				{
+					if ( selectedItem.Tag == null )
+					{
+						selectedItem.Tag = rosterItem.GenerateChatThreadId() ;
+					}
+
 					Client.Instance.SendChatState( rosterItem, chatstate, ( string ) selectedItem.Tag ) ;
 				}
 			}

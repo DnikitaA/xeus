@@ -272,7 +272,7 @@ namespace xeus.Core
 				message.To = rosterItem.XmppRosterItem.Jid ;
 				message.From = MyJid ;
 				message.Chatstate = chatState ;
-				message.Thread = threadId ;
+				// message.Thread = threadId ;
 
 				Trace.WriteLine( message.Thread );
 
@@ -291,7 +291,7 @@ namespace xeus.Core
 				message.Body = text ;
 				message.From = MyJid ;
 				message.Chatstate = Chatstate.active ;
-				message.Thread = threadId ;
+				// message.Thread = threadId ;
 
 				Trace.WriteLine( message.Thread );
 

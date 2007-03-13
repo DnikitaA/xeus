@@ -2,6 +2,7 @@ using System.Collections.Generic ;
 using System.Timers ;
 using agsXMPP ;
 using agsXMPP.protocol.client ;
+using agsXMPP.protocol.extensions.chatstates ;
 using agsXMPP.protocol.iq.roster ;
 using agsXMPP.protocol.iq.vcard ;
 
@@ -127,6 +128,10 @@ namespace xeus.Core
 						App.Instance.Window.AlertError( "Service problem",
 						                                string.Format( "Service {0} became unavailable", rosterItem.Key ) ) ;
 					}
+				}
+				else if ( presence.Type == PresenceType.available )
+				{
+					Client.Instance.SendChatState( rosterItem, Chatstate.active, rosterItem.GenerateChatThreadId() );
 				}
 
 				if ( !rosterItem.HasVCardRecivied && presence.Type == PresenceType.available )

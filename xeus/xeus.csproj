@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
+    <Page Include="Controls\ContactTyping.xaml" />
     <Page Include="Controls\ControlResources.xaml" />
     <Page Include="Controls\DialogBox.xaml" />
     <Page Include="Controls\InlineSearch.xaml" />
@@ -104,6 +105,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ContactTyping.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ContactTyping.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DialogBox.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>DialogBox.xaml</DependentUpon>
