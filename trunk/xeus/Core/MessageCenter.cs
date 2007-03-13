@@ -102,9 +102,6 @@ namespace xeus.Core
 
 						ChatMessage message = new ChatMessage( msg, rosterItem, DateTime.Now ) ;
 
-						Database database = new Database();
-						database.InsertMessage( message );
-
 						if ( MessageWindow.IsOpen() )
 						{
 							lock ( rosterItem.Messages._syncObject )

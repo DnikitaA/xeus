@@ -111,6 +111,11 @@ namespace xeus.Core
 			{
 				rosterItem.Presence = presence ;
 
+				/*
+				App.Instance.Window.Status( string.Format( "'{0}' changed status to '{1}'",
+													rosterItem.DisplayName, rosterItem.StatusDescription ) ) ;
+				*/
+
 				if ( rosterItem.IsService )
 				{
 					if ( presence.Type == PresenceType.available )

@@ -141,6 +141,7 @@ namespace xeus.Core
 			}
 		}
 
+		/*
 		public void InsertMessage( ChatMessage message )
 		{
 			lock ( message )
@@ -162,7 +163,7 @@ namespace xeus.Core
 					Client.Instance.Log( "Error writing messages: {0}", e.Message ) ;
 				}
 			}
-		}
+		}*/
 
 		public void StoreGroups( Dictionary< string, bool > expanderStates )
 		{

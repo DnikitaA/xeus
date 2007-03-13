@@ -60,8 +60,6 @@ namespace xeus.Core
 		public RosterItem( DataRow row ) : this()
 		{
 			_key = row[ "Key" ] as string ;
-			/*_lastMessageFrom = row[ "LastMessageFrom" ] as string ;
-			_lastMessageTo = row[ "LastMessageTo" ] as string ;*/
 			_subscriptionType = ( SubscriptionType )Enum.Parse( typeof( SubscriptionType ),
 																row[ "SubscriptionType" ] as string, false ) ;
 			_fullName = row[ "FullName" ] as string ;
@@ -692,7 +690,23 @@ namespace xeus.Core
 		{
 			get
 			{
-				return string.Format( "Subscription: {0}", SubscriptionType ) ;
+				switch ( SubscriptionType )
+				{
+					case SubscriptionType.both:
+						{
+							return "Authorized in both ways" ;
+						}
+					case SubscriptionType.from:
+						{
+							return "Contact is authorized, but you aren't" ;
+						}
+					case SubscriptionType.to:
+						{
+							return "You are authorized, but the Contact isn't" ;
+						}
+				}
+
+				return "Unknown authorization state" ;
 			}
 		}
 
