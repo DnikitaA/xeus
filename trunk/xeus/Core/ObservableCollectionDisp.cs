@@ -8,7 +8,7 @@ namespace xeus.Core
 	{
 		public readonly object _syncObject = new object();
 
-		private Dispatcher dispatcherUIThread ;
+		private Dispatcher _dispatcherUIThread ;
 
 		private delegate void SetItemCallback( int index, T item ) ;
 
@@ -22,70 +22,85 @@ namespace xeus.Core
 
 		public ObservableCollectionDisp( Dispatcher dispatcher )
 		{
-			dispatcherUIThread = dispatcher ;
+			_dispatcherUIThread = dispatcher ;
 		}
 
 		protected override void SetItem( int index, T item )
 		{
-			if ( dispatcherUIThread.CheckAccess() )
+			if ( _dispatcherUIThread.CheckAccess() )
 			{
-				base.SetItem( index, item ) ;
+				lock ( _syncObject )
+				{
+					base.SetItem( index, item ) ;
+				}
 			}
 			else
 			{
-				dispatcherUIThread.BeginInvoke( DispatcherPriority.Send,
+				_dispatcherUIThread.BeginInvoke( DispatcherPriority.Send,
 				                                new SetItemCallback( SetItem ), index, new object[] { item } ) ;
 			}
 		}
 
 		protected override void InsertItem( int index, T item )
 		{
-			if ( dispatcherUIThread.CheckAccess() )
+			if ( _dispatcherUIThread.CheckAccess() )
 			{
-				base.InsertItem( index, item ) ;
+				lock ( _syncObject )
+				{
+					base.InsertItem( index, item ) ;
+				}
 			}
 			else
 			{
-				dispatcherUIThread.BeginInvoke( DispatcherPriority.Send,
+				_dispatcherUIThread.BeginInvoke( DispatcherPriority.Send,
 				                                new InsertItemCallback( InsertItem ), index, new object[] { item } ) ;
 			}
 		}
 
 		protected override void RemoveItem( int index )
 		{
-			if ( dispatcherUIThread.CheckAccess() )
+			if ( _dispatcherUIThread.CheckAccess() )
 			{
-				base.RemoveItem( index ) ;
+				lock ( _syncObject )
+				{
+					base.RemoveItem( index ) ;
+				}
 			}
 			else
 			{
-				dispatcherUIThread.BeginInvoke( DispatcherPriority.Send,
+				_dispatcherUIThread.BeginInvoke( DispatcherPriority.Send,
 				                                new RemoveItemCallback( RemoveItem ), index, new object[] { } ) ;
 			}
 		}
 
 		protected override void MoveItem( int oldIndex, int newIndex )
 		{
-			if ( dispatcherUIThread.CheckAccess() )
+			if ( _dispatcherUIThread.CheckAccess() )
 			{
-				base.MoveItem( oldIndex, newIndex ) ;
+				lock ( _syncObject )
+				{
+					base.MoveItem( oldIndex, newIndex ) ;
+				}
 			}
 			else
 			{
-				dispatcherUIThread.BeginInvoke( DispatcherPriority.Send,
+				_dispatcherUIThread.BeginInvoke( DispatcherPriority.Send,
 				                                new MoveItemCallback( MoveItem ), oldIndex, new object[] { newIndex } ) ;
 			}
 		}
 
 		protected override void ClearItems()
 		{
-			if ( dispatcherUIThread.CheckAccess() )
+			if ( _dispatcherUIThread.CheckAccess() )
 			{
-				base.ClearItems() ;
+				lock ( _syncObject )
+				{
+					base.ClearItems() ;
+				}
 			}
 			else
 			{
-				dispatcherUIThread.BeginInvoke( DispatcherPriority.Send, new ClearItemsCallback( ClearItems ) ) ;
+				_dispatcherUIThread.BeginInvoke( DispatcherPriority.Send, new ClearItemsCallback( ClearItems ) ) ;
 			}
 		}
 	}

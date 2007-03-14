@@ -76,6 +76,7 @@
     <Page Include="Controls\ResizeGropResources.xaml" />
     <Page Include="Controls\TextBoxResource.xaml" />
     <Page Include="Controls\ToolTipsResourcexaml.xaml" />
+    <Page Include="HeadlinesResources.xaml" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -160,6 +161,7 @@
     <Compile Include="Core\ChatMessage.cs" />
     <Compile Include="Core\CountToVisibilityConverter.cs" />
     <Compile Include="Core\Database.cs" />
+    <Compile Include="Core\HeadlineMessage.cs" />
     <Compile Include="Core\InlineMethod.cs" />
     <Compile Include="Core\MessageCenter.cs" />
     <Compile Include="Controls\ServicesControl.xaml.cs">

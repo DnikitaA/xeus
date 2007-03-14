@@ -430,5 +430,33 @@
 	</DataTemplate.Triggers>
 
 </DataTemplate>
-    
+
+  <DataTemplate x:Key="HeadlineMessageItem" DataType="{x:Type local:HeadlineMessage}">
+    <Grid Background="#05FFFFFF" x:Name="_grid">
+      <Border BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2"
+			 HorizontalAlignment="Right" Padding="4,2,4,2" Opacity="0.8"
+			 Margin="0,4,4,0" Panel.ZIndex="2" VerticalAlignment="Top" x:Name="_timeBorder">
+        <Border.Background>
+          <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF78C2E1" Offset="0"/>
+            <GradientStop Color="#FFCEE4EB" Offset="1"/>
+          </LinearGradientBrush>
+        </Border.Background>
+        <Border.OpacityMask>
+          <RadialGradientBrush>
+            <GradientStop Color="#FF000000" Offset="0"/>
+            <GradientStop Color="#95FFFFFF" Offset="1"/>
+          </RadialGradientBrush>
+        </Border.OpacityMask>
+        <Border.BitmapEffect>
+          <DropShadowBitmapEffect/>
+        </Border.BitmapEffect>
+        <TextBlock Text="{Binding Path=Time}" Foreground="#FF323F48" FontSize="10" x:Name="_time" />
+      </Border>
+        <TextBox x:Name="_body" Text="{Binding Path=Body, Mode=OneWay}" Foreground="White"
+         Margin="10,0,10,0" TextWrapping="WrapWithOverflow"
+            DockPanel.Dock="Right" FontSize="11" Style="{DynamicResource TextBoxStyleBlack}" IsReadOnly="True" IsUndoEnabled="False"/>
+    </Grid>
+  </DataTemplate>
+  
 </ResourceDictionary>

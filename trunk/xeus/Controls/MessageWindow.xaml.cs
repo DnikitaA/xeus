@@ -15,7 +15,7 @@ namespace xeus.Controls
 	/// <summary>
 	/// Interaction logic for MessageWindow.xaml
 	/// </summary>
-	public partial class MessageWindow : WindowBase
+	public partial class MessageWindow : WindowBase, IDisposable
 	{
 		private static MessageWindow _instance ;
 		private static ListBox _listBox ;
@@ -71,7 +71,7 @@ namespace xeus.Controls
 			{
 				if ( _instance != null && _instance._statusTyping != null )
 				{
-					_instance._typing.UserName = string.Format( "'{0}' is typing a Message", userName ) ;
+					_instance._typing.UserName = userName ;
 					_instance._typing.Chatstate = chatstate ;
 				}
 			}
@@ -277,16 +277,13 @@ namespace xeus.Controls
 			ChangeChatState( Chatstate.gone ) ;
 
 			_timeRefreshTimer.Stop() ;
-			_timeRefreshTimer.Dispose();
 			_listRefreshTimer.Stop() ;
-			_listRefreshTimer.Dispose();
 			_timerNoTyping.Stop();
-			_timerNoTyping.Dispose();
 			_timerNoTyping2.Stop();
-			_timerNoTyping2.Dispose();
 
 			base.OnClosed( e ) ;
 
+			_instance.Dispose();
 			_instance = null ;
 		}
 
@@ -365,7 +362,6 @@ namespace xeus.Controls
 				if ( activateTab )
 				{
 					_instance._tabs.SelectedItem = tab ;
-					_instance.Activate() ;
 				}
 
 				if ( rosterItem != null )
@@ -375,6 +371,7 @@ namespace xeus.Controls
 					if ( !_instance.IsVisible )
 					{
 						_instance.Show() ;
+						_instance.Activate() ;
 					}
 				}
 
@@ -398,16 +395,10 @@ namespace xeus.Controls
 			if ( MessageTextBox != null && _instance != null && _instance._tabs != null
 					&& Client.Instance != null && Client.Instance.IsAvailable )
 			{
-				TabItem selectedItem = ( TabItem ) _instance._tabs.SelectedItem ;
 				RosterItem rosterItem = _instance._tabs.SelectedContent as RosterItem ;
 
-				if ( rosterItem != null && selectedItem != null )
+				if ( rosterItem != null )
 				{
-					if ( selectedItem.Tag == null )
-					{
-						selectedItem.Tag = rosterItem.GenerateChatThreadId() ;
-					}
-
 					Client.Instance.SendChatState( rosterItem, chatstate ) ;
 				}
 			}
@@ -417,16 +408,10 @@ namespace xeus.Controls
 		{
 			if ( MessageTextBox != null )
 			{
-				TabItem selectedItem = ( TabItem ) _instance._tabs.SelectedItem ;
 				RosterItem rosterItem = _instance._tabs.SelectedContent as RosterItem ;
 
 				if ( rosterItem != null )
 				{
-					if ( selectedItem.Tag == null )
-					{
-						selectedItem.Tag = rosterItem.GenerateChatThreadId() ;
-					}
-
 					Client.Instance.SendChatMessage( rosterItem, MessageTextBox.Text ) ;
 
 					_instance.ChangeChatState( Chatstate.inactive ) ;
@@ -470,13 +455,6 @@ namespace xeus.Controls
 				{
 					ChatMessage chatMessage = listBox.Items[ listBox.Items.Count - 1 ] as ChatMessage ;
 
-					TabItem selectedItem = ( TabItem ) _instance._tabs.SelectedItem ;
-
-					if ( !string.IsNullOrEmpty( chatMessage.ThreadId ) )
-					{
-						selectedItem.Tag = chatMessage.ThreadId ;
-					}
-
 					listBox.ScrollIntoView( chatMessage ) ;
 				}
 			}
@@ -502,6 +480,15 @@ namespace xeus.Controls
 			}
 
 			DisplayChat( activateJid, activate ) ;
+		}
+
+
+		public void Dispose()
+		{
+			_listRefreshTimer.Dispose();
+			_timeRefreshTimer.Dispose();
+			_timerNoTyping.Dispose();
+			_timerNoTyping2.Dispose();
 		}
 	}
 }

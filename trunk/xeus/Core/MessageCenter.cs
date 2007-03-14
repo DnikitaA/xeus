@@ -17,8 +17,8 @@ namespace xeus.Core
 		private ObservableCollectionDisp< ChatMessage > _chatMessages =
 			new ObservableCollectionDisp< ChatMessage >( App.DispatcherThread ) ;
 
-		private ObservableCollectionDisp< Message > _hedlineMessages =
-			new ObservableCollectionDisp< Message >( App.DispatcherThread ) ;
+		private ObservableCollectionDisp< HeadlineMessage > _hedlineMessages =
+			new ObservableCollectionDisp< HeadlineMessage >( App.DispatcherThread ) ;
 
 		public void RegisterEvent( Client client )
 		{
@@ -49,7 +49,7 @@ namespace xeus.Core
 			}
 		}
 
-		public ObservableCollectionDisp< Message > HedlineMessages
+		public ObservableCollectionDisp< HeadlineMessage > HedlineMessages
 		{
 			get
 			{
@@ -89,12 +89,10 @@ namespace xeus.Core
 						}
 						else
 						{
-							lock ( _normalMessages._syncObject )
+							lock ( _hedlineMessages._syncObject )
 							{
-								_normalMessages.Add( msg ) ;
+								_hedlineMessages.Add( new HeadlineMessage( msg ) ) ;
 							}
-
-							App.Instance.Window.AlertInfo( "Message", msg.Body );
 						}
 
 						break ;
@@ -103,8 +101,7 @@ namespace xeus.Core
 					{
 						lock ( _hedlineMessages._syncObject )
 						{
-							_hedlineMessages.Add( msg ) ;
-							App.Instance.Window.AlertInfo( "Headline", msg.Body );
+							_hedlineMessages.Add( new HeadlineMessage( msg ) ) ;
 						}
 
 						break ;

@@ -23,15 +23,15 @@ namespace xeus.Core
 	{
 		private static readonly Client _instance = new Client() ;
 
-		private XmppClientConnection _xmppConnection = new XmppClientConnection() ;
+		private XmppClientConnection _xmppConnection ;
 
-		private Services _services = new Services() ;
-		private Roster _roster = new Roster() ;
-		private MessageCenter _messageCenter = new MessageCenter() ;
+		private Services _services ;
+		private Roster _roster ;
+		private MessageCenter _messageCenter ;
 		private Presence _presence ;
 
-		private Timer _discoTimer = new Timer( 1500 ) ;
-		private Timer _idleTimer = new Timer( 1000 ) ;
+		private Timer _discoTimer ;
+		private Timer _idleTimer ;
 
 		#region delegates
 
@@ -71,6 +71,11 @@ namespace xeus.Core
 		{
 			get
 			{
+				if ( _roster == null )
+				{
+					_roster = new Roster() ;
+				}
+
 				return _roster ;
 			}
 		}
@@ -90,6 +95,13 @@ namespace xeus.Core
 
 		public void Setup()
 		{
+			_xmppConnection = new XmppClientConnection() ;
+
+			_services = new Services() ;
+
+			_discoTimer = new Timer( 1500 ) ;
+			_idleTimer = new Timer( 1000 ) ;
+
 			RegisterEvents() ;
 
 			_xmppConnection.UseCompression = true ;
@@ -118,6 +130,8 @@ namespace xeus.Core
 
 			_xmppConnection.OnRegisterInformation += new RegisterEventHandler( _xmppConnection_OnRegisterInformation );
 			_xmppConnection.OnRegistered += new ObjectHandler( _xmppConnection_OnRegistered );
+			_xmppConnection.OnIq += new agsXMPP.Xml.StreamHandler( _xmppConnection_OnIq );
+
 
 			_messageCenter.RegisterEvent( _instance ) ;
 
@@ -129,6 +143,10 @@ namespace xeus.Core
 			_idleTimer.Start() ;
 
 			Log( "Setup finished" ) ;
+		}
+
+		void _xmppConnection_OnIq( object sender, Node e )
+		{
 		}
 
 		void _xmppConnection_OnRegistered( object sender )
@@ -278,6 +296,9 @@ namespace xeus.Core
 		{
 			if ( rosterItem.IsInitialized )
 			{
+#if DEBUG
+				MessageCenter.HedlineMessages.Add( new HeadlineMessage( new Message( new Jid( "to" ), new Jid( "from" ), "Willkommen beim Jabber-IM-Service auf jabber.linuxlovers.at ! more information on http://linuxlovers.at/site/forums/sonstiges/jabber_serveror in the chatroom server-talk@conference.jabber.linuxlovers.at" ) ) );
+#endif
 				Message message = new Message() ;
 
 				message.Type = MessageType.chat ;
@@ -537,6 +558,11 @@ namespace xeus.Core
 				{
 					DiscoInfo di = iq.Query as DiscoInfo ;
 					item.Disco = di ;
+
+					if ( di.HasFeature( agsXMPP.Uri.BYTESTREAMS ) )
+					{
+						
+					}
 				}
 			}
 
@@ -588,6 +614,11 @@ namespace xeus.Core
 		{
 			get
 			{
+				if ( _messageCenter == null )
+				{
+					_messageCenter = new MessageCenter() ;
+				}
+
 				return _messageCenter ;
 			}
 		}
