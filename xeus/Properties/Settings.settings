@@ -11,6 +11,9 @@
     <Setting Name="Client_IdleMinutesXA" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
+    <Setting Name="UI_RosterSlider" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">80</Value>
+    </Setting>
     <Setting Name="Client_UserName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
@@ -19,9 +22,6 @@
     </Setting>
     <Setting Name="Client_Server" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="UI_RosterSlider" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">80</Value>
     </Setting>
   </Settings>
 </SettingsFile>

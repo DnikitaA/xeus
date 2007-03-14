@@ -144,7 +144,7 @@ namespace xeus.Core
 		/*
 		public void InsertMessage( ChatMessage message )
 		{
-			lock ( message )
+			if ( !message.IsFromDb )
 			{
 				FieldValuePair[] data = message.GetData() ;
 
