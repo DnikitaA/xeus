@@ -242,7 +242,6 @@ namespace xeus
 			}
 
 			database.StoreGroups( _roster.ExpanderStates ) ;
-			database.Save() ;
 		}
 
 		protected override void OnClosed( EventArgs e )
