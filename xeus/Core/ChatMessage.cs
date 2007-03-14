@@ -1,9 +1,9 @@
 using System ;
 using System.ComponentModel ;
 using System.Data ;
+using System.Data.Common ;
 using System.Windows.Media.Imaging ;
 using agsXMPP.protocol.client ;
-using Clifton.Tools.Xml ;
 
 namespace xeus.Core
 {
@@ -16,16 +16,19 @@ namespace xeus.Core
 		private string _relativeTime ;
 		private string _body ;
 		private bool _isFromDb = false ;
+		private int _id = 0 ;
 
-		public ChatMessage( DataRow row, RosterItem rosterItem )
+		public ChatMessage( DbDataReader reader, RosterItem rosterItem )
 		{
+			_id = Int32.Parse( reader[ "Id" ] as string ) ;
+
 			_isFromDb = true ;
 			_rosterItem = rosterItem ;
 
-			_body = row[ "Body" ] as string ;
-			_from = row[ "From" ] as string ;
-			_to = row[ "To" ] as string ;
-			_time = DateTime.FromBinary( long.Parse( row[ "Time" ] as string ) ) ;
+			_body = reader[ "Body" ] as string ;
+			_from = reader[ "From" ] as string ;
+			_to = reader[ "To" ] as string ;
+			_time = DateTime.FromBinary( long.Parse( reader[ "Time" ] as string ) ) ;
 			_relativeTime = TimeUtilities.FormatRelativeTime( _time ) ;
 		}
 
@@ -39,11 +42,19 @@ namespace xeus.Core
 			_relativeTime = TimeUtilities.FormatRelativeTime( time ) ;
 		}
 
+		public string Key
+		{
+			get
+			{
+				return ( SentByMe ) ? To : From ;
+			}
+		}
+/*
 		public XmlDatabase.FieldValuePair[] GetData()
 		{
 			XmlDatabase.FieldValuePair[] data = new XmlDatabase.FieldValuePair[ 5 ] ;
 
-			string key = ( SentByMe ) ? To : From ;
+			string key = 
 
 			data[ 0 ] = new NullFieldValuePair( "Key", key ) ;
 			data[ 1 ] = new NullFieldValuePair( "From", From ) ;
@@ -52,7 +63,7 @@ namespace xeus.Core
 			data[ 4 ] = new NullFieldValuePair( "Body", Body ) ;
 
 			return data ;
-		}
+		}*/
 
 		public string From
 		{

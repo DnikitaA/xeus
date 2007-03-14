@@ -1,29 +1,29 @@
 using System ;
 using System.Collections.Generic ;
 using System.Data ;
-using System.IO ;
-using System.Xml ;
-using Clifton.Tools.Xml ;
+using System.Data.Common ;
 using xeus.Properties ;
 
 namespace xeus.Core
 {
+	/*
 	internal class NullFieldValuePair : XmlDatabase.FieldValuePair
 	{
 		public NullFieldValuePair( string field, string val )
 			: base( ( field == null ) ? String.Empty : field, ( val == null ) ? String.Empty : val )
 		{
 		}
-	}
+	}*/
 
-	internal class Database : XmlDatabase
+	internal class Database
 	{
+		private DbProviderFactory _factoryProvider = DbProviderFactories.GetFactory( "System.Data.SQLite" ) ;
+
 		public Database()
 		{
-			OpenDatabase() ;
 		}
 
-		string Path
+		private string Path
 		{
 			get
 			{
@@ -31,56 +31,35 @@ namespace xeus.Core
 			}
 		}
 
-		private void OpenDatabase()
-		{
-			xdoc = new XmlDocument();
-
-			try
-			{
-				RootName = "xeus" ;
-				Load( Path ) ;
-			}
-
-			catch ( Exception )
-			{
-				// does not exist
-				RootName = "xeus" ;
-				Create() ;
-			}
-		}
-
 		public List< RosterItem > ReadRosterItems()
 		{
 			List< RosterItem > rosterItems = new List< RosterItem >() ;
 
-			try
+			using ( DbConnection connection = _factoryProvider.CreateConnection() )
 			{
-				DataTable data = Query( "Roster/RosterItem" ) ;
+				connection.ConnectionString = string.Format( "Data Source=\"{0}\"", Path ) ;
+				connection.Open() ;
 
-				foreach ( DataRow row in data.Rows )
+				try
 				{
-					RosterItem rosterItem = new RosterItem( row ) ;
-					rosterItems.Add( rosterItem ) ;
+					DbCommand command = connection.CreateCommand() ;
+					command.CommandText = "SELECT * FROM RosterItem" ;
+					command.CommandType = CommandType.Text ;
+					DbDataReader reader = command.ExecuteReader() ;
 
-					DataTable dataMsg = Query( "Roster/LastMessagesFrom", string.Format( "@Key='{0}'", rosterItem.Key ) ) ;
-
-					if ( dataMsg.Rows.Count > 0 )
+					while ( reader.Read() )
 					{
-						rosterItem.LastMessageFrom = new ChatMessage( dataMsg.Rows[ 0 ], rosterItem );
+						RosterItem rosterItem = new RosterItem( reader ) ;
+						rosterItems.Add( rosterItem ) ;
 					}
 
-					dataMsg = Query( "Roster/LastMessagesTo", string.Format( "@Key='{0}'", rosterItem.Key ) ) ;
-
-					if ( dataMsg.Rows.Count > 0 )
-					{
-						rosterItem.LastMessageTo = new ChatMessage( dataMsg.Rows[ 0 ], rosterItem );
-					}
+					reader.Close() ;
 				}
-			}
 
-			catch ( Exception e )
-			{
-				Client.Instance.Log( "Error reading Roster items: {0}", e.Message ) ;
+				catch ( Exception e )
+				{
+					Client.Instance.Log( "Error reading Roster items: {0}", e.Message ) ;
+				}
 			}
 
 			return rosterItems ;
@@ -90,33 +69,40 @@ namespace xeus.Core
 		{
 			List< ChatMessage > messages = new List< ChatMessage >() ;
 
-			try
+			using ( DbConnection connection = _factoryProvider.CreateConnection() )
 			{
 				int maxMessages = Settings.Default.Roster_MaximumMessagesToLoad ;
 
-				DataTable data = Query( "Messages/Message", string.Format( "@Key='{0}'", rosterItem.Key ) ) ;
+				connection.ConnectionString = string.Format( "Data Source=\"{0}\"", Path ) ;
+				connection.Open() ;
 
-				int i = 0 ;
-
-				foreach ( DataRow row in data.Rows )
+				try
 				{
-					messages.Add( new ChatMessage( row, rosterItem ) ) ;
+					DbCommand command = connection.CreateCommand() ;
+					command.CommandText = string.Format( "SELECT TOP {0} * FROM Message WHERE Key='{1}' ORDER BY Id DESC",
+					                                     maxMessages, rosterItem.Key ) ;
 
-					if ( ++i > maxMessages )
+					command.CommandType = CommandType.Text ;
+					DbDataReader reader = command.ExecuteReader() ;
+
+					while ( reader.Read() )
 					{
-						messages.RemoveAt( 0 ) ;
+						messages.Insert( 0, new ChatMessage( reader, rosterItem ) ) ;
 					}
-				}
-			}
 
-			catch ( Exception e )
-			{
-				Client.Instance.Log( "Error reading messages: {0}", e.Message ) ;
+					reader.Close() ;
+				}
+
+				catch ( Exception e )
+				{
+					Client.Instance.Log( "Error reading messages: {0}", e.Message ) ;
+				}
 			}
 
 			return messages ;
 		}
 
+		/*
 		private void StoreMessages( ObservableCollectionDisp< ChatMessage > messages )
 		{
 			lock ( messages._syncObject )
@@ -139,7 +125,7 @@ namespace xeus.Core
 					}
 				}
 			}
-		}
+		}*/
 
 		/*
 		public void InsertMessage( ChatMessage message )
@@ -169,57 +155,50 @@ namespace xeus.Core
 		{
 			foreach ( KeyValuePair< string, bool > state in expanderStates )
 			{
-				FieldValuePair [] data = new FieldValuePair [] { new FieldValuePair( "IsExpanded", state.Value.ToString() ),
-																	new FieldValuePair( "Name", state.Key ) } ;
+				/*
+				FieldValuePair[] data = new FieldValuePair[]
+					{
+						new FieldValuePair( "IsExpanded", state.Value.ToString() ),
+						new FieldValuePair( "Name", state.Key )
+					} ;
 
-				SaveOrUpdate( "Roster/Groups", string.Format( "@Name='{0}'", state.Key ), data ) ;
-			}
-		}
-
-		new public void Save()
-		{
-			try
-			{
-				// do backup
-				string backupPath = string.Format( "{0}.backup", Path ) ;
-				File.Delete( backupPath ) ;
-				File.Copy( Path, backupPath ) ;
-			}
-
-			catch
-			{
-				
-			}
-
-			try
-			{
-				base.Save();
-			}
-
-			catch
-			{
+				SaveOrUpdate( "Roster/Groups", string.Format( "@Name='{0}'", state.Key ), data ) ;*/
 			}
 		}
 
 		public Dictionary< string, bool > ReadGroups()
 		{
-			Dictionary< string, bool > expanderStates = new Dictionary< string, bool >();
+			Dictionary< string, bool > expanderStates = new Dictionary< string, bool >() ;
 
-			try
+			using ( DbConnection connection = _factoryProvider.CreateConnection() )
 			{
-				DataTable data = Query( "Roster/Groups" ) ;
+				int maxMessages = Settings.Default.Roster_MaximumMessagesToLoad ;
 
-				foreach ( DataRow row in data.Rows )
+				connection.ConnectionString = string.Format( "Data Source=\"{0}\"", Path ) ;
+				connection.Open() ;
+
+				try
 				{
-					expanderStates.Add( ( string )row[ "Name" ], bool.Parse( ( string )row[ "IsExpanded" ] ) ) ;
+					DbCommand command = connection.CreateCommand() ;
+					command.CommandText = "SELECT * FROM Group" ;
+
+					command.CommandType = CommandType.Text ;
+					DbDataReader reader = command.ExecuteReader() ;
+
+					while ( reader.Read() )
+					{
+						expanderStates.Add( ( string ) reader[ "Name" ], bool.Parse( ( string ) reader[ "IsExpanded" ] ) ) ;
+					}
+
+					reader.Close() ;
+				}
+
+				catch ( Exception e )
+				{
+					Client.Instance.Log( "Error reading groups: {0}", e.Message ) ;
 				}
 			}
 
-			catch ( Exception e )
-			{
-				Client.Instance.Log( "Error reading groups: {0}", e.Message ) ;
-			}
-			
 			return expanderStates ;
 		}
 
