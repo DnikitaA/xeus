@@ -1,8 +1,7 @@
 using System ;
 using System.Collections ;
+using System.Collections.Generic ;
 using System.Collections.Specialized ;
-using System.ComponentModel ;
-using System.Data ;
 using System.Data.Common ;
 using System.Windows.Controls ;
 using System.Windows.Media.Imaging ;
@@ -12,11 +11,10 @@ using agsXMPP.protocol.client ;
 using agsXMPP.protocol.iq.disco ;
 using agsXMPP.protocol.iq.roster ;
 using agsXMPP.protocol.iq.vcard ;
-using Clifton.Tools.Xml ;
 
 namespace xeus.Core
 {
-	[Serializable]
+	[ Serializable ]
 	internal class RosterItem : NotifyInfoDispatcher, IDisposable
 	{
 		private ObservableCollectionDisp< ChatMessage > _messages =
@@ -67,14 +65,25 @@ namespace xeus.Core
 		public RosterItem( DbDataReader reader ) : this()
 		{
 			_key = reader[ "Key" ] as string ;
-			_subscriptionType = ( SubscriptionType )Enum.Parse( typeof( SubscriptionType ),
-																reader[ "SubscriptionType" ] as string, false ) ;
+			_subscriptionType = ( SubscriptionType ) Enum.Parse( typeof ( SubscriptionType ),
+			                                                     reader[ "SubscriptionType" ] as string, false ) ;
 			_fullName = reader[ "FullName" ] as string ;
 			_nickName = reader[ "NickName" ] as string ;
 			_customName = reader[ "CustomName" ] as string ;
 
-			_idLastMessageFrom = Int32.Parse( reader[ "IdLastMessageFrom" ] as string ) ;
-			_idLastMessageTo = Int32.Parse( reader[ "IdLastMessageTo" ] as string ) ;
+			string idFrom = reader[ "IdLastMessageFrom" ] as string ;
+
+			if ( !string.IsNullOrEmpty( idFrom ) )
+			{
+				_idLastMessageFrom = Int32.Parse( idFrom ) ;
+			}
+			
+			string idTo = reader[ "IdLastMessageTo" ] as string ;
+
+			if ( !string.IsNullOrEmpty( idTo ) )
+			{
+				_idLastMessageTo = Int32.Parse( idTo ) ;
+			}
 		}
 
 		public DiscoInfo Disco
@@ -95,21 +104,20 @@ namespace xeus.Core
 			return ( Key + "_" + Client.Instance.MyJid.Bare ).GetHashCode().ToString() ;
 		}
 
-		public XmlDatabase.FieldValuePair[] GetData()
+		public Dictionary< string, object > GetData()
 		{
-			XmlDatabase.FieldValuePair[] data = new XmlDatabase.FieldValuePair[ 7 ] ;
+			Dictionary< string, object > data = new Dictionary< string, object >();
 
-			data[ 0 ] = new NullFieldValuePair( "Key", Key ) ;
-			data[ 1 ] = new NullFieldValuePair( "LastMessageFrom", "" ) ;
-			data[ 2 ] = new NullFieldValuePair( "LastMessageTo", "" ) ;
-			data[ 3 ] = new NullFieldValuePair( "SubscriptionType", SubscriptionType.ToString() ) ;
-			data[ 4 ] = new NullFieldValuePair( "FullName", FullName ) ;
-			data[ 5 ] = new NullFieldValuePair( "NickName", NickName ) ;
-			data[ 6 ] = new NullFieldValuePair( "CustomName", CustomName ) ;
+			data.Add( "Key", Key ) ;
+			data.Add( "IdLastMessageFrom", _idLastMessageFrom ) ;
+			data.Add( "IdLastMessageTo", _idLastMessageTo ) ;
+			data.Add( "SubscriptionType", SubscriptionType.ToString() ) ;
+			data.Add( "FullName", FullName ) ;
+			data.Add( "NickName", NickName ) ;
+			data.Add( "CustomName", CustomName ) ;
 
 			return data ;
 		}
-
 
 		public RosterItem( agsXMPP.protocol.iq.roster.RosterItem rosterItem ) : this()
 		{
@@ -140,7 +148,7 @@ namespace xeus.Core
 			}
 		}
 
-		bool SetLastMessages( IList newMessages )
+		private bool SetLastMessages( IList newMessages )
 		{
 			DateTime maxFrom = DateTime.MinValue ;
 			DateTime maxTo = DateTime.MinValue ;
@@ -228,7 +236,7 @@ namespace xeus.Core
 			}
 		}
 
-		bool IsTrimmedEmpty( string text )
+		private bool IsTrimmedEmpty( string text )
 		{
 			if ( text == null )
 			{
@@ -546,7 +554,7 @@ namespace xeus.Core
 				if ( oldDisplayName != DisplayName )
 				{
 					NotifyPropertyChanged( "DisplayName" ) ;
-				}	
+				}
 			}
 		}
 
@@ -692,7 +700,7 @@ namespace xeus.Core
 			{
 				return _lastMessageTo ;
 			}
-			
+
 			set
 			{
 				_lastMessageTo = value ;

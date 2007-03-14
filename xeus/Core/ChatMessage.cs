@@ -20,7 +20,7 @@ namespace xeus.Core
 
 		public ChatMessage( DbDataReader reader, RosterItem rosterItem )
 		{
-			_id = Int32.Parse( reader[ "Id" ] as string ) ;
+			Id = Int32.Parse( reader[ "Id" ] as string ) ;
 
 			_isFromDb = true ;
 			_rosterItem = rosterItem ;
@@ -144,6 +144,18 @@ namespace xeus.Core
 			set
 			{
 				_isFromDb = value ;
+			}
+		}
+
+		public int Id
+		{
+			get
+			{
+				return _id ;
+			}
+			set
+			{
+				_id = value ;
 			}
 		}
 	}

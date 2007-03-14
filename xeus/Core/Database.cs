@@ -2,32 +2,20 @@ using System ;
 using System.Collections.Generic ;
 using System.Data ;
 using System.Data.Common ;
+using System.Text ;
 using xeus.Properties ;
 
 namespace xeus.Core
 {
-	/*
-	internal class NullFieldValuePair : XmlDatabase.FieldValuePair
-	{
-		public NullFieldValuePair( string field, string val )
-			: base( ( field == null ) ? String.Empty : field, ( val == null ) ? String.Empty : val )
-		{
-		}
-	}*/
-
 	internal class Database
 	{
 		private DbProviderFactory _factoryProvider = DbProviderFactories.GetFactory( "System.Data.SQLite" ) ;
-
-		public Database()
-		{
-		}
 
 		private string Path
 		{
 			get
 			{
-				return string.Format( "{0}\\{1}", Storage.GetDbFolder(), "Default.xeusdb" ) ;
+				return string.Format( "{0}\\{1}", Storage.GetDbFolder(), "xeus.db" ) ;
 			}
 		}
 
@@ -172,8 +160,6 @@ namespace xeus.Core
 
 			using ( DbConnection connection = _factoryProvider.CreateConnection() )
 			{
-				int maxMessages = Settings.Default.Roster_MaximumMessagesToLoad ;
-
 				connection.ConnectionString = string.Format( "Data Source=\"{0}\"", Path ) ;
 				connection.Open() ;
 
@@ -204,53 +190,118 @@ namespace xeus.Core
 
 		public void StoreRosterItems( ObservableCollectionDisp< RosterItem > rosterItems )
 		{
-			foreach ( RosterItem item in rosterItems )
+			using ( DbConnection connection = _factoryProvider.CreateConnection() )
 			{
-				if ( item.IsService )
+				connection.ConnectionString = string.Format( "Data Source=\"{0}\"", Path ) ;
+				connection.Open() ;
+
+				foreach ( RosterItem item in rosterItems )
 				{
-					continue ;
-				}
+					if ( item.IsService )
+					{
+						continue ;
+					}
 
-				try
-				{
-					FieldValuePair[] data = item.GetData() ;
+					try
+					{
+						SaveOrUpdate( item.GetData(), "Key", "RosterItem", connection ) ;
+					}
 
-					SaveOrUpdate( "Roster/RosterItem", string.Format( "@Key='{0}'", item.Key ), data ) ;
-
-					StoreMessages( item.Messages ) ;
-					StoreLastMessages( item ) ;
-				}
-
-				catch ( Exception e )
-				{
-					Client.Instance.Log( "Error writing roster items: {0}", e.Message ) ;
+					catch ( Exception e )
+					{
+						Client.Instance.Log( "Error writing roster items: {0}", e.Message ) ;
+					}
 				}
 			}
 		}
 
-		private void StoreLastMessages( RosterItem rosterItem )
+		private void SaveOrUpdate( Dictionary< string, object > values, string keyField, string table, DbConnection connection )
 		{
-			FieldValuePair[] data ;
+			StringBuilder query = new StringBuilder() ;
 
-			if ( rosterItem.LastMessageFrom != null )
+			query.AppendFormat( "SELECT * FROM {0} WHERE [{1}]='{2}'", table, keyField, values[ keyField ].ToString() ) ;
+
+			DbCommand command = connection.CreateCommand() ;
+			command.CommandText = query.ToString() ;
+			DbDataReader reader = command.ExecuteReader() ;
+
+			bool exists = reader.HasRows ;
+
+			reader.Close() ;
+
+			StringBuilder queryUpdate = new StringBuilder() ;
+
+			if ( exists )
 			{
-				data = rosterItem.LastMessageFrom.GetData() ;
-				SaveOrUpdate( "Roster/LastMessagesFrom", string.Format( "@Key='{0}'", rosterItem.Key ), data ) ;
+				queryUpdate.AppendFormat( "UPDATE {0} SET ", table ) ;
+
+				bool isFirst = true ;
+
+				foreach ( KeyValuePair< string, object > pair in values )
+				{
+					if ( !isFirst )
+					{
+						queryUpdate.Append( "," ) ;
+					}
+
+					isFirst = false ;
+
+					if ( pair.Value is Int32 )
+					{
+						queryUpdate.AppendFormat( "{0}={1}", pair.Key, pair.Value ) ;
+					}
+					else
+					{
+						queryUpdate.AppendFormat( "{0}='{1}'", pair.Key, pair.Value ) ;
+					}
+				}
+			}
+			else
+			{
+				queryUpdate.AppendFormat( "INSERT INTO {0} (", table ) ;
+
+				bool isFirst = true ;
+
+				foreach ( KeyValuePair< string, object > pair in values )
+				{
+					if ( !isFirst )
+					{
+						queryUpdate.Append( "," ) ;
+					}
+
+					isFirst = false ;
+
+					queryUpdate.Append( pair.Key ) ;
+				}
+
+				queryUpdate.Append( ") VALUES (" ) ;
+
+				isFirst = true ;
+
+				foreach ( KeyValuePair< string, object > pair in values )
+				{
+					if ( !isFirst )
+					{
+						queryUpdate.Append( "," ) ;
+					}
+
+					isFirst = false ;
+
+					if ( pair.Value is Int32 )
+					{
+						queryUpdate.Append( pair.Value ) ;
+					}
+					else
+					{
+						queryUpdate.AppendFormat( "'{0}'", pair.Value ) ;
+					}
+				}
 			}
 
-			if ( rosterItem.LastMessageTo != null )
-			{
-				data = rosterItem.LastMessageTo.GetData() ;
-				SaveOrUpdate( "Roster/LastMessagesTo", string.Format( "@Key='{0}'", rosterItem.Key ), data ) ;
-			}
-		}
+			queryUpdate.Append( ")" ) ;
 
-		private void SaveOrUpdate( string path, string where, FieldValuePair[] fields )
-		{
-			if ( Update( path, where, fields ) == 0 )
-			{
-				Insert( path, fields ) ;
-			}
+			command.CommandText = queryUpdate.ToString() ;
+			command.ExecuteNonQuery() ;
 		}
 	}
 }
