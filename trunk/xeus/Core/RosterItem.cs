@@ -3,6 +3,7 @@ using System.Collections ;
 using System.Collections.Specialized ;
 using System.ComponentModel ;
 using System.Data ;
+using System.Data.Common ;
 using System.Windows.Controls ;
 using System.Windows.Media.Imaging ;
 using System.Windows.Threading ;
@@ -47,6 +48,10 @@ namespace xeus.Core
 
 		private ChatMessage _lastMessageFrom ;
 		private ChatMessage _lastMessageTo ;
+
+		private int _idLastMessageFrom = 0 ;
+		private int _idLastMessageTo = 0 ;
+
 		private SubscriptionType _subscriptionType = SubscriptionType.none ;
 		private string _customName = String.Empty ;
 
@@ -59,14 +64,17 @@ namespace xeus.Core
 			_messages.CollectionChanged += new NotifyCollectionChangedEventHandler( _messages_CollectionChanged ) ;
 		}
 
-		public RosterItem( DataRow row ) : this()
+		public RosterItem( DbDataReader reader ) : this()
 		{
-			_key = row[ "Key" ] as string ;
+			_key = reader[ "Key" ] as string ;
 			_subscriptionType = ( SubscriptionType )Enum.Parse( typeof( SubscriptionType ),
-																row[ "SubscriptionType" ] as string, false ) ;
-			_fullName = row[ "FullName" ] as string ;
-			_nickName = row[ "NickName" ] as string ;
-			_customName = row[ "CustomName" ] as string ;
+																reader[ "SubscriptionType" ] as string, false ) ;
+			_fullName = reader[ "FullName" ] as string ;
+			_nickName = reader[ "NickName" ] as string ;
+			_customName = reader[ "CustomName" ] as string ;
+
+			_idLastMessageFrom = Int32.Parse( reader[ "IdLastMessageFrom" ] as string ) ;
+			_idLastMessageTo = Int32.Parse( reader[ "IdLastMessageTo" ] as string ) ;
 		}
 
 		public DiscoInfo Disco
