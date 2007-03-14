@@ -10,8 +10,8 @@
 	<DataTemplate x:Key="RosterItemMessagesTemplate" DataType="{x:Type local:RosterItem}">
 	<Grid>
 	<DockPanel>
-        <TextBox VerticalAlignment="Stretch" Height="Auto" Grid.Row="1" Style="{DynamicResource TextBoxStyleBlack}" TextWrapping="Wrap"
-                   Initialized="TextBoxInitialized" x:Name="textBox" Background="#07FFFFFF" KeyDown="OnTextKeyDown" AcceptsReturn="True" AutoWordSelection="True" Text="" SpellCheck.IsEnabled="True" MaxLength="10000" MaxLines="1000" MinLines="1" DockPanel.Dock="Bottom" TabIndex="0" />
+        <TextBox VerticalAlignment="Stretch" Height="Auto" Grid.Row="1" Style="{DynamicResource TextBoxStyleInDialog}" TextWrapping="Wrap"
+                   Initialized="TextBoxInitialized" x:Name="textBox" KeyDown="OnTextKeyDown" AcceptsReturn="True" AutoWordSelection="True" Text="" SpellCheck.IsEnabled="True" MaxLength="10000" MaxLines="1000" MinLines="1" DockPanel.Dock="Bottom" TabIndex="0" />
     <ListBox
       Initialized="ListBoxInitialized"
 			ItemsSource="{Binding Path=Messages}"

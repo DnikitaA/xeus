@@ -38,7 +38,21 @@ namespace xeus
 		void MessengerWindow_Initialized( object sender, EventArgs e )
 		{
 			Client.Instance.MessageCenter.ChatMessages.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( ChatMessages_CollectionChanged );
+			Client.Instance.MessageCenter.HedlineMessages.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( HedlineMessages_CollectionChanged );
 			Client.Instance.LoginError += new Client.LoginHandler( OnLoginError );
+		}
+
+		void HedlineMessages_CollectionChanged( object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e )
+		{
+			if ( e.NewItems.Count > 0 )
+			{
+				_headlines.Visibility = Visibility.Visible ;
+			}
+		}
+
+		void CloseHeadlines( object sender, RoutedEventArgs e )
+		{
+			_headlines.Visibility = Visibility.Collapsed ;
 		}
 
 		void ManualLogin()
