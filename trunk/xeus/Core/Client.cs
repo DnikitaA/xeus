@@ -261,6 +261,9 @@ namespace xeus.Core
 				_xmppConnection.Username = Settings.Default.Client_UserName ;
 				_xmppConnection.Password = Settings.Default.Client_Password ;
 				_xmppConnection.Server = Settings.Default.Client_Server ;
+
+				Settings.Default.Save();
+
 				_xmppConnection.Open() ;
 			}
 		}
