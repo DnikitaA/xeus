@@ -85,6 +85,28 @@ namespace xeus.Core
 		{
 			xmppConnection.OnRosterItem += new XmppClientConnection.RosterHandler( xmppConnecion_OnRosterItem ) ;
 			xmppConnection.OnPresence += new XmppClientConnection.PresenceHandler( xmppConnection_OnPresence ) ;
+			Client.Instance.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler( Instance_PropertyChanged );
+		}
+
+		void Instance_PropertyChanged( object sender, System.ComponentModel.PropertyChangedEventArgs e )
+		{
+			if ( e.PropertyName == "IsAvailable" && !Client.Instance.IsAvailable )
+			{
+				List< RosterItem > items = new List< RosterItem >( _items.Count );
+
+				lock ( _items._syncObject )
+				{
+					foreach ( RosterItem item in _items )
+					{
+						items.Add( item ) ;
+					}
+				}
+
+				foreach ( RosterItem item in items )
+				{
+					item.Presence = null ;
+				}
+			}
 		}
 
 		public RosterItem FindItem( string bare )

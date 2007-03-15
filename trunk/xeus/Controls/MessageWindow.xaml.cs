@@ -128,6 +128,17 @@ namespace xeus.Controls
 			}
 		}
 
+		void OnTypingUnchecked( object sender, RoutedEventArgs e )
+		{
+			ChangeChatState( Chatstate.inactive ) ;
+			ChangeChatState( Chatstate.gone ) ;
+		}
+		
+		void OnTypingChecked( object sender, RoutedEventArgs e )
+		{
+			ChangeChatState( Chatstate.active ) ;
+		}
+
 		void MessageWindow_KeyDown( object sender, KeyEventArgs e )
 		{
 			if ( e.Key == Key.Escape )
