@@ -2,6 +2,7 @@ using System ;
 using System.Collections.Generic ;
 using System.Data ;
 using System.Data.Common ;
+using System.Data.SQLite ;
 using System.Text ;
 using xeus.Properties ;
 
@@ -9,9 +10,9 @@ namespace xeus.Core
 {
 	internal class Database
 	{
-		private DbProviderFactory _factoryProvider = DbProviderFactories.GetFactory( "System.Data.SQLite" ) ;
+		private static DbProviderFactory _factoryProvider = DbProviderFactories.GetFactory( "System.Data.SQLite" ) ;
 
-		private string Path
+		private static string Path
 		{
 			get
 			{
@@ -19,35 +20,43 @@ namespace xeus.Core
 			}
 		}
 
+		private static DbConnection _connection = null ;
+
+		public static void OpenDatabase()
+		{
+			_connection = _factoryProvider.CreateConnection() ;
+			_connection.ConnectionString = string.Format( "Data Source=\"{0}\"", Path ) ;
+			_connection.Open() ;
+		}
+
+		public static void CloseDatabase()
+		{
+			_connection.Close() ;
+		}
+
 		public List< RosterItem > ReadRosterItems()
 		{
 			List< RosterItem > rosterItems = new List< RosterItem >() ;
 
-			using ( DbConnection connection = _factoryProvider.CreateConnection() )
+			try
 			{
-				connection.ConnectionString = string.Format( "Data Source=\"{0}\"", Path ) ;
-				connection.Open() ;
+				DbCommand command = _connection.CreateCommand() ;
+				command.CommandText = "SELECT * FROM [RosterItem]" ;
 
-				try
+				DbDataReader reader = command.ExecuteReader() ;
+
+				while ( reader.Read() )
 				{
-					DbCommand command = connection.CreateCommand() ;
-					command.CommandText = "SELECT * FROM RosterItem" ;
-					command.CommandType = CommandType.Text ;
-					DbDataReader reader = command.ExecuteReader() ;
-
-					while ( reader.Read() )
-					{
-						RosterItem rosterItem = new RosterItem( reader ) ;
-						rosterItems.Add( rosterItem ) ;
-					}
-
-					reader.Close() ;
+					RosterItem rosterItem = new RosterItem( reader ) ;
+					rosterItems.Add( rosterItem ) ;
 				}
 
-				catch ( Exception e )
-				{
-					Client.Instance.Log( "Error reading Roster items: {0}", e.Message ) ;
-				}
+				reader.Close() ;
+			}
+
+			catch ( Exception e )
+			{
+				Client.Instance.Log( "Error reading Roster items: {0}", e.Message ) ;
 			}
 
 			return rosterItems ;
@@ -57,100 +66,103 @@ namespace xeus.Core
 		{
 			List< ChatMessage > messages = new List< ChatMessage >() ;
 
-			using ( DbConnection connection = _factoryProvider.CreateConnection() )
+			int maxMessages = Settings.Default.Roster_MaximumMessagesToLoad ;
+
+			try
 			{
-				int maxMessages = Settings.Default.Roster_MaximumMessagesToLoad ;
+				DbCommand command = _connection.CreateCommand() ;
 
-				connection.ConnectionString = string.Format( "Data Source=\"{0}\"", Path ) ;
-				connection.Open() ;
+				command.CommandText =
+					string.Format( "SELECT TOP {0} FROM [Message] WHERE [Key]=@key ORDER BY [Id] DESC", maxMessages ) ;
 
-				try
+				command.Parameters.Add( new SQLiteParameter( "key", rosterItem.Key ) ) ;
+
+				DbDataReader reader = command.ExecuteReader() ;
+
+				while ( reader.Read() )
 				{
-					DbCommand command = connection.CreateCommand() ;
-					command.CommandText = string.Format( "SELECT TOP {0} * FROM Message WHERE Key='{1}' ORDER BY Id DESC",
-					                                     maxMessages, rosterItem.Key ) ;
-
-					command.CommandType = CommandType.Text ;
-					DbDataReader reader = command.ExecuteReader() ;
-
-					while ( reader.Read() )
-					{
-						messages.Insert( 0, new ChatMessage( reader, rosterItem ) ) ;
-					}
-
-					reader.Close() ;
+					messages.Insert( 0, new ChatMessage( reader, rosterItem ) ) ;
 				}
 
-				catch ( Exception e )
-				{
-					Client.Instance.Log( "Error reading messages: {0}", e.Message ) ;
-				}
+				reader.Close() ;
 			}
+
+			catch ( Exception e )
+			{
+				Client.Instance.Log( "Error reading messages: {0}", e.Message ) ;
+			}
+
 
 			return messages ;
 		}
 
-		/*
-		private void StoreMessages( ObservableCollectionDisp< ChatMessage > messages )
+		public ChatMessage GetChatMessage( Int64 id, RosterItem rosterItem )
 		{
-			lock ( messages._syncObject )
+			ChatMessage chatMessage = null ;
+
+			try
 			{
-				foreach ( ChatMessage item in messages )
+				DbCommand command = _connection.CreateCommand() ;
+
+				command.CommandText = "SELECT * FROM [Message] WHERE [Id]=@id" ;
+
+				command.Parameters.Add( new SQLiteParameter( "Id", id ) ) ;
+
+				DbDataReader reader = command.ExecuteReader() ;
+
+				while ( reader.Read() )
 				{
-					if ( !item.IsFromDb )
-					{
-						try
-						{
-							FieldValuePair[] data = item.GetData() ;
-
-							Insert( "Messages/Message", data ) ;
-						}
-
-						catch ( Exception e )
-						{
-							Client.Instance.Log( "Error writing messages: {0}", e.Message ) ;
-						}
-					}
+					chatMessage = new ChatMessage( reader, rosterItem ) ;
 				}
-			}
-		}*/
 
-		/*
-		public void InsertMessage( ChatMessage message )
+				reader.Close() ;
+			}
+
+			catch ( Exception e )
+			{
+				Client.Instance.Log( "Error reading messages: {0}", e.Message ) ;
+			}
+
+			return chatMessage ;
+		}
+
+		public int InsertMessage( ChatMessage message )
 		{
-			if ( !message.IsFromDb )
+			int id = 0 ;
+
+			try
 			{
-				FieldValuePair[] data = message.GetData() ;
+				Dictionary< string, object > values = message.GetData() ;
 
-				try
-				{
-					if ( !message.IsFromDb )
-					{
-						Insert( "Messages/Message", data ) ;
-					}
-
-					message.IsFromDb = true ;
-				}
-
-				catch ( Exception e )
-				{
-					Client.Instance.Log( "Error writing messages: {0}", e.Message ) ;
-				}
+				id = SaveOrUpdate( values, null, "Message", "Id", _connection ) ;
 			}
-		}*/
+
+			catch ( Exception e )
+			{
+				Client.Instance.Log( "Error writing groups: {0}", e.Message ) ;
+			}
+
+			return id ;
+		}
 
 		public void StoreGroups( Dictionary< string, bool > expanderStates )
 		{
-			foreach ( KeyValuePair< string, bool > state in expanderStates )
+			try
 			{
-				/*
-				FieldValuePair[] data = new FieldValuePair[]
-					{
-						new FieldValuePair( "IsExpanded", state.Value.ToString() ),
-						new FieldValuePair( "Name", state.Key )
-					} ;
+				foreach ( KeyValuePair< string, bool > state in expanderStates )
+				{
+					Dictionary< string, object > values = new Dictionary< string, object >() ;
 
-				SaveOrUpdate( "Roster/Groups", string.Format( "@Name='{0}'", state.Key ), data ) ;*/
+					values.Add( "Name", state.Key ) ;
+					values.Add( "IsExpander", ( state.Value ) ? 1 : 0 ) ;
+
+					SaveOrUpdate( values, "Name", "Group", null, _connection ) ;
+				}
+			}
+
+			catch ( Exception e )
+			{
+				Client.Instance.Log( "Error writing groups: {0}", e.Message ) ;
 			}
 		}
 
@@ -158,31 +170,25 @@ namespace xeus.Core
 		{
 			Dictionary< string, bool > expanderStates = new Dictionary< string, bool >() ;
 
-			using ( DbConnection connection = _factoryProvider.CreateConnection() )
+			try
 			{
-				connection.ConnectionString = string.Format( "Data Source=\"{0}\"", Path ) ;
-				connection.Open() ;
+				DbCommand command = _connection.CreateCommand() ;
 
-				try
+				command.CommandText = "SELECT * FROM [Group]" ;
+
+				DbDataReader reader = command.ExecuteReader() ;
+
+				while ( reader.Read() )
 				{
-					DbCommand command = connection.CreateCommand() ;
-					command.CommandText = "SELECT * FROM Group" ;
-
-					command.CommandType = CommandType.Text ;
-					DbDataReader reader = command.ExecuteReader() ;
-
-					while ( reader.Read() )
-					{
-						expanderStates.Add( ( string ) reader[ "Name" ], bool.Parse( ( string ) reader[ "IsExpanded" ] ) ) ;
-					}
-
-					reader.Close() ;
+					expanderStates.Add( ( string ) reader[ "Name" ], ( ( Int64 ) reader[ "IsExpander" ] ) == 1 ) ;
 				}
 
-				catch ( Exception e )
-				{
-					Client.Instance.Log( "Error reading groups: {0}", e.Message ) ;
-				}
+				reader.Close() ;
+			}
+
+			catch ( Exception e )
+			{
+				Client.Instance.Log( "Error reading groups: {0}", e.Message ) ;
 			}
 
 			return expanderStates ;
@@ -190,11 +196,8 @@ namespace xeus.Core
 
 		public void StoreRosterItems( ObservableCollectionDisp< RosterItem > rosterItems )
 		{
-			using ( DbConnection connection = _factoryProvider.CreateConnection() )
+			lock ( rosterItems._syncObject )
 			{
-				connection.ConnectionString = string.Format( "Data Source=\"{0}\"", Path ) ;
-				connection.Open() ;
-
 				foreach ( RosterItem item in rosterItems )
 				{
 					if ( item.IsService )
@@ -204,7 +207,7 @@ namespace xeus.Core
 
 					try
 					{
-						SaveOrUpdate( item.GetData(), "Key", "RosterItem", connection ) ;
+						SaveOrUpdate( item.GetData(), "Key", "RosterItem", null, _connection ) ;
 					}
 
 					catch ( Exception e )
@@ -215,30 +218,49 @@ namespace xeus.Core
 			}
 		}
 
-		private void SaveOrUpdate( Dictionary< string, object > values, string keyField, string table, DbConnection connection )
+		private Int32 SaveOrUpdate( Dictionary< string, object > values, string keyField, string table, string identityField,
+		                            DbConnection connection )
 		{
-			StringBuilder query = new StringBuilder() ;
+			bool exists = false ;
 
-			query.AppendFormat( "SELECT * FROM {0} WHERE [{1}]='{2}'", table, keyField, values[ keyField ].ToString() ) ;
+			int id = 0 ;
 
-			DbCommand command = connection.CreateCommand() ;
-			command.CommandText = query.ToString() ;
-			DbDataReader reader = command.ExecuteReader() ;
+			if ( keyField != null )
+			{
+				StringBuilder query = new StringBuilder() ;
 
-			bool exists = reader.HasRows ;
+				query.AppendFormat( "SELECT * FROM [{0}] WHERE [{1}]=@keyparam", table, keyField ) ;
 
-			reader.Close() ;
+				DbCommand command = connection.CreateCommand() ;
+				command.CommandText = query.ToString() ;
+
+				command.Parameters.Add( new SQLiteParameter( "keyparam", values[ keyField ] ) ) ;
+
+				DbDataReader reader = command.ExecuteReader() ;
+
+				exists = reader.HasRows ;
+
+				reader.Close() ;
+			}
+
+
+			DbCommand commandUpdate = connection.CreateCommand() ;
 
 			StringBuilder queryUpdate = new StringBuilder() ;
 
 			if ( exists )
 			{
-				queryUpdate.AppendFormat( "UPDATE {0} SET ", table ) ;
+				queryUpdate.AppendFormat( "UPDATE [{0}] SET ", table ) ;
 
 				bool isFirst = true ;
 
 				foreach ( KeyValuePair< string, object > pair in values )
 				{
+					if ( string.Compare( keyField, pair.Key, true ) == 0 )
+					{
+						continue ;
+					}
+
 					if ( !isFirst )
 					{
 						queryUpdate.Append( "," ) ;
@@ -246,19 +268,14 @@ namespace xeus.Core
 
 					isFirst = false ;
 
-					if ( pair.Value is Int32 )
-					{
-						queryUpdate.AppendFormat( "{0}={1}", pair.Key, pair.Value ) ;
-					}
-					else
-					{
-						queryUpdate.AppendFormat( "{0}='{1}'", pair.Key, pair.Value ) ;
-					}
+					queryUpdate.AppendFormat( "[{0}]=@{1}", pair.Key, pair.Key ) ;
+
+					commandUpdate.Parameters.Add( new SQLiteParameter( pair.Key, pair.Value ) ) ;
 				}
 			}
 			else
 			{
-				queryUpdate.AppendFormat( "INSERT INTO {0} (", table ) ;
+				queryUpdate.AppendFormat( "INSERT INTO [{0}] (", table ) ;
 
 				bool isFirst = true ;
 
@@ -271,7 +288,7 @@ namespace xeus.Core
 
 					isFirst = false ;
 
-					queryUpdate.Append( pair.Key ) ;
+					queryUpdate.AppendFormat( "[{0}]", pair.Key ) ;
 				}
 
 				queryUpdate.Append( ") VALUES (" ) ;
@@ -287,21 +304,32 @@ namespace xeus.Core
 
 					isFirst = false ;
 
-					if ( pair.Value is Int32 )
-					{
-						queryUpdate.Append( pair.Value ) ;
-					}
-					else
-					{
-						queryUpdate.AppendFormat( "'{0}'", pair.Value ) ;
-					}
+					queryUpdate.AppendFormat( "@{0}", pair.Key ) ;
+
+					commandUpdate.Parameters.Add( new SQLiteParameter( pair.Key, pair.Value ) ) ;
+				}
+
+				queryUpdate.Append( ")" ) ;
+
+				if ( identityField != null )
+				{
+					SQLiteParameter identity = new SQLiteParameter() ;
+					identity.ParameterName = identityField ;
+					identity.Direction = ParameterDirection.Output ;
+					commandUpdate.Parameters.Add( identity ) ;
 				}
 			}
 
-			queryUpdate.Append( ")" ) ;
 
-			command.CommandText = queryUpdate.ToString() ;
-			command.ExecuteNonQuery() ;
+			commandUpdate.CommandText = queryUpdate.ToString() ;
+			commandUpdate.ExecuteNonQuery() ;
+
+			if ( identityField != null )
+			{
+				id = ( Int32 ) ( Int64 ) commandUpdate.Parameters[ identityField ].Value ;
+			}
+
+			return id ;
 		}
 	}
 }

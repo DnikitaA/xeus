@@ -204,6 +204,14 @@ namespace xeus.Core
 		private void _xmppConnection_OnSocketError( object sender, Exception ex )
 		{
 			App.Instance.Window.AlertError( "Network error", ex.Message ) ;
+
+			if ( string.IsNullOrEmpty( Settings.Default.Client_Server ) )
+			{
+				if ( LoginError != null )
+				{
+					LoginError() ;
+				}
+			}
 		}
 
 		private bool ClientSocket_OnValidateCertificate( object sender, X509Certificate certificate, X509Chain chain,

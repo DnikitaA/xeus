@@ -47,9 +47,6 @@ namespace xeus.Core
 		private ChatMessage _lastMessageFrom ;
 		private ChatMessage _lastMessageTo ;
 
-		private int _idLastMessageFrom = 0 ;
-		private int _idLastMessageTo = 0 ;
-
 		private SubscriptionType _subscriptionType = SubscriptionType.none ;
 		private string _customName = String.Empty ;
 
@@ -71,18 +68,20 @@ namespace xeus.Core
 			_nickName = reader[ "NickName" ] as string ;
 			_customName = reader[ "CustomName" ] as string ;
 
-			string idFrom = reader[ "IdLastMessageFrom" ] as string ;
+			Database database = new Database();
 
-			if ( !string.IsNullOrEmpty( idFrom ) )
+			if ( !reader.IsDBNull( reader.GetOrdinal( "IdLastMessageFrom" ) ) )
 			{
-				_idLastMessageFrom = Int32.Parse( idFrom ) ;
+				Int64 idLastMessageFrom = ( Int64 )reader[ "IdLastMessageFrom" ] ;
+
+				_lastMessageFrom = database.GetChatMessage( idLastMessageFrom, this ) ;
 			}
 			
-			string idTo = reader[ "IdLastMessageTo" ] as string ;
-
-			if ( !string.IsNullOrEmpty( idTo ) )
+			if ( !reader.IsDBNull( reader.GetOrdinal( "IdLastMessageTo" ) ) )
 			{
-				_idLastMessageTo = Int32.Parse( idTo ) ;
+				Int64 idLastMessageTo = ( Int64 )reader[ "IdLastMessageTo" ] ;
+
+				_lastMessageTo = database.GetChatMessage( idLastMessageTo, this ) ;
 			}
 		}
 
@@ -99,18 +98,42 @@ namespace xeus.Core
 			}
 		}
 
-		public string GenerateChatThreadId()
+		Int64 IdLastMessageTo
 		{
-			return ( Key + "_" + Client.Instance.MyJid.Bare ).GetHashCode().ToString() ;
+			get
+			{
+				if ( _lastMessageTo == null )
+				{
+					return 0 ;
+				}
+				else
+				{
+					return _lastMessageTo.Id ;
+				}
+			}
 		}
 
+		Int64 IdLastMessageFrom
+		{
+			get
+			{
+				if ( _lastMessageFrom == null )
+				{
+					return 0 ;
+				}
+				else
+				{
+					return _lastMessageFrom.Id ;
+				}
+			}
+		}
 		public Dictionary< string, object > GetData()
 		{
 			Dictionary< string, object > data = new Dictionary< string, object >();
 
 			data.Add( "Key", Key ) ;
-			data.Add( "IdLastMessageFrom", _idLastMessageFrom ) ;
-			data.Add( "IdLastMessageTo", _idLastMessageTo ) ;
+			data.Add( "IdLastMessageFrom", IdLastMessageFrom ) ;
+			data.Add( "IdLastMessageTo", IdLastMessageTo ) ;
 			data.Add( "SubscriptionType", SubscriptionType.ToString() ) ;
 			data.Add( "FullName", FullName ) ;
 			data.Add( "NickName", NickName ) ;
@@ -690,6 +713,7 @@ namespace xeus.Core
 			set
 			{
 				_lastMessageFrom = value ;
+
 				NotifyPropertyChanged( "LastMessageFrom" ) ;
 			}
 		}

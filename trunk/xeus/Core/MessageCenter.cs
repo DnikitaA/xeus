@@ -121,6 +121,10 @@ namespace xeus.Core
 						}
 						else
 						{
+							Database database = new Database();
+
+							message.Id = database.InsertMessage( message ) ;
+
 							if ( MessageWindow.IsOpen() )
 							{
 								lock ( rosterItem.Messages._syncObject )
