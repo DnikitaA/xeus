@@ -307,9 +307,6 @@ namespace xeus.Core
 		{
 			if ( rosterItem.IsInitialized )
 			{
-#if DEBUG
-				MessageCenter.HedlineMessages.Add( new HeadlineMessage( new Message( new Jid( "to" ), new Jid( "from" ), "Willkommen beim Jabber-IM-Service auf jabber.linuxlovers.at ! more information on http://linuxlovers.at/site/forums/sonstiges/jabber_serveror in the chatroom server-talk@conference.jabber.linuxlovers.at" ) ) );
-#endif
 				Message message = new Message() ;
 
 				message.Type = MessageType.chat ;
@@ -322,9 +319,14 @@ namespace xeus.Core
 
 				_xmppConnection.Send( message ) ;
 
+				ChatMessage chatMessage = new ChatMessage( message, rosterItem, DateTime.Now );
+
+				Database database = new Database();
+				chatMessage.Id = database.InsertMessage( chatMessage ) ;
+
 				lock ( rosterItem.Messages._syncObject )
 				{
-					rosterItem.Messages.Add( new ChatMessage( message, rosterItem, DateTime.Now ) ) ;
+					rosterItem.Messages.Add( chatMessage ) ;
 				}
 			}
 		}

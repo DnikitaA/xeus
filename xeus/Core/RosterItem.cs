@@ -54,6 +54,9 @@ namespace xeus.Core
 		private string _statusDescription = "Unavailable" ;
 		private DiscoInfo _disco ;
 
+		private bool _isInDatabase = false ;
+		private bool _isDirty = false ;
+
 		private RosterItem()
 		{
 			_messages.CollectionChanged += new NotifyCollectionChangedEventHandler( _messages_CollectionChanged ) ;
@@ -61,6 +64,7 @@ namespace xeus.Core
 
 		public RosterItem( DbDataReader reader ) : this()
 		{
+			_isInDatabase = true ;
 			_key = reader[ "Key" ] as string ;
 			_subscriptionType = ( SubscriptionType ) Enum.Parse( typeof ( SubscriptionType ),
 			                                                     reader[ "SubscriptionType" ] as string, false ) ;
@@ -518,7 +522,13 @@ namespace xeus.Core
 			{
 				string oldDisplayName = DisplayName ;
 
+				if ( _fullName != value )
+				{
+					_isDirty = true ;
+				}
+
 				_fullName = value ;
+
 				NotifyPropertyChanged( "FullName" ) ;
 
 				if ( oldDisplayName != DisplayName )
@@ -538,7 +548,13 @@ namespace xeus.Core
 			{
 				string oldDisplayName = DisplayName ;
 
+				if ( _nickName != value )
+				{
+					_isDirty = true ;
+				}
+
 				_nickName = value ;
+
 				NotifyPropertyChanged( "NickName" ) ;
 
 				if ( oldDisplayName != DisplayName )
@@ -712,6 +728,11 @@ namespace xeus.Core
 
 			set
 			{
+				if ( _lastMessageFrom != value )
+				{
+					_isDirty = true ;
+				}
+
 				_lastMessageFrom = value ;
 
 				NotifyPropertyChanged( "LastMessageFrom" ) ;
@@ -727,7 +748,13 @@ namespace xeus.Core
 
 			set
 			{
+				if ( _lastMessageTo != value )
+				{
+					_isDirty = true ;
+				}
+
 				_lastMessageTo = value ;
+
 				NotifyPropertyChanged( "LastMessageTo" ) ;
 			}
 		}
@@ -740,7 +767,13 @@ namespace xeus.Core
 			}
 			set
 			{
+				if ( _subscriptionType != value )
+				{
+					_isDirty = true ;
+				}
+
 				_subscriptionType = value ;
+
 				NotifyPropertyChanged( "SubscriptionType" ) ;
 				NotifyPropertyChanged( "SubscriptionTypeText" ) ;
 			}
@@ -781,6 +814,11 @@ namespace xeus.Core
 			{
 				string oldDisplayName = DisplayName ;
 
+				if ( _customName != value )
+				{
+					_isDirty = true ;
+				}
+
 				_customName = value ;
 
 				if ( oldDisplayName != DisplayName )
@@ -817,6 +855,31 @@ namespace xeus.Core
 			set
 			{
 				_messagesPreloaded = value ;
+			}
+		}
+
+		public bool IsInDatabase
+		{
+			get
+			{
+				return _isInDatabase ;
+			}
+
+			set
+			{
+				_isInDatabase = value ;
+			}
+		}
+
+		public bool IsDirty
+		{
+			get
+			{
+				return _isDirty ;
+			}
+			set
+			{
+				_isDirty = value ;
 			}
 		}
 
