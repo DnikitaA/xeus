@@ -93,6 +93,7 @@
     <Page Include="Controls\ServicesWindow.xaml" />
     <Page Include="Controls\SingleValueDialog.xaml" />
     <Page Include="Controls\StatusControl.xaml" />
+    <Page Include="Controls\VCardWindow.xaml" />
     <Page Include="Controls\WindowDecoration.xaml" />
     <Page Include="Controls\XFormData.xaml" />
     <Page Include="Controls\XFormItem.xaml" />
@@ -150,6 +151,10 @@
     <Compile Include="Controls\TabMessages.xaml.cs" />
     <Compile Include="Controls\TitleBar.cs" />
     <Compile Include="Controls\TrayIcon.cs" />
+    <Compile Include="Controls\VCardWindow.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>VCardWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WindowBase.cs" />
     <Compile Include="Controls\XFormData.xaml.cs">
       <SubType>Code</SubType>
