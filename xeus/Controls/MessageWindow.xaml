@@ -17,7 +17,8 @@
 		<StatusBar DockPanel.Dock="Bottom" Style="{DynamicResource StatusBarStyleBlack}">
 			<StatusBarItem HorizontalAlignment="Stretch" 
 			    	  VerticalAlignment="Stretch" Panel.ZIndex="1">
-        <CheckBox x:Name="_typingInfo" VerticalAlignment="Bottom" Template="{DynamicResource CheckBoxTypingInfo}" ToolTip="Send 'Typing' Information" Width="17" Height="17" >
+        <CheckBox x:Name="_typingInfo" VerticalAlignment="Bottom" Checked="OnTypingChecked" Unchecked="OnTypingUnchecked"
+                  Template="{DynamicResource CheckBoxTypingInfo}" ToolTip="Send 'Typing' Information" Width="17" Height="17" >
           <CheckBox.IsChecked>
             <Binding Path="Client_SendTyping" Source="{x:Static prop:Settings.Default}" Mode="TwoWay"/>
           </CheckBox.IsChecked>
