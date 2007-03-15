@@ -186,7 +186,7 @@ namespace xeus
 		{
 			if ( Client.Instance.IsAvailable )
 			{
-				string userName = SingleValueDialog.AddUserDialog( this ) ;
+				string userName = SingleValueDialog.AddUserDialog( this, String.Empty ) ;
 
 				if ( !string.IsNullOrEmpty( userName ) )
 				{

@@ -7,6 +7,7 @@
     x:Class="xeus.Controls.MessageWindow"
     Title="message" Height="300" Width="300"
     settings:WindowSettings.Save="True"	
+    xmlns:prop="clr-namespace:xeus.Properties"
 	  Style="{StaticResource DarkStyleWindow}"
 	  Background="{x:Null}"
     x:Name="message"
@@ -14,6 +15,14 @@
 	>
     <DockPanel>
 		<StatusBar DockPanel.Dock="Bottom" Style="{DynamicResource StatusBarStyleBlack}">
+			<StatusBarItem HorizontalAlignment="Stretch" 
+			    	  VerticalAlignment="Stretch" Panel.ZIndex="1">
+        <CheckBox x:Name="_typingInfo" VerticalAlignment="Bottom" Template="{DynamicResource CheckBoxTypingInfo}" ToolTip="Send 'Typing' Information" Width="17" Height="17" >
+          <CheckBox.IsChecked>
+            <Binding Path="Client_SendTyping" Source="{x:Static prop:Settings.Default}" Mode="TwoWay"/>
+          </CheckBox.IsChecked>
+        </CheckBox>
+			</StatusBarItem>
 			<StatusBarItem HorizontalAlignment="Stretch" 
 			    	  x:Name="_statusTyping" VerticalAlignment="Stretch" Panel.ZIndex="1">
 		    	<win:ContactTyping x:Name="_typing" VerticalAlignment="Bottom" Visibility="Hidden"/>

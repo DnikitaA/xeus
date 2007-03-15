@@ -103,5 +103,17 @@ namespace xeus.Properties {
                 this["Client_Server"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Client_SendTyping {
+            get {
+                return ((bool)(this["Client_SendTyping"]));
+            }
+            set {
+                this["Client_SendTyping"] = value;
+            }
+        }
     }
 }

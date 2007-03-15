@@ -86,7 +86,7 @@ namespace xeus.Controls
 			{
 				if ( item.Tag != null && item.Tag.ToString() == "newGroup" )
 				{
-					string groupName = SingleValueDialog.AddGroupDialog( App.Instance.Window );
+					string groupName = SingleValueDialog.AddGroupDialog( App.Instance.Window, String.Empty );
 
 					if ( !string.IsNullOrEmpty( groupName ) )
 					{
