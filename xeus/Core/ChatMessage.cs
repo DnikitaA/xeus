@@ -1,9 +1,11 @@
 using System ;
+using System.Collections.Generic ;
 using System.ComponentModel ;
 using System.Data ;
 using System.Data.Common ;
 using System.Windows.Media.Imaging ;
 using agsXMPP.protocol.client ;
+using agsXMPP.protocol.iq.roster ;
 
 namespace xeus.Core
 {
@@ -15,20 +17,18 @@ namespace xeus.Core
 		private DateTime _time ;
 		private string _relativeTime ;
 		private string _body ;
-		private bool _isFromDb = false ;
 		private int _id = 0 ;
 
 		public ChatMessage( DbDataReader reader, RosterItem rosterItem )
 		{
-			Id = Int32.Parse( reader[ "Id" ] as string ) ;
+			Id = ( Int32 )( Int64 )reader[ "Id" ] ;
 
-			_isFromDb = true ;
 			_rosterItem = rosterItem ;
 
-			_body = reader[ "Body" ] as string ;
-			_from = reader[ "From" ] as string ;
-			_to = reader[ "To" ] as string ;
-			_time = DateTime.FromBinary( long.Parse( reader[ "Time" ] as string ) ) ;
+			_body = ( string )reader[ "Body" ] ;
+			_from = ( string )reader[ "From" ] ;
+			_to = ( string )reader[ "To" ] ;
+			_time = DateTime.FromBinary( ( Int64 )reader[ "Time" ] ) ;
 			_relativeTime = TimeUtilities.FormatRelativeTime( _time ) ;
 		}
 
@@ -42,6 +42,19 @@ namespace xeus.Core
 			_relativeTime = TimeUtilities.FormatRelativeTime( time ) ;
 		}
 
+		public Dictionary< string, object > GetData()
+		{
+			Dictionary< string, object > data = new Dictionary< string, object >();
+
+			data.Add( "Key", Key ) ;
+			data.Add( "Body", Body ) ;
+			data.Add( "SentFrom", From ) ;
+			data.Add( "SentTo", To ) ;
+			data.Add( "Time", _time.ToBinary() ) ;
+
+			return data ;
+		}
+
 		public string Key
 		{
 			get
@@ -49,21 +62,6 @@ namespace xeus.Core
 				return ( SentByMe ) ? To : From ;
 			}
 		}
-/*
-		public XmlDatabase.FieldValuePair[] GetData()
-		{
-			XmlDatabase.FieldValuePair[] data = new XmlDatabase.FieldValuePair[ 5 ] ;
-
-			string key = 
-
-			data[ 0 ] = new NullFieldValuePair( "Key", key ) ;
-			data[ 1 ] = new NullFieldValuePair( "From", From ) ;
-			data[ 2 ] = new NullFieldValuePair( "To", To ) ;
-			data[ 3 ] = new NullFieldValuePair( "Time", Time.ToBinary().ToString() ) ;
-			data[ 4 ] = new NullFieldValuePair( "Body", Body ) ;
-
-			return data ;
-		}*/
 
 		public string From
 		{
@@ -131,19 +129,6 @@ namespace xeus.Core
 			get
 			{
 				return _to ;
-			}
-		}
-
-		public bool IsFromDb
-		{
-			get
-			{
-				return _isFromDb ;
-			}
-
-			set
-			{
-				_isFromDb = value ;
 			}
 		}
 

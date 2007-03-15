@@ -28,6 +28,8 @@ namespace xeus
 
 		public MessengerWindow()
 		{
+			Database.OpenDatabase() ;
+
 			Initialized += new EventHandler( MessengerWindow_Initialized );
 
 			InitializeComponent() ;
@@ -226,6 +228,8 @@ namespace xeus
 			Settings.Default.Save();
 			SaveData() ;
 
+			Database.CloseDatabase();
+
 			base.OnClosing( e ) ;
 
 			MessageWindow.CloseWindow() ;
@@ -236,10 +240,7 @@ namespace xeus
 		{
 			Database database =  new Database();
 			
-			lock ( Client.Instance.Roster.Items._syncObject )
-			{
-				database.StoreRosterItems( Client.Instance.Roster.Items ) ;
-			}
+			database.StoreRosterItems( Client.Instance.Roster.Items ) ;
 
 			database.StoreGroups( _roster.ExpanderStates ) ;
 		}
