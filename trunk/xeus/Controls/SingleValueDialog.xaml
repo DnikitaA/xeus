@@ -11,7 +11,7 @@
 	Style="{StaticResource DarkStyleWindow}"
     x:Name="single"
 	Background="{x:Null}" ResizeMode="NoResize" Margin="5,5,5,5" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" >
-	<DockPanel>
+	<DockPanel Margin="2,2,2,0">
 	<Image x:Name="_image" Width="50" Height="50" Margin="10,10,15,0" VerticalAlignment="Top"/>
   <StackPanel>
 

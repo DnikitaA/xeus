@@ -207,7 +207,9 @@ namespace xeus.Core
 
 			if ( rosterItem != null )
 			{
-				string contactName = SingleValueDialog.ContactNameDialog( App.Instance.Window, rosterItem.Image );
+				string contactName = SingleValueDialog.ContactNameDialog( App.Instance.Window,
+																			rosterItem.Image,
+																			rosterItem.DisplayName );
 
 				if ( !string.IsNullOrEmpty( contactName ) )
 				{

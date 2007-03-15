@@ -59,16 +59,21 @@ namespace xeus.Core
 
 		public void MoveUnreadMessagesToRosterItem( RosterItem rosterItem )
 		{
-			for ( int i = Client.Instance.MessageCenter.ChatMessages.Count - 1; i >= 0 ; i = Client.Instance.MessageCenter.ChatMessages.Count - 1 )
+			lock ( Client.Instance.MessageCenter.ChatMessages._syncObject )
 			{
-				ChatMessage message = Client.Instance.MessageCenter.ChatMessages[ i ] ;
-
-				lock ( rosterItem.Messages._syncObject )
+				for ( int i = Client.Instance.MessageCenter.ChatMessages.Count - 1;
+				      i >= 0;
+				      i = Client.Instance.MessageCenter.ChatMessages.Count - 1 )
 				{
-					rosterItem.Messages.Add( message ) ;
-				}
+					ChatMessage message = Client.Instance.MessageCenter.ChatMessages[ i ] ;
 
-				Client.Instance.MessageCenter.ChatMessages.Remove( message ) ;
+					lock ( rosterItem.Messages._syncObject )
+					{
+						rosterItem.Messages.Add( message ) ;
+					}
+
+					Client.Instance.MessageCenter.ChatMessages.Remove( message ) ;
+				}
 			}
 		}
 

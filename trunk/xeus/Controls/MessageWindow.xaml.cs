@@ -9,6 +9,7 @@ using System.Windows.Media ;
 using System.Windows.Threading ;
 using agsXMPP.protocol.extensions.chatstates ;
 using xeus.Core ;
+using xeus.Properties ;
 
 namespace xeus.Controls
 {
@@ -252,12 +253,29 @@ namespace xeus.Controls
 
 						foreach ( ChatMessage chatMessage in messages )
 						{
+							bool exists = false ;
+
 							lock ( rosterItem.Messages._syncObject )
 							{
-								rosterItem.Messages.Insert( i, chatMessage ) ;
-							}
+								foreach ( ChatMessage existingMessage in rosterItem.Messages )
+								{
+									if ( existingMessage.Id == chatMessage.Id )
+									{
+										exists = true ;
+										break ;
+									}
+								}
 
-							i++ ;
+								if ( !exists )
+								{
+									lock ( rosterItem.Messages._syncObject )
+									{
+										rosterItem.Messages.Insert( i, chatMessage ) ;
+									}
+
+									i++ ;
+								}
+							}
 						}
 
 						rosterItem.MessagesPreloaded = true ;
@@ -392,14 +410,17 @@ namespace xeus.Controls
 
 		public static void SendChatState( Chatstate chatstate )
 		{
-			if ( MessageTextBox != null && _instance != null && _instance._tabs != null
-					&& Client.Instance != null && Client.Instance.IsAvailable )
+			if ( Settings.Default.Client_SendTyping )
 			{
-				RosterItem rosterItem = _instance._tabs.SelectedContent as RosterItem ;
-
-				if ( rosterItem != null )
+				if ( MessageTextBox != null && _instance != null && _instance._tabs != null
+				     && Client.Instance != null && Client.Instance.IsAvailable )
 				{
-					Client.Instance.SendChatState( rosterItem, chatstate ) ;
+					RosterItem rosterItem = _instance._tabs.SelectedContent as RosterItem ;
+
+					if ( rosterItem != null )
+					{
+						Client.Instance.SendChatState( rosterItem, chatstate ) ;
+					}
 				}
 			}
 		}
@@ -467,19 +488,22 @@ namespace xeus.Controls
 
 		public static void DisplayChatWindow( string activateJid, bool activate )
 		{
-			List< string > recievers = new List< string >( Client.Instance.MessageCenter.ChatMessages.Count ) ;
-
-			foreach ( ChatMessage message in Client.Instance.MessageCenter.ChatMessages )
+			lock ( Client.Instance.MessageCenter.ChatMessages._syncObject )
 			{
-				recievers.Add( message.From ) ;
-			}
+				List< string > recievers = new List< string >( Client.Instance.MessageCenter.ChatMessages.Count ) ;
 
-			foreach ( string jid in recievers )
-			{
-				DisplayChat( jid, false ) ;
-			}
+				foreach ( ChatMessage message in Client.Instance.MessageCenter.ChatMessages )
+				{
+					recievers.Add( message.From ) ;
+				}
 
-			DisplayChat( activateJid, activate ) ;
+				foreach ( string jid in recievers )
+				{
+					DisplayChat( jid, false ) ;
+				}
+
+				DisplayChat( activateJid, activate ) ;
+			}
 		}
 
 

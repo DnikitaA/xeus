@@ -61,62 +61,71 @@ namespace xeus.Controls
 
 		private void TitleBar_Loaded( object sender, RoutedEventArgs e )
 		{
-			closeButton = ( Button ) Template.FindName( "CloseButton", this ) ;
-			minButton = ( Button ) Template.FindName( "MinButton", this ) ;
-			maxButton = ( Button ) Template.FindName( "MaxButton", this ) ;
-			_xeus = ( Path ) Template.FindName( "_xeus", this ) ;
-
-			closeButton.Click += new RoutedEventHandler( CloseButton_Click ) ;
-			minButton.Click += new RoutedEventHandler( MinButton_Click ) ;
-			maxButton.Click += new RoutedEventHandler( MaxButton_Click ) ;
-
-			Window window = TemplatedParent as Window ;
-
-			if ( window != null )
+			if ( Template != null )
 			{
-				window.Activated += new System.EventHandler( window_Activated );
-				window.Deactivated += new System.EventHandler( window_Deactivated );
-			}
+				closeButton = ( Button ) Template.FindName( "CloseButton", this ) ;
+				minButton = ( Button ) Template.FindName( "MinButton", this ) ;
+				maxButton = ( Button ) Template.FindName( "MaxButton", this ) ;
+				_xeus = ( Path ) Template.FindName( "_xeus", this ) ;
 
-			if ( window != null && window.ResizeMode == ResizeMode.NoResize )
-			{
-				minButton.Visibility = Visibility.Hidden ;
-				maxButton.Visibility = Visibility.Hidden ;
+				closeButton.Click += new RoutedEventHandler( CloseButton_Click ) ;
+				minButton.Click += new RoutedEventHandler( MinButton_Click ) ;
+				maxButton.Click += new RoutedEventHandler( MaxButton_Click ) ;
 
-				Line line = ( Line ) window.Template.FindName( "lnSizeNorth", window ) ;
-				line.Visibility = Visibility.Hidden ;
+				Window window = TemplatedParent as Window ;
 
-				line = ( Line ) window.Template.FindName( "lnSizeSouth", window ) ;
-				line.Visibility = Visibility.Hidden ;
+				if ( window != null )
+				{
+					window.Activated += new System.EventHandler( window_Activated ) ;
+					window.Deactivated += new System.EventHandler( window_Deactivated ) ;
+				}
 
-				line = ( Line ) window.Template.FindName( "lnSizeWest", window ) ;
-				line.Visibility = Visibility.Hidden ;
+				if ( window != null && window.ResizeMode == ResizeMode.NoResize )
+				{
+					minButton.Visibility = Visibility.Hidden ;
+					maxButton.Visibility = Visibility.Hidden ;
 
-				line = ( Line ) window.Template.FindName( "lnSizeEast", window ) ;
-				line.Visibility = Visibility.Hidden ;
+					Line line = ( Line ) window.Template.FindName( "lnSizeNorth", window ) ;
+					line.Visibility = Visibility.Hidden ;
 
-				Rectangle rectangle = ( Rectangle ) window.Template.FindName( "rectSizeNorthWest", window ) ;
-				rectangle.Visibility = Visibility.Hidden ;
-			
-				rectangle = ( Rectangle ) window.Template.FindName( "rectSizeNorthEast", window ) ;
-				rectangle.Visibility = Visibility.Hidden ;
+					line = ( Line ) window.Template.FindName( "lnSizeSouth", window ) ;
+					line.Visibility = Visibility.Hidden ;
 
-				rectangle = ( Rectangle ) window.Template.FindName( "rectSizeSouthWest", window ) ;
-				rectangle.Visibility = Visibility.Hidden ;
+					line = ( Line ) window.Template.FindName( "lnSizeWest", window ) ;
+					line.Visibility = Visibility.Hidden ;
 
-				rectangle = ( Rectangle ) window.Template.FindName( "rectSizeSouthEast", window ) ;
-				rectangle.Visibility = Visibility.Hidden ;
+					line = ( Line ) window.Template.FindName( "lnSizeEast", window ) ;
+					line.Visibility = Visibility.Hidden ;
+
+					Rectangle rectangle = ( Rectangle ) window.Template.FindName( "rectSizeNorthWest", window ) ;
+					rectangle.Visibility = Visibility.Hidden ;
+
+					rectangle = ( Rectangle ) window.Template.FindName( "rectSizeNorthEast", window ) ;
+					rectangle.Visibility = Visibility.Hidden ;
+
+					rectangle = ( Rectangle ) window.Template.FindName( "rectSizeSouthWest", window ) ;
+					rectangle.Visibility = Visibility.Hidden ;
+
+					rectangle = ( Rectangle ) window.Template.FindName( "rectSizeSouthEast", window ) ;
+					rectangle.Visibility = Visibility.Hidden ;
+				}
 			}
 		}
 
 		void window_Deactivated( object sender, System.EventArgs e )
 		{
-			_xeus.Fill = Brushes.Black ;
+			if ( _xeus != null )
+			{
+				_xeus.Fill = Brushes.Black ;
+			}
 		}
 
 		void window_Activated( object sender, System.EventArgs e )
 		{
-			_xeus.Fill = Brushes.Gray ;
+			if ( _xeus != null )
+			{
+				_xeus.Fill = Brushes.Gray ;
+			}
 		}
 
 		static TitleBar()
