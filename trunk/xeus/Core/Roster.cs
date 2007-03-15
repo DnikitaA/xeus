@@ -232,7 +232,6 @@ namespace xeus.Core
 					}
 				}
 
-
 				if ( item.Subscription == SubscriptionType.remove )
 				{
 					if ( existingRosterItem != null )
@@ -242,27 +241,30 @@ namespace xeus.Core
 				}
 				else
 				{
-					if ( existingRosterItem != null )
+					if ( item.Ask == AskType.NONE )
 					{
-						existingRosterItem.XmppRosterItem = item ;
-
-						if ( presence != null )
+						if ( existingRosterItem != null )
 						{
-							existingRosterItem.Presence = presence ;
-						}
-					}
-					else
-					{
-						RosterItem rosterItem = new RosterItem( item ) ;
+							existingRosterItem.XmppRosterItem = item ;
 
-						if ( presence != null )
+							if ( presence != null )
+							{
+								existingRosterItem.Presence = presence ;
+							}
+						}
+						else
 						{
-							rosterItem.Presence = presence ;
+							RosterItem rosterItem = new RosterItem( item ) ;
+
+							if ( presence != null )
+							{
+								rosterItem.Presence = presence ;
+							}
+
+							_items.Add( rosterItem ) ;
+
+							AskForVCard( rosterItem.Key ) ;
 						}
-
-						_items.Add( rosterItem ) ;
-
-						AskForVCard( rosterItem.Key ) ;
 					}
 				}
 			}
@@ -281,6 +283,9 @@ namespace xeus.Core
 			{
 				Client.Instance.UnregisterService( new Jid( rosterItem.Key ) ) ;
 			}
+
+			Database database = new Database();
+			database.DeleteRosterItem( rosterItem ) ;
 
 			if ( rosterItem.IsInitialized )
 			{

@@ -1,11 +1,8 @@
 using System ;
 using System.Collections.Generic ;
-using System.ComponentModel ;
-using System.Data ;
 using System.Data.Common ;
 using System.Windows.Media.Imaging ;
 using agsXMPP.protocol.client ;
-using agsXMPP.protocol.iq.roster ;
 
 namespace xeus.Core
 {
@@ -21,14 +18,14 @@ namespace xeus.Core
 
 		public ChatMessage( DbDataReader reader, RosterItem rosterItem )
 		{
-			Id = ( Int32 )( Int64 )reader[ "Id" ] ;
+			Id = ( Int32 ) ( Int64 ) reader[ "Id" ] ;
 
 			_rosterItem = rosterItem ;
 
-			_body = ( string )reader[ "Body" ] ;
-			_from = ( string )reader[ "From" ] ;
-			_to = ( string )reader[ "To" ] ;
-			_time = DateTime.FromBinary( ( Int64 )reader[ "Time" ] ) ;
+			_body = ( string ) reader[ "Body" ] ;
+			_from = ( string ) reader[ "SentFrom" ] ;
+			_to = ( string ) reader[ "SentTo" ] ;
+			_time = DateTime.FromBinary( ( Int64 ) reader[ "Time" ] ) ;
 			_relativeTime = TimeUtilities.FormatRelativeTime( _time ) ;
 		}
 
@@ -44,7 +41,7 @@ namespace xeus.Core
 
 		public Dictionary< string, object > GetData()
 		{
-			Dictionary< string, object > data = new Dictionary< string, object >();
+			Dictionary< string, object > data = new Dictionary< string, object >() ;
 
 			data.Add( "Key", Key ) ;
 			data.Add( "Body", Body ) ;

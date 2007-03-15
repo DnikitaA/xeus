@@ -1,8 +1,8 @@
 using System ;
 using System.Collections.Generic ;
-using System.Data ;
 using System.Data.Common ;
 using System.Data.SQLite ;
+using System.IO ;
 using System.Text ;
 using xeus.Properties ;
 
@@ -20,13 +20,45 @@ namespace xeus.Core
 			}
 		}
 
-		private static DbConnection _connection = null ;
+		private static SQLiteConnection _connection = null ;
 
 		public static void OpenDatabase()
 		{
-			_connection = _factoryProvider.CreateConnection() ;
+			bool dbExisist = File.Exists( Path ) ;
+
+			_connection = ( SQLiteConnection ) _factoryProvider.CreateConnection() ;
 			_connection.ConnectionString = string.Format( "Data Source=\"{0}\"", Path ) ;
 			_connection.Open() ;
+
+			if ( !dbExisist )
+			{
+				CreateDatabase() ;
+			}
+		}
+
+		private static void CreateDatabase()
+		{
+			using ( SQLiteCommand cmd = _connection.CreateCommand() )
+			{
+				cmd.CommandText = "CREATE TABLE [Group] ([IsExpander] INTEGER NOT NULL DEFAULT '0',"
+				                  + "[Name] VARCHAR NOT NULL PRIMARY KEY UNIQUE);" ;
+				cmd.ExecuteNonQuery() ;
+
+				cmd.CommandText = "CREATE TABLE [Message] (Key VARCHAR NOT NULL, "
+				                  + "[SentFrom] VARCHAR NOT NULL, "
+				                  + "[SentTo] VARCHAR NOT NULL, "
+				                  + "[Time] INTEGER NOT NULL, "
+				                  + "[Id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, "
+				                  + "[Body] VARCHAR NOT NULL);" ;
+				cmd.ExecuteNonQuery() ;
+
+				cmd.CommandText = "CREATE TABLE [RosterItem] (Key VARCHAR NOT NULL PRIMARY KEY UNIQUE, "
+				                  + "[SubscriptionType] CHAR NOT NULL, "
+				                  + "[FullName] VARCHAR, [NickName] VARCHAR, "
+				                  + "[CustomName] VARCHAR, [IdLastMessageFrom] INTEGER, "
+				                  + "[IdLastMessageTo] INTEGER);" ;
+				cmd.ExecuteNonQuery() ;
+			}
 		}
 
 		public static void CloseDatabase()
@@ -40,18 +72,20 @@ namespace xeus.Core
 
 			try
 			{
-				DbCommand command = _connection.CreateCommand() ;
-				command.CommandText = "SELECT * FROM [RosterItem]" ;
-
-				DbDataReader reader = command.ExecuteReader() ;
-
-				while ( reader.Read() )
+				using ( SQLiteCommand command = _connection.CreateCommand() )
 				{
-					RosterItem rosterItem = new RosterItem( reader ) ;
-					rosterItems.Add( rosterItem ) ;
-				}
+					command.CommandText = "SELECT * FROM [RosterItem]" ;
 
-				reader.Close() ;
+					SQLiteDataReader reader = command.ExecuteReader() ;
+
+					while ( reader.Read() )
+					{
+						RosterItem rosterItem = new RosterItem( reader ) ;
+						rosterItems.Add( rosterItem ) ;
+					}
+
+					reader.Close() ;
+				}
 			}
 
 			catch ( Exception e )
@@ -70,28 +104,28 @@ namespace xeus.Core
 
 			try
 			{
-				DbCommand command = _connection.CreateCommand() ;
-
-				command.CommandText =
-					string.Format( "SELECT TOP {0} FROM [Message] WHERE [Key]=@key ORDER BY [Id] DESC", maxMessages ) ;
-
-				command.Parameters.Add( new SQLiteParameter( "key", rosterItem.Key ) ) ;
-
-				DbDataReader reader = command.ExecuteReader() ;
-
-				while ( reader.Read() )
+				using ( SQLiteCommand command = _connection.CreateCommand() )
 				{
-					messages.Insert( 0, new ChatMessage( reader, rosterItem ) ) ;
-				}
+					command.CommandText =
+						string.Format( "SELECT * FROM [Message] WHERE [Key]=@key ORDER BY [Id] DESC LIMIT {0}", maxMessages ) ;
 
-				reader.Close() ;
+					command.Parameters.Add( new SQLiteParameter( "key", rosterItem.Key ) ) ;
+
+					SQLiteDataReader reader = command.ExecuteReader() ;
+
+					while ( reader.Read() )
+					{
+						messages.Insert( 0, new ChatMessage( reader, rosterItem ) ) ;
+					}
+
+					reader.Close() ;
+				}
 			}
 
 			catch ( Exception e )
 			{
 				Client.Instance.Log( "Error reading messages: {0}", e.Message ) ;
 			}
-
 
 			return messages ;
 		}
@@ -102,20 +136,21 @@ namespace xeus.Core
 
 			try
 			{
-				DbCommand command = _connection.CreateCommand() ;
-
-				command.CommandText = "SELECT * FROM [Message] WHERE [Id]=@id" ;
-
-				command.Parameters.Add( new SQLiteParameter( "Id", id ) ) ;
-
-				DbDataReader reader = command.ExecuteReader() ;
-
-				while ( reader.Read() )
+				using ( SQLiteCommand command = _connection.CreateCommand() )
 				{
-					chatMessage = new ChatMessage( reader, rosterItem ) ;
-				}
+					command.CommandText = "SELECT * FROM [Message] WHERE [Id]=@id" ;
 
-				reader.Close() ;
+					command.Parameters.Add( new SQLiteParameter( "Id", id ) ) ;
+
+					SQLiteDataReader reader = command.ExecuteReader() ;
+
+					while ( reader.Read() )
+					{
+						chatMessage = new ChatMessage( reader, rosterItem ) ;
+					}
+
+					reader.Close() ;
+				}
 			}
 
 			catch ( Exception e )
@@ -134,7 +169,7 @@ namespace xeus.Core
 			{
 				Dictionary< string, object > values = message.GetData() ;
 
-				id = SaveOrUpdate( values, null, "Message", "Id", _connection ) ;
+				id = Insert( values, "Message", true, _connection ) ;
 			}
 
 			catch ( Exception e )
@@ -149,14 +184,19 @@ namespace xeus.Core
 		{
 			try
 			{
-				foreach ( KeyValuePair< string, bool > state in expanderStates )
+				using ( SQLiteTransaction transaction = _connection.BeginTransaction() )
 				{
-					Dictionary< string, object > values = new Dictionary< string, object >() ;
+					foreach ( KeyValuePair< string, bool > state in expanderStates )
+					{
+						Dictionary< string, object > values = new Dictionary< string, object >() ;
 
-					values.Add( "Name", state.Key ) ;
-					values.Add( "IsExpander", ( state.Value ) ? 1 : 0 ) ;
+						values.Add( "Name", state.Key ) ;
+						values.Add( "IsExpander", ( state.Value ) ? 1 : 0 ) ;
 
-					SaveOrUpdate( values, "Name", "Group", null, _connection ) ;
+						SaveOrUpdate( values, "Name", "Group", false, _connection ) ;
+					}
+
+					transaction.Commit();
 				}
 			}
 
@@ -172,18 +212,19 @@ namespace xeus.Core
 
 			try
 			{
-				DbCommand command = _connection.CreateCommand() ;
-
-				command.CommandText = "SELECT * FROM [Group]" ;
-
-				DbDataReader reader = command.ExecuteReader() ;
-
-				while ( reader.Read() )
+				using ( SQLiteCommand command = _connection.CreateCommand() )
 				{
-					expanderStates.Add( ( string ) reader[ "Name" ], ( ( Int64 ) reader[ "IsExpander" ] ) == 1 ) ;
-				}
+					command.CommandText = "SELECT * FROM [Group]" ;
 
-				reader.Close() ;
+					SQLiteDataReader reader = command.ExecuteReader() ;
+
+					while ( reader.Read() )
+					{
+						expanderStates.Add( ( string ) reader[ "Name" ], ( ( Int64 ) reader[ "IsExpander" ] ) == 1 ) ;
+					}
+
+					reader.Close() ;
+				}
 			}
 
 			catch ( Exception e )
@@ -198,83 +239,68 @@ namespace xeus.Core
 		{
 			lock ( rosterItems._syncObject )
 			{
-				foreach ( RosterItem item in rosterItems )
+				using ( SQLiteTransaction transaction = _connection.BeginTransaction() )
 				{
-					if ( item.IsService )
+					foreach ( RosterItem item in rosterItems )
 					{
-						continue ;
+						if ( item.IsService )
+						{
+							continue ;
+						}
+
+						try
+						{
+							if ( !item.IsInDatabase )
+							{
+								Insert( item.GetData(), "RosterItem", false, _connection ) ;
+								item.IsInDatabase = true ;
+								item.IsDirty = false ;
+							}
+							else if ( item.IsDirty )
+							{
+								Update( item.GetData(), "Key", "RosterItem", _connection ) ;
+								item.IsDirty = false ;
+							}
+						}
+
+						catch ( Exception e )
+						{
+							Client.Instance.Log( "Error writing roster items: {0}", e.Message ) ;
+						}
 					}
 
-					try
-					{
-						SaveOrUpdate( item.GetData(), "Key", "RosterItem", null, _connection ) ;
-					}
-
-					catch ( Exception e )
-					{
-						Client.Instance.Log( "Error writing roster items: {0}", e.Message ) ;
-					}
+					transaction.Commit();
 				}
 			}
 		}
 
-		private Int32 SaveOrUpdate( Dictionary< string, object > values, string keyField, string table, string identityField,
-		                            DbConnection connection )
+		public void DeleteRosterItem( RosterItem rosterItem )
 		{
-			bool exists = false ;
+			Delete( "RosterItem", "Key", rosterItem.Key, _connection ) ;
+		}
 
-			int id = 0 ;
-
-			if ( keyField != null )
+		void Delete( string table, string keyField, object keyValue, SQLiteConnection connection )
+		{
+			using ( SQLiteCommand commandDelete = connection.CreateCommand() )
 			{
-				StringBuilder query = new StringBuilder() ;
+				StringBuilder queryDelete = new StringBuilder() ;
 
-				query.AppendFormat( "SELECT * FROM [{0}] WHERE [{1}]=@keyparam", table, keyField ) ;
+				queryDelete.AppendFormat( "DELETE FROM [{0}] WHERE [{1}]=@{1}", table, keyField ) ;
+				
+				commandDelete.Parameters.Add( new SQLiteParameter( keyField, keyValue ) ) ;
 
-				DbCommand command = connection.CreateCommand() ;
-				command.CommandText = query.ToString() ;
-
-				command.Parameters.Add( new SQLiteParameter( "keyparam", values[ keyField ] ) ) ;
-
-				DbDataReader reader = command.ExecuteReader() ;
-
-				exists = reader.HasRows ;
-
-				reader.Close() ;
+				commandDelete.CommandText = queryDelete.ToString() ;
+				commandDelete.ExecuteNonQuery() ;
 			}
+		}
 
-
-			DbCommand commandUpdate = connection.CreateCommand() ;
-
-			StringBuilder queryUpdate = new StringBuilder() ;
-
-			if ( exists )
+		private Int32 Insert( Dictionary< string, object > values, string table, bool readAutoId,
+		                      SQLiteConnection connection )
+		{
+			using ( SQLiteCommand commandUpdate = connection.CreateCommand() )
 			{
-				queryUpdate.AppendFormat( "UPDATE [{0}] SET ", table ) ;
+				StringBuilder queryUpdate = new StringBuilder() ;
 
-				bool isFirst = true ;
-
-				foreach ( KeyValuePair< string, object > pair in values )
-				{
-					if ( string.Compare( keyField, pair.Key, true ) == 0 )
-					{
-						continue ;
-					}
-
-					if ( !isFirst )
-					{
-						queryUpdate.Append( "," ) ;
-					}
-
-					isFirst = false ;
-
-					queryUpdate.AppendFormat( "[{0}]=@{1}", pair.Key, pair.Key ) ;
-
-					commandUpdate.Parameters.Add( new SQLiteParameter( pair.Key, pair.Value ) ) ;
-				}
-			}
-			else
-			{
 				queryUpdate.AppendFormat( "INSERT INTO [{0}] (", table ) ;
 
 				bool isFirst = true ;
@@ -311,22 +337,112 @@ namespace xeus.Core
 
 				queryUpdate.Append( ")" ) ;
 
-				if ( identityField != null )
+				commandUpdate.CommandText = queryUpdate.ToString() ;
+				commandUpdate.ExecuteNonQuery() ;
+			}
+
+			if ( readAutoId )
+			{
+				return GetlastRowId( connection ) ;
+			}
+			else
+			{
+				return 0 ;
+			}
+		}
+
+		private void Update( Dictionary< string, object > values, string keyField, string table, SQLiteConnection connection )
+		{
+			using ( SQLiteCommand commandUpdate = connection.CreateCommand() )
+			{
+				StringBuilder queryUpdate = new StringBuilder() ;
+
+				queryUpdate.AppendFormat( "UPDATE [{0}] SET ", table ) ;
+
+				bool isFirst = true ;
+
+				foreach ( KeyValuePair< string, object > pair in values )
 				{
-					SQLiteParameter identity = new SQLiteParameter() ;
-					identity.ParameterName = identityField ;
-					identity.Direction = ParameterDirection.Output ;
-					commandUpdate.Parameters.Add( identity ) ;
+					if ( string.Compare( keyField, pair.Key, true ) == 0 )
+					{
+						continue ;
+					}
+
+					if ( !isFirst )
+					{
+						queryUpdate.Append( "," ) ;
+					}
+
+					isFirst = false ;
+
+					queryUpdate.AppendFormat( "[{0}]=@{0}", pair.Key ) ;
+
+					commandUpdate.Parameters.Add( new SQLiteParameter( pair.Key, pair.Value ) ) ;
+				}
+
+				queryUpdate.AppendFormat( " WHERE [{0}]=@{0}", keyField ) ;
+				commandUpdate.Parameters.Add( new SQLiteParameter( keyField, values[ keyField ] ) ) ;
+
+				commandUpdate.CommandText = queryUpdate.ToString() ;
+				commandUpdate.ExecuteNonQuery() ;
+			}
+		}
+
+		private Int32 SaveOrUpdate( Dictionary< string, object > values, string keyField, string table, bool readAutoId,
+		                            SQLiteConnection connection )
+		{
+			bool exists = false ;
+
+			int id = 0 ;
+
+			if ( keyField != null )
+			{
+				StringBuilder query = new StringBuilder() ;
+
+				query.AppendFormat( "SELECT * FROM [{0}] WHERE [{1}]=@keyparam", table, keyField ) ;
+
+				using ( SQLiteCommand command = connection.CreateCommand() )
+				{
+					command.CommandText = query.ToString() ;
+
+					command.Parameters.Add( new SQLiteParameter( "keyparam", values[ keyField ] ) ) ;
+
+					SQLiteDataReader reader = command.ExecuteReader() ;
+
+					exists = reader.HasRows ;
+
+					reader.Close() ;
 				}
 			}
 
-
-			commandUpdate.CommandText = queryUpdate.ToString() ;
-			commandUpdate.ExecuteNonQuery() ;
-
-			if ( identityField != null )
+			if ( exists )
 			{
-				id = ( Int32 ) ( Int64 ) commandUpdate.Parameters[ identityField ].Value ;
+				Update( values, keyField, table, connection ) ;
+			}
+			else
+			{
+				id = Insert( values, table, readAutoId, connection ) ;
+			}
+
+			return id ;
+		}
+
+		private int GetlastRowId( SQLiteConnection connection )
+		{
+			int id = 0 ;
+
+			using ( SQLiteCommand command = connection.CreateCommand() )
+			{
+				command.CommandText = "SELECT last_insert_rowid()" ;
+
+				SQLiteDataReader reader = command.ExecuteReader() ;
+
+				if ( reader.Read() )
+				{
+					id = ( Int32 ) ( Int64 ) reader[ 0 ] ;
+				}
+
+				reader.Close() ;
 			}
 
 			return id ;
