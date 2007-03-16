@@ -332,7 +332,7 @@ namespace xeus.Core
 
 		public void SetMyPresence( ShowType showType, bool isIdle )
 		{
-			if ( !IsAvailable )
+			if ( !IsAvailable && isIdle )
 			{
 				return ;
 			}

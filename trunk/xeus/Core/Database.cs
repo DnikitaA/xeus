@@ -235,6 +235,34 @@ namespace xeus.Core
 			return expanderStates ;
 		}
 
+		public void SaveRosterItem( RosterItem item )
+		{
+			if ( item.IsService )
+			{
+				return ;
+			}
+
+			try
+			{
+				if ( !item.IsInDatabase )
+				{
+					Insert( item.GetData(), "RosterItem", false, _connection ) ;
+					item.IsInDatabase = true ;
+					item.IsDirty = false ;
+				}
+				else if ( item.IsDirty )
+				{
+					Update( item.GetData(), "Key", "RosterItem", _connection ) ;
+					item.IsDirty = false ;
+				}
+			}
+
+			catch ( Exception e )
+			{
+				Client.Instance.Log( "Error writing roster items: {0}", e.Message ) ;
+			}
+		}
+
 		public void StoreRosterItems( ObservableCollectionDisp< RosterItem > rosterItems )
 		{
 			lock ( rosterItems._syncObject )
@@ -243,30 +271,7 @@ namespace xeus.Core
 				{
 					foreach ( RosterItem item in rosterItems )
 					{
-						if ( item.IsService )
-						{
-							continue ;
-						}
-
-						try
-						{
-							if ( !item.IsInDatabase )
-							{
-								Insert( item.GetData(), "RosterItem", false, _connection ) ;
-								item.IsInDatabase = true ;
-								item.IsDirty = false ;
-							}
-							else if ( item.IsDirty )
-							{
-								Update( item.GetData(), "Key", "RosterItem", _connection ) ;
-								item.IsDirty = false ;
-							}
-						}
-
-						catch ( Exception e )
-						{
-							Client.Instance.Log( "Error writing roster items: {0}", e.Message ) ;
-						}
+						SaveRosterItem( item ) ;
 					}
 
 					transaction.Commit();
