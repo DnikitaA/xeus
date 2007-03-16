@@ -35,6 +35,10 @@ namespace xeus
 			InitializeComponent() ;
 
 			_trayIcon.NotifyIcon.MouseClick += new MouseEventHandler( _notifyIcon_MouseClick ) ;
+
+#if DEBUG
+//			_trayIcon.State = TrayIcon.TrayState.NewMessage ;
+#endif
 		}
 
 		void MessengerWindow_Initialized( object sender, EventArgs e )
@@ -42,6 +46,25 @@ namespace xeus
 			Client.Instance.MessageCenter.ChatMessages.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( ChatMessages_CollectionChanged );
 			Client.Instance.MessageCenter.HedlineMessages.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( HedlineMessages_CollectionChanged );
 			Client.Instance.LoginError += new Client.LoginHandler( OnLoginError );
+
+			Client.Instance.PropertyChanged += new PropertyChangedEventHandler( Instance_PropertyChanged );
+
+			_trayIcon.State = TrayIcon.TrayState.Pending ;
+		}
+
+		void Instance_PropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			if ( e.PropertyName == "IsAvailable" )
+			{
+				if ( Client.Instance.IsAvailable )
+				{
+					_trayIcon.State = TrayIcon.TrayState.Normal ;
+				}
+				else
+				{
+					_trayIcon.State = TrayIcon.TrayState.Pending ;
+				}
+			}
 		}
 
 		void HedlineMessages_CollectionChanged( object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e )

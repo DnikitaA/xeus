@@ -10,9 +10,9 @@ namespace xeus.Controls
 	{
 		private NotifyIcon _notifyIcon = new NotifyIcon() ;
 
-		private Icon _mainIcon = Properties.Resources.xeus ;
-		private Icon _messageIcon = Properties.Resources.message ;
-		private Icon _messageIconTrans = Properties.Resources.message_trans ;
+		Queue< Icon > _pending = new Queue< Icon >( 4 );
+		Queue< Icon > _normal = new Queue< Icon >( 1 );
+		Queue< Icon > _message = new Queue< Icon >( 2 );
 
 		private TrayState _state = TrayState.Normal ;
 
@@ -21,12 +21,22 @@ namespace xeus.Controls
 		public enum TrayState
 		{
 			Normal,
-			NewMessage
+			NewMessage,
+			Pending
 		}
 
 		public TrayIcon()
 		{
-			_notifyIcon.Icon = _mainIcon ;
+			_normal.Enqueue( Properties.Resources.xeus );
+
+			_pending.Enqueue( Properties.Resources.xeus1 );
+			_pending.Enqueue( Properties.Resources.xeus2 );
+			_pending.Enqueue( Properties.Resources.xeus3 );
+			_pending.Enqueue( Properties.Resources.xeus4 );
+
+			_message.Enqueue( Properties.Resources.message );
+			_message.Enqueue( Properties.Resources.message_trans );
+
 			_notifyIcon.Visible = true ;
 			_notifyIcon.Text = "xeus" ;
 			
@@ -41,23 +51,21 @@ namespace xeus.Controls
 			{
 				case TrayState.Normal:
 					{
-						if ( _notifyIcon.Icon != _mainIcon )
-						{
-							_notifyIcon.Icon = _mainIcon ;
-						}
+						_notifyIcon.Icon = _normal.Dequeue() ;
+						_normal.Enqueue( _notifyIcon.Icon ) ;
 						break ;
 					}
 
 				case TrayState.NewMessage:
 					{
-						if ( _notifyIcon.Icon == _messageIcon )
-						{
-							_notifyIcon.Icon = _messageIconTrans ;
-						}
-						else
-						{
-							_notifyIcon.Icon = _messageIcon ;
-						}
+						_notifyIcon.Icon = _message.Dequeue() ;
+						_message.Enqueue( _notifyIcon.Icon ) ;
+						break;
+					}
+				case TrayState.Pending:
+					{
+						_notifyIcon.Icon = _pending.Dequeue() ;
+						_pending.Enqueue( _notifyIcon.Icon ) ;
 						break;
 					}
 			}			
@@ -105,9 +113,6 @@ namespace xeus.Controls
 			if ( _notifyIcon != null )
 			{
 				_notifyIcon.Dispose() ;
-				_mainIcon.Dispose();
-				_messageIcon.Dispose();
-				_messageIconTrans.Dispose();
 			}
 		}
 

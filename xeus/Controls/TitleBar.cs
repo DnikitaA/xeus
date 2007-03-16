@@ -45,7 +45,10 @@ namespace xeus.Controls
 		private Button closeButton ;
 		private Button maxButton ;
 		private Button minButton ;
+		private CheckBox pinButton ;
+
 		private Path _xeus ;
+		private Window window ;
 
 		public TitleBar()
 		{
@@ -66,24 +69,29 @@ namespace xeus.Controls
 				closeButton = ( Button ) Template.FindName( "CloseButton", this ) ;
 				minButton = ( Button ) Template.FindName( "MinButton", this ) ;
 				maxButton = ( Button ) Template.FindName( "MaxButton", this ) ;
+				pinButton = ( CheckBox ) Template.FindName( "PinButton", this ) ;
 				_xeus = ( Path ) Template.FindName( "_xeus", this ) ;
 
 				closeButton.Click += new RoutedEventHandler( CloseButton_Click ) ;
 				minButton.Click += new RoutedEventHandler( MinButton_Click ) ;
 				maxButton.Click += new RoutedEventHandler( MaxButton_Click ) ;
+				pinButton.Click += new RoutedEventHandler( pinButton_Click );
 
-				Window window = TemplatedParent as Window ;
+				window = TemplatedParent as Window ;
 
 				if ( window != null )
 				{
 					window.Activated += new System.EventHandler( window_Activated ) ;
 					window.Deactivated += new System.EventHandler( window_Deactivated ) ;
+
+					pinButton.IsChecked = window.Topmost ;
 				}
 
 				if ( window != null && window.ResizeMode == ResizeMode.NoResize )
 				{
 					minButton.Visibility = Visibility.Hidden ;
 					maxButton.Visibility = Visibility.Hidden ;
+					pinButton.Visibility = Visibility.Hidden ;
 
 					Line line = ( Line ) window.Template.FindName( "lnSizeNorth", window ) ;
 					line.Visibility = Visibility.Hidden ;
@@ -109,6 +117,14 @@ namespace xeus.Controls
 					rectangle = ( Rectangle ) window.Template.FindName( "rectSizeSouthEast", window ) ;
 					rectangle.Visibility = Visibility.Hidden ;
 				}
+			}
+		}
+
+		void pinButton_Click( object sender, RoutedEventArgs e )
+		{
+			if ( window != null )
+			{
+				window.Topmost = ( bool )pinButton.IsChecked ;
 			}
 		}
 

@@ -889,6 +889,70 @@
 		</Trigger>
 	</ControlTemplate.Triggers></ControlTemplate>
 
+<ControlTemplate x:Key="PinTemplate" TargetType="{x:Type CheckBox}">
+<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.498,0.51" >
+	<Ellipse Stroke="#FF1E1E1E" StrokeThickness="1" Width="16" Height="16" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle" RenderTransformOrigin="0.5,0.5">
+		<Ellipse.Fill>
+			<RadialGradientBrush>
+				<GradientStop Color="#FF868682" Offset="0"/>
+				<GradientStop Color="#B2282828" Offset="1"/>
+			</RadialGradientBrush>
+		</Ellipse.Fill>
+		<Ellipse.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="0"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Ellipse.RenderTransform>
+	</Ellipse>
+	
+</Viewbox>
+	<ControlTemplate.Triggers>
+		<Trigger Property="IsEnabled" Value="False">
+			<Setter Property="Opacity" TargetName="viewbox" Value="0.5"/>
+		</Trigger>
+	  <Trigger Property="Ellipse.IsMouseOver" Value="True">
+	  	<Setter Property="Fill" TargetName="_circle">
+	  		<Setter.Value>
+	  			<RadialGradientBrush>
+	  				<GradientStop Color="#FFBDBDBD" Offset="0"/>
+	  				<GradientStop Color="#B2BB6719" Offset="1"/>
+	  			</RadialGradientBrush>
+	  		</Setter.Value>
+	  	</Setter>
+	  </Trigger>
+		<Trigger Property="IsPressed" Value="True">
+			<Setter Property="Fill" TargetName="_circle">
+				<Setter.Value>
+					<RadialGradientBrush>
+						<GradientStop Color="#FF88867B" Offset="0"/>
+						<GradientStop Color="#B2864C14" Offset="1"/>
+					</RadialGradientBrush>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="Width" TargetName="_circle" Value="15"/>
+			<Setter Property="Height" TargetName="_circle" Value="15"/>
+		</Trigger>
+		<Trigger Property="IsChecked" Value="True">
+			<Setter Property="Fill" TargetName="_circle">
+				<Setter.Value>
+					<RadialGradientBrush>
+						<GradientStop Color="#FFC18E49" Offset="0"/>
+						<GradientStop Color="#B2694C13" Offset="1"/>
+					</RadialGradientBrush>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="BitmapEffect" TargetName="_circle">
+				<Setter.Value>
+					<DropShadowBitmapEffect Opacity="0" ShadowDepth="1" Softness="0.1"/>
+				</Setter.Value>
+			</Setter>
+		</Trigger>
+	</ControlTemplate.Triggers></ControlTemplate>
+
 </ResourceDictionary>
 
 
