@@ -2,7 +2,7 @@
 = Introduction =
 
 *xeus* is an instant messenger with [http://www.xmpp.org/ xmpp] protocol support. In other words, it is a [http://www.jabber.org/ Jabber] client.
-Its user interface is implemented in Window Presentation Foundation.
+Its user interface is implemented in [http://wpf.netfx3.com/ Windows Presentation Foundation].
 
 
 = Details =
