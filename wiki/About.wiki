@@ -8,8 +8,21 @@ Its user interface is implemented in [http://wpf.netfx3.com/ Windows Presentatio
 
 = Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Features implemented in version 1.0 alpha 1:
+  * Add new contact / delete contact
+  * Chat with history
+  * Grouping contacts
+  * Automatic v-card download incl. avatar
+  * Transport registration
+  * Automatic Away, N/A on idle
+  * Nice user interface :)
+
+Features planned:
+  * My v-card
+  * User search
+  * Service browse
+  ...
+
+
+
 
