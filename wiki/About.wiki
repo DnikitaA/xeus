@@ -1,8 +1,7 @@
-#summary One-sentence summary of this page.
-
+#summary What is *xeus* about
 = Introduction =
 
-xeus is an instant messenger with xmpp protocol support. In other words, it is a Jabber client.
+*xeus* is an instant messenger with [http://www.xmpp.org/ xmpp] protocol support. In other words, it is a [http://www.jabber.org/ Jabber] client.
 Its user interface is implemented in Window Presentation Foundation.
 
 
@@ -12,5 +11,6 @@ Add your content here.  Format your content with:
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
+
 
 
