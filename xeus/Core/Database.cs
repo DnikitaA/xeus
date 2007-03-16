@@ -10,8 +10,6 @@ namespace xeus.Core
 {
 	internal class Database
 	{
-		private static DbProviderFactory _factoryProvider = DbProviderFactories.GetFactory( "System.Data.SQLite" ) ;
-
 		private static string Path
 		{
 			get
@@ -26,8 +24,7 @@ namespace xeus.Core
 		{
 			bool dbExisist = File.Exists( Path ) ;
 
-			_connection = ( SQLiteConnection ) _factoryProvider.CreateConnection() ;
-			_connection.ConnectionString = string.Format( "Data Source=\"{0}\"", Path ) ;
+			_connection = new SQLiteConnection( string.Format( "Data Source=\"{0}\"", Path ) );
 			_connection.Open() ;
 
 			if ( !dbExisist )
