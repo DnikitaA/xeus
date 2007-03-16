@@ -16,6 +16,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ServiceResources.xaml" />
         <ResourceDictionary Source="ControlResources.xaml" />
+        <ResourceDictionary Source="ToolTipsResourcexaml.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </win:WindowBase.Resources>
