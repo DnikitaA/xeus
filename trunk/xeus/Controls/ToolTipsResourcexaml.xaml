@@ -172,8 +172,8 @@
   <Setter Property="Template">
     <Setter.Value>
       <ControlTemplate TargetType="Separator">
-        <Border BorderBrush="#FF999999"
-                BorderThickness="0,0,0,1" SnapsToDevicePixels="True" d:IsHidden="True"/>
+        <Border BorderBrush="#FF303030"
+                BorderThickness="1,1,1,1" SnapsToDevicePixels="True" d:IsHidden="True" Margin="5,0,5,0" CornerRadius="2,2,2,2"/>
       </ControlTemplate>
     </Setter.Value>
   </Setter>
@@ -410,7 +410,11 @@
 
 <Style x:Key="{x:Type MenuItem}" TargetType="MenuItem">
   <Setter Property="OverridesDefaultStyle" Value="True"/>
+	<Setter Property="FontSize" Value="14"/>
   <Style.Triggers>
+  	<Trigger Property="IsMouseOver" Value="True">
+  		<Setter Property="Foreground" Value="#FF243045"/>
+  	</Trigger>
     <Trigger Property="Role" Value="TopLevelHeader">
       <Setter Property="Template"
               Value="{StaticResource {x:Static MenuItem.TopLevelHeaderTemplateKey}}"/>

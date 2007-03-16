@@ -162,8 +162,7 @@ namespace xeus.Core
 
 		private void _idleTimer_Elapsed( object sender, ElapsedEventArgs e )
 		{
-			long idleTime = ( Win32.GetTickCount() - Win32.GetLastInputTime() ) ;
-			TimeSpan timeSpan = new TimeSpan( 0, 0, 0, 0, ( int ) idleTime ) ;
+			TimeSpan timeSpan = new TimeSpan( 0, 0, 0, 0, ( int )Win32.GetIdleTime() ) ;
 
 			if ( timeSpan.TotalMinutes > Settings.Default.Client_IdleMinutesAway )
 			{
@@ -333,6 +332,11 @@ namespace xeus.Core
 
 		public void SetMyPresence( ShowType showType, bool isIdle )
 		{
+			if ( !IsAvailable )
+			{
+				return ;
+			}
+
 			Connect( false ) ;
 
 			if ( _xmppConnection.Authenticated )

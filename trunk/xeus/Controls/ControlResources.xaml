@@ -350,38 +350,43 @@
 	</Style>
 
 <DataTemplate x:Key="RosterItemTab" DataType="{x:Type local:RosterItem}">
-  	<Grid x:Name="_rosterItemGridOuter" RenderTransformOrigin="0.5,0.5"
-			Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}"
-			Margin="3,3,3,3" Width="110" Height="25" ToolTipService.InitialShowDelay="1500"
-			ToolTipService.BetweenShowDelay="1500" >
-  		<Grid.ColumnDefinitions>
-  			<ColumnDefinition Width="0.163*"/>
-  			<ColumnDefinition Width="0.837*"/>
-  		</Grid.ColumnDefinitions>
-		<Image HorizontalAlignment="Left" Source="{Binding Path=Image}" Grid.Row="0" 
-				VerticalAlignment="Top" Stretch="Uniform" Width="29" Height="25" d:LayoutOverrides="HorizontalAlignment" Grid.ColumnSpan="2"/>
-  		<Border VerticalAlignment="Stretch" Width="Auto" Grid.Column="1"
-  		 Height="Auto" Grid.Row="0" Grid.RowSpan="1"
-  		 CornerRadius="3,3,3,3" x:Name="_displayNameLabel"
-  		 Visibility="Visible" BorderThickness="1,1,1,1" Margin="11.07,0,-3,0" d:LayoutOverrides="GridBox">
-		<Grid Grid.Row="1" HorizontalAlignment="Stretch" Width="78.75" >     
-  			<TextBlock Text="{Binding Path=DisplayName}" HorizontalAlignment="Stretch" Margin="0,0,0,0"
-  				TextTrimming="CharacterEllipsis"
-  				FontFamily="Calibri" Foreground="#FFDDDDDD"
-  				VerticalAlignment="Top" x:Name="_displayName" FontSize="12" d:LayoutOverrides="VerticalAlignment" Height="10.793" SnapsToDevicePixels="True"/>
-  			<TextBlock Text="{Binding Path=StatusDescription}" HorizontalAlignment="Stretch"
-  				TextTrimming="CharacterEllipsis"
-  				FontFamily="Calibri" Foreground="#FF9DC6E7"
-  				x:Name="_displayStatus" Margin="0,0,0,3" FontSize="10" VerticalAlignment="Bottom" d:LayoutOverrides="VerticalAlignment" Height="9.207" SnapsToDevicePixels="True"/>				
-	    </Grid>  
-  		</Border>
-  		<Grid d:IsLayer="True" x:Name="Layer" Grid.ColumnSpan="2" Grid.RowSpan="1" Panel.ZIndex="2">
-  			<Button x:Name="_unreadMsg" Width="14.429" Template="{DynamicResource MessageIcon}" Height="13.823" IsEnabled="False" HorizontalAlignment="Left" Margin="18,-4,0,0" ToolTip="Unread Messages" VerticalAlignment="Top" />
-  		</Grid>
-	</Grid>
+	<DataTemplate.Resources>
+		<Storyboard x:Key="Timeline1">
+			<ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="_unreadMsg" Storyboard.TargetProperty="(UIElement.Visibility)">
+				<DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="00:00:00.2000000" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+	</DataTemplate.Resources>
+	<StackPanel Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}" RenderTransformOrigin="0.5,0.5" Margin="3,3,3,3" x:Name="_rosterItemGridOuter" Orientation="Horizontal" ToolTipService.BetweenShowDelay="1500" ToolTipService.InitialShowDelay="1500">
+		<Button x:Name="_unreadMsg" Width="27" Template="{DynamicResource MessageIcon}" Height="27" IsEnabled="False" ToolTip="Unread Messages" Panel.ZIndex="10" />
+		<Image Source="{Binding Path=Image}" Stretch="Uniform" Width="30" Height="30" Margin="4,0,0,0"/>
+		<Border
+			CornerRadius="3,3,3,3" x:Name="_displayNameLabel"
+			Visibility="Visible" BorderThickness="1,1,1,1" d:LayoutOverrides="GridBox" Margin="4,0,0,0">
+			<StackPanel HorizontalAlignment="Stretch" Grid.Row="1" Margin="2,2,2,2">     
+				<TextBlock Text="{Binding Path=DisplayName}"
+					TextTrimming="CharacterEllipsis"
+					FontFamily="Calibri" Foreground="#FFDDDDDD"
+					x:Name="_displayName" FontSize="12" SnapsToDevicePixels="True"/>
+				<TextBlock Text="{Binding Path=StatusDescription}"
+					TextTrimming="CharacterEllipsis"
+					FontFamily="Calibri" Foreground="#FF9DC6E7"
+					x:Name="_displayStatus" FontSize="10" SnapsToDevicePixels="True"/>				
+			</StackPanel>  
+		</Border>
+	</StackPanel>
 	<DataTemplate.Triggers>
+		<Trigger Property="Visibility" SourceName="_unreadMsg" Value="Visible">
+			<Trigger.EnterActions>
+				<BeginStoryboard x:Name="Timeline1_BeginStoryboard" Storyboard="{StaticResource Timeline1}"/>
+			</Trigger.EnterActions>
+			<Trigger.ExitActions>
+				<StopStoryboard BeginStoryboardName="Timeline1_BeginStoryboard"/>
+			</Trigger.ExitActions>
+		</Trigger>
 		<DataTrigger Binding="{Binding Path=HasUnreadMessages}" Value="false">
-			<Setter Property="Visibility" Value="Hidden" TargetName="_unreadMsg" />
+			<Setter Property="Visibility" Value="Collapsed" TargetName="_unreadMsg" />
 		</DataTrigger>
 	</DataTemplate.Triggers>
   </DataTemplate>

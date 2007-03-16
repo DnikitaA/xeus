@@ -81,6 +81,34 @@ namespace xeus.Properties {
             }
         }
         
+        internal static System.Drawing.Icon xeus1 {
+            get {
+                object obj = ResourceManager.GetObject("xeus1", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon xeus2 {
+            get {
+                object obj = ResourceManager.GetObject("xeus2", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon xeus3 {
+            get {
+                object obj = ResourceManager.GetObject("xeus3", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon xeus4 {
+            get {
+                object obj = ResourceManager.GetObject("xeus4", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap ximple {
             get {
                 object obj = ResourceManager.GetObject("ximple", resourceCulture);

@@ -53,6 +53,23 @@ namespace xeus.Core
 					this[ "WindowState" ] = value ;
 				}
 			}
+
+			[ UserScopedSetting ]
+			public bool AlwaysOnTop
+			{
+				get
+				{
+					if ( this[ "AlwaysOnTop" ] != null )
+					{
+						return ( bool ) this[ "AlwaysOnTop" ] ;
+					}
+					return false ;
+				}
+				set
+				{
+					this[ "AlwaysOnTop" ] = value ;
+				}
+			}
 		}
 
 		private Window window = null ;
@@ -106,6 +123,8 @@ namespace xeus.Core
 			{
 				window.WindowState = Settings.WindowState ;
 			}
+
+			window.Topmost = Settings.AlwaysOnTop ;
 		}
 
 
@@ -116,6 +135,7 @@ namespace xeus.Core
 		{
 			Settings.WindowState = window.WindowState ;
 			Settings.Location = window.RestoreBounds ;
+			Settings.AlwaysOnTop = window.Topmost ;
 			Settings.Save() ;
 		}
 

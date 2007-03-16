@@ -18,9 +18,11 @@ namespace xeus.Core
 				{
 					return 1.0 ;
 				}
+
+				return 0.4 ;
 			}
 
-			return 0.4 ;
+			return 0.2 ;
 		}
 
 		public object ConvertBack( object value, Type targetType, object parameter, CultureInfo culture )
