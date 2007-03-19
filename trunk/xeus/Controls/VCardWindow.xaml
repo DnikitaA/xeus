@@ -6,81 +6,105 @@
     xmlns:settings="clr-namespace:xeus.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="xeus.Controls.VCardWindow"
-    Title="v-card" Height="300" Width="300"
+    Title="v-card" Height="461" Width="300"
     settings:WindowSettings.Save="False"
 	  Style="{StaticResource DarkStyleWindow}"
     x:Name="vcard"
 	Background="{x:Null}" Margin="5,5,5,5" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" >
-  <StackPanel Margin="2,2,2,2">
-  <StackPanel Orientation="Horizontal" Margin="10,10,10,0">
+  <StackPanel Margin="10,10,10,10">
+  	<DockPanel>
 	  
-	<StackPanel Width="80">
-	<Grid x:Name="_avatar">
-	    <Image x:Name="_image" Source="{Binding Path=Image}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="50" Height="50" Margin="0,17,0,0"/>
-		<Grid SnapsToDevicePixels="False" d:IsLayer="True" x:Name="_frame" Grid.ColumnSpan="1" Grid.RowSpan="3" Panel.ZIndex="-1">
-  			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" Height="Auto" Data="M2.5,0.5 L71.5,0.5 C72.604568,0.5 73.5,1.3954304 73.5,2.5 L73.5,71.5 C73.5,72.604568 72.604568,73.5 71.5,73.5 L2.5,73.5 C1.3954304,73.5 0.5,72.604568 0.5,71.5 L0.5,2.5 C0.5,1.3954304 1.3954304,0.5 2.5,0.5 z" Fill="#5B000000" Margin="9.25,6.75,6.75,20.069">
-  				<Path.RenderTransform>
-  					<TransformGroup>
-  						<ScaleTransform ScaleX="1" ScaleY="1"/>
-  						<SkewTransform AngleX="0" AngleY="0"/>
-  						<RotateTransform Angle="-90"/>
-  						<TranslateTransform X="0" Y="0"/>
-  					</TransformGroup>
-  				</Path.RenderTransform>
-  			</Path>
+  		<StackPanel Width="80">
+  			<Grid x:Name="_avatar">
+  				<Image x:Name="_image" Source="{Binding Path=Image}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="50" Height="50" Margin="0,17,0,0"/>
+  				<Grid SnapsToDevicePixels="False" d:IsLayer="True" x:Name="_frame" Grid.ColumnSpan="1" Grid.RowSpan="3" Panel.ZIndex="-1">
+  					<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" Height="Auto" Data="M2.5,0.5 L71.5,0.5 C72.604568,0.5 73.5,1.3954304 73.5,2.5 L73.5,71.5 C73.5,72.604568 72.604568,73.5 71.5,73.5 L2.5,73.5 C1.3954304,73.5 0.5,72.604568 0.5,71.5 L0.5,2.5 C0.5,1.3954304 1.3954304,0.5 2.5,0.5 z" Fill="#5B000000" Margin="9.25,6.75,6.75,20.069">
+  						<Path.RenderTransform>
+  							<TransformGroup>
+  								<ScaleTransform ScaleX="1" ScaleY="1"/>
+  								<SkewTransform AngleX="0" AngleY="0"/>
+  								<RotateTransform Angle="-90"/>
+  								<TranslateTransform X="0" Y="0"/>
+  							</TransformGroup>
+  						</Path.RenderTransform>
+  					</Path>
 	      
-  			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill"
-			 Stroke="#FF666666" StrokeStartLineCap="Square" StrokeThickness="1"
-			  Margin="8,5.25,8,21.569" VerticalAlignment="Stretch" Height="Auto"
-			   Data="M2.5,0.5 L71.5,0.5 C72.604568,0.5 73.5,1.3954304 73.5,2.5 L73.5,71.5 C73.5,72.604568 72.604568,73.5 71.5,73.5 L2.5,73.5 C1.3954304,73.5 0.5,72.604568 0.5,71.5 L0.5,2.5 C0.5,1.3954304 1.3954304,0.5 2.5,0.5 z"
-			    d:LayoutOverrides="Margin">
-  				<Path.RenderTransform>
-  					<TransformGroup>
-  						<ScaleTransform ScaleX="1" ScaleY="1"/>
-  						<SkewTransform AngleX="0" AngleY="0"/>
-  						<RotateTransform Angle="-270"/>
-  						<TranslateTransform X="0" Y="0"/>
-  					</TransformGroup>
-  				</Path.RenderTransform>
-  				<Path.Fill>
-  					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-  						<GradientStop Color="#FF000000" Offset="0"/>
-  						<GradientStop Color="#FF333333" Offset="1"/>
+  					<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill"
+  						Stroke="#FF666666" StrokeStartLineCap="Square" StrokeThickness="1"
+  						Margin="8,5.25,8,21.569" VerticalAlignment="Stretch" Height="Auto"
+  						Data="M2.5,0.5 L71.5,0.5 C72.604568,0.5 73.5,1.3954304 73.5,2.5 L73.5,71.5 C73.5,72.604568 72.604568,73.5 71.5,73.5 L2.5,73.5 C1.3954304,73.5 0.5,72.604568 0.5,71.5 L0.5,2.5 C0.5,1.3954304 1.3954304,0.5 2.5,0.5 z"
+  						d:LayoutOverrides="Margin">
+  						<Path.RenderTransform>
+  							<TransformGroup>
+  								<ScaleTransform ScaleX="1" ScaleY="1"/>
+  								<SkewTransform AngleX="0" AngleY="0"/>
+  								<RotateTransform Angle="-270"/>
+  								<TranslateTransform X="0" Y="0"/>
+  							</TransformGroup>
+  						</Path.RenderTransform>
+  						<Path.Fill>
+  							<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+  								<GradientStop Color="#FF000000" Offset="0"/>
+  								<GradientStop Color="#FF333333" Offset="1"/>
+  							</LinearGradientBrush>
+  						</Path.Fill>
+  					</Path>
+  				</Grid>
+  			</Grid>		
+  			<Border Opacity="0.2" Height="40" RenderTransformOrigin="0.5,0.5" Margin="3,-26,1,0">
+  				<Border.OpacityMask>
+  					<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+  						<GradientStop Offset="0.162" Color="Black"/>
+  						<GradientStop Offset="0.671" Color="Transparent"/>
   					</LinearGradientBrush>
-  				</Path.Fill>
-  			</Path>
-  		</Grid>
-	</Grid>		
-	<Border Opacity="0.2" Height="40" RenderTransformOrigin="0.5,0.5" Margin="3,-26,1,0">
-	<Border.OpacityMask>
-	    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-	    	<GradientStop Offset="0.162" Color="Black"/>
-	    	<GradientStop Offset="0.671" Color="Transparent"/>
-	    </LinearGradientBrush>
-	</Border.OpacityMask>
-	<Border.Background>
-	    <VisualBrush Visual="{Binding ElementName=_avatar}">
-	        <VisualBrush.Transform>
-	            <ScaleTransform ScaleX="1" ScaleY="-1" CenterX="0" CenterY="20" />
-	        </VisualBrush.Transform>
-	    </VisualBrush>
-	</Border.Background>
-	</Border>
-	</StackPanel>
+  				</Border.OpacityMask>
+  				<Border.Background>
+  					<VisualBrush Visual="{Binding ElementName=_avatar}">
+  						<VisualBrush.Transform>
+  							<ScaleTransform ScaleX="1" ScaleY="-1" CenterX="0" CenterY="20" />
+  						</VisualBrush.Transform>
+  					</VisualBrush>
+  				</Border.Background>
+  			</Border>
+  		</StackPanel>
 	
-	<StackPanel Margin="10,0,0,0">
-		<TextBlock Text="{Binding Path=Key}" FontSize="12" Foreground="#FFB2D9E3" Margin="0,0,0,10" />
-		<StackPanel Margin="0,5,0,0">
-			<TextBlock FontSize="12" Foreground="White" Text="Full Name" />
-			<TextBox Text="{Binding Path=FullName}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
-		</StackPanel>
-		<StackPanel Margin="0,5,0,0">
-			<TextBlock FontSize="12" Foreground="White" Text="Nickname" />
-			<TextBox Text="{Binding Path=NickName}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
-		</StackPanel>
-		</StackPanel>
-  </StackPanel>
-    <StackPanel Margin="0,10,0,0" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Bottom">
+  		<StackPanel Margin="10,0,0,0">
+  			<TextBlock Text="{Binding Path=DisplayName}" FontSize="12" Foreground="#FFB2D9E3" Margin="0,0,0,10"
+  				ToolTip="{Binding Path=Key}" />
+  			<StackPanel Margin="0,5,0,0">
+  				<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Full Name" />
+  				<TextBox Text="{Binding Path=FullName}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
+  			</StackPanel>
+  			<StackPanel Margin="0,5,0,0">
+  				<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Nickname" />
+  				<TextBox Text="{Binding Path=NickName}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
+  			</StackPanel>
+  		</StackPanel>		
+  	</DockPanel>
+  	<StackPanel>
+  		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="E-Mail" />
+  		<TextBox Text="{Binding Path=Email}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
+  	</StackPanel>
+  	<StackPanel>
+  		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Description" />
+  		<TextBox Text="{Binding Path=Description}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
+  	</StackPanel>
+  	<StackPanel>
+  		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Organization" />
+  		<TextBox Text="{Binding Path=Organization}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
+  	</StackPanel>
+  	<StackPanel>
+  		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Title" />
+  		<TextBox Text="{Binding Path=Title}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
+  	</StackPanel>
+  	<StackPanel>
+  		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Url" />
+  		<TextBox Text="{Binding Path=Url}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
+  	</StackPanel>
+  	<StackPanel>
+  		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Role" />
+  		<TextBox Text="{Binding Path=Role}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
+  	</StackPanel>    <StackPanel Margin="0,10,0,0" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Bottom">
       <Button Width="63.867" Content="Ok"
 			Background="#FF3980A9" Template="{DynamicResource AButton}" IsDefault="True"
 			Click="Ok" Foreground="#FFF2F2F2" Height="26" x:Name="_ok" Margin="5,0,5,0" TabIndex="1"/>
