@@ -25,24 +25,6 @@
     </CollectionViewSource.SortDescriptions>
   </CollectionViewSource>
 
-    <Style x:Key="{x:Static StatusBar.SeparatorStyleKey}" TargetType="Separator">
-      <Setter Property="Height" Value="15"/>
-      <Setter Property="Margin" Value="4,4,4,4"/>
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="Separator">
-            <StackPanel
-                    d:IsHidden="True" Margin="5,0,5,0">
-            	<Rectangle Fill="#FFFFFFFF" StrokeThickness="0" Width="3" RadiusX="2" RadiusY="2" Opacity="0.22" Height="3" SnapsToDevicePixels="True" Margin="3,1,3,1"/>
-            	<Rectangle Fill="#FFFFFFFF" StrokeThickness="0" Width="3" RadiusX="2" RadiusY="2" Opacity="0.22" Height="3" SnapsToDevicePixels="True" Margin="3,1,3,1"/>
-            	<Rectangle Fill="#FFFFFFFF" StrokeThickness="0" Width="3" RadiusX="2" RadiusY="2" Opacity="0.22" Height="3" SnapsToDevicePixels="True" Margin="3,1,3,1"/>
-            	<Rectangle Fill="#FFFFFFFF" StrokeThickness="0" Width="3" RadiusX="2" RadiusY="2" Opacity="0.22" Height="3" SnapsToDevicePixels="True" Margin="3,1,3,1"/>
-            </StackPanel>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
-
   	<Storyboard x:Key="OnSizeChanged1">
   		<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="_headlines" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
   			<SplineDoubleKeyFrame KeyTime="00:00:00" Value="1.025"/>
@@ -66,25 +48,26 @@
 	<StatusBar DockPanel.Dock="Bottom" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}" VerticalAlignment="Bottom" Padding="2,4,2,4">
 		<StatusBarItem HorizontalAlignment="Stretch" Margin="0,0,0,0"
 		    	  x:Name="_statusMyStatus" VerticalAlignment="Stretch">
-		    <Button x:Name="_buttonmyStatus" Width="20" Height="20" Template="{Binding Path=StatusTemplate}" Click="DisplayPopup" ToolTip="My Status"
+		    <Button x:Name="_buttonmyStatus" Width="25" Height="25" Template="{Binding Path=StatusTemplate}" Click="DisplayPopup" ToolTip="My Status"
 				>
-			<Popup x:Name="_statusPopup" AllowsTransparency="True" Placement="MousePoint" StaysOpen="False" Width="85" Height="85">
-				<local:StatusControl x:Name="_statusControl"/>
+			<Popup x:Name="_statusPopup" AllowsTransparency="True" Placement="MousePoint" StaysOpen="False" Width="120" Height="120">
+				<local:StatusControl x:Name="_statusControl" Panel.ZIndex="100"/>
 			</Popup>
 			</Button>
 		</StatusBarItem>
     <StatusBarItem
 		    	  x:Name="_statusAddUser" VerticalAlignment="Stretch">
-      <Button x:Name="_buttonAddUser" Width="20" Height="20" Template="{DynamicResource AddNewUser}"
+      <Button x:Name="_buttonAddUser" Width="25" Height="25" Template="{DynamicResource AddNewUser}"
       Command="localcore:RosterItemCommands.ContactAdd" ToolTip="Add new User" Background="#FFFFA300"/>
     </StatusBarItem>
     <Separator/>
 		<StatusBarItem 
 		    	  x:Name="_statusServices" VerticalAlignment="Stretch">
-		    <Button x:Name="_buttonmyServices" Width="23" Height="23" Template="{DynamicResource OpenServices}"
+		    <Button x:Name="_buttonmyServices" Width="27" Height="27" Template="{DynamicResource OpenServices}"
 				Click="OpenServices" ToolTip="Services" Background="Yellow"
 				IsEnabled="{Binding Path=IsAvailable}"/>
 		</StatusBarItem>
+    <Separator/>
 		<StatusBarItem HorizontalAlignment="Stretch" 
 		    	  x:Name="_statusUnreadMessages" VerticalAlignment="Stretch"
 		          Visibility="{Binding Path=MessageCenter.ChatMessages.Count, Converter={StaticResource _visibilityConverter}}">
@@ -96,7 +79,7 @@
 		</StatusBarItem>
 		<StatusBarItem HorizontalAlignment="Stretch" 
 		    	  x:Name="_statusInlineSearch" VerticalAlignment="Stretch" Panel.ZIndex="1">
-	    	<local:InlineSearch x:Name="_inlineSearch" Height="25" VerticalAlignment="Bottom" Visibility="Collapsed"/>
+	    	<local:InlineSearch x:Name="_inlineSearch" Height="25" VerticalAlignment="Bottom" />
 		</StatusBarItem>
 		<StatusBarItem HorizontalAlignment="Stretch" 
 		    	  x:Name="_statusText" VerticalAlignment="Stretch" Margin="3,3,5,3" >

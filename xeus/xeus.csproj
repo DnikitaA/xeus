@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
+    <Page Include="Controls\AuthorizeWindow.xaml" />
     <Page Include="Controls\ContactTyping.xaml" />
     <Page Include="Controls\ControlResources.xaml" />
     <Page Include="Controls\DialogBox.xaml" />
@@ -109,6 +110,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\AuthorizeWindow.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>AuthorizeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ContactTyping.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>ContactTyping.xaml</DependentUpon>

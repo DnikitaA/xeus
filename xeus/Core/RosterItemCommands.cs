@@ -16,6 +16,7 @@ namespace xeus.Core
 		private static RoutedUICommand _contactAdd = new RoutedUICommand( "Add New Contact", "contactAdd", typeof ( RosterItemCommands ) ) ;
 		private static RoutedUICommand _contactDelete = new RoutedUICommand( "Delete Contact", "contactDelete", typeof ( RosterItemCommands ) ) ;
 		private static RoutedUICommand _contactRename = new RoutedUICommand( "Rename Contact", "contactRename", typeof ( RosterItemCommands ) ) ;
+		private static RoutedUICommand _contactVcard = new RoutedUICommand( "Display V-Card", "contactDisplayVCard", typeof ( RosterItemCommands ) ) ;
 
 		public static RoutedUICommand AuthSendTo
 		{
@@ -65,6 +66,14 @@ namespace xeus.Core
 			}
 		}
 
+		public static RoutedUICommand ContactDisplayVCard
+		{
+			get
+			{
+				return _contactVcard ;
+			}
+		}
+
 		static RosterItemCommands()
 		{
 			_dispatcher = Dispatcher.CurrentDispatcher ;
@@ -86,6 +95,9 @@ namespace xeus.Core
 
 			Application.Current.MainWindow.CommandBindings.Add(
 				new CommandBinding( _contactRename, ExecuteContactRename, CanExecuteContactRename ) ) ;
+
+			Application.Current.MainWindow.CommandBindings.Add(
+				new CommandBinding( _contactVcard, ExecuteContactVcard, CanExecuteContactVcard ) ) ;
 		}
 
 		public static void CanExecuteAuthRemoveFrom( object sender, CanExecuteRoutedEventArgs e )
@@ -133,6 +145,14 @@ namespace xeus.Core
 		}
 
 		public static void CanExecuteContactRename( object sender, CanExecuteRoutedEventArgs e )
+		{
+			RosterItem rosterItem = e.Parameter as RosterItem ;
+
+			e.Handled = true ;
+			e.CanExecute = ( rosterItem != null ) ;
+		}
+
+		public static void CanExecuteContactVcard( object sender, CanExecuteRoutedEventArgs e )
 		{
 			RosterItem rosterItem = e.Parameter as RosterItem ;
 
@@ -215,6 +235,21 @@ namespace xeus.Core
 				{
 					rosterItem.CustomName = contactName ;
 				}
+			}
+
+			e.Handled = true ;
+		}
+
+		public static void ExecuteContactVcard( object sender, ExecutedRoutedEventArgs e )
+		{
+			RosterItem rosterItem = e.Parameter as RosterItem ;
+
+			if ( rosterItem != null )
+			{
+				VCardWindow vCardWindow = new VCardWindow();
+				vCardWindow.DataContext = rosterItem ;
+
+				vCardWindow.Show();
 			}
 
 			e.Handled = true ;

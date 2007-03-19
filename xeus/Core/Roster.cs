@@ -15,13 +15,13 @@ namespace xeus.Core
 
 		#region delegates
 
-		public delegate bool PresenceSubscribeVetoHandler( Jid jid ) ;
+		public delegate void PresenceSubscribeHandler( Jid jid ) ;
 
 		#endregion
 
 		#region events
 
-		public event PresenceSubscribeVetoHandler PresenceSubscribeVeto ;
+		public event PresenceSubscribeHandler PresenceSubscribe ;
 
 		#endregion
 
@@ -172,16 +172,20 @@ namespace xeus.Core
 
 		private void xmppConnection_OnPresence( object sender, Presence pres )
 		{
+			RosterItem rosterItem = FindItem( pres.From.Bare ) ;
+
+			string name = ( rosterItem != null ) ? rosterItem.DisplayName : pres.From.Bare ;
+
 			switch ( pres.Type )
 			{
 				case PresenceType.subscribe:
 					{
-						Client.Instance.SubscribePresence( pres.From, OnSubscribePresenceVeto( pres.From ) ) ;
+						OnSubscribePresence( pres.From ) ;
 						break ;
 					}
 				case PresenceType.subscribed:
 					{
-						App.Instance.Window.AlertInfo( "Authorization", string.Format( "You were authorized by {0}", pres.From ) ) ;
+						App.Instance.Window.AlertInfo( "Authorization", string.Format( "You were authorized by {0}", name ) ) ;
 						AskForVCard( pres.From.Bare ) ;
 						break ;
 					}
@@ -192,7 +196,7 @@ namespace xeus.Core
 				case PresenceType.unsubscribed:
 					{
 						App.Instance.Window.AlertInfo( "Authorization",
-						                               string.Format( "{0} removed the authorization from you", pres.From ) ) ;
+						                               string.Format( "{0} removed the authorization from you", name ) ) ;
 						break ;
 					}
 				default:
@@ -203,14 +207,12 @@ namespace xeus.Core
 			}
 		}
 
-		protected virtual bool OnSubscribePresenceVeto( Jid jid )
+		protected virtual void OnSubscribePresence( Jid jid )
 		{
-			if ( PresenceSubscribeVeto != null )
+			if ( PresenceSubscribe != null )
 			{
-				return PresenceSubscribeVeto( jid ) ;
+				PresenceSubscribe( jid ) ;
 			}
-
-			return true ;
 		}
 
 		private void VcardResult( object sender, IQ iq, object data )

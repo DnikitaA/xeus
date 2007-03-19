@@ -115,5 +115,17 @@ namespace xeus.Properties {
                 this["Client_SendTyping"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int UI_MessageTextSlider {
+            get {
+                return ((int)(this["UI_MessageTextSlider"]));
+            }
+            set {
+                this["UI_MessageTextSlider"] = value;
+            }
+        }
     }
 }

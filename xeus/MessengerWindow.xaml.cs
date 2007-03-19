@@ -4,6 +4,7 @@ using System.Windows ;
 using System.Windows.Controls.Primitives ;
 using System.Windows.Forms ;
 using System.Windows.Threading ;
+using agsXMPP ;
 using agsXMPP.protocol.client ;
 using agsXMPP.protocol.iq.register ;
 using xeus.Controls ;
@@ -25,6 +26,7 @@ namespace xeus
 		private delegate void ManualLoginCallback() ;
 		private delegate void SetStatusCallback( string text ) ;
 		private delegate void OnRegisterCallback( IQ iq, Register register ) ;
+		private delegate void PresenceSubscribeCallback( Jid jid ) ;
 
 		public MessengerWindow()
 		{
@@ -35,9 +37,10 @@ namespace xeus
 			InitializeComponent() ;
 
 			_trayIcon.NotifyIcon.MouseClick += new MouseEventHandler( _notifyIcon_MouseClick ) ;
+			
 
 #if DEBUG
-//			_trayIcon.State = TrayIcon.TrayState.NewMessage ;
+//			Roster_PresenceSubscribe( Client.Instance.Roster.Items[ 0 ].XmppRosterItem.Jid ) ;
 #endif
 		}
 
@@ -48,8 +51,32 @@ namespace xeus
 			Client.Instance.LoginError += new Client.LoginHandler( OnLoginError );
 
 			Client.Instance.PropertyChanged += new PropertyChangedEventHandler( Instance_PropertyChanged );
+			Client.Instance.Roster.PresenceSubscribe += new Roster.PresenceSubscribeHandler( Roster_PresenceSubscribe );
 
 			_trayIcon.State = TrayIcon.TrayState.Pending ;
+			_inlineSearch.Visibility = Visibility.Collapsed ;
+		}
+
+		void Roster_PresenceSubscribe( Jid jid )
+		{
+			if ( App.DispatcherThread.CheckAccess() )
+			{
+				RosterItem rosterItem = Client.Instance.Roster.FindItem( jid.Bare ) ;
+
+				if ( rosterItem != null )
+				{
+					AuthorizeWindow.ShowWindow( rosterItem ) ;
+				}
+				else
+				{
+					AuthorizeWindow.ShowWindow( jid ) ;
+				}
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new PresenceSubscribeCallback( Roster_PresenceSubscribe ), jid ) ;
+			}
 		}
 
 		void Instance_PropertyChanged( object sender, PropertyChangedEventArgs e )
@@ -255,6 +282,7 @@ namespace xeus
 
 			base.OnClosing( e ) ;
 
+			AuthorizeWindow.CloseAllWindows();
 			MessageWindow.CloseWindow() ;
 			ServicesWindow.CloseWindow();
 		}
