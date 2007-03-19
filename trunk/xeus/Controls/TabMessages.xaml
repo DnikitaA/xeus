@@ -11,7 +11,23 @@
 	<Grid>
 	<DockPanel>
         <TextBox VerticalAlignment="Stretch" Height="Auto" Grid.Row="1" Style="{DynamicResource TextBoxStyleInDialog}" TextWrapping="Wrap"
-                   Initialized="TextBoxInitialized" x:Name="textBox" KeyDown="OnTextKeyDown" AcceptsReturn="True" AutoWordSelection="True" Text="" SpellCheck.IsEnabled="True" MaxLength="10000" MaxLines="1000" MinLines="1" DockPanel.Dock="Bottom" TabIndex="0" />
+                   Initialized="TextBoxInitialized" x:Name="textBox" KeyDown="OnTextKeyDown" AcceptsReturn="True" AutoWordSelection="True" Text="" SpellCheck.IsEnabled="True" MaxLength="10000" MaxLines="1000" MinLines="1" DockPanel.Dock="Bottom" TabIndex="0">
+			<TextBox.LayoutTransform>
+				<TransformGroup>
+					<ScaleTransform>
+						<ScaleTransform.ScaleY>
+	          				<Binding Path="UI_MessageTextSlider" Source="{x:Static prop:Settings.Default}" Mode="OneWay"/>
+						</ScaleTransform.ScaleY>
+						<ScaleTransform.ScaleX>
+	          				<Binding Path="UI_MessageTextSlider" Source="{x:Static prop:Settings.Default}" Mode="OneWay"/>
+						</ScaleTransform.ScaleX>
+					</ScaleTransform>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="0"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</TextBox.LayoutTransform>
+		</TextBox>
     <ListBox
       Initialized="ListBoxInitialized"
 			ItemsSource="{Binding Path=Messages}"

@@ -411,6 +411,21 @@
   
  <DataTemplate x:Key="ChatMessageItem" DataType="{x:Type local:ChatMessage}">
 		<Grid Background="#05FFFFFF" x:Name="_grid">
+			<Grid.LayoutTransform>
+				<TransformGroup>
+					<ScaleTransform>
+						<ScaleTransform.ScaleY>
+	          				<Binding Path="UI_MessageTextSlider" Source="{x:Static prop:Settings.Default}" Mode="OneWay"/>
+						</ScaleTransform.ScaleY>
+						<ScaleTransform.ScaleX>
+	          				<Binding Path="UI_MessageTextSlider" Source="{x:Static prop:Settings.Default}" Mode="OneWay"/>
+						</ScaleTransform.ScaleX>
+					</ScaleTransform>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="0"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</Grid.LayoutTransform>
 			<Border BorderBrush="#FF4A4A4A" BorderThickness="0.5,0.5,0.5,0.5" CornerRadius="2,2,2,2"
 			 HorizontalAlignment="Right" Padding="4,2,4,2" Opacity="0.8"
 			 Margin="0,29.7,4,0" Panel.ZIndex="2" VerticalAlignment="Top" x:Name="_timeBorder">
@@ -434,12 +449,9 @@
 	    <DockPanel >
 			<Image Source="{Binding Path=Image}" Width="40" VerticalAlignment="Top" Height="40" HorizontalAlignment="Right"
 				x:Name="_image" DockPanel.Dock="Right" />
-			<TextBox x:Name="_body" Text="{Binding Path=Body, Mode=OneWay}" Foreground="#FFC5A581" 
+			<TextBox x:Name="_body" Text="{Binding Path=Body, Mode=OneWay}" FontSize="12" Foreground="#FFC5A581" 
 			 Margin="10,0,10,0" TextWrapping="WrapWithOverflow" 
 			 		DockPanel.Dock="Right" Style="{DynamicResource TextBoxStyleBlack}" IsReadOnly="True" IsUndoEnabled="False">
-        <TextBox.FontSize>
-          <Binding Path="UI_MessageTextSlider" Source="{x:Static prop:Settings.Default}" Mode="OneWay"/>
-        </TextBox.FontSize>
       </TextBox>
 	    </DockPanel>
 	</Grid>
