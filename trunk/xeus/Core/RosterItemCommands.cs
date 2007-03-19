@@ -246,10 +246,7 @@ namespace xeus.Core
 
 			if ( rosterItem != null )
 			{
-				VCardWindow vCardWindow = new VCardWindow();
-				vCardWindow.DataContext = rosterItem ;
-
-				vCardWindow.Show();
+				VCardWindow.ShowWindow( rosterItem );
 			}
 
 			e.Handled = true ;

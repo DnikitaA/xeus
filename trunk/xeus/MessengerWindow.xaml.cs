@@ -285,6 +285,7 @@ namespace xeus
 			AuthorizeWindow.CloseAllWindows();
 			MessageWindow.CloseWindow() ;
 			ServicesWindow.CloseWindow();
+			VCardWindow.CloseAllWindows();
 		}
 
 		private void SaveData()
