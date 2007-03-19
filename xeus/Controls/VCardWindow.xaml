@@ -12,10 +12,47 @@
     x:Name="vcard"
 	Background="{x:Null}" Margin="5,5,5,5" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" >
   <StackPanel Margin="2,2,2,2">
-  <StackPanel Margin="10,10,10,10" Orientation="Horizontal">
-    <Image x:Name="_image" Width="80" Height="80" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+  <StackPanel Orientation="Horizontal">
+	  
+	<StackPanel>
+	<Border BorderThickness="4" >
+	    <Image x:Name="_image" Source="../images/avatar.png" Width="80" Height="80" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+	</Border>
+	<Border Opacity="0.2" Height="30" RenderTransformOrigin="0.5,0.5">
+	<Border.OpacityMask>
+	    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+	    	<GradientStop Offset="0.724" Color="Black"/>
+	    	<GradientStop Offset="0.31" Color="Transparent"/>
+	    </LinearGradientBrush>
+	</Border.OpacityMask>
+	<Border.Background>
+	    <VisualBrush Visual="{Binding ElementName=_image}">
+	       <!-- <VisualBrush.Transform>
+	            <ScaleTransform ScaleX="1" ScaleY="-1" CenterX="200" CenterY="150" />
+	        </VisualBrush.Transform>-->
+	    </VisualBrush>
+	</Border.Background>
+		<Border.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Border.RenderTransform>
+		<Border.LayoutTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="180"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Border.LayoutTransform>
+	</Border>
+	</StackPanel>
+	
 	<StackPanel Margin="10,0,0,0">
-		<TextBlock Text="{Binding Path=Key}" FontSize="12" Foreground="#FFB2D9E3" />
+		<TextBlock Text="{Binding Path=Key}" FontSize="12" Foreground="#FFB2D9E3" Margin="0,0,0,10" />
 		<StackPanel Margin="0,5,0,0">
 			<TextBlock FontSize="12" Foreground="White" Text="Full Name" />
 			<TextBox Text="{Binding Path=FullName}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
