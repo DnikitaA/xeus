@@ -166,11 +166,11 @@ namespace xeus.Core
 
 			if ( timeSpan.TotalMinutes > Settings.Default.Client_IdleMinutesAway )
 			{
-				SetMyPresence( ShowType.xa, true ) ;
+				SetMyPresence( ShowType.away, true ) ;
 			}
 			else if ( timeSpan.TotalMinutes > Settings.Default.Client_IdleMinutesXA )
 			{
-				SetMyPresence( ShowType.away, true ) ;
+				SetMyPresence( ShowType.xa, true ) ;
 			}
 			else
 			{
