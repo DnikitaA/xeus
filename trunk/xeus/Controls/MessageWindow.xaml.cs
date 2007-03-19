@@ -236,65 +236,71 @@ namespace xeus.Controls
 		{
 			if ( e.RemovedItems.Count > 0 )
 			{
-				TabItem unselectedItem = ( TabItem ) e.RemovedItems[ 0 ] ;
+				TabItem unselectedItem = e.RemovedItems[ 0 ] as TabItem ;
 
-				RosterItem rosterItem = unselectedItem.Content as RosterItem ;
-
-				if ( rosterItem != null )
+				if ( unselectedItem != null )
 				{
-					ChangeChatState( Chatstate.gone );
+					RosterItem rosterItem = unselectedItem.Content as RosterItem ;
+
+					if ( rosterItem != null )
+					{
+						ChangeChatState( Chatstate.gone ) ;
+					}
 				}
 			}	
 			
 			if ( e.AddedItems.Count > 0 )
 			{
-				TabItem selectedItem = ( TabItem ) e.AddedItems[ 0 ] ;
+				TabItem selectedItem = e.AddedItems[ 0 ] as TabItem ;
 
-				RosterItem rosterItem = selectedItem.Content as RosterItem ;
-
-				if ( rosterItem != null )
+				if ( selectedItem != null )
 				{
-					if ( !rosterItem.MessagesPreloaded )
+					RosterItem rosterItem = selectedItem.Content as RosterItem ;
+
+					if ( rosterItem != null )
 					{
-						Database database = new Database() ;
-
-						List< ChatMessage > messages = database.ReadMessages( rosterItem ) ;
-
-						int i = 0 ;
-
-						foreach ( ChatMessage chatMessage in messages )
+						if ( !rosterItem.MessagesPreloaded )
 						{
-							bool exists = false ;
+							Database database = new Database() ;
 
-							lock ( rosterItem.Messages._syncObject )
+							List< ChatMessage > messages = database.ReadMessages( rosterItem ) ;
+
+							int i = 0 ;
+
+							foreach ( ChatMessage chatMessage in messages )
 							{
-								foreach ( ChatMessage existingMessage in rosterItem.Messages )
-								{
-									if ( existingMessage.Id == chatMessage.Id )
-									{
-										exists = true ;
-										break ;
-									}
-								}
+								bool exists = false ;
 
-								if ( !exists )
+								lock ( rosterItem.Messages._syncObject )
 								{
-									lock ( rosterItem.Messages._syncObject )
+									foreach ( ChatMessage existingMessage in rosterItem.Messages )
 									{
-										rosterItem.Messages.Insert( i, chatMessage ) ;
+										if ( existingMessage.Id == chatMessage.Id )
+										{
+											exists = true ;
+											break ;
+										}
 									}
 
-									i++ ;
+									if ( !exists )
+									{
+										lock ( rosterItem.Messages._syncObject )
+										{
+											rosterItem.Messages.Insert( i, chatMessage ) ;
+										}
+
+										i++ ;
+									}
 								}
 							}
+
+							rosterItem.MessagesPreloaded = true ;
 						}
 
-						rosterItem.MessagesPreloaded = true ;
+						rosterItem.HasUnreadMessages = false ;
+
+						ChangeChatState( Chatstate.active ) ;
 					}
-
-					rosterItem.HasUnreadMessages = false ;
-
-					ChangeChatState( Chatstate.active ) ;
 				}
 			}
 

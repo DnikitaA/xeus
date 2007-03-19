@@ -27,8 +27,11 @@
 		  				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},Path=DataContext}"/>
 	          <MenuItem Command="local:RosterItemCommands.AuthRemoveFrom"
 		  				CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},Path=DataContext}"/>
-	     </MenuItem>
-	</ContextMenu>
+	  </MenuItem>
+    <Separator/>
+    <MenuItem Command="local:RosterItemCommands.ContactDisplayVCard"
+      CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},Path=DataContext}"/>
+  </ContextMenu>
     </ResourceDictionary>
   </UserControl.Resources>
 

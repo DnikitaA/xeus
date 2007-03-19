@@ -3,11 +3,11 @@
 	  xmlns:local="clr-namespace:xeus.Core"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:settings="clr-namespace:xeus.Core"
-	xmlns:win="clr-namespace:xeus.Controls"
+	xmlns:win="clr-namespace:xeus.Controls"	
+    xmlns:prop="clr-namespace:xeus.Properties"
     x:Class="xeus.Controls.MessageWindow"
     Title="message" Height="300" Width="300"
-    settings:WindowSettings.Save="True"	
-    xmlns:prop="clr-namespace:xeus.Properties"
+    settings:WindowSettings.Save="True"
 	  Style="{StaticResource DarkStyleWindow}"
 	  Background="{x:Null}"
     x:Name="message"
@@ -15,7 +15,20 @@
 	>
     <DockPanel>
 		<StatusBar DockPanel.Dock="Bottom" Style="{DynamicResource StatusBarStyleBlack}">
-			<StatusBarItem HorizontalAlignment="Stretch" 
+      <StatusBarItem HorizontalAlignment="Stretch"
+			    	  x:Name="_statusResize" VerticalAlignment="Stretch" Panel.ZIndex="1">
+        <Slider Margin="8,0,8,0" x:Name="_sliderItemSize"
+       VerticalAlignment="Bottom" Minimum="10.0" Maximum="40.0" Style="{DynamicResource SliderStyleRoster}"
+       TickPlacement="TopLeft" LargeChange="4" SmallChange="1" IsSnapToTickEnabled="True" Height="24"
+            Focusable="False" MaxWidth="100" IsTabStop="False" IsMoveToPointEnabled="True" IsSelectionRangeEnabled="False"
+			        >
+          <Slider.Value>
+            <Binding Path="UI_MessageTextSlider" Source="{x:Static prop:Settings.Default}" Mode="TwoWay"/>
+          </Slider.Value>
+        </Slider>
+      </StatusBarItem>
+      <Separator/>
+      <StatusBarItem HorizontalAlignment="Stretch" 
 			    	  VerticalAlignment="Stretch" Panel.ZIndex="1">
         <CheckBox x:Name="_typingInfo" VerticalAlignment="Bottom" Checked="OnTypingChecked" Unchecked="OnTypingUnchecked"
                   Template="{DynamicResource CheckBoxTypingInfo}" ToolTip="Send 'Typing' Information" Width="17" Height="17" >

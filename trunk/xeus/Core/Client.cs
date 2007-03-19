@@ -378,16 +378,18 @@ namespace xeus.Core
 
 		public void SubscribePresence( Jid jid, bool approve )
 		{
-			PresenceManager presenceManager = new PresenceManager( _xmppConnection ) ;
+			if ( IsAvailable )
+			{
+				PresenceManager presenceManager = new PresenceManager( _xmppConnection ) ;
 
-			if ( approve )
-			{
-				presenceManager.ApproveSubscriptionRequest( jid ) ;
-				App.Instance.Window.AlertInfo( "Authorization", string.Format( "You just authorized {0}", jid.Bare ) ) ;
-			}
-			else
-			{
-				presenceManager.RefuseSubscriptionRequest( jid ) ;
+				if ( approve )
+				{
+					presenceManager.ApproveSubscriptionRequest( jid ) ;
+				}
+				else
+				{
+					presenceManager.RefuseSubscriptionRequest( jid ) ;
+				}
 			}
 		}
 
