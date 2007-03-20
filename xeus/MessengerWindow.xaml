@@ -67,6 +67,11 @@
 				Click="OpenServices" ToolTip="Services" Background="Yellow"
 				IsEnabled="{Binding Path=IsAvailable}"/>
 		</StatusBarItem>
+		<StatusBarItem 
+		    	  x:Name="_statusVCard" VerticalAlignment="Stretch">
+		    <Button x:Name="_buttonVCard" Width="27" Height="27" Template="{DynamicResource VCard}"
+				  ToolTip="My V-card" Command="localcore:RosterItemCommands.ContactDisplayVCard" CommandParameter="{Binding Path=MyRosterItem}" />
+		</StatusBarItem>
     <Separator/>
 		<StatusBarItem HorizontalAlignment="Stretch" 
 		    	  x:Name="_statusUnreadMessages" VerticalAlignment="Stretch"

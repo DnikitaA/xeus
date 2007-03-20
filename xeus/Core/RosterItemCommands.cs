@@ -8,7 +8,6 @@ namespace xeus.Core
 {
 	public static class RosterItemCommands
 	{
-		private static Dispatcher _dispatcher ;
 		private static RoutedUICommand _authSendTo = new RoutedUICommand( "Resend Authorization To Contact", "authSendTo", typeof ( RosterItemCommands ) ) ;
 		private static RoutedUICommand _authRequestFrom = new RoutedUICommand( "Request Authorization From Contact", "authRequestFrom", typeof ( RosterItemCommands ) ) ;
 		private static RoutedUICommand _authRemoveFrom = new RoutedUICommand( "Remove Your Authorization From Contact", "authRemoveFrom", typeof ( RosterItemCommands ) ) ;
@@ -76,8 +75,6 @@ namespace xeus.Core
 
 		static RosterItemCommands()
 		{
-			_dispatcher = Dispatcher.CurrentDispatcher ;
-
 			Application.Current.MainWindow.CommandBindings.Add(
 				new CommandBinding( _authSendTo, ExecuteAuthSendTo, CanExecuteAuthSendTo ) ) ;
 

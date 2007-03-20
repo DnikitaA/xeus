@@ -37,8 +37,8 @@ namespace xeus.Core
 		private string _nickName = String.Empty ;
 		private string _description = String.Empty ;
 		private string _name = String.Empty ;
-		private Organization _organization ;
-		private Email _emailPreferred ;
+		private string _organization ;
+		private string _emailPreferred ;
 		private BitmapImage _image ;
 		private bool _hasVCardRecivied = false ;
 		private bool _hasUnreadMessages = false ;
@@ -56,6 +56,9 @@ namespace xeus.Core
 
 		private bool _isInDatabase = false ;
 		private bool _isDirty = false ;
+		private string _imagefileName ;
+
+		private bool _removeTemporaryImage ;
 
 		private RosterItem()
 		{
@@ -463,10 +466,22 @@ namespace xeus.Core
 				{
 					Birthday = vcard.Birthday ;
 					Description = vcard.Description ;
-					EmailPreferred = vcard.GetPreferedEmailAddress() ;
+
+					Email email = vcard.GetPreferedEmailAddress() ;
+					if ( email != null )
+					{
+						EmailPreferred = email.UserId ;
+					}
+
 					FullName = vcard.Fullname ;
 					NickName = vcard.Nickname ;
-					Organization = vcard.Organization ;
+
+					Organization organization = vcard.Organization ;
+					if ( organization != null )
+					{
+						Organization = vcard.Organization.Name ;
+					}
+
 					Role = vcard.Role ;
 					Title = vcard.Title ;
 					Url = vcard.Url ;
@@ -605,7 +620,7 @@ namespace xeus.Core
 			}
 		}
 
-		public Organization Organization
+		public string Organization
 		{
 			get
 			{
@@ -618,7 +633,7 @@ namespace xeus.Core
 			}
 		}
 
-		public Email EmailPreferred
+		public string EmailPreferred
 		{
 			get
 			{
@@ -667,6 +682,19 @@ namespace xeus.Core
 			{
 				_title = value ;
 				NotifyPropertyChanged( "Title" ) ;
+			}
+		}
+
+		public string ImageFileName
+		{
+			get
+			{
+				return _imagefileName ;
+			}
+
+			set
+			{
+				_imagefileName = value ;
 			}
 		}
 
@@ -888,6 +916,18 @@ namespace xeus.Core
 			set
 			{
 				_isDirty = value ;
+			}
+		}
+
+		public bool RemoveTemporaryImage
+		{
+			get
+			{
+				return _removeTemporaryImage ;
+			}
+			set
+			{
+				_removeTemporaryImage = value ;
 			}
 		}
 

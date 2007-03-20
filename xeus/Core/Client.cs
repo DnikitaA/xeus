@@ -45,7 +45,6 @@ namespace xeus.Core
 
 		#region events
 
-		public event LoginHandler LoggedIn ;
 		public event LoginHandler LoginError ;
 		public event MessageHandler Message ;
 
@@ -189,10 +188,12 @@ namespace xeus.Core
 		void _xmppConnection_OnClose( object sender )
 		{
 			_presence = null ;
+			_myRosterItem = null ;
 
 			NotifyPropertyChanged( "MyPresence" ) ;
 			NotifyPropertyChanged( "StatusTemplate" ) ;
 			NotifyPropertyChanged( "IsAvailable" ) ;
+			NotifyPropertyChanged( "MyRosterItem" ) ;
 		}
 
 		private void _xmppConnection_OnXmppConnectionStateChanged( object sender, XmppConnectionState state )
@@ -299,6 +300,22 @@ namespace xeus.Core
 				Trace.WriteLine( message.Thread );
 
 				_xmppConnection.Send( message ) ;
+			}
+		}
+
+		private RosterItem _myRosterItem = null ;
+
+		public RosterItem MyRosterItem
+		{
+			get
+			{
+				return _myRosterItem ;
+			}
+
+			set
+			{
+				_myRosterItem = value ;
+				NotifyPropertyChanged( "MyRosterItem" ) ;
 			}
 		}
 
@@ -613,6 +630,14 @@ namespace xeus.Core
 			_xmppConnection.RequestAgents() ;
 		}
 
+		public void Send( IQ iq )
+		{
+			if ( _xmppConnection.Binded )
+			{
+				_xmppConnection.Send( iq ) ;
+			}
+		}
+
 		public void SendIqGrabber( IQ iq, IqCB iqCallback, object cbArgument )
 		{
 			if ( _xmppConnection.Binded )
@@ -644,15 +669,7 @@ namespace xeus.Core
 
 		private void _xmppConnecion_OnLogin( object sender )
 		{
-			OnLogin() ;
-		}
-
-		protected virtual void OnLogin()
-		{
-			if ( LoggedIn != null )
-			{
-				LoggedIn() ;
-			}
+			Roster.AskForVCard( MyJid.Bare ) ;
 		}
 
 		public void Log( string text, params object[] parameters )

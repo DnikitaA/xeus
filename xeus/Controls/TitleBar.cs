@@ -48,6 +48,7 @@ namespace xeus.Controls
 		private CheckBox pinButton ;
 
 		private Path _xeus ;
+		private Border _logo ;
 		private Window window ;
 
 		public TitleBar()
@@ -71,6 +72,7 @@ namespace xeus.Controls
 				maxButton = ( Button ) Template.FindName( "MaxButton", this ) ;
 				pinButton = ( CheckBox ) Template.FindName( "PinButton", this ) ;
 				_xeus = ( Path ) Template.FindName( "_xeus", this ) ;
+				_logo = ( Border ) Template.FindName( "_logo", this ) ;
 
 				closeButton.Click += new RoutedEventHandler( CloseButton_Click ) ;
 				minButton.Click += new RoutedEventHandler( MinButton_Click ) ;
@@ -133,6 +135,7 @@ namespace xeus.Controls
 			if ( _xeus != null )
 			{
 				_xeus.Fill = Brushes.Black ;
+				_logo.Opacity = 0.15 ;
 			}
 		}
 
@@ -141,6 +144,7 @@ namespace xeus.Controls
 			if ( _xeus != null )
 			{
 				_xeus.Fill = Brushes.Gray ;
+				_logo.Opacity = 1.0 ;
 			}
 		}
 

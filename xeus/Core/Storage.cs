@@ -150,6 +150,47 @@ namespace xeus.Core
 			return GetAvatar( "pack://application:,,,/Images/service.png", ref _defaultServiceAvatar ) ;
 		}
 
+		public static string FlushImage( string jid )
+		{
+			try
+			{
+				Vcard vcard = GetVcard( jid ) ;
+
+				if ( vcard == null || vcard.Photo == null )
+				{
+					return null ;
+				}
+
+				string filename = Path.GetTempFileName() ;
+				byte[] pic ;
+
+				if ( vcard.Photo.HasTag( "BINVAL" ) )
+				{
+					pic = Convert.FromBase64String( vcard.Photo.GetTag( "BINVAL" ) ) ;
+
+				}
+				else if ( vcard.Photo.TextBase64.Length > 0 )
+				{
+					pic = Convert.FromBase64String( vcard.Photo.Value ) ;
+				}
+				else
+				{
+					return null ;
+				}
+
+				using ( BinaryWriter binWriter = new BinaryWriter( File.Open( filename, FileMode.Create ) ) )
+				{
+					binWriter.Write( pic );
+				}
+
+				return filename ;
+			}
+
+			catch
+			{
+				return null ;
+			}			
+		}
 		public static BitmapImage ImageFromPhoto( Photo photo )
 		{
 			try
