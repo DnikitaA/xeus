@@ -3,7 +3,7 @@
 	  xmlns:local="clr-namespace:xeus.Core"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:settings="clr-namespace:xeus.Core"
-	xmlns:win="clr-namespace:xeus.Controls"	
+	  xmlns:win="clr-namespace:xeus.Controls"	
     xmlns:prop="clr-namespace:xeus.Properties"
     x:Class="xeus.Controls.MessageWindow"
     Title="message" Height="300" Width="300"
@@ -37,11 +37,15 @@
           </CheckBox.IsChecked>
         </CheckBox>
 			</StatusBarItem>
-			<StatusBarItem HorizontalAlignment="Stretch" 
+      <StatusBarItem HorizontalAlignment="Stretch"
+              x:Name="_statusInlineSearch" VerticalAlignment="Stretch" Panel.ZIndex="1">
+        <win:InlineSearch x:Name="_inlineSearch" Height="25" VerticalAlignment="Bottom" />
+      </StatusBarItem>
+      <StatusBarItem HorizontalAlignment="Stretch" 
 			    	  x:Name="_statusTyping" VerticalAlignment="Stretch" Panel.ZIndex="1">
 		    	<win:ContactTyping x:Name="_typing" VerticalAlignment="Bottom" Visibility="Hidden"/>
 			</StatusBarItem>
-		</StatusBar>
+    </StatusBar>
     	<TabControl x:Name="_tabs" ContentTemplate="{StaticResource RosterItemMessagesTemplate}" 
 			Margin="8,8,8,8" Style="{DynamicResource TabControlStyle}" DockPanel.Dock="Top" />
 	</DockPanel>

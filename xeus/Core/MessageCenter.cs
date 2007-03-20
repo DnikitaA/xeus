@@ -61,6 +61,8 @@ namespace xeus.Core
 		{
 			lock ( Client.Instance.MessageCenter.ChatMessages._syncObject )
 			{
+				int count = rosterItem.Messages.Count ;
+
 				for ( int i = Client.Instance.MessageCenter.ChatMessages.Count - 1;
 				      i >= 0;
 				      i = Client.Instance.MessageCenter.ChatMessages.Count - 1 )
@@ -69,7 +71,7 @@ namespace xeus.Core
 
 					lock ( rosterItem.Messages._syncObject )
 					{
-						rosterItem.Messages.Add( message ) ;
+						rosterItem.Messages.Insert( count, message ) ;
 					}
 
 					Client.Instance.MessageCenter.ChatMessages.Remove( message ) ;

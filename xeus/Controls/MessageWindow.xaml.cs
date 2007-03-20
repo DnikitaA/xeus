@@ -29,6 +29,8 @@ namespace xeus.Controls
 
 		private Chatstate _chatstate = Chatstate.None ;
 
+		private InlineMethod _inlineMethod = new InlineMethod() ;
+
 		private delegate void ScrollToLastItemCallback( ListBox listBox ) ;
 
 		private delegate void DisplayChatCallback( string jid, bool activate ) ;
@@ -38,6 +40,8 @@ namespace xeus.Controls
 		private delegate void ContactIsTypingCallback( string userName, Chatstate chatstate ) ;
 
 		private delegate void SendChatStateCallback( Chatstate chatstate ) ;
+
+		private delegate void SelectItemCallback( ChatMessage item ) ;
 
 		public MessageWindow()
 		{
@@ -50,10 +54,139 @@ namespace xeus.Controls
 			_timerNoTyping.Elapsed += new ElapsedEventHandler( _timerNoTyping_Elapsed );
 			_timerNoTyping2.Elapsed += new ElapsedEventHandler( _timerNoTyping2_Elapsed );
 
+			_inlineSearch.Visibility = Visibility.Collapsed ;
+
 			_listRefreshTimer.AutoReset = false ;
 			_listRefreshTimer.Start() ;
 
+			_inlineMethod.Finished += new InlineMethod.InlineResultHandler( _inlineMethod_Finished );
+			_inlineSearch.TextChanged += new TextChangedEventHandler( _inlineSearch_TextChanged );
+			_inlineSearch.Closed += new InlineSearch.ClosedHandler( _inlineSearch_Closed );
+
 			KeyDown += new KeyEventHandler( MessageWindow_KeyDown );
+		}
+
+		object _textsLock = new object();
+		private List< KeyValuePair< string, ChatMessage > > _texts = null ;
+		private string lastSearch = String.Empty ;
+		private ChatMessage _lastFoundItem = null ;
+
+		private object SearchInList( ref bool stop, object param )
+		{
+			lock ( _textsLock )
+			{
+				if ( _texts == null )
+				{
+					_texts = new List< KeyValuePair< string, ChatMessage > >() ;
+
+					lock ( _rosterItem.Messages._syncObject )
+					{
+						foreach ( ChatMessage chatMessage in _rosterItem.Messages )
+						{
+							_texts.Add( new KeyValuePair< string, ChatMessage >( chatMessage.Body.ToUpper().Trim(), chatMessage ) ) ;
+						}
+					}
+				}
+			}
+
+			ChatMessage found = null ;
+			
+			string toFound = ( ( string ) param ).ToUpper() ;
+
+			bool searchNext = ( lastSearch == toFound ) ;
+
+			lastSearch = toFound ;
+
+			if ( searchNext && _lastFoundItem != null )
+			{
+				bool fromHere = false ;
+
+				foreach ( KeyValuePair< string, ChatMessage > body in _texts )
+				{
+					if ( stop )
+					{
+						return null ;
+					}
+
+					if ( fromHere && body.Key.Contains( toFound ) )
+					{
+						found = body.Value ;
+						break ;
+					}
+
+					if ( _lastFoundItem == body.Value )
+					{
+						fromHere = true ;
+					}
+				}
+			}
+			else
+			{
+				foreach ( KeyValuePair< string, ChatMessage > body in _texts )
+				{
+					if ( stop )
+					{
+						return null ;
+					}
+
+					if ( ( ( string ) param ) == String.Empty )
+					{
+						return null ;
+					}
+
+					if ( body.Key.Contains( toFound ) )
+					{
+						found = body.Value ;
+						break ;
+					}
+				}
+			}
+
+			_lastFoundItem = found ;
+			return found ;
+		}
+
+
+		void _inlineSearch_Closed( bool isEnter )
+		{
+			lock ( _texts )
+			{
+				_texts = null ;
+			}
+		}
+
+		void _inlineSearch_TextChanged( object sender, TextChangedEventArgs e )
+		{
+			_inlineMethod.Go( new InlineParam( SearchInList, _inlineSearch.Text ) ) ;
+		}
+
+		void _inlineMethod_Finished( object result )
+		{
+			ChatMessage rosterItem = ( ChatMessage ) result ;
+			SelectItem( rosterItem ) ;
+		}
+
+		private void SelectItem( ChatMessage item )
+		{
+			if ( App.DispatcherThread.CheckAccess() )
+			{
+				if ( item == null )
+				{
+					_inlineSearch.NotFound = true ;
+				}
+				else
+				{
+					_listBox.SelectedItem = item ;
+
+					_listBox.ScrollIntoView( item ) ;
+					_inlineSearch.NotFound = false ;
+				}
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new SelectItemCallback( SelectItem ), item ) ;
+			}
 		}
 
 		void _timerNoTyping2_Elapsed( object sender, ElapsedEventArgs e )
@@ -145,6 +278,10 @@ namespace xeus.Controls
 			{
 				_instance.RemoveCurrentTab();
 			}
+			else if ( _inlineSearch != null && FocusManager.GetFocusedElement( this ) != _textBox )
+			{
+				_inlineSearch.SendKey( e.Key ) ;
+			}
 		}
 
 		void RemoveCurrentTab()
@@ -232,6 +369,8 @@ namespace xeus.Controls
 			ScrollToLastItem( MessageListBox ) ;
 		}
 
+		RosterItem _rosterItem = null ;
+
 		private void _tabs_SelectionChanged( object sender, SelectionChangedEventArgs e )
 		{
 			if ( e.RemovedItems.Count > 0 )
@@ -255,15 +394,15 @@ namespace xeus.Controls
 
 				if ( selectedItem != null )
 				{
-					RosterItem rosterItem = selectedItem.Content as RosterItem ;
+					_rosterItem = selectedItem.Content as RosterItem ;
 
-					if ( rosterItem != null )
+					if ( _rosterItem != null )
 					{
-						if ( !rosterItem.MessagesPreloaded )
+						if ( !_rosterItem.MessagesPreloaded )
 						{
 							Database database = new Database() ;
 
-							List< ChatMessage > messages = database.ReadMessages( rosterItem ) ;
+							List< ChatMessage > messages = database.ReadMessages( _rosterItem ) ;
 
 							int i = 0 ;
 
@@ -271,9 +410,9 @@ namespace xeus.Controls
 							{
 								bool exists = false ;
 
-								lock ( rosterItem.Messages._syncObject )
+								lock ( _rosterItem.Messages._syncObject )
 								{
-									foreach ( ChatMessage existingMessage in rosterItem.Messages )
+									foreach ( ChatMessage existingMessage in _rosterItem.Messages )
 									{
 										if ( existingMessage.Id == chatMessage.Id )
 										{
@@ -284,9 +423,9 @@ namespace xeus.Controls
 
 									if ( !exists )
 									{
-										lock ( rosterItem.Messages._syncObject )
+										lock ( _rosterItem.Messages._syncObject )
 										{
-											rosterItem.Messages.Insert( i, chatMessage ) ;
+											_rosterItem.Messages.Insert( i, chatMessage ) ;
 										}
 
 										i++ ;
@@ -294,10 +433,10 @@ namespace xeus.Controls
 								}
 							}
 
-							rosterItem.MessagesPreloaded = true ;
+							_rosterItem.MessagesPreloaded = true ;
 						}
 
-						rosterItem.HasUnreadMessages = false ;
+						_rosterItem.HasUnreadMessages = false ;
 
 						ChangeChatState( Chatstate.active ) ;
 					}
