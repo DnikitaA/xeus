@@ -1,4 +1,8 @@
+using System ;
 using System.Collections.Generic ;
+using System.Drawing ;
+using System.Drawing.Imaging ;
+using System.IO ;
 using System.Timers ;
 using agsXMPP ;
 using agsXMPP.protocol.client ;
@@ -134,11 +138,6 @@ namespace xeus.Core
 			{
 				rosterItem.Presence = presence ;
 
-				/*
-				App.Instance.Window.Status( string.Format( "'{0}' changed status to '{1}'",
-													rosterItem.DisplayName, rosterItem.StatusDescription ) ) ;
-				*/
-
 				if ( rosterItem.IsService )
 				{
 					if ( presence.Type == PresenceType.available )
@@ -215,6 +214,59 @@ namespace xeus.Core
 			}
 		}
 
+		public void PublishMyVCard()
+		{
+			RosterItem item = Client.Instance.MyRosterItem ;
+			VcardIq viq = new VcardIq( IqType.set, Client.Instance.MyJid ) ;
+
+			if ( !string.IsNullOrEmpty( item.EmailPreferred ) )
+			{
+				viq.Vcard.AddEmailAddress( new Email( EmailType.INTERNET, item.EmailPreferred, true ) ) ;
+			}
+
+			viq.Vcard.Url = item.Url ;
+			viq.Vcard.Title = item.Title ;
+			viq.Vcard.Birthday = item.Birthday ;
+			viq.Vcard.Role = item.Role ;
+			viq.Vcard.Description = item.Description ;
+			viq.Vcard.Fullname = item.FullName ;
+			viq.Vcard.Nickname = item.NickName ;
+
+			if ( !string.IsNullOrEmpty( item.Organization ) )
+			{
+				viq.Vcard.Organization = new Organization( item.Organization, String.Empty ) ;
+			}
+
+			if ( !string.IsNullOrEmpty( item.ImageFileName ) )
+			{
+				SetPicture( item.ImageFileName, viq.Vcard, item.RemoveTemporaryImage ) ;
+			}
+
+			Client.Instance.Send( viq ) ;
+		}
+
+		private void SetPicture( string filename, Vcard vcard, bool deleteImage )
+		{
+			try
+			{
+				Image img = Image.FromFile( filename );
+				ImageFormat imageFormat = null ;
+
+				vcard.Photo = new Photo( img, imageFormat );
+
+				img.Dispose();
+
+				if ( deleteImage )
+				{
+					File.Delete( filename ) ;
+				}
+			}
+
+			catch ( Exception )
+			{
+			}
+		}
+
 		private void VcardResult( object sender, IQ iq, object data )
 		{
 			// if it is already in roster, change status property
@@ -267,6 +319,8 @@ namespace xeus.Core
 				{
 					if ( item.Ask == AskType.NONE )
 					{
+						RosterItem rosterItemComing = null ;
+
 						if ( existingRosterItem != null )
 						{
 							existingRosterItem.XmppRosterItem = item ;
@@ -275,6 +329,8 @@ namespace xeus.Core
 							{
 								existingRosterItem.Presence = presence ;
 							}
+
+							rosterItemComing = existingRosterItem ;
 						}
 						else
 						{
@@ -288,6 +344,14 @@ namespace xeus.Core
 							_items.Add( rosterItem ) ;
 
 							AskForVCard( rosterItem.Key ) ;
+
+							rosterItemComing = rosterItem ;
+						}
+
+						if ( rosterItemComing.Key == Client.Instance.MyJid.Bare
+							&& Client.Instance.MyRosterItem == null )
+						{
+							Client.Instance.MyRosterItem = rosterItemComing ;
 						}
 					}
 				}

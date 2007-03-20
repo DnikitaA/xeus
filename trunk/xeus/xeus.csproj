@@ -78,6 +78,7 @@
     <Page Include="Controls\ResizeGropResources.xaml" />
     <Page Include="Controls\TextBoxResource.xaml" />
     <Page Include="Controls\ToolTipsResourcexaml.xaml" />
+    <Page Include="Controls\xeus-logo.xaml" />
     <Page Include="HeadlinesResources.xaml" />
   </ItemGroup>
   <ItemGroup>

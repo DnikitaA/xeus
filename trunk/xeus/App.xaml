@@ -22,6 +22,7 @@
         <ResourceDictionary Source="Controls\WindowDecoration.xaml" />
   			<ResourceDictionary Source="Controls\ServiceResources.xaml"/>
   			<ResourceDictionary Source="Controls\InlineSearchResources.xaml"/>
+  			<ResourceDictionary Source="Controls\xeus-logo.xaml"/>
       </ResourceDictionary.MergedDictionaries>
   	</ResourceDictionary>
   </Application.Resources>

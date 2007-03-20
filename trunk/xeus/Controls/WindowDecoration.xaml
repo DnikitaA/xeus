@@ -27,6 +27,7 @@
                BorderThickness="0,0,0,1"
                CornerRadius="5,5,0,0"  BorderBrush="#FF323232"  Background="#FF202020"  >
             <DockPanel Margin="0,3,0,5">
+			        <Border x:Name="_logo" xmlns:Width="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Width="17" Height="17" Margin="5,2,0,2" Background="{DynamicResource xeus_logo_design}" />
               <Button Grid.Column="4" x:Name="CloseButton"
                     Width="16" Height="16" Template="{DynamicResource WindowButton}" Background="#FFF4866E" DockPanel.Dock="Right" Margin="0,0,5,0" ToolTip="Close" />
               <Button Grid.Column="3" x:Name="MaxButton"

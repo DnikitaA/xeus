@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<DrawingBrush x:Key="xeus_logo_design">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Geometry="F1 M 497.655,315.988C 556.565,315.988 604.321,363.745 604.321,422.655C 604.321,481.565 556.565,529.322 497.655,529.322C 438.744,529.322 390.988,481.565 390.988,422.655C 390.988,363.745 438.744,315.988 497.655,315.988 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="20" LineJoin="Round" Brush="#FF686868"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<LinearGradientBrush StartPoint="0.5,0.957143" EndPoint="0.5,0.0428571">
+								<LinearGradientBrush.GradientStops>
+									<GradientStop Color="#FF13308E" Offset="0"/>
+									<GradientStop Color="#FFA7BBFF" Offset="1"/>
+								</LinearGradientBrush.GradientStops>
+							</LinearGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#5FFFFFFF" Geometry="F1 M 496.988,325.322C 456.185,325.322 421.599,349.98 409.655,384.087C 435.016,393.322 464.94,398.655 496.988,398.655C 529.036,398.655 558.96,393.322 584.321,384.087C 572.377,349.98 537.791,325.322 496.988,325.322 Z "/>
+					<GeometryDrawing Brush="#27000000" Geometry="F1 M 498.026,518.988C 526.466,518.988 551.943,506.861 569.099,487.725C 549.492,481.392 525.33,477.655 499.195,477.655C 472.253,477.655 447.409,481.626 427.489,488.318C 444.637,507.112 469.88,518.988 498.026,518.988 Z "/>
+					<GeometryDrawing Geometry="F1 M 498.654,75.9962C 557.565,75.9962 605.321,123.753 605.321,182.663C 605.321,241.573 557.565,289.33 498.654,289.33C 439.744,289.33 391.987,241.573 391.987,182.663C 391.987,123.753 439.744,75.9962 498.654,75.9962 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="20" LineJoin="Round" Brush="#FF686868"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<LinearGradientBrush StartPoint="0.5,0.957143" EndPoint="0.5,0.0428571">
+								<LinearGradientBrush.GradientStops>
+									<GradientStop Color="#FFBA1965" Offset="0"/>
+									<GradientStop Color="#FFEFB6D0" Offset="1"/>
+								</LinearGradientBrush.GradientStops>
+							</LinearGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#5FFFFFFF" Geometry="F1 M 497.987,85.3295C 457.184,85.3295 422.599,109.988 410.654,144.095C 436.016,153.33 465.94,158.663 497.987,158.663C 530.035,158.663 559.959,153.33 585.321,144.095C 573.376,109.988 538.791,85.3295 497.987,85.3295 Z "/>
+					<GeometryDrawing Brush="#27000000" Geometry="F1 M 499.025,278.996C 527.466,278.996 552.942,266.869 570.099,247.733C 550.491,241.4 526.329,237.663 500.194,237.663C 473.253,237.663 448.408,241.634 428.489,248.326C 445.637,267.12 470.879,278.996 499.025,278.996 Z "/>
+					<GeometryDrawing Geometry="F1 M 258.659,314.996C 317.569,314.996 365.326,362.753 365.326,421.663C 365.326,480.573 317.569,528.33 258.659,528.33C 199.749,528.33 151.992,480.573 151.992,421.663C 151.992,362.753 199.749,314.996 258.659,314.996 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="20" LineJoin="Round" Brush="#FF686868"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<LinearGradientBrush StartPoint="0.5,0.957143" EndPoint="0.5,0.0428571">
+								<LinearGradientBrush.GradientStops>
+									<GradientStop Color="#FF0EA83D" Offset="0"/>
+									<GradientStop Color="#FF98F1B3" Offset="1"/>
+								</LinearGradientBrush.GradientStops>
+							</LinearGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#5FFFFFFF" Geometry="F1 M 257.992,324.329C 217.189,324.329 182.604,348.988 170.659,383.095C 196.021,392.33 225.945,397.663 257.992,397.663C 290.04,397.663 319.964,392.33 345.326,383.095C 333.381,348.988 298.796,324.329 257.992,324.329 Z "/>
+					<GeometryDrawing Brush="#27000000" Geometry="F1 M 259.03,517.996C 287.471,517.996 312.947,505.869 330.103,486.733C 310.496,480.4 286.334,476.663 260.199,476.663C 233.258,476.663 208.413,480.634 188.493,487.326C 205.642,506.12 230.884,517.996 259.03,517.996 Z "/>
+					<GeometryDrawing Geometry="F1 M 258.659,75.9962C 317.569,75.9962 365.326,123.753 365.326,182.663C 365.326,241.573 317.569,289.33 258.659,289.33C 199.749,289.33 151.992,241.573 151.992,182.663C 151.992,123.753 199.749,75.9962 258.659,75.9962 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="20" LineJoin="Round" Brush="#FF686868"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<LinearGradientBrush StartPoint="0.5,0.957143" EndPoint="0.5,0.0428571">
+								<LinearGradientBrush.GradientStops>
+									<GradientStop Color="#FF589E0D" Offset="0.0211864"/>
+									<GradientStop Color="#FFCFF3A9" Offset="0.991525"/>
+								</LinearGradientBrush.GradientStops>
+							</LinearGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#5FFFFFFF" Geometry="F1 M 257.992,85.3295C 217.189,85.3295 182.604,109.988 170.659,144.095C 196.021,153.33 225.945,158.663 257.992,158.663C 290.04,158.663 319.964,153.33 345.326,144.095C 333.381,109.988 298.796,85.3295 257.992,85.3295 Z "/>
+					<GeometryDrawing Brush="#27000000" Geometry="F1 M 259.03,278.996C 287.471,278.996 312.947,266.869 330.103,247.733C 310.496,241.4 286.334,237.663 260.199,237.663C 233.258,237.663 208.413,241.634 188.493,248.326C 205.642,267.12 230.884,278.996 259.03,278.996 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+</ResourceDictionary>
