@@ -294,7 +294,7 @@ namespace xeus.Core
 			}
 		}
 
-		private void AskForVCard( string jid )
+		public void AskForVCard( string jid )
 		{
 			// ask for VCard
 			VcardIq viq = new VcardIq( IqType.get, new Jid( jid ) ) ;

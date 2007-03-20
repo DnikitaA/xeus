@@ -66,6 +66,13 @@ namespace xeus.Controls
 			_windows.Clear();
 		}
 
+		protected override void OnClosed( EventArgs e )
+		{
+			base.OnClosed( e );
+
+			_windows.Remove( this ) ;
+		}
+
 		public AuthorizeWindow()
 		{
 			InitializeComponent();

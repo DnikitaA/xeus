@@ -62,6 +62,14 @@ namespace xeus.Core
 			_messages.CollectionChanged += new NotifyCollectionChangedEventHandler( _messages_CollectionChanged ) ;
 		}
 
+		public bool IsVcardReadOnly
+		{
+			get
+			{
+				return ( _key != Client.Instance.MyJid.Bare ) ;
+			}
+		}
+
 		public RosterItem( DbDataReader reader ) : this()
 		{
 			_isInDatabase = true ;

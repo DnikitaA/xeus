@@ -157,7 +157,7 @@ namespace xeus.Core
 			RosterItem rosterItem = e.Parameter as RosterItem ;
 
 			e.Handled = true ;
-			e.CanExecute = ( rosterItem != null ) ;
+			e.CanExecute = ( rosterItem != null && rosterItem.IsInitialized ) ;
 		}
 
 		public static void ExecuteAuthSendTo( object sender, ExecutedRoutedEventArgs e )
@@ -244,8 +244,13 @@ namespace xeus.Core
 		{
 			RosterItem rosterItem = e.Parameter as RosterItem ;
 
-			if ( rosterItem != null )
+			if ( rosterItem != null && rosterItem.IsInitialized )
 			{
+				if ( !rosterItem.HasVCardRecivied )
+				{
+					Client.Instance.Roster.AskForVCard( rosterItem.Key );
+				}
+
 				VCardWindow.ShowWindow( rosterItem );
 			}
 
