@@ -272,6 +272,19 @@ namespace xeus.Core
 			// if it is already in roster, change status property
 			RosterItem rosterItem = FindItem( ( string ) data ) ;
 
+			if ( ( string ) data == Client.Instance.MyJid.Bare )
+			{
+				if ( Client.Instance.MyRosterItem == null )
+				{
+					rosterItem = new RosterItem( new agsXMPP.protocol.iq.roster.RosterItem( Client.Instance.MyJid ) ) ;
+					Client.Instance.MyRosterItem = rosterItem ;
+				}
+				else
+				{
+					rosterItem = Client.Instance.MyRosterItem ;
+				}
+			}
+
 			if ( rosterItem != null )
 			{
 				if ( iq.Type == IqType.error || iq.Error != null )
@@ -348,8 +361,7 @@ namespace xeus.Core
 							rosterItemComing = rosterItem ;
 						}
 
-						if ( rosterItemComing.Key == Client.Instance.MyJid.Bare
-							&& Client.Instance.MyRosterItem == null )
+						if ( rosterItemComing.Key == Client.Instance.MyJid.Bare )
 						{
 							Client.Instance.MyRosterItem = rosterItemComing ;
 						}
