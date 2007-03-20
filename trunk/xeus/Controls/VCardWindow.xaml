@@ -10,7 +10,20 @@
     settings:WindowSettings.Save="False"
 	  Style="{StaticResource DarkStyleWindow}"
     x:Name="vcard"
-	Background="{x:Null}" Margin="5,5,5,5" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" >
+	Background="{x:Null}" Margin="5,5,5,5" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" ResizeMode="CanResizeWithGrip" >
+
+  <win:WindowBase.Resources>
+    <Style x:Key="PublishButton" TargetType="Button">
+      <Style.Triggers>
+        <DataTrigger
+          Binding="{Binding Path=IsVcardReadOnly}"
+          Value="True">
+          <Setter Property="Visibility" Value="Collapsed" />
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>    
+  </win:WindowBase.Resources>
+  
   <StackPanel Margin="10,10,10,10">
   	<DockPanel>
 	  
@@ -73,43 +86,44 @@
   				ToolTip="{Binding Path=Key}" />
   			<StackPanel Margin="0,5,0,0">
   				<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Full Name" />
-  				<TextBox Text="{Binding Path=FullName}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
+  				<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=FullName}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" MaxLength="256" MaxLines="1" />
   			</StackPanel>
   			<StackPanel Margin="0,5,0,0">
   				<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Nickname" />
-  				<TextBox Text="{Binding Path=NickName}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
+  				<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=NickName}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="256" MaxLines="1" />
   			</StackPanel>
   		</StackPanel>		
   	</DockPanel>
   	<StackPanel>
   		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="E-Mail" />
-  		<TextBox Text="{Binding Path=Email}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
-  	</StackPanel>
-  	<StackPanel>
-  		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Description" />
-  		<TextBox Text="{Binding Path=Description}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
-  	</StackPanel>
-  	<StackPanel>
-  		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Organization" />
-  		<TextBox Text="{Binding Path=Organization}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
-  	</StackPanel>
-  	<StackPanel>
-  		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Title" />
-  		<TextBox Text="{Binding Path=Title}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
+  		<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=Email}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="256" MaxLines="1" />
   	</StackPanel>
   	<StackPanel>
   		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Url" />
-  		<TextBox Text="{Binding Path=Url}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
+  		<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=Url}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="512" MaxLines="1" />
+  	</StackPanel>
+  	<StackPanel>
+  		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Title" />
+  		<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=Title}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="256" MaxLines="1" />
   	</StackPanel>
   	<StackPanel>
   		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Role" />
-  		<TextBox Text="{Binding Path=Role}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" />
-  	</StackPanel>    <StackPanel Margin="0,10,0,0" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Bottom">
-      <Button Width="63.867" Content="Ok"
-			Background="#FF3980A9" Template="{DynamicResource AButton}" IsDefault="True"
-			Click="Ok" Foreground="#FFF2F2F2" Height="26" x:Name="_ok" Margin="5,0,5,0" TabIndex="1"/>
-
-      <Button Content="Cancel" Background="#FF5D97B9" Template="{DynamicResource AButton}" IsCancel="True" IsDefault="False" Foreground="#FFF2F2F2" Width="63.867" Height="26" Margin="5,0,5,0" TabIndex="2"/>
+  		<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=Role}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="256" MaxLines="1" />
+  	</StackPanel>
+  	<StackPanel>
+  		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Organization" />
+  		<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=Organization}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="256" MaxLines="1" />
+  	</StackPanel>
+  	<StackPanel>
+  		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Description" />
+  		<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=Description}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="512" MaxLines="10" />
+  	</StackPanel>
+  	<StackPanel Margin="0,15,0,0" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Bottom">
+      <Button Width="63.867" Content="Publish"
+			Background="#FF3980A9" Style="{StaticResource PublishButton}" Template="{DynamicResource AButton}" IsDefault="True"
+			Click="OnPublish" Foreground="#FFF2F2F2" Height="26" x:Name="_ok" Margin="5,0,5,0" TabIndex="1">
+      </Button>
+      <Button Click="OnClose" Content="Close" Background="#FF5D97B9" Template="{DynamicResource AButton}" IsCancel="True" IsDefault="False" Foreground="#FFF2F2F2" Width="63.867" Height="26" Margin="5,0,5,0" TabIndex="2"/>
     </StackPanel>
   </StackPanel>
 </win:WindowBase>

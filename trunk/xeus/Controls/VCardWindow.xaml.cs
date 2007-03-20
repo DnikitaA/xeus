@@ -41,6 +41,15 @@ namespace xeus.Controls
 
 		internal static void ShowWindow( RosterItem rosterItem )
 		{
+			foreach ( VCardWindow vCardWindow in _windows )
+			{
+				if ( ( ( RosterItem )vCardWindow.DataContext ).Key == rosterItem.Key )
+				{
+					vCardWindow.Activate() ;
+					return ;
+				}
+			}
+
 			VCardWindow vcardWindow = new VCardWindow() ;
 
 			vcardWindow.DataContext = rosterItem ;
@@ -51,9 +60,20 @@ namespace xeus.Controls
 			vcardWindow.Show();
 		}
 
-		protected void Ok( object sender, EventArgs e )
+		protected override void OnClosed( EventArgs e )
 		{
-			 DialogResult = true ;
+			base.OnClosed( e );
+
+			_windows.Remove( this ) ;
+		}
+
+		protected void OnPublish( object sender, EventArgs e )
+		{
+		}
+
+		protected void OnClose( object sender, EventArgs e )
+		{
+			 Close();
 		}
 	}
 }
