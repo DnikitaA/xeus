@@ -276,7 +276,14 @@ namespace xeus.Controls
 		{
 			if ( e.Key == Key.Escape )
 			{
-				_instance.RemoveCurrentTab();
+				if ( _inlineSearch.Visibility == Visibility.Visible )
+				{
+					_inlineSearch.SendKey( e.Key ) ;
+				}
+				else
+				{
+					_instance.RemoveCurrentTab() ;
+				}
 			}
 			else if ( _inlineSearch != null && FocusManager.GetFocusedElement( this ) != _textBox )
 			{

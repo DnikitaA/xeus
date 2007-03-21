@@ -365,6 +365,22 @@ namespace xeus.Core
 						{
 							Client.Instance.MyRosterItem = rosterItemComing ;
 						}
+
+						if ( rosterItemComing.IsInitialized && !rosterItemComing.IsService )
+						{
+							lock ( Client.Instance.Services.Items._syncObject )
+							{
+								foreach ( ServiceItem serviceItem in Client.Instance.Services.Items )
+								{
+									if ( rosterItemComing.XmppRosterItem.Jid.Server
+											== serviceItem.Jid.Server )
+									{
+										rosterItemComing.Transport = serviceItem.Category ;
+										break ;
+									}
+								}
+							}
+						}
 					}
 				}
 			}
