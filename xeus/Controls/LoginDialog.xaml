@@ -11,6 +11,7 @@
     settings:WindowSettings.Save="False"
 	  Style="{StaticResource DarkStyleWindow}"
     x:Name="login"
+    Icon="../images/xeus.ico"
 	  Background="{x:Null}" ResizeMode="NoResize" Margin="5,5,5,5" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" Height="339" >
   
   <Grid>

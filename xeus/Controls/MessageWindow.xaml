@@ -13,6 +13,8 @@
     x:Name="message"
     Icon="../images/message.ico"
 	>
+
+	
     <DockPanel>
 		<StatusBar DockPanel.Dock="Bottom" Style="{DynamicResource StatusBarStyleBlack}">
       <StatusBarItem HorizontalAlignment="Stretch"

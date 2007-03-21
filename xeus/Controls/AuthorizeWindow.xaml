@@ -6,24 +6,25 @@
     xmlns:settings="clr-namespace:xeus.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="xeus.Controls.AuthorizeWindow"
-    Title="add user" Height="119" Width="383"
+    Title="add user" Width="383"
     settings:WindowSettings.Save="False"
 	Style="{StaticResource DarkStyleWindow}"
+    Icon="../images/xeus.ico"
     x:Name="single"
-	Background="{x:Null}" ResizeMode="NoResize" Margin="5,5,5,5" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" >
-  <DockPanel Margin="2,2,2,0">
-    <Image x:Name="_image" Width="50" Height="50" Margin="10,10,15,0" VerticalAlignment="Top"/>
-    <StackPanel>
+	Background="{x:Null}" ResizeMode="NoResize" Margin="5,5,5,5" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" VerticalAlignment="Top" SizeToContent="Manual" Height="125" >
+	<StackPanel Margin="2,2,2,2" Orientation="Horizontal">
+		<Image x:Name="_image" Width="50" Height="50" Margin="5,5,0,0" VerticalAlignment="Top"/>
+		<StackPanel Margin="5,5,10,0" Width="316">
 
-      <TextBlock x:Name="_titleReason" Text="Name" Foreground="#FF828282" Margin="0,0,0,8" TextWrapping="Wrap"/>
+			<TextBlock x:Name="_titleReason" Text="Name" Foreground="#FF828282" Margin="0,0,0,8" TextWrapping="Wrap"/>
 
-      <StackPanel Margin="0,10,0,0" HorizontalAlignment="Right" Orientation="Horizontal">
-        <Button Width="63.867" Content="Authorize"
-        Background="#FF39A960" Template="{DynamicResource AButton}" IsDefault="False"
-        Click="Ok" Foreground="#FFF2F2F2" Height="26" x:Name="_ok" Margin="5,0,5,0" TabIndex="1"/>
+			<StackPanel Margin="0,10,0,0" HorizontalAlignment="Right" Orientation="Horizontal">
+				<Button Width="63.867" Content="Authorize"
+					Background="#FF39A960" Template="{DynamicResource AButton}" IsDefault="False"
+					Click="Ok" Foreground="#FFF2F2F2" Height="26" x:Name="_ok" Margin="5,0,5,0" TabIndex="1"/>
 
-        <Button Content="Deny" Click="OnDeny" Background="#FFC44835" Template="{DynamicResource AButton}" IsCancel="False" IsDefault="False" Foreground="#FFF2F2F2" Width="63.867" Height="26" Margin="5,0,5,0" TabIndex="2" x:Name="_deny"/>
-      </StackPanel>
-    </StackPanel>
-  </DockPanel>
+				<Button Content="Deny" Click="OnDeny" Background="#FFC44835" Template="{DynamicResource AButton}" IsCancel="False" IsDefault="False" Foreground="#FFF2F2F2" Width="63.867" Height="26" Margin="5,0,5,0" TabIndex="2" x:Name="_deny"/>
+			</StackPanel>
+		</StackPanel>
+	</StackPanel>
 </win:WindowBase>

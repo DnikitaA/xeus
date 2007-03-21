@@ -7,6 +7,11 @@
   x:Class="xeus.Controls.TabMessages">
 	<!-- Resource dictionary entries should be defined here. -->
 
+	
+  		<ResourceDictionary.MergedDictionaries>
+  			<ResourceDictionary Source="ToolTipsResourcexaml.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+  
 	<DataTemplate x:Key="RosterItemMessagesTemplate" DataType="{x:Type local:RosterItem}">
 	<Grid>
 	<DockPanel>
