@@ -9,6 +9,7 @@
     settings:WindowSettings.Save="True"
 	Style="{StaticResource DarkStyleWindow}"
     x:Name="services"
+    Icon="../images/xeus.ico"
 	Background="{x:Null}" >
 	
 <win:WindowBase.Resources>

@@ -10,6 +10,7 @@
     settings:WindowSettings.Save="False"
 	Style="{StaticResource DarkStyleWindow}"
     x:Name="services"
+    Icon="../images/xeus.ico"
 	Background="{x:Null}" ResizeMode="NoResize" >	
     <StackPanel Margin="5,5,5,5">
         

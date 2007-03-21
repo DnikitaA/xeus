@@ -383,13 +383,13 @@
     				<TextBlock Text="{Binding Path=DisplayName}"
     					TextTrimming="CharacterEllipsis"
     					FontFamily="Calibri" Foreground="#FFDCDCDC"
-    					x:Name="_displayName" FontSize="12" d:LayoutOverrides="Height" MaxWidth="100"/> 
+    					x:Name="_displayName" FontSize="12" d:LayoutOverrides="Height" MaxWidth="100" HorizontalAlignment="Left"/> 
 					<StackPanel Orientation="Horizontal">    
 					<Rectangle x:Name="_transport" Width="10" Height="10"
 						Fill="{DynamicResource jabber_design}" />
     				<TextBlock Text="{Binding Path=StatusDescription}"
     					FontFamily="Calibri" Foreground="#FFB8D9F2"
-    					x:Name="_displayStatus" FontSize="10" TextWrapping="Wrap" Margin="5,0,0,0"/>				
+    					x:Name="_displayStatus" FontSize="10" TextWrapping="Wrap" Margin="5,0,0,0" HorizontalAlignment="Left" MaxWidth="100"/>
 					</StackPanel>
     			</StackPanel>
 		
@@ -627,8 +627,7 @@
 				x:Name="_image" DockPanel.Dock="Right" />
 			<TextBox x:Name="_body" Text="{Binding Path=Body, Mode=OneWay}" FontSize="12" Foreground="#FFC5A581" 
 			 Margin="10,0,10,0" TextWrapping="WrapWithOverflow" 
-			 		DockPanel.Dock="Right" Style="{DynamicResource TextBoxStyleBlack}" IsReadOnly="True" IsUndoEnabled="False">
-      </TextBox>
+			 		DockPanel.Dock="Right" Style="{DynamicResource TextBoxStyleBlack}" IsReadOnly="True" IsUndoEnabled="False" AutoWordSelection="True" IsTabStop="False"/>
 	    </DockPanel>
 	</Grid>
 	<DataTemplate.Triggers>

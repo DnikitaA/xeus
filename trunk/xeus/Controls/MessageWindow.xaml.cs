@@ -68,7 +68,8 @@ namespace xeus.Controls
 
 		object _textsLock = new object();
 		private List< KeyValuePair< string, ChatMessage > > _texts = null ;
-		private string lastSearch = String.Empty ;
+		private string _lastSearch = String.Empty ;
+		private string _textToSearch = String.Empty ;
 		private ChatMessage _lastFoundItem = null ;
 
 		private object SearchInList( ref bool stop, object param )
@@ -90,12 +91,14 @@ namespace xeus.Controls
 			}
 
 			ChatMessage found = null ;
+
+			_textToSearch = ( string ) param ;
 			
 			string toFound = ( ( string ) param ).ToUpper() ;
 
-			bool searchNext = ( lastSearch == toFound ) ;
+			bool searchNext = ( _lastSearch == toFound ) ;
 
-			lastSearch = toFound ;
+			_lastSearch = toFound ;
 
 			if ( searchNext && _lastFoundItem != null )
 			{
@@ -177,9 +180,26 @@ namespace xeus.Controls
 				else
 				{
 					_listBox.SelectedItem = item ;
-
 					_listBox.ScrollIntoView( item ) ;
 					_inlineSearch.NotFound = false ;
+
+					if ( !string.IsNullOrEmpty( _textToSearch ) )
+					{
+						if ( _listBox.SelectedIndex >= 0 )
+						{
+							ListBoxItem listBoxItem =
+								( ListBoxItem ) ( _listBox.ItemContainerGenerator.ContainerFromIndex( _listBox.SelectedIndex ) ) ;
+
+							Border border = VisualTreeHelper.GetChild( listBoxItem, 0 ) as Border ;
+							ContentPresenter contentPresenter = VisualTreeHelper.GetChild( border, 0 ) as ContentPresenter ;
+
+							TextBox textBox = _listBox.ItemTemplate.FindName( "_body", contentPresenter ) as TextBox ;
+
+							textBox.Focus() ;
+							int selectStart = textBox.Text.IndexOf( _textToSearch ) ;
+							textBox.Select( selectStart, _textToSearch.Length );
+						}
+					}
 				}
 			}
 			else

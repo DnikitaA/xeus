@@ -37,14 +37,17 @@ namespace xeus.Controls
 		{
 			if ( e.Key == Key.Escape )
 			{
+				e.Handled = true ;
 				Close( false ) ;
 			}
 			else if ( e.Key == Key.Return )
 			{
+				e.Handled = true ;
 				Close( true ) ;
 			}
 			else if ( e.Key == Key.PageDown )
 			{
+				e.Handled = true ;
 				OnNext( this, null ) ;
 			}
 		}
