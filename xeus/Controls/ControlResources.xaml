@@ -7,7 +7,179 @@
     xmlns:System="clr-namespace:System;assembly=mscorlib"
     x:Class="xeus.Controls.ControlResource"
     >
-   
+	
+	<DrawingBrush x:Key="icq_design" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Geometry="F1 M 119.889,135.889C 119.889,135.889 57.2221,158.556 49.2221,167.889C 41.2221,177.222 37.2221,194.556 46.5554,203.889C 55.8888,213.222 83.8888,217.222 98.5554,203.889C 113.222,190.556 138.555,162.556 138.555,162.556L 119.889,135.889 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF5A5A5A"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<LinearGradientBrush StartPoint="0.000587243,0.307613" EndPoint="0.833925,0.307613">
+								<LinearGradientBrush.GradientStops>
+									<GradientStop Color="#FFF4B0B0" Offset="0"/>
+									<GradientStop Color="#FFDB3838" Offset="0.995763"/>
+								</LinearGradientBrush.GradientStops>
+							</LinearGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Geometry="F1 M 134.555,137.222L 86.5554,79.889C 86.5554,79.889 75.8888,49.2223 91.8888,41.2223C 107.889,33.2223 130.555,53.2223 130.555,53.2223L 149.222,127.889L 143.889,50.5557C 143.889,50.5557 171.889,15.889 193.222,30.5557C 214.555,45.2223 218.555,54.5557 217.222,70.5557C 215.889,86.5557 166.555,138.556 166.555,138.556L 225.222,90.5557C 225.222,90.5557 255.889,81.2223 262.555,97.2223C 269.222,113.222 262.555,129.222 253.222,135.889C 243.889,142.556 173.222,149.222 173.222,149.222L 247.889,151.889C 247.889,151.889 271.889,167.889 270.555,191.889C 269.665,207.92 255.889,226.556 231.889,221.222C 207.889,215.889 163.889,174.556 163.889,174.556L 202.555,222.556C 202.555,222.556 210.555,246.556 194.555,257.222C 178.555,267.889 157.222,249.222 155.889,242.556C 154.555,235.889 145.222,178.556 145.222,178.556L 146.555,251.889C 146.555,251.889 128.705,281.426 111.889,277.222C 90.5554,271.889 77.2221,249.222 79.8888,235.889C 82.5554,222.556 125.222,167.889 125.222,167.889L 114.555,141.222C 114.555,141.222 70.5554,163.889 50.5554,155.889C 30.5554,147.889 23.8888,121.222 33.2221,107.889C 42.5554,94.5557 62.5554,83.889 75.8888,93.2223C 89.2221,102.556 134.555,134.556 134.555,137.222 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF5A5A5A"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.140979" RadiusY="0.136122" Center="0.346869,0.335415" GradientOrigin="0.346869,0.335415">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FFB0F4B6" Offset="0"/>
+									<GradientStop Color="#FF5DDB38" Offset="1"/>
+								</RadialGradientBrush.GradientStops>
+								<RadialGradientBrush.RelativeTransform>
+									<TransformGroup/>
+								</RadialGradientBrush.RelativeTransform>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Geometry="F1 M 144.686,121.724C 162.655,121.724 177.222,136.291 177.222,154.26C 177.222,172.23 162.655,186.797 144.686,186.797C 126.717,186.797 112.15,172.23 112.15,154.26C 112.15,136.291 126.717,121.724 144.686,121.724 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF5A5A5A"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.409105" RadiusY="0.409105" Center="0.5,0.5" GradientOrigin="0.5,0.5">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FFF2F4B0" Offset="0"/>
+									<GradientStop Color="#FFA8A742" Offset="1"/>
+								</RadialGradientBrush.GradientStops>
+								<RadialGradientBrush.RelativeTransform>
+									<TransformGroup/>
+								</RadialGradientBrush.RelativeTransform>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#4DF8F8F8" Geometry="F1 M 144.785,121.496C 131.419,121.496 119.935,129.556 114.929,141.08C 122.979,144.384 133.358,146.373 144.686,146.373C 156.093,146.373 166.537,144.356 174.611,141.011C 169.588,129.524 158.124,121.496 144.785,121.496 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+	
+		<DrawingBrush x:Key="msn_design" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Geometry="F1 M 148.121,119.828C 97.3416,119.828 56.1763,176.196 56.1763,245.728C 56.1763,245.925 56.1766,246.122 56.1773,246.319C 82.8627,263.482 114.273,273.379 147.892,273.379C 181.705,273.379 213.282,263.368 240.066,246.023C 240.067,245.925 240.067,245.827 240.067,245.728C 240.067,176.196 198.901,119.828 148.121,119.828 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF5A5A5A"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.476125" RadiusY="0.720777" Center="0.5,0.5" GradientOrigin="0.5,0.5">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FFB0F0F4" Offset="0"/>
+									<GradientStop Color="#FF4293A8" Offset="1"/>
+								</RadialGradientBrush.GradientStops>
+								<RadialGradientBrush.RelativeTransform>
+									<TransformGroup/>
+								</RadialGradientBrush.RelativeTransform>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#5A000000" Geometry="F1 M 147.26,121.005C 125.985,121.005 106.398,130.899 90.819,147.509C 115.845,179.733 151.009,194.999 179.783,182.681C 192.578,177.204 202.467,166.976 209.082,153.712C 192.753,133.391 171.063,121.005 147.26,121.005 Z "/>
+					<GeometryDrawing Brush="#4DFFFFFF" Geometry="F1 M 97.0728,248.67C 97.0728,254.15 97.2617,259.576 97.6322,264.94C 82.4439,260.325 68.1055,253.619 54.9206,245.139L 54.9196,244.548C 54.9196,178.931 91.5787,125.039 138.382,119.177C 112.716,153.377 97.0728,198.811 97.0728,248.67 Z "/>
+					<GeometryDrawing Geometry="F1 M 147.068,25.8937C 181.979,25.8937 210.28,54.8676 210.28,90.6086C 210.28,126.35 181.979,155.323 147.068,155.323C 112.157,155.323 83.8558,126.35 83.8558,90.6086C 83.8558,54.8676 112.157,25.8937 147.068,25.8937 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF5A5A5A"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.450016" RadiusY="0.451127" Center="0.5,0.5" GradientOrigin="0.5,0.5">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FFB0F4B0" Offset="0"/>
+									<GradientStop Color="#FF42A892" Offset="1"/>
+								</RadialGradientBrush.GradientStops>
+								<RadialGradientBrush.RelativeTransform>
+									<TransformGroup/>
+								</RadialGradientBrush.RelativeTransform>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#4DF8F8F8" Geometry="F1 M 147.26,25.4395C 121.292,25.4395 98.9808,41.4703 89.2543,64.3927C 104.895,70.9635 125.059,74.9201 147.068,74.9201C 169.23,74.9201 189.521,70.9085 205.207,64.2556C 195.449,41.4064 173.176,25.4395 147.26,25.4395 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+
+
+		<DrawingBrush x:Key="jabber_design" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Geometry="F1 M 167.195,285.656L 129.532,285.656C 115.725,285.656 104.532,274.464 104.532,260.656L 104.532,137.4C 104.532,123.593 115.725,112.4 129.532,112.4L 167.195,112.4C 181.002,112.4 192.195,123.593 192.195,137.4L 192.195,260.656C 192.195,274.464 181.002,285.656 167.195,285.656 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF5A5A5A"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<LinearGradientBrush StartPoint="-0.017004,0.5" EndPoint="1.017,0.5">
+								<LinearGradientBrush.GradientStops>
+									<GradientStop Color="#FF92B7D3" Offset="0"/>
+									<GradientStop Color="#FFE1ECEF" Offset="0.983051"/>
+								</LinearGradientBrush.GradientStops>
+							</LinearGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Geometry="F1 M 148.058,17.5603C 192.118,17.5603 227.836,53.3032 227.836,97.3944C 227.836,141.486 192.118,177.229 148.058,177.229C 103.998,177.229 68.2802,141.486 68.2802,97.3944C 68.2802,53.3032 103.998,17.5603 148.058,17.5603 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF5A5A5A"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.46015" RadiusY="0.460178" Center="0.5,0.5" GradientOrigin="0.5,0.5">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FFF4F0B0" Offset="0"/>
+									<GradientStop Color="#FFF6E130" Offset="1"/>
+								</RadialGradientBrush.GradientStops>
+								<RadialGradientBrush.RelativeTransform>
+									<TransformGroup/>
+								</RadialGradientBrush.RelativeTransform>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#4DF8F8F8" Geometry="F1 M 148.3,17C 115.527,17 87.369,36.776 75.0935,65.0538C 94.8328,73.1597 120.281,78.0407 148.058,78.0407C 176.027,78.0407 201.636,73.0918 221.432,64.8846C 209.118,36.6972 181.008,17 148.3,17 Z "/>
+					<GeometryDrawing Geometry="F1 M 109.613,222.442L 190.502,194.886">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF5A5A5A"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+								<LinearGradientBrush.GradientStops>
+									<GradientStop Color="#FF92B7D3" Offset="0"/>
+									<GradientStop Color="#FFE1ECEF" Offset="0.983051"/>
+								</LinearGradientBrush.GradientStops>
+							</LinearGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Geometry="F1 M 106.947,257.886L 187.836,230.331">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF5A5A5A"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+								<LinearGradientBrush.GradientStops>
+									<GradientStop Color="#FF92B7D3" Offset="0"/>
+									<GradientStop Color="#FFE1ECEF" Offset="0.983051"/>
+								</LinearGradientBrush.GradientStops>
+							</LinearGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#FF000000" Geometry="F1 M 156.28,284.886L 139.391,284.886C 134.237,284.886 130.058,280.707 130.058,275.553L 130.058,275.553C 130.058,270.398 134.237,266.219 139.391,266.219L 156.28,266.219C 161.435,266.219 165.613,270.398 165.613,275.553L 165.613,275.553C 165.613,280.707 161.435,284.886 156.28,284.886 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF5A5A5A"/>
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+
+
+
 <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#FFF" />
 <SolidColorBrush x:Key="SolidBorderBrush" Color="#888" />
 
@@ -182,54 +354,58 @@
     <Viewbox x:Name="_viewbox"
 		Width="{Binding Path=Value, Converter={StaticResource _sizeFromSliderConverterSmall}, ElementName=_sliderItemSize}"
 		 ContextMenu="{DynamicResource _rosterItemContextMenu}">
-  	<Grid x:Name="_rosterItemGridOuter" RenderTransformOrigin="0.5,0.5"
-			Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}"
-			Margin="3,3,3,3" Width="130" Height="28" ToolTipService.InitialShowDelay="1500"
-			ToolTipService.BetweenShowDelay="1500" >
-  		<Grid.ColumnDefinitions>
-  			<ColumnDefinition Width="0.223*"/>
-  			<ColumnDefinition Width="0.777*"/>
-  		</Grid.ColumnDefinitions>
-		<Grid.ToolTip>
-			<ToolTip ContentTemplate="{StaticResource RosterItemTip}" 
-			Content="{Binding RelativeSource={RelativeSource Self},Path=DataContext}"/>
-		</Grid.ToolTip>
+    	<StackPanel Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}" RenderTransformOrigin="0.5,0.5" Margin="3,3,3,3" x:Name="_rosterItemGridOuter" ToolTipService.BetweenShowDelay="1500" ToolTipService.InitialShowDelay="1500" Orientation="Horizontal">		
+    		<StackPanel.ToolTip>
+    			<ToolTip ContentTemplate="{StaticResource RosterItemTip}" 
+    				Content="{Binding Path=DataContext, RelativeSource={RelativeSource Self}}"/>
+    		</StackPanel.ToolTip>
 		
-  		<Border VerticalAlignment="Stretch" Width="Auto" Grid.Column="1"
-  		 Height="Auto" Grid.RowSpan="1"
-  		 CornerRadius="3,3,3,3" x:Name="_displayNameLabel"
-  		 BorderThickness="1,1,1,1" Grid.ColumnSpan="2" BorderBrush="#FF6E7281">
-  			<Border.Background>
-  				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-  					<GradientStop Color="#FF54687F" Offset="0"/>
-  					<GradientStop Color="#6898AED9" Offset="0.986"/>
-  				</LinearGradientBrush>
-  			</Border.Background>
-  			<Border.OpacityMask>
-  				<RadialGradientBrush>
-  					<GradientStop Color="#FF000000" Offset="0"/>
-  					<GradientStop Color="#C5FFFFFF" Offset="1"/>
-  				</RadialGradientBrush>
-  			</Border.OpacityMask>
-  		</Border>
+<Button Template="{Binding Path=StatusTemplate}" IsEnabled="False"
+    			Width="22" Height="22" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" BorderThickness="0,0,0,0" d:LayoutOverrides="GridBox" />
 		
-		<StackPanel Grid.Column="1" Margin="5,0,2,0" d:LayoutOverrides="Margin" >     
-  			<TextBlock Text="{Binding Path=DisplayName}"
-  				TextTrimming="CharacterEllipsis"
-  				FontFamily="Calibri" Foreground="#FFDCDCDC"
-  				x:Name="_displayName" FontSize="12" d:LayoutOverrides="Height"/>     
-  			<TextBlock Text="{Binding Path=StatusDescription}"
-  				FontFamily="Calibri" Foreground="#FFB8D9F2"
-  				x:Name="_displayStatus" FontSize="10" TextTrimming="CharacterEllipsis"/>				
-	    </StackPanel>
+    		<Border
+    			CornerRadius="3,3,3,3" x:Name="_displayNameLabel"
+    			BorderThickness="1,1,1,1" BorderBrush="#FF6E7281" Margin="5,0,0,0">
+    			<Border.Background>
+    				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+    					<GradientStop Color="#FF54687F" Offset="0"/>
+    					<GradientStop Color="#6898AED9" Offset="0.986"/>
+    				</LinearGradientBrush>
+    			</Border.Background>
+    			<Border.OpacityMask>
+    				<RadialGradientBrush>
+    					<GradientStop Color="#FF000000" Offset="0"/>
+    					<GradientStop Color="#C5FFFFFF" Offset="1"/>
+    				</RadialGradientBrush>
+    			</Border.OpacityMask>
 		
-		<Button Template="{Binding Path=StatusTemplate}" HorizontalAlignment="Stretch" IsEnabled="False"
-			Margin="0,0,0,0" VerticalAlignment="Stretch" Width="22" Height="22" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" BorderThickness="0,0,0,0" d:LayoutOverrides="GridBox" />  
-	</Grid>
+    			<StackPanel Margin="4,2,4,2" MaxWidth="200" MinWidth="100" >     
+    				<TextBlock Text="{Binding Path=DisplayName}"
+    					TextTrimming="CharacterEllipsis"
+    					FontFamily="Calibri" Foreground="#FFDCDCDC"
+    					x:Name="_displayName" FontSize="12" d:LayoutOverrides="Height" MaxWidth="100"/> 
+					<StackPanel Orientation="Horizontal">    
+					<Rectangle x:Name="_transport" Width="10" Height="10"
+						Fill="{DynamicResource jabber_design}" />
+    				<TextBlock Text="{Binding Path=StatusDescription}"
+    					FontFamily="Calibri" Foreground="#FFB8D9F2"
+    					x:Name="_displayStatus" FontSize="10" TextWrapping="Wrap" Margin="5,0,0,0"/>				
+					</StackPanel>
+    			</StackPanel>
+		
+    		</Border>
+    	</StackPanel>
 	</Viewbox>
 	<DataTemplate.Triggers>
 		<DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}, AncestorLevel=1}, Path=IsSelected}" Value="False">
-			<Setter Property="Visibility" Value="Hidden" TargetName="_displayNameLabel" />
+			<Setter Property="Background" Value="{x:Null}" TargetName="_displayNameLabel" />
+			<Setter Property="BorderBrush" Value="{x:Null}" TargetName="_displayNameLabel" />
+		</DataTrigger>
+		<DataTrigger Binding="{Binding Path=Transport}" Value="msn">
+			<Setter Property="Fill" Value="{DynamicResource msn_design}" TargetName="_transport" />
+		</DataTrigger>
+		<DataTrigger Binding="{Binding Path=Transport}" Value="icq">
+			<Setter Property="Fill" Value="{DynamicResource icq_design}" TargetName="_transport" />
 		</DataTrigger>
 	</DataTemplate.Triggers>
   </DataTemplate>
@@ -281,8 +457,8 @@
   		<Path Opacity="0.215" RenderTransformOrigin="0.499999997872742,0.524966983478661" SnapsToDevicePixels="False" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" Margin="9.001,6.273,8.999,0" VerticalAlignment="Top" Width="Auto" Height="26.765" Grid.RowSpan="2" Panel.ZIndex="2" Data="M2.050252,-1.7272823 L69.930183,-1.7272823 C71.016823,-1.7272825 71.89772,-1.0236186 71.89772,-0.15560764 L71.89772,0.28742129 72,0.28783017 71.999741,30.631169 C71.951302,30.66849 59.999,27.261103 35.785892,27.334388 11.998007,27.406386 3.0632521E-07,30.586258 3.0632521E-07,30.586258 L0.00012261505,1.8544513E-07 0.082717486,0.00033037047 0.082717486,-0.15560764 C0.082717471,-1.0236186 0.96361244,-1.7272825 2.050252,-1.7272823 z" d:LayoutOverrides="Margin">
   			<Path.Fill>
   				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-  					<GradientStop Color="#FF6B7A8E" Offset="0"/>
-  					<GradientStop Color="#FFD1D1D1" Offset="0.986"/>
+  					<GradientStop Color="#FFD9D9D9" Offset="0"/>
+  					<GradientStop Color="#FF616161" Offset="0.986"/>
   				</LinearGradientBrush>
   			</Path.Fill>
   		</Path>
@@ -303,7 +479,7 @@
   			</Path>
 	      
   			<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill"
-			 Stroke="#FF666666" StrokeStartLineCap="Square" StrokeThickness="1"
+			 Stroke="#FF282828" StrokeStartLineCap="Square" StrokeThickness="1"
 			  Margin="8,5.25,8,21.569" VerticalAlignment="Stretch" Height="Auto"
 			   Data="M2.5,0.5 L71.5,0.5 C72.604568,0.5 73.5,1.3954304 73.5,2.5 L73.5,71.5 C73.5,72.604568 72.604568,73.5 71.5,73.5 L2.5,73.5 C1.3954304,73.5 0.5,72.604568 0.5,71.5 L0.5,2.5 C0.5,1.3954304 1.3954304,0.5 2.5,0.5 z"
 			    d:LayoutOverrides="Margin">
@@ -317,8 +493,8 @@
   				</Path.RenderTransform>
   				<Path.Fill>
   					<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-  						<GradientStop Color="#FF000000" Offset="0"/>
-  						<GradientStop Color="#FF333333" Offset="1"/>
+  						<GradientStop Color="#FF090909" Offset="0"/>
+  						<GradientStop Color="#FF363636" Offset="1"/>
   					</LinearGradientBrush>
   				</Path.Fill>
   			</Path>
@@ -497,5 +673,6 @@
             DockPanel.Dock="Right" FontSize="11" Style="{DynamicResource TextBoxStyleBlack}" IsReadOnly="True" IsUndoEnabled="False"/>
     </Grid>
   </DataTemplate>
+  
   
 </ResourceDictionary>

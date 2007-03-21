@@ -60,6 +60,8 @@ namespace xeus.Core
 
 		private bool _removeTemporaryImage ;
 
+		private string _transport = String.Empty ;
+
 		private RosterItem()
 		{
 			_messages.CollectionChanged += new NotifyCollectionChangedEventHandler( _messages_CollectionChanged ) ;
@@ -928,6 +930,20 @@ namespace xeus.Core
 			set
 			{
 				_removeTemporaryImage = value ;
+			}
+		}
+
+		public string Transport
+		{
+			get
+			{
+				return _transport ;
+			}
+			set
+			{
+				_transport = value ;
+
+				NotifyPropertyChanged( "Transport" ) ;
 			}
 		}
 

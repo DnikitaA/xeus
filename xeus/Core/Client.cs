@@ -595,6 +595,20 @@ namespace xeus.Core
 					DiscoInfo di = iq.Query as DiscoInfo ;
 					item.Disco = di ;
 
+					lock ( Roster.Items._syncObject )
+					{
+						foreach ( RosterItem contactRosterItem in Roster.Items )
+						{
+							if ( contactRosterItem.IsInitialized
+									&& !contactRosterItem.IsService
+									&& contactRosterItem.XmppRosterItem.Jid.Server
+										== item.Jid.Server )
+							{
+								contactRosterItem.Transport = item.Type ;
+							}
+						}
+					}
+
 					if ( di.HasFeature( agsXMPP.Uri.BYTESTREAMS ) )
 					{
 						
@@ -670,6 +684,8 @@ namespace xeus.Core
 		private void _xmppConnecion_OnLogin( object sender )
 		{
 			Roster.AskForVCard( MyJid.Bare ) ;
+
+			DiscoverServer() ;
 		}
 
 		public void Log( string text, params object[] parameters )
