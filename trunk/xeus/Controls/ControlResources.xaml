@@ -8,6 +8,88 @@
     x:Class="xeus.Controls.ControlResource"
     >
 	
+		<DrawingBrush x:Key="tv_design">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 156.121,125.803L 113.455,22">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF000000"/>
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 155.121,124.038L 197.788,20.2349">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF000000"/>
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#FF1F2428" Geometry="F1 M 252.455,82.8031L 53.1215,82.8031C 39.3144,82.8031 28.1215,93.996 28.1215,107.803L 28.1215,249.803C 28.1215,263.61 39.3144,274.803 53.1215,274.803L 252.455,274.803C 266.262,274.803 277.455,263.61 277.455,249.803L 277.455,107.803C 277.455,93.996 266.262,82.8031 252.455,82.8031 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF5A5A5A"/>
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+					<GeometryDrawing Geometry="F1 M 203.455,104.469L 61.2323,104.469C 47.4252,104.469 36.2323,115.662 36.2323,129.469L 36.2323,226.802C 36.2323,240.61 47.4252,251.802 61.2323,251.802L 203.455,251.802C 217.262,251.802 228.455,240.61 228.455,226.802L 228.455,129.469C 228.455,115.662 217.262,104.469 203.455,104.469 Z ">
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.53008" RadiusY="0.688368" Center="0.5,0.5" GradientOrigin="0.5,0.5">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FFEBEBEB" Offset="0"/>
+									<GradientStop Color="#FF9BBFDF" Offset="0.792373"/>
+									<GradientStop Color="#FF71AEE5" Offset="1"/>
+								</RadialGradientBrush.GradientStops>
+								<RadialGradientBrush.RelativeTransform>
+									<TransformGroup/>
+								</RadialGradientBrush.RelativeTransform>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 249.455,182.469C 256.082,182.469 261.454,187.842 261.454,194.469C 261.454,201.096 256.082,206.469 249.455,206.469C 242.827,206.469 237.455,201.096 237.455,194.469C 237.455,187.842 242.827,182.469 249.455,182.469 Z "/>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 250.121,219.802C 256.749,219.802 262.121,225.175 262.121,231.802C 262.121,238.43 256.749,243.802 250.121,243.802C 243.494,243.802 238.121,238.43 238.121,231.802C 238.121,225.175 243.494,219.802 250.121,219.802 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+	
+	<DrawingBrush x:Key="aim_design" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Geometry="F1 M 156.693,84.9808C 156.693,84.9808 123.214,107.807 116.366,127.59C 109.518,147.374 111.801,174.765 103.431,186.179C 95.0612,197.592 24.2988,220.419 24.2988,220.419L 50.1689,282.811C 50.1689,282.811 95.0612,276.724 117.888,257.702C 140.714,238.68 159.736,216.614 159.736,216.614C 159.736,216.614 187.889,224.984 197.781,238.68C 207.672,252.376 231.26,285.855 231.26,285.855L 278.435,259.985C 278.435,259.985 260.934,220.419 241.151,205.201C 221.368,189.983 189.411,168.678 189.411,168.678L 256.369,167.917C 256.369,167.917 279.957,163.352 279.196,145.852C 278.435,128.351 264.739,121.503 251.043,122.264C 237.347,123.025 194.737,119.221 194.737,119.221L 182.563,102.481L 156.693,84.9808 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF5A5A5A"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.30586" RadiusY="0.382428" Center="0.430901,0.179254" GradientOrigin="0.430901,0.179254">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FFE8F4B0" Offset="0"/>
+									<GradientStop Color="#FFDFDC1C" Offset="1"/>
+								</RadialGradientBrush.GradientStops>
+								<RadialGradientBrush.RelativeTransform>
+									<TransformGroup/>
+								</RadialGradientBrush.RelativeTransform>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Geometry="F1 M 185.997,14.4747C 211.328,14.4747 231.862,35.4976 231.862,61.4306C 231.862,87.3635 211.328,108.386 185.997,108.386C 160.666,108.386 140.131,87.3635 140.131,61.4306C 140.131,35.4976 160.666,14.4747 185.997,14.4747 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF5A5A5A"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.43266" RadiusY="0.434076" Center="0.5,0.5" GradientOrigin="0.5,0.5">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FFECF4B0" Offset="0"/>
+									<GradientStop Color="#FFA3B010" Offset="1"/>
+								</RadialGradientBrush.GradientStops>
+								<RadialGradientBrush.RelativeTransform>
+									<TransformGroup/>
+								</RadialGradientBrush.RelativeTransform>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#4DF8F8F8" Geometry="F1 M 186.136,14.1452C 167.294,14.1452 151.106,25.7768 144.048,42.4088C 155.397,47.1765 170.028,50.0473 185.997,50.0473C 202.077,50.0473 216.8,47.1365 228.181,42.3094C 221.101,25.7304 204.94,14.1452 186.136,14.1452 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+		
 	<DrawingBrush x:Key="icq_design" Stretch="Uniform">
 		<DrawingBrush.Drawing>
 			<DrawingGroup>
@@ -406,6 +488,12 @@
 		</DataTrigger>
 		<DataTrigger Binding="{Binding Path=Transport}" Value="icq">
 			<Setter Property="Fill" Value="{DynamicResource icq_design}" TargetName="_transport" />
+		</DataTrigger>
+		<DataTrigger Binding="{Binding Path=Transport}" Value="aim">
+			<Setter Property="Fill" Value="{DynamicResource aim_design}" TargetName="_transport" />
+		</DataTrigger>
+		<DataTrigger Binding="{Binding Path=Transport}" Value="tv">
+			<Setter Property="Fill" Value="{DynamicResource tv_design}" TargetName="_transport" />
 		</DataTrigger>
 	</DataTemplate.Triggers>
   </DataTemplate>
