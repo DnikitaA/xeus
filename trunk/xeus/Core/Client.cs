@@ -131,7 +131,6 @@ namespace xeus.Core
 			_xmppConnection.OnRegistered += new ObjectHandler( _xmppConnection_OnRegistered );
 			_xmppConnection.OnIq += new agsXMPP.Xml.StreamHandler( _xmppConnection_OnIq );
 
-
 			_messageCenter.RegisterEvent( _instance ) ;
 
 			_discoTimer.AutoReset = false ;
@@ -146,6 +145,47 @@ namespace xeus.Core
 
 		void _xmppConnection_OnIq( object sender, Node e )
 		{
+			IQ iq = e as IQ;
+
+			if ( iq != null )
+			{
+				Element query = iq.Query ;
+
+                if ( query != null )
+                {
+                    if ( query.GetType() == typeof( agsXMPP.protocol.iq.version.Version ) )
+                    {
+						// its a version IQ VersionIQ
+						agsXMPP.protocol.iq.version.Version version = query as agsXMPP.protocol.iq.version.Version;
+						
+						if ( iq.Type == IqType.get )
+						{
+							// Somebody wants to know our client version, so send it back
+							iq.SwitchDirection();
+							iq.Type = IqType.result;
+
+							version.Name = "xeus";
+							version.Ver = "1.0 alpha";
+							version.Os = Environment.OSVersion.ToString();
+
+							_xmppConnection.Send( iq );
+						}
+                    }                	
+					else if ( query.GetType() == typeof( DiscoInfo ) )
+                    {
+						DiscoFeature disco = query as DiscoFeature;
+						
+						if ( iq.Type == IqType.get )
+						{
+							iq.SwitchDirection();
+							iq.Type = IqType.result;
+							
+							_xmppConnection.Send( iq );
+						}
+                    }                	
+
+                }
+			}
 		}
 
 		void _xmppConnection_OnRegistered( object sender )
@@ -288,7 +328,7 @@ namespace xeus.Core
 
 		public void SendChatState( RosterItem rosterItem, Chatstate chatState )
 		{
-			if ( rosterItem.IsInitialized )
+			if ( rosterItem.IsInitialized && rosterItem.SupportsChatNotification )
 			{
 				Message message = new Message() ;
 
@@ -551,7 +591,7 @@ namespace xeus.Core
 		public void DiscoRequest( RosterItem rosterItem )
 		{
 			DiscoManager dm = new DiscoManager( _xmppConnection ) ;
-			dm.DisoverInformation( rosterItem.XmppRosterItem.Jid, new IqCB( OnDiscoInfoResult ), rosterItem ) ;
+			dm.DisoverInformation( new Jid( rosterItem.Key ), new IqCB( OnDiscoInfoResult ), rosterItem ) ;
 		}
 
 		public void DiscoRequest()
