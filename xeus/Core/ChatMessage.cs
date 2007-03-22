@@ -80,9 +80,13 @@ namespace xeus.Core
 		{
 			get
 			{
-				if ( _rosterItem == null || SentByMe )
+				if ( _rosterItem == null )
 				{
 					return Storage.GetDefaultAvatar() ;
+				}
+				else if ( SentByMe )
+				{
+					return Client.Instance.MyRosterItem.Image ;
 				}
 				else
 				{

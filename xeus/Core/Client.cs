@@ -147,7 +147,7 @@ namespace xeus.Core
 		{
 			IQ iq = e as IQ;
 
-			if ( iq != null )
+			if ( iq != null && iq.Type == IqType.get )
 			{
 				Element query = iq.Query ;
 
@@ -158,30 +158,29 @@ namespace xeus.Core
 						// its a version IQ VersionIQ
 						agsXMPP.protocol.iq.version.Version version = query as agsXMPP.protocol.iq.version.Version;
 						
-						if ( iq.Type == IqType.get )
-						{
-							// Somebody wants to know our client version, so send it back
-							iq.SwitchDirection();
-							iq.Type = IqType.result;
+						// Somebody wants to know our client version, so send it back
+						iq.SwitchDirection();
+						iq.Type = IqType.result;
 
-							version.Name = "xeus";
-							version.Ver = "1.0 alpha";
-							version.Os = Environment.OSVersion.ToString();
+						version.Name = "xeus";
+						version.Ver = "1.0 alpha";
+						version.Os = Environment.OSVersion.ToString();
 
-							_xmppConnection.Send( iq );
-						}
+						_xmppConnection.Send( iq );
                     }                	
 					else if ( query.GetType() == typeof( DiscoInfo ) )
                     {
-						DiscoFeature disco = query as DiscoFeature;
+						DiscoInfo disco = query as DiscoInfo;
 						
-						if ( iq.Type == IqType.get )
-						{
-							iq.SwitchDirection();
-							iq.Type = IqType.result;
-							
-							_xmppConnection.Send( iq );
-						}
+						iq.SwitchDirection();
+						iq.Type = IqType.result;
+
+						disco.AddFeature( new DiscoFeature( agsXMPP.Uri.CLIENT ) ) ;
+						disco.AddFeature( new DiscoFeature( agsXMPP.Uri.VCARD ) ) ;
+						disco.AddFeature( new DiscoFeature( agsXMPP.Uri.CHATSTATES ) ) ;
+						disco.AddFeature( new DiscoFeature( agsXMPP.Uri.COMMANDS ) ) ;
+						
+						_xmppConnection.Send( iq );
                     }                	
 
                 }
@@ -619,6 +618,11 @@ namespace xeus.Core
 
 				if ( itm.Jid != null )
 				{
+					if ( !IsAvailable )
+					{
+						return ;
+					}
+
 					dm.DisoverInformation( itm.Jid, new IqCB( OnDiscoInfoResult ), itm ) ;
 				}
 			}

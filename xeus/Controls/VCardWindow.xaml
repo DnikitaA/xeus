@@ -6,12 +6,12 @@
     xmlns:settings="clr-namespace:xeus.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="xeus.Controls.VCardWindow"
-    Title="v-card" Height="477" Width="300"
+    Title="v-card" Height="573" Width="300"
     settings:WindowSettings.Save="False"
 	  Style="{StaticResource DarkStyleWindow}"
     x:Name="vcard"
     Icon="../images/xeus.ico"
-	Background="{x:Null}" Margin="5,5,5,5" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" ResizeMode="CanResizeWithGrip" >
+	Background="{x:Null}" Margin="5,5,5,5" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" >
 
   <win:WindowBase.Resources>
     <Style x:Key="PublishButton" TargetType="Button">
@@ -29,8 +29,10 @@
   	<Border BorderBrush="#FF262626" BorderThickness="1,1,1,1" CornerRadius="6,6,6,6" Padding="7,7,7,15" Margin="0,0,0,5">
   		<Border.Background>
   			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-  				<GradientStop Color="#FF355982" Offset="0"/>
-  				<GradientStop Color="#485E7B9C" Offset="1"/>
+  				<GradientStop Color="#FF24456D" Offset="0"/>
+  				<GradientStop Color="#7070A3DA" Offset="0.976"/>
+  				<GradientStop Color="#A66683A5" Offset="0.348"/>
+  				<GradientStop Color="#757292B9" Offset="0.695"/>
   			</LinearGradientBrush>
   		</Border.Background>
   		<Border.BitmapEffect>
@@ -61,42 +63,42 @@
   		</StackPanel>
 	
   		<StackPanel Margin="10,0,0,0">
-  			<TextBlock Text="{Binding Path=DisplayName}" FontSize="12" Foreground="#FFB2D9E3" Margin="0,0,0,10"
-  				ToolTip="{Binding Path=Key}" />
+  			<TextBlock Text="{Binding Path=DisplayName}" FontSize="12" Foreground="#FFB2C2E3" Margin="0,0,0,10"
+  				ToolTip="{Binding Path=Key}" FontWeight="Bold" />
   			<StackPanel Margin="0,5,0,0">
-  				<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Full Name" />
+  				<TextBlock FontSize="12" Foreground="#FFB2C2E3" Text="Full Name" />
   				<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=FullName}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" MaxLength="256" MaxLines="1"  Template="{DynamicResource TextBoxBaseTemplateDialog}"  />
   			</StackPanel>
   			<StackPanel Margin="0,5,0,0">
-  				<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Nickname" />
+  				<TextBlock FontSize="12" Foreground="#FFB2C2E3" Text="Nickname" />
   				<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=NickName}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="256" MaxLines="1" Template="{DynamicResource TextBoxBaseTemplateDialog}" />
   			</StackPanel>
   		</StackPanel>		
   	</DockPanel>
 	</Border>
-  	<StackPanel Margin="0,10,0,0">
+  	<StackPanel Margin="0,5,0,0">
   		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="E-Mail" />
   		<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=EmailPreferred}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="256" MaxLines="1" />
   	</StackPanel>
-  	<StackPanel>
+  	<StackPanel Margin="0,5,0,0">
   		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Url" />
   		<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=Url}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="512" MaxLines="1" />
   	</StackPanel>
-  	<StackPanel>
+  	<StackPanel Margin="0,5,0,0">
   		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Title" />
   		<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=Title}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="256" MaxLines="1" />
   	</StackPanel>
-  	<StackPanel>
+  	<StackPanel Margin="0,5,0,0">
   		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Role" />
   		<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=Role}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="256" MaxLines="1" />
   	</StackPanel>
-  	<StackPanel>
+  	<StackPanel Margin="0,5,0,0">
   		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Organization" />
   		<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=Organization}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="256" MaxLines="1" />
   	</StackPanel>
-  	<StackPanel>
+  	<StackPanel Margin="0,5,0,0">
   		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Description" />
-  		<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=Description}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="512" MaxLines="10" />
+  		<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=Description}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="512" MaxLines="3" MinLines="3" VerticalScrollBarVisibility="Auto" />
   	</StackPanel>
   	<StackPanel Margin="0,15,0,0" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Bottom">
       <Button Width="63.867" Content="Publish"

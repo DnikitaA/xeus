@@ -115,6 +115,26 @@ namespace xeus.Core
 			}
 		}
 
+		public RosterItem ClearMesssages()
+		{
+			lock ( _items._syncObject )
+			{
+				foreach ( RosterItem rosterItem in _items )
+				{
+					lock ( rosterItem.Messages._syncObject )
+					{
+						if ( rosterItem.MessagesPreloaded )
+						{
+							rosterItem.Messages.Clear();
+							rosterItem.MessagesPreloaded = false;
+						}
+					}
+				}
+			}
+
+			return null ;
+		}
+
 		public RosterItem FindItem( string bare )
 		{
 			lock ( _items._syncObject )
