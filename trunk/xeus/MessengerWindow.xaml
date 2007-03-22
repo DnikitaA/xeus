@@ -48,7 +48,8 @@
 	<StatusBar DockPanel.Dock="Bottom" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}" VerticalAlignment="Bottom" Padding="2,4,2,4">
 		<StatusBarItem HorizontalAlignment="Stretch" Margin="0,0,0,0"
 		    	  x:Name="_statusMyStatus" VerticalAlignment="Stretch">
-		    <Button x:Name="_buttonmyStatus" Width="25" Height="25" Template="{Binding Path=StatusTemplate}" Click="DisplayPopup" ToolTip="My Status"
+		    <Button x:Name="_buttonmyStatus" Width="25" Height="25" Template="{Binding Path=StatusTemplate}" Click="DisplayPopup" MouseRightButtonDown="StatusRightClick"
+                ToolTip="My Status / Right-Click to Login"
 				>
 			<Popup x:Name="_statusPopup" AllowsTransparency="True" Placement="MousePoint" StaysOpen="False" Width="120" Height="120">
 				<local:StatusControl x:Name="_statusControl" Panel.ZIndex="100"/>

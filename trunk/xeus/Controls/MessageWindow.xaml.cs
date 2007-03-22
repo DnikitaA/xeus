@@ -489,6 +489,8 @@ namespace xeus.Controls
 
 			base.OnClosed( e ) ;
 
+			Client.Instance.Roster.ClearMesssages() ;
+
 			_instance.Dispose();
 			_instance = null ;
 		}

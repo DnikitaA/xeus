@@ -138,7 +138,7 @@ namespace xeus
 
 		void OnLoginError()
 		{
-			ManualLogin() ;
+			//ManualLogin() ;
 		}
 
 		void ChatMessages_CollectionChanged( object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e )
@@ -237,6 +237,11 @@ namespace xeus
 		public void OpenServices( object sender, RoutedEventArgs e )
 		{
 			ServicesWindow.DisplayServices() ;
+		}
+
+		public void StatusRightClick( object sender, RoutedEventArgs e )
+		{
+			ManualLogin();
 		}
 
 		public void AddUser()
