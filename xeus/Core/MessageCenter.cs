@@ -57,25 +57,11 @@ namespace xeus.Core
 			}
 		}
 
-		public void MoveUnreadMessagesToRosterItem( RosterItem rosterItem )
+		public void RemoveMoveUnreadMessages()
 		{
 			lock ( Client.Instance.MessageCenter.ChatMessages._syncObject )
 			{
-				int count = rosterItem.Messages.Count ;
-
-				for ( int i = Client.Instance.MessageCenter.ChatMessages.Count - 1;
-				      i >= 0;
-				      i = Client.Instance.MessageCenter.ChatMessages.Count - 1 )
-				{
-					ChatMessage message = Client.Instance.MessageCenter.ChatMessages[ i ] ;
-
-					lock ( rosterItem.Messages._syncObject )
-					{
-						rosterItem.Messages.Insert( count, message ) ;
-					}
-
-					Client.Instance.MessageCenter.ChatMessages.Remove( message ) ;
-				}
+				Client.Instance.MessageCenter.ChatMessages.Clear() ;
 			}
 		}
 

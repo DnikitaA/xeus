@@ -7,8 +7,10 @@ using System.Timers ;
 using agsXMPP ;
 using agsXMPP.protocol.client ;
 using agsXMPP.protocol.extensions.chatstates ;
+using agsXMPP.protocol.iq.disco ;
 using agsXMPP.protocol.iq.roster ;
 using agsXMPP.protocol.iq.vcard ;
+using agsXMPP.protocol.stream ;
 
 namespace xeus.Core
 {

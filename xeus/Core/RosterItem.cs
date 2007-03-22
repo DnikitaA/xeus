@@ -112,6 +112,9 @@ namespace xeus.Core
 			set
 			{
 				_disco = value ;
+
+				NotifyPropertyChanged( "DiscoInfo" ) ;
+				NotifyPropertyChanged( "SupportsChatNotification" ) ;
 			}
 		}
 
@@ -944,6 +947,21 @@ namespace xeus.Core
 				_transport = value ;
 
 				NotifyPropertyChanged( "Transport" ) ;
+			}
+		}
+
+		public bool SupportsChatNotification
+		{
+			get
+			{
+				if ( _disco == null )
+				{
+					return true ; 
+				}
+				else
+				{
+					return true ;// return _disco.HasFeature( agsXMPP.Uri.CHATSTATES ) ;
+				}
 			}
 		}
 

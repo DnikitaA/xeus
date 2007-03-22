@@ -572,7 +572,7 @@ namespace xeus.Controls
 
 				if ( rosterItem != null )
 				{
-					Client.Instance.MessageCenter.MoveUnreadMessagesToRosterItem( rosterItem ) ;
+					Client.Instance.MessageCenter.RemoveMoveUnreadMessages() ;
 
 					if ( !_instance.IsVisible )
 					{
