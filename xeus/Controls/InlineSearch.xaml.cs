@@ -88,7 +88,8 @@ namespace xeus.Controls
 		{
 			if ( Keyboard.Modifiers == 0 )
 			{
-				if ( key >= Key.D0 && key <= Key.Z )
+				if ( ( key >= Key.D0 && key <= Key.Z )
+					|| ( key >= Key.NumPad0 && key <= Key.NumPad9 ))
 				{
 					Visibility = Visibility.Visible ;
 					_text.Focus() ;
@@ -100,6 +101,10 @@ namespace xeus.Controls
 				else if ( key == Key.Return )
 				{
 					Close( true ) ;
+				}
+				else if ( key == Key.PageDown )
+				{
+					OnNext( this, null ) ;
 				}
 			}
 		}

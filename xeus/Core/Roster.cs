@@ -375,7 +375,7 @@ namespace xeus.Core
 									if ( rosterItemComing.XmppRosterItem.Jid.Server
 											== serviceItem.Jid.Server )
 									{
-										rosterItemComing.Transport = serviceItem.Category ;
+										rosterItemComing.Transport = serviceItem.Type ;
 										break ;
 									}
 								}

@@ -26,47 +26,24 @@
   </win:WindowBase.Resources>
   
   <StackPanel Margin="10,10,10,10">
+  	<Border BorderBrush="#FF262626" BorderThickness="1,1,1,1" CornerRadius="6,6,6,6" Padding="7,7,7,15" Margin="0,0,0,5">
+  		<Border.Background>
+  			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+  				<GradientStop Color="#FF355982" Offset="0"/>
+  				<GradientStop Color="#485E7B9C" Offset="1"/>
+  			</LinearGradientBrush>
+  		</Border.Background>
+  		<Border.BitmapEffect>
+  			<DropShadowBitmapEffect Direction="294" Opacity="0.945" ShadowDepth="2" Softness="0.26"/>
+  		</Border.BitmapEffect>
   	<DockPanel>
-	  
-  		<StackPanel Width="80">
-  			<Grid x:Name="_avatar" ToolTip="Drop Image Here">
+  		<StackPanel Width="70">
+  			<Border x:Name="_avatar" ToolTip="Drop Image Here" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FF2E2E2E" BorderBrush="#FF383838" BorderThickness="1,1,1,1" CornerRadius="3,3,3,3">
   				<Image x:Name="_image" Drop="OnDropFile" DragOver="OnDragOver"
-				 Source="{Binding Path=Image}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="50" Height="50" Margin="0,17,0,0" AllowDrop="True" />
-  				<Grid SnapsToDevicePixels="False" d:IsLayer="True" x:Name="_frame" Grid.ColumnSpan="1" Grid.RowSpan="3" Panel.ZIndex="-1">
-  					<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" Height="Auto" Data="M2.5,0.5 L71.5,0.5 C72.604568,0.5 73.5,1.3954304 73.5,2.5 L73.5,71.5 C73.5,72.604568 72.604568,73.5 71.5,73.5 L2.5,73.5 C1.3954304,73.5 0.5,72.604568 0.5,71.5 L0.5,2.5 C0.5,1.3954304 1.3954304,0.5 2.5,0.5 z" Fill="#5B000000" Margin="9.25,6.75,6.75,20.069">
-  						<Path.RenderTransform>
-  							<TransformGroup>
-  								<ScaleTransform ScaleX="1" ScaleY="1"/>
-  								<SkewTransform AngleX="0" AngleY="0"/>
-  								<RotateTransform Angle="-90"/>
-  								<TranslateTransform X="0" Y="0"/>
-  							</TransformGroup>
-  						</Path.RenderTransform>
-  					</Path>
-	      
-  					<Path RenderTransformOrigin="0.5,0.5" Stretch="Fill"
-  						Stroke="#FF666666" StrokeStartLineCap="Square" StrokeThickness="1"
-  						Margin="8,5.25,8,21.569" VerticalAlignment="Stretch" Height="Auto"
-  						Data="M2.5,0.5 L71.5,0.5 C72.604568,0.5 73.5,1.3954304 73.5,2.5 L73.5,71.5 C73.5,72.604568 72.604568,73.5 71.5,73.5 L2.5,73.5 C1.3954304,73.5 0.5,72.604568 0.5,71.5 L0.5,2.5 C0.5,1.3954304 1.3954304,0.5 2.5,0.5 z"
-  						d:LayoutOverrides="Margin">
-  						<Path.RenderTransform>
-  							<TransformGroup>
-  								<ScaleTransform ScaleX="1" ScaleY="1"/>
-  								<SkewTransform AngleX="0" AngleY="0"/>
-  								<RotateTransform Angle="-270"/>
-  								<TranslateTransform X="0" Y="0"/>
-  							</TransformGroup>
-  						</Path.RenderTransform>
-  						<Path.Fill>
-  							<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-  								<GradientStop Color="#FF000000" Offset="0"/>
-  								<GradientStop Color="#FF333333" Offset="1"/>
-  							</LinearGradientBrush>
-  						</Path.Fill>
-  					</Path>
-  				</Grid>
-  			</Grid>		
-  			<Border Opacity="0.2" Height="40" RenderTransformOrigin="0.5,0.5" Margin="3,-26,1,0">
+				 Source="{Binding Path=Image}" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="50" Height="50" AllowDrop="True" RenderTransformOrigin="0.5,0.5" Margin="4,4,4,4" >
+  				</Image>
+  			</Border>		
+  			<Border Opacity="0.2" RenderTransformOrigin="0.5,0.5" Width="60" Height="40">
   				<Border.OpacityMask>
   					<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
   						<GradientStop Offset="0.162" Color="Black"/>
@@ -88,15 +65,16 @@
   				ToolTip="{Binding Path=Key}" />
   			<StackPanel Margin="0,5,0,0">
   				<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Full Name" />
-  				<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=FullName}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" MaxLength="256" MaxLines="1" />
+  				<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=FullName}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}" MaxLength="256" MaxLines="1"  Template="{DynamicResource TextBoxBaseTemplateDialog}"  />
   			</StackPanel>
   			<StackPanel Margin="0,5,0,0">
   				<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="Nickname" />
-  				<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=NickName}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="256" MaxLines="1" />
+  				<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=NickName}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="256" MaxLines="1" Template="{DynamicResource TextBoxBaseTemplateDialog}" />
   			</StackPanel>
   		</StackPanel>		
   	</DockPanel>
-  	<StackPanel>
+	</Border>
+  	<StackPanel Margin="0,10,0,0">
   		<TextBlock FontSize="12" Foreground="#FF7F7F7F" Text="E-Mail" />
   		<TextBox IsReadOnly="{Binding Path=IsVcardReadOnly}" Text="{Binding Path=EmailPreferred}" Margin="0,5,0,0" Style="{DynamicResource TextBoxStyleInDialog}"  MaxLength="256" MaxLines="1" />
   	</StackPanel>
@@ -122,9 +100,8 @@
   	</StackPanel>
   	<StackPanel Margin="0,15,0,0" HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Bottom">
       <Button Width="63.867" Content="Publish"
-			Background="#FF3980A9" Style="{StaticResource PublishButton}" Template="{DynamicResource AButton}" IsDefault="True"
-			Click="OnPublish" Foreground="#FFF2F2F2" Height="26" x:Name="_ok" Margin="5,0,5,0" TabIndex="1">
-      </Button>
+			Background="#FFA96739" Style="{StaticResource PublishButton}" Template="{DynamicResource AButton}" IsDefault="True"
+			Click="OnPublish" Foreground="#FFF2F2F2" Height="26" x:Name="_ok" Margin="5,0,5,0" TabIndex="1"/>
       <Button Click="OnClose" Content="Close" Background="#FF5D97B9" Template="{DynamicResource AButton}" IsCancel="True" IsDefault="False" Foreground="#FFF2F2F2" Width="63.867" Height="26" Margin="5,0,5,0" TabIndex="2"/>
     </StackPanel>
   </StackPanel>
