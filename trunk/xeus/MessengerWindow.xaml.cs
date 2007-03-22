@@ -54,6 +54,13 @@ namespace xeus
 			Client.Instance.Roster.PresenceSubscribe += new Roster.PresenceSubscribeHandler( Roster_PresenceSubscribe );
 
 			_trayIcon.State = TrayIcon.TrayState.Pending ;
+			_roster.Focus() ;
+
+			_statusBar.Loaded += new RoutedEventHandler( _statusBar_Loaded );
+		}
+
+		void _statusBar_Loaded( object sender, RoutedEventArgs e )
+		{
 			_inlineSearch.Visibility = Visibility.Collapsed ;
 		}
 

@@ -16,7 +16,7 @@
 
 	
     <DockPanel>
-		<StatusBar DockPanel.Dock="Bottom" Style="{DynamicResource StatusBarStyleBlack}">
+		<StatusBar DockPanel.Dock="Bottom" Style="{DynamicResource StatusBarStyleBlack}" x:Name="_statusBar">
       <StatusBarItem HorizontalAlignment="Stretch"
 			    	  x:Name="_statusResize" VerticalAlignment="Stretch" Panel.ZIndex="1">
         <Slider Margin="8,0,8,0" x:Name="_sliderItemSize"

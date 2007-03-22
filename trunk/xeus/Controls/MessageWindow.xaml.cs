@@ -54,8 +54,6 @@ namespace xeus.Controls
 			_timerNoTyping.Elapsed += new ElapsedEventHandler( _timerNoTyping_Elapsed );
 			_timerNoTyping2.Elapsed += new ElapsedEventHandler( _timerNoTyping2_Elapsed );
 
-			_inlineSearch.Visibility = Visibility.Collapsed ;
-
 			_listRefreshTimer.AutoReset = false ;
 			_listRefreshTimer.Start() ;
 
@@ -64,6 +62,13 @@ namespace xeus.Controls
 			_inlineSearch.Closed += new InlineSearch.ClosedHandler( _inlineSearch_Closed );
 
 			KeyDown += new KeyEventHandler( MessageWindow_KeyDown );
+
+			_statusBar.Loaded += new RoutedEventHandler( _statusBar_Loaded );
+		}
+
+		void _statusBar_Loaded( object sender, RoutedEventArgs e )
+		{
+			_inlineSearch.Visibility = Visibility.Collapsed ;
 		}
 
 		object _textsLock = new object();
@@ -152,7 +157,7 @@ namespace xeus.Controls
 
 		void _inlineSearch_Closed( bool isEnter )
 		{
-			lock ( _texts )
+			lock ( _textsLock )
 			{
 				_texts = null ;
 			}
