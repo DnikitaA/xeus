@@ -118,6 +118,8 @@ namespace xeus
 		{
 			if ( App.DispatcherThread.CheckAccess() )
 			{
+				Client.Instance.Disconnect();
+
 				LoginDialog loginDialog = new LoginDialog();
 
 				loginDialog.Owner = this ;
