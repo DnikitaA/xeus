@@ -200,7 +200,6 @@ namespace xeus.Controls
 
 							TextBox textBox = _listBox.ItemTemplate.FindName( "_body", contentPresenter ) as TextBox ;
 
-							textBox.Focus() ;
 							int selectStart = textBox.Text.IndexOf( _textToSearch ) ;
 							textBox.Select( selectStart, _textToSearch.Length );
 						}

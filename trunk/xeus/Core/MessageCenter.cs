@@ -80,7 +80,7 @@ namespace xeus.Core
 								MessageWindow.ContactIsTyping( rosterItem.DisplayName, msg.Chatstate ) ;
 							}
 						}
-						else if ( msg.Body.TrimEnd() != String.Empty )
+						else if ( !String.IsNullOrEmpty( msg.Body ) )
 						{
 							lock ( _hedlineMessages._syncObject )
 							{
@@ -92,7 +92,7 @@ namespace xeus.Core
 					}
 				case MessageType.headline:
 					{
-						if ( msg.Body.TrimEnd() != String.Empty )
+						if ( !String.IsNullOrEmpty( msg.Body ) )
 						{
 							lock ( _hedlineMessages._syncObject )
 							{
