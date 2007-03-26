@@ -623,7 +623,15 @@ namespace xeus.Core
 						return ;
 					}
 
-					dm.DisoverInformation( itm.Jid, new IqCB( OnDiscoInfoResult ), itm ) ;
+					try
+					{
+						dm.DisoverInformation( itm.Jid, new IqCB( OnDiscoInfoResult ), itm ) ;
+					}
+
+					catch ( Exception e )
+					{
+						Log( "Error discovering roster items: {0}", e.Message ) ;
+					}
 				}
 			}
 		}

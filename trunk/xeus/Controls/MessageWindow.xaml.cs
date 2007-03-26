@@ -640,11 +640,14 @@ namespace xeus.Controls
 
 				if ( rosterItem != null )
 				{
-					if ( e.Key == Key.Return && Keyboard.IsKeyDown( Key.LeftCtrl ) )
+					if ( e.Key == Key.Return && 
+						( Keyboard.IsKeyDown( Key.LeftCtrl ) || Keyboard.IsKeyDown( Key.RightCtrl ) ) )
 					{
 						SendMessage() ;
 					}
-					else if ( e.Key >= Key.D0 && e.Key <= Key.Z )
+					else if ( ( e.Key >= Key.D0 && e.Key <= Key.Z )
+							|| ( e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 ) )
+
 					{
 						_instance.ChangeChatState( Chatstate.composing ) ;
 					}
