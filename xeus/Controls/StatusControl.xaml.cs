@@ -36,7 +36,7 @@ namespace xeus.Controls
 
 		private void CloseParentPopup()
 		{
-			Popup popup = Parent as Popup ;
+			System.Windows.Controls.Primitives.Popup popup = Parent as System.Windows.Controls.Primitives.Popup ;
 
 			if ( popup != null )
 			{

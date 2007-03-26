@@ -29,5 +29,8 @@
     <Setting Name="UI_MessageTextSlider" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">1.0</Value>
     </Setting>
+    <Setting Name="UI_DefaultEventItemSeconds" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -127,5 +127,17 @@ namespace xeus.Properties {
                 this["UI_MessageTextSlider"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public double UI_DefaultEventItemSeconds {
+            get {
+                return ((double)(this["UI_DefaultEventItemSeconds"]));
+            }
+            set {
+                this["UI_DefaultEventItemSeconds"] = value;
+            }
+        }
     }
 }

@@ -526,7 +526,7 @@ namespace xeus.Core
 		{
 			get
 			{
-				return "I am idle for 10 minutes" ;
+				return _statusText ;
 			}
 		}
 
