@@ -29,6 +29,7 @@ namespace xeus.Core
 		private Roster _roster ;
 		private MessageCenter _messageCenter ;
 		private Presence _presence ;
+		private Event _event = new Event() ;
 
 		private Timer _discoTimer ;
 		private Timer _idleTimer ;
@@ -814,6 +815,14 @@ namespace xeus.Core
 			get
 			{
 				return _xmppConnection.PresenceManager ;
+			}
+		}
+
+		public Event Event
+		{
+			get
+			{
+				return _event ;
 			}
 		}
 	}

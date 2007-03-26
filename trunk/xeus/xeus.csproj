@@ -90,6 +90,7 @@
     <Page Include="Controls\InlineSearch.xaml" />
     <Page Include="Controls\LoginDialog.xaml" />
     <Page Include="Controls\MessageWindow.xaml" />
+    <Page Include="Controls\Popup.xaml" />
     <Page Include="Controls\RegisterWindow.xaml" />
     <Page Include="Controls\ServicesControl.xaml" />
     <Page Include="Controls\ServicesWindow.xaml" />
@@ -136,6 +137,10 @@
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\OfficeStyleWindow.cs" />
+    <Compile Include="Controls\Popup.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>Popup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RegisterWindow.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>RegisterWindow.xaml</DependentUpon>
@@ -174,7 +179,11 @@
     <Compile Include="Core\ChatMessage.cs" />
     <Compile Include="Core\CountToVisibilityConverter.cs" />
     <Compile Include="Core\Database.cs" />
+    <Compile Include="Core\Event.cs" />
+    <Compile Include="Core\EventcontactStatusChanged.cs" />
+    <Compile Include="Core\EventItem.cs" />
     <Compile Include="Core\HeadlineMessage.cs" />
+    <Compile Include="Core\IEvent.cs" />
     <Compile Include="Core\InlineMethod.cs" />
     <Compile Include="Core\MessageCenter.cs" />
     <Compile Include="Controls\ServicesControl.xaml.cs">

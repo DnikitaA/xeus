@@ -160,6 +160,8 @@ namespace xeus.Core
 			{
 				rosterItem.Presence = presence ;
 
+				Client.Instance.Event.AddEvent( new EventContactStatusChanged( rosterItem ) );
+
 				if ( rosterItem.IsService )
 				{
 					if ( presence.Type == PresenceType.available )

@@ -23,6 +23,8 @@ namespace xeus
 	{
 		private TrayIcon _trayIcon = new TrayIcon() ;
 
+		xeus.Controls.Popup _popup = new xeus.Controls.Popup();
+
 		private delegate void ManualLoginCallback() ;
 		private delegate void SetStatusCallback( string text ) ;
 		private delegate void OnRegisterCallback( IQ iq, Register register ) ;
@@ -296,6 +298,7 @@ namespace xeus
 
 			base.OnClosing( e ) ;
 
+			_popup.Close();
 			AuthorizeWindow.CloseAllWindows();
 			MessageWindow.CloseWindow() ;
 			ServicesWindow.CloseWindow();
