@@ -354,6 +354,10 @@ namespace xeus.Core
 				{
 					group = "Services" ;
 				}
+				else if ( !IsInitialized && _presence != null )
+				{
+					group = "Out of Server Roster" ;
+				}
 				else if ( !IsInitialized || _presence == null || _presence.Type == PresenceType.unavailable )
 				{
 					group = "Offline" ;
