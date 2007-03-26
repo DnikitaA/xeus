@@ -98,19 +98,19 @@ namespace xeus.Core
 		{
 			if ( e.PropertyName == "IsAvailable" && !Client.Instance.IsAvailable )
 			{
-				List< RosterItem > items = new List< RosterItem >( _items.Count );
-
 				lock ( _items._syncObject )
 				{
+					List< RosterItem > items = new List< RosterItem >( _items.Count );
+	
 					foreach ( RosterItem item in _items )
 					{
 						items.Add( item ) ;
 					}
-				}
 
-				foreach ( RosterItem item in items )
-				{
-					item.Presence = null ;
+					foreach ( RosterItem item in items )
+					{
+						item.Presence = null;
+					}
 				}
 			}
 		}

@@ -89,7 +89,7 @@ namespace xeus.Controls
 			if ( Keyboard.Modifiers == 0 )
 			{
 				if ( ( key >= Key.D0 && key <= Key.Z )
-					|| ( key >= Key.NumPad0 && key <= Key.NumPad9 ))
+					|| ( key >= Key.NumPad0 && key <= Key.NumPad9 ) )
 				{
 					Visibility = Visibility.Visible ;
 					_text.Focus() ;

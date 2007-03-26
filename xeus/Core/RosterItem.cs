@@ -14,7 +14,6 @@ using agsXMPP.protocol.iq.vcard ;
 
 namespace xeus.Core
 {
-	[ Serializable ]
 	internal class RosterItem : NotifyInfoDispatcher, IDisposable
 	{
 		private ObservableCollectionDisp< ChatMessage > _messages =
