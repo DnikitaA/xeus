@@ -401,6 +401,7 @@ namespace xeus.Controls
 		}
 
 		RosterItem _rosterItem = null ;
+		private static bool _isActivated = false ;
 
 		private void _tabs_SelectionChanged( object sender, SelectionChangedEventArgs e )
 		{
@@ -490,6 +491,8 @@ namespace xeus.Controls
 
 			Client.Instance.Roster.ClearMesssages() ;
 
+			_instance.Activated -= _instance_Activated ;
+			_instance.Deactivated -= _instance_Deactivated ;
 			_instance.Dispose();
 			_instance = null ;
 		}
@@ -497,6 +500,11 @@ namespace xeus.Controls
 		public static bool IsOpen()
 		{
 			return ( _instance != null ) ;
+		}
+
+		public static bool IsChatActive()
+		{
+			return ( _instance != null && _isActivated ) ;
 		}
 
 		public static void CloseWindow()
@@ -529,6 +537,9 @@ namespace xeus.Controls
 				if ( _instance == null )
 				{
 					_instance = new MessageWindow() ;
+
+					_instance.Activated += new EventHandler( _instance_Activated );
+					_instance.Deactivated += new EventHandler( _instance_Deactivated );
 					_instance.Activate() ;
 				}
 
@@ -595,6 +606,16 @@ namespace xeus.Controls
 				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
 				                                  new DisplayChatCallback( DisplayChat ), jid, false ) ;
 			}
+		}
+
+		static void _instance_Deactivated( object sender, EventArgs e )
+		{
+			_isActivated = false ;
+		}
+
+		static void _instance_Activated( object sender, EventArgs e )
+		{
+			_isActivated = true ;
 		}
 
 		public static void SendChatState( Chatstate chatstate )

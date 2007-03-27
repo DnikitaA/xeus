@@ -121,6 +121,12 @@ namespace xeus.Core
 
 							message.Id = database.InsertMessage( message ) ;
 
+							if ( !MessageWindow.IsOpen()
+									|| !MessageWindow.IsChatActive() )
+							{
+								Client.Instance.Event.AddEvent( new EventMessage( rosterItem, message ) ) ;
+							}
+
 							if ( MessageWindow.IsOpen() )
 							{
 								lock ( rosterItem.Messages._syncObject )

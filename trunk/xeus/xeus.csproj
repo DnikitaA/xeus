@@ -184,6 +184,7 @@
     <Compile Include="Core\EventError.cs" />
     <Compile Include="Core\EventInfo.cs" />
     <Compile Include="Core\EventItem.cs" />
+    <Compile Include="Core\EventMessage.cs" />
     <Compile Include="Core\HeadlineMessage.cs" />
     <Compile Include="Core\IEvent.cs" />
     <Compile Include="Core\InlineMethod.cs" />

@@ -2,10 +2,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:xeus.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="xeus.Controls.Popup"
     Title="xeus.Controls" MaxHeight="200" MaxWidth="350" AllowsTransparency="True" WindowStyle="None"
     Margin="10,10,10,10" Background="#00282828"
-    IsEnabled="False" VerticalAlignment="Bottom" Icon="..\Images\ximple.png" ResizeMode="NoResize" ShowInTaskbar="False" SizeToContent="Height" Topmost="True"
+    IsEnabled="True" VerticalAlignment="Bottom" Icon="..\Images\ximple.png" ResizeMode="NoResize" ShowInTaskbar="False" SizeToContent="WidthAndHeight" Topmost="True"
     Opacity="0.8"
     >
 
@@ -39,6 +40,17 @@
 		</DrawingBrush.Drawing>
 	</DrawingBrush>
 			  
+	<DrawingBrush x:Key="message_design" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<ImageDrawing ImageSource="C:\temp\~me27E_files\image0.png" Rect="4,23,294,271"/>
+					<GeometryDrawing Brush="#4DFFFFFF" Geometry="F1 M 148.246,40.567C 94.8287,40.567 49.5382,59.9281 33.8022,86.7269C 67.9929,94.1144 107.842,98.3517 150.388,98.3517C 191.359,98.3517 229.829,94.4224 263.153,87.5344C 247.86,60.3179 202.198,40.567 148.246,40.567 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+				  
 	<DataTemplate DataType="{x:Type local:EventError}">
 		<StackPanel Orientation="Horizontal">
 			<Rectangle Fill="{DynamicResource error_design}" VerticalAlignment="Center" Width="30" Height="30"/>
@@ -58,7 +70,35 @@
 			</StackPanel>
 		</StackPanel>
 	  </DataTemplate>
-	  
+	
+	<DataTemplate DataType="{x:Type local:EventMessage}">
+		<Border MouseDown="OnEventMessageClick" x:Name="border" CornerRadius="3,3,3,3" >
+		<StackPanel Orientation="Horizontal" x:Name="stackPanel" Margin="2,2,2,2">
+			<Grid>
+			<Image HorizontalAlignment="Stretch" Source="{Binding Path=RosterItem.Image}"
+				       VerticalAlignment="Stretch" Stretch="Uniform" Width="25" Height="25"/>
+			<Rectangle Fill="{DynamicResource message_design}" VerticalAlignment="Top" Width="15" Height="15" d:LayoutOverrides="HorizontalAlignment" HorizontalAlignment="Right" Margin="0,0,-9,0"/>
+			</Grid>
+			<StackPanel Margin="20,0,0,0">
+				<TextBlock Foreground="#FFEEA91D" Text="{Binding Path=RosterItem.DisplayName}" TextTrimming="CharacterEllipsis" />
+				<TextBlock Foreground="#FFE6E6E6" Text="{Binding Path=ChatMessage.Body}" TextTrimming="CharacterEllipsis" />
+			</StackPanel>
+		</StackPanel>
+		</Border>
+		<DataTemplate.Triggers>
+			<Trigger Property="IsMouseOver" Value="True">
+				<Setter Property="Background" TargetName="border">
+					<Setter.Value>
+						<RadialGradientBrush>
+							<GradientStop Color="#FF383838" Offset="1"/>
+							<GradientStop Color="#FF4D4D4D" Offset="0"/>
+						</RadialGradientBrush>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+		</DataTemplate.Triggers>
+	  </DataTemplate>
+	  	  
   	<DataTemplate DataType="{x:Type local:EventContactStatusChanged}">
 		<StackPanel Orientation="Horizontal">
 			<Image HorizontalAlignment="Stretch" Source="{Binding Path=RosterItem.Image}"
@@ -79,7 +119,7 @@
 		<DropShadowBitmapEffect ShadowDepth="2"/>
 	</Window.BitmapEffect>
   	
-	<Border CornerRadius="3,3,3,3" VerticalAlignment="Bottom" Background="#FF2C2C2C" Margin="5,5,5,5" MinHeight="20" BorderBrush="#FF4E4E4E" BorderThickness="1,1,1,1">
+	<Border CornerRadius="3,3,3,3" VerticalAlignment="Bottom" Background="#FF2C2C2C" Margin="5,5,5,5" MinHeight="20" BorderBrush="#FF4E4E4E" BorderThickness="1,1,1,1" x:Name="border">
 		<ListBox Style="{DynamicResource ListBoxStyleMessages}"
 		 IsSynchronizedWithCurrentItem="True" x:Name="_listBox"
 		 ItemsSource="{Binding Source={StaticResource _eventsView}}" Margin="5,5,5,5" Focusable="False" IsTextSearchEnabled="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
