@@ -1,26 +1,64 @@
 ﻿<Window
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:xeus.Core"
     x:Class="xeus.Controls.Popup"
     Title="xeus.Controls" MaxHeight="200" MaxWidth="350" AllowsTransparency="True" WindowStyle="None"
-    Margin="5,5,5,5" Background="#FF282828"
+    Margin="10,10,10,10" Background="#00282828"
     IsEnabled="False" VerticalAlignment="Bottom" Icon="..\Images\ximple.png" ResizeMode="NoResize" ShowInTaskbar="False" SizeToContent="Height" Topmost="True"
+    Opacity="0.8"
     >
 
   <Window.Resources>
     <ResourceDictionary>
-	  <CollectionViewSource x:Key="_eventsView" Source="{Binding Path=Event.Items}">
-	  </CollectionViewSource>
+	  <CollectionViewSource x:Key="_eventsView" Source="{Binding Path=Event.Items}"/>
+	  
+	<DrawingBrush x:Key="error_design" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<ImageDrawing ImageSource="C:\temp\~er73_files\image0.png" Rect="20,22,274,276"/>
+					<GeometryDrawing Brush="#3EFFFFFF" Geometry="F1 M 148.319,38.4447C 100.067,38.4447 59.1564,68.2297 44.9421,109.457C 75.8264,120.822 111.822,127.34 150.254,127.34C 187.263,127.34 222.013,121.296 252.115,110.699C 238.3,68.8293 197.054,38.4447 148.319,38.4447 Z "/>
+					<GeometryDrawing Brush="#2C000000" Geometry="F1 M 149.189,257.588C 171.769,257.588 192.827,250.903 210.584,239.359C 191.723,234.294 170.361,231.437 147.729,231.437C 125.927,231.437 105.303,234.088 86.9589,238.81C 104.889,250.692 126.254,257.588 149.189,257.588 Z "/>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 163.785,78.6216L 161.789,172.584L 135.843,172.584L 131.851,78.6216L 163.785,78.6216 Z M 148.91,217.607C 143.4,217.607 138.847,216.073 135.251,213.004C 131.654,209.935 129.856,206.219 129.856,201.855C 129.856,197.288 131.669,193.551 135.297,190.645C 138.925,187.74 143.463,186.287 148.91,186.287C 154.44,186.287 158.967,187.76 162.49,190.706C 166.014,193.653 167.776,197.369 167.776,201.855C 167.776,206.402 166.03,210.165 162.537,213.142C 159.045,216.119 154.502,217.607 148.91,217.607 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+		  
+	<DataTemplate DataType="{x:Type local:EventError}">
+		<StackPanel Orientation="Horizontal">
+			<Rectangle Fill="{DynamicResource error_design}" VerticalAlignment="Center" Width="30" Height="30"/>
+			<StackPanel Margin="10,0,0,0">
+				<TextBlock Foreground="#FFEEA91D" Text="{Binding Path=Title}" />
+				<TextBlock Foreground="#FFE6E6E6" Text="{Binding Path=Text}" />
+			</StackPanel>
+		</StackPanel>
+	  </DataTemplate>	  
+
+  	<DataTemplate DataType="{x:Type local:EventContactStatusChanged}">
+		<StackPanel Orientation="Horizontal">
+			<Image HorizontalAlignment="Stretch" Source="{Binding Path=RosterItem.Image}"
+				       VerticalAlignment="Stretch" Stretch="Uniform" Width="20" Height="20"/>
+			<Button Template="{Binding Path=OldPresenceTemplate}" IsEnabled="False" ToolTip="Previous Status" Width="20" Height="20" Margin="5,0,0,0"/>
+			<Button Background="#FFFF1600" Template="{DynamicResource FindNext}" Margin="4,0,4,0" Width="10" Height="10" VerticalAlignment="Center" />			
+			<Button Template="{Binding Path=NewPresenceTemplate}" IsEnabled="False" ToolTip="Current Status" Width="20" Height="20"/>
+			<StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+				<TextBlock Foreground="#FFE6E6E6" Text="{Binding Path=Text}" VerticalAlignment="Center" TextTrimming="WordEllipsis" />
+			</StackPanel>
+		</StackPanel>
+	  </DataTemplate>
+	  
     </ResourceDictionary>
   </Window.Resources>
   	
 	<Window.BitmapEffect>
-		<DropShadowBitmapEffect/>
+		<DropShadowBitmapEffect ShadowDepth="2"/>
 	</Window.BitmapEffect>
   	
-	<Border CornerRadius="10,10,10,10" VerticalAlignment="Bottom">
+	<Border CornerRadius="3,3,3,3" VerticalAlignment="Bottom" Background="#FF2C2C2C" Margin="5,5,5,5" MinHeight="20" BorderBrush="#FF4E4E4E" BorderThickness="1,1,1,1">
 		<ListBox Style="{DynamicResource ListBoxStyleMessages}"
 		 IsSynchronizedWithCurrentItem="True" x:Name="_listBox"
-		 ItemsSource="{Binding Source={StaticResource _eventsView}}" VerticalAlignment="Bottom"/>
+		 ItemsSource="{Binding Source={StaticResource _eventsView}}" Margin="5,5,5,5"/>
 	</Border>
 </Window>

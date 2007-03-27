@@ -212,7 +212,7 @@ namespace xeus
 
 		public void AlertError( string title, string text )
 		{
-			_trayIcon.AlertError( title, text ) ;
+			Client.Instance.Event.AddEvent( new EventError( text, title ) ) ;
 		}
 
 		public void AlertInfo( string title, string text )
