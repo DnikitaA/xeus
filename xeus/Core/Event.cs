@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Timers ;
+using System.Windows.Threading ;
 using agsXMPP.protocol.client ;
 
 namespace xeus.Core
@@ -13,29 +14,44 @@ namespace xeus.Core
 
 		Timer _refreshTimer = new Timer( 1000 ) ;
 
+		public delegate void RemoveItemHandler( int index ) ;
+
 		public Event()
 		{
 			_refreshTimer.Start();
+			_refreshTimer.AutoReset = false ;
 			_refreshTimer.Elapsed += new ElapsedEventHandler( _refreshTimer_Elapsed );
+		}
+
+		void RemoveItem( int index )
+		{
+			if ( App.DispatcherThread.CheckAccess() )
+			{
+				_items.RemoveAt( index ) ;
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new RemoveItemHandler( RemoveItem ), index ) ;
+			}
 		}
 
 		void _refreshTimer_Elapsed( object sender, ElapsedEventArgs e )
 		{
 			lock ( _items._syncObject )
 			{
-				IEvent [] events = new IEvent[ _items.Count ] ;
-				_items.CopyTo( events, 0 ) ;
-
 				DateTime now = DateTime.Now ;
-
-				foreach ( IEvent item in events )
+				
+				for ( int i = _items.Count - 1; i >= 0; i-- )
 				{
-					if ( item.ToBeRemoved < now )
+					if ( Items[ i ].ToBeRemoved < now )
 					{
-						_items.Remove( item ) ;
+						RemoveItem( i ) ;
 					}
 				}
 			}
+
+			_refreshTimer.Start();
 		}
 
 		public ObservableCollectionDisp< IEvent > Items

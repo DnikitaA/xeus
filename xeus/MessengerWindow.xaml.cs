@@ -23,7 +23,7 @@ namespace xeus
 	{
 		private TrayIcon _trayIcon = new TrayIcon() ;
 
-		xeus.Controls.Popup _popup = new xeus.Controls.Popup();
+		xeus.Controls.Popup _popup;
 
 		private delegate void ManualLoginCallback() ;
 		private delegate void SetStatusCallback( string text ) ;
@@ -39,15 +39,12 @@ namespace xeus
 			InitializeComponent() ;
 
 			_trayIcon.NotifyIcon.MouseClick += new MouseEventHandler( _notifyIcon_MouseClick ) ;
-			
-
-#if DEBUG
-//			Roster_PresenceSubscribe( Client.Instance.Roster.Items[ 0 ].XmppRosterItem.Jid ) ;
-#endif
 		}
 
 		void MessengerWindow_Initialized( object sender, EventArgs e )
 		{
+			_popup = new xeus.Controls.Popup();
+
 			Client.Instance.MessageCenter.ChatMessages.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( ChatMessages_CollectionChanged );
 			Client.Instance.MessageCenter.HedlineMessages.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( HedlineMessages_CollectionChanged );
 			Client.Instance.LoginError += new Client.LoginHandler( OnLoginError );
