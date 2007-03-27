@@ -35,5 +35,8 @@
     <Setting Name="UI_MessageEventItemSeconds" Type="System.Double" Scope="User">
       <Value Profile="(Default)">15</Value>
     </Setting>
+    <Setting Name="Client_ProxyUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

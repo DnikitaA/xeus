@@ -195,6 +195,7 @@
     <Compile Include="Core\EventItem.cs" />
     <Compile Include="Core\EventMessage.cs" />
     <Compile Include="Core\HeadlineMessage.cs" />
+    <Compile Include="Core\HotkeyManager.cs" />
     <Compile Include="Core\IEvent.cs" />
     <Compile Include="Core\InlineMethod.cs" />
     <Compile Include="Core\Jep65Socket.cs" />

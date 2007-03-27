@@ -151,5 +151,17 @@ namespace xeus.Properties {
                 this["UI_MessageEventItemSeconds"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Client_ProxyUrl {
+            get {
+                return ((string)(this["Client_ProxyUrl"]));
+            }
+            set {
+                this["Client_ProxyUrl"] = value;
+            }
+        }
     }
 }
