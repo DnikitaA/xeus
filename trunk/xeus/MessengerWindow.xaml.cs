@@ -3,14 +3,19 @@ using System.ComponentModel ;
 using System.Windows ;
 using System.Windows.Controls.Primitives ;
 using System.Windows.Forms ;
+using System.Windows.Input ;
 using System.Windows.Threading ;
 using agsXMPP ;
 using agsXMPP.protocol.client ;
 using agsXMPP.protocol.iq.register ;
+using GeoCore.Win32 ;
 using xeus.Controls ;
 using xeus.Core ;
 using xeus.Properties ;
 using Button=System.Windows.Controls.Button;
+using Keys=GeoCore.Win32.Keys;
+using MouseEventArgs=System.Windows.Forms.MouseEventArgs;
+using MouseEventHandler=System.Windows.Forms.MouseEventHandler;
 using Point=System.Drawing.Point;
 using ToolTip=System.Windows.Controls.ToolTip;
 
@@ -22,6 +27,9 @@ namespace xeus
 	public partial class MessengerWindow : WindowBase
 	{
 		private TrayIcon _trayIcon = new TrayIcon() ;
+
+		private WPFHotkeyManager _hotkeyManager ;
+		private Hotkey _hotkeyShowMainWindow ;
 
 		xeus.Controls.Popup _popup;
 
@@ -35,14 +43,24 @@ namespace xeus
 			Database.OpenDatabase() ;
 
 			Initialized += new EventHandler( MessengerWindow_Initialized );
+			Loaded += new RoutedEventHandler( MessengerWindow_Loaded );
 
 			InitializeComponent() ;
 
 			_trayIcon.NotifyIcon.MouseClick += new MouseEventHandler( _notifyIcon_MouseClick ) ;
 		}
 
+		void MessengerWindow_Loaded( object sender, RoutedEventArgs e )
+		{
+			_hotkeyManager.Register( _hotkeyShowMainWindow );
+		}
+
 		void MessengerWindow_Initialized( object sender, EventArgs e )
 		{
+			_hotkeyManager = new WPFHotkeyManager( this );
+			_hotkeyManager.HotkeyPressed += new WPFHotkeyManager.HotkeyPressedEvent( _hotkeyManager_HotkeyPressed );
+			_hotkeyShowMainWindow = new Hotkey( ModifierKeys.Windows, Keys.A );
+
 			_popup = new xeus.Controls.Popup();
 
 			Client.Instance.MessageCenter.ChatMessages.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( ChatMessages_CollectionChanged );
@@ -56,6 +74,14 @@ namespace xeus
 			_roster.Focus() ;
 
 			_statusBar.Loaded += new RoutedEventHandler( _statusBar_Loaded );
+		}
+
+		void _hotkeyManager_HotkeyPressed( Window window, Hotkey hotkey )
+		{
+			if ( hotkey.Equals( _hotkeyShowMainWindow ) )
+			{
+				ShowHide() ;
+			}
 		}
 
 		void _statusBar_Loaded( object sender, RoutedEventArgs e )
@@ -255,6 +281,19 @@ namespace xeus
 				{
 					Client.Instance.AddUser( userName ) ;
 				}
+			}
+		}
+
+		void ShowHide()
+		{
+			if ( IsActive )
+			{
+				Hide() ;
+			}
+			else
+			{
+				Show() ;
+				Activate() ;
 			}
 		}
 

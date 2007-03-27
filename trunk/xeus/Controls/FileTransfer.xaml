@@ -2,11 +2,34 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Class="xeus.Controls.FileTransfer"
     >
+	<StackPanel>
+	<Label>File Name</Label>
+	<Label>File Size</Label>
+	<StackPanel>
+			<ProgressBar Style="{DynamicResource ProgressBarStyle}" x:Name="_progress"/>
+			<Border Opacity="0.8" RenderTransformOrigin="0.5,0.5" Height="20" Margin="0,3,0,0">
+  				<Border.OpacityMask>
+  					<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+  						<GradientStop Offset="0.162" Color="Black"/>
+  						<GradientStop Offset="0.671" Color="Transparent"/>
+  					</LinearGradientBrush>
+  				</Border.OpacityMask>
+  				<Border.Background>
+  					<VisualBrush Visual="{Binding ElementName=_progress}">
+  						<VisualBrush.Transform>
+  							<ScaleTransform ScaleX="1" ScaleY="-1" CenterX="0" CenterY="10" />
+  						</VisualBrush.Transform>
+  					</VisualBrush>
+  				</Border.Background>
+  			</Border>	
+	</StackPanel>
 	<StackPanel Margin="0,10,0,0" HorizontalAlignment="Right" Orientation="Horizontal">
 		<Button Width="63.867" Content="Accept"
 			Background="#FF39A960" Template="{DynamicResource AButton}" IsDefault="False"
 			Click="Ok" Foreground="#FFF2F2F2" Height="26" x:Name="_ok" Margin="5,0,5,0" TabIndex="1"/>
 
 		<Button Content="Refuse" Click="OnDeny" Background="#FFC44835" Template="{DynamicResource AButton}" IsCancel="False" IsDefault="False" Foreground="#FFF2F2F2" Width="63.867" Height="26" Margin="5,0,5,0" TabIndex="2" x:Name="_deny"/>
+		<Button Content="Send" Click="OnSend" Background="#FF35A4C4" Template="{DynamicResource AButton}" IsCancel="False" IsDefault="False" Foreground="#FFF2F2F2" Width="63.867" Height="26" Margin="5,0,5,0" TabIndex="2" x:Name="_send"/>
+	</StackPanel>
 	</StackPanel>
 </UserControl>

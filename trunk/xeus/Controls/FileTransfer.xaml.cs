@@ -7,6 +7,7 @@ using System.Text ;
 using System.Threading ;
 using System.Windows ;
 using System.Windows.Controls ;
+using System.Windows.Threading ;
 using agsXMPP ;
 using agsXMPP.Collections ;
 using agsXMPP.net ;
@@ -20,6 +21,7 @@ using agsXMPP.Xml ;
 using agsXMPP.Xml.Dom ;
 using Microsoft.Win32 ;
 using xeus.Core ;
+using xeus.Properties ;
 using File=agsXMPP.protocol.extensions.filetransfer.File;
 using Uri=agsXMPP.Uri;
 
@@ -30,9 +32,7 @@ namespace xeus.Controls
 	/// </summary>
 	public partial class FileTransfer : UserControl
 	{
-		// Add here your file transfer proxy, or disover it with service discovery
-		// DONT USE THIS PROXY FOT PRODUCTION. THIS PROXY IS FOR RESTING ONLY
-		private const string PROXY = "proxy.netlab.cz" ;
+		private string _proxyUrl = Settings.Default.Client_ProxyUrl ;
 
 		/// <summary>
 		/// SID of the filetransfer
@@ -59,6 +59,8 @@ namespace xeus.Controls
 		private File _file ;
 		private SI _si ;
 		private IQ _siIq ;
+
+		private delegate void ProgressCallback() ;
 
 		public FileTransfer()
 		{
@@ -92,9 +94,6 @@ namespace xeus.Controls
 			}
 
 			_xmppConnection = XmppCon ;
-
-
-			//this.progress.Maximum = 100;
 
 			XmppCon.OnIq += new StreamHandler( XmppCon_OnIq ) ;
 		}
@@ -284,7 +283,7 @@ namespace xeus.Controls
 				bsIq.Query.AddStreamHost( _xmppConnection.MyJID, iphe.AddressList[ i ].ToString(), 1000 ) ;
 			}
 
-			bsIq.Query.AddStreamHost( new Jid( PROXY ), PROXY, 7777 ) ;
+			bsIq.Query.AddStreamHost( new Jid( _proxyUrl ), _proxyUrl, 7777 ) ;
 
 			_p2pSocks5Socket = new JEP65Socket() ;
 			_p2pSocks5Socket.Initiator = _xmppConnection.MyJID ;
@@ -316,10 +315,10 @@ namespace xeus.Controls
 						// direct connection
 						SendFile( null ) ;
 					}
-					if ( sh != null & sh.Equals( new Jid( PROXY ), new FullJidComparer() ) )
+					if ( sh != null & sh.Equals( new Jid( _proxyUrl ), new FullJidComparer() ) )
 					{
 						_p2pSocks5Socket = new JEP65Socket() ;
-						_p2pSocks5Socket.Address = PROXY ;
+						_p2pSocks5Socket.Address = _proxyUrl ;
 						_p2pSocks5Socket.Port = 7777 ;
 						_p2pSocks5Socket.Target = _to ;
 						_p2pSocks5Socket.Initiator = _xmppConnection.MyJID ;
@@ -329,7 +328,7 @@ namespace xeus.Controls
 
 						if ( _p2pSocks5Socket.Connected )
 						{
-							ActivateBytestream( new Jid( PROXY ) ) ;
+							ActivateBytestream( new Jid( _proxyUrl ) ) ;
 						}
 					}
 				}
@@ -421,10 +420,10 @@ namespace xeus.Controls
 				// We're not in the UI thread, so we need to call BeginInvoke
 				// to udate the progress bar
 				TimeSpan ts = DateTime.Now - _lastProgressUpdate ;
-				/* if (ts.Seconds >= 1)
+				if (ts.Seconds >= 1)
                 {
-                    BeginInvoke(new ObjectHandler(UpdateProgress), new object[] { this });
-                }*/
+					UpdateProgress() ;
+				}
 			}
 
 			int len = fs.Read( buffer, 0, BUFFERSIZE ) ;
@@ -437,7 +436,8 @@ namespace xeus.Controls
 			else
 			{
 				// Update Pogress when finished
-				//BeginInvoke(new ObjectHandler(UpdateProgress), new object[] { this });
+				UpdateProgress() ;
+
 				fs.Close() ;
 				fs.Dispose() ;
 				if ( _p2pSocks5Socket != null && _p2pSocks5Socket.Connected )
@@ -528,6 +528,10 @@ namespace xeus.Controls
 					}
 				}
 			}
+		}
+
+		protected void OnSend( object sender, EventArgs e )
+		{
 		}
 
 		protected void OnDeny( object sender, EventArgs e )
@@ -637,11 +641,11 @@ namespace xeus.Controls
 				// completed
 				//tslTransmitted.Text = "completed";
 				// Update Progress when complete
-				//BeginInvoke(new ObjectHandler(UpdateProgress), new object[] { sender });
+				UpdateProgress() ;
 			}
 			else
 			{
-				// not complete, some error occured or somebody canceled the transfer
+				App.Instance.Window.AlertError( "File Transfer Error", "Connection lost." ) ;
 			}
 		}
 
@@ -656,23 +660,30 @@ namespace xeus.Controls
 			// We're not in the UI thread, so we need to call BeginInvoke
 			// to udate the progress bar	
 			TimeSpan ts = DateTime.Now - _lastProgressUpdate ;
+
 			if ( ts.Seconds >= 1 )
 			{
-				//BeginInvoke(new ObjectHandler(UpdateProgress), new object[] { sender });                  
+				UpdateProgress() ;
 			}
 		}
 
-		private void UpdateProgress( object sender )
+		private void UpdateProgress()
 		{
-			/*
-            m_lastProgressUpdate = DateTime.Now;
-            double percent = (double)m_bytesTransmitted / (double)m_lFileLength * 100;
-            Console.WriteLine("Percent: " + percent.ToString());
-            progress.Value = (int)percent;
-
+			if ( App.DispatcherThread.CheckAccess() )
+			{
+				_lastProgressUpdate = DateTime.Now ;
+				double percent = ( double ) _bytesTransmitted / ( double ) _fileLength * 100 ;
+				_progress.Value = percent ;
+				/*
             tslRate.Text = GetHRByteRateString();
             tslTransmitted.Text = HRSize(m_bytesTransmitted);
-            tslRemaining.Text = GetHRRemainingTime();        */
+            tslRemaining.Text = GetHRRemainingTime();*/
+			}
+			else
+			{
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new ProgressCallback( UpdateProgress ) ) ;
+			}
 		}
 
 		private void m_s5Sock_OnConnect( object sender )
@@ -720,6 +731,7 @@ namespace xeus.Controls
 
 		private void FileTransfer_Unloaded( object sender, RoutedEventArgs e )
 		{
+
 			_xmppConnection.OnIq -= new StreamHandler( XmppCon_OnIq ) ;
 		}
 
