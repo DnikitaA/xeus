@@ -12,6 +12,7 @@ using agsXMPP.protocol.extensions.chatstates ;
 using agsXMPP.protocol.iq.disco ;
 using agsXMPP.protocol.iq.register ;
 using agsXMPP.protocol.iq.roster ;
+using agsXMPP.protocol.sasl ;
 using agsXMPP.Xml.Dom ;
 using Win32_API ;
 using xeus.Properties ;
@@ -262,7 +263,7 @@ namespace xeus.Core
 
 		private void _xmppConnection_OnAuthError( object sender, Element e )
 		{
-			App.Instance.Window.AlertError( "Authorization error", e.ToString() ) ;
+			App.Instance.Window.AlertError( "Authorization failure", "Check your user name and password" ) ;
 
 			if ( _xmppConnection.XmppConnectionState != XmppConnectionState.Disconnected )
 			{

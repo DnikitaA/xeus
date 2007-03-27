@@ -214,7 +214,7 @@ namespace xeus
 
 		public void AlertInfo( string title, string text )
 		{
-			_trayIcon.AlertInfo( title, text ) ;
+			Client.Instance.Event.AddEvent( new EventInfo( text, title ) ) ;
 		}
 
 		protected override void OnInitialized( EventArgs e )

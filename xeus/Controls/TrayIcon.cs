@@ -96,16 +96,6 @@ namespace xeus.Controls
 			}
 		}
 
-		public void AlertError( string title, string text )
-		{
-			if ( string.IsNullOrEmpty( text ) )
-			{
-				text = "No text" ;
-			}
-
-			_notifyIcon.ShowBalloonTip( 500, title, text, ToolTipIcon.Error ) ;			
-		}
-
 		public void Dispose()
 		{
 			_reloadTime.Stop();
@@ -114,16 +104,6 @@ namespace xeus.Controls
 			{
 				_notifyIcon.Dispose() ;
 			}
-		}
-
-		public void AlertInfo( string title, string text )
-		{
-			if ( string.IsNullOrEmpty( text ) )
-			{
-				text = "No text" ;
-			}
-
-			_notifyIcon.ShowBalloonTip( 500, title, text, ToolTipIcon.Info ) ;			
 		}
 	}
 }
