@@ -66,7 +66,7 @@ namespace xeus.Core
 		{
 			lock ( _items._syncObject )
 			{
-				_items.Add( theEvent ) ;
+				_items.Insert( 0, theEvent ) ;
 			}
 		}
 	}

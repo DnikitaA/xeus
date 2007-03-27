@@ -26,21 +26,44 @@
 		</DrawingBrush.Drawing>
 	</DrawingBrush>
 		  
+	<DrawingBrush x:Key="info_design" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<ImageDrawing ImageSource="C:\temp\~in1A9_files\image0.png" Rect="20,22,274,276"/>
+					<GeometryDrawing Brush="#3EFFFFFF" Geometry="F1 M 148.319,38.4447C 100.067,38.4447 59.1564,68.2297 44.9421,109.457C 75.8264,120.822 111.822,127.34 150.254,127.34C 187.263,127.34 222.013,121.296 252.115,110.699C 238.3,68.8293 197.054,38.4447 148.319,38.4447 Z "/>
+					<GeometryDrawing Brush="#2C000000" Geometry="F1 M 149.189,257.588C 171.769,257.588 192.827,250.903 210.584,239.359C 191.723,234.294 170.361,231.437 147.729,231.437C 125.927,231.437 105.303,234.088 86.9589,238.81C 104.889,250.692 126.254,257.588 149.189,257.588 Z "/>
+					<GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M 169.415,77.8815L 169.415,108.81L 130.239,108.81L 130.239,77.8815L 169.415,77.8815 Z M 169.415,117.058L 169.415,220.153L 130.239,220.153L 130.239,117.058L 169.415,117.058 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+			  
 	<DataTemplate DataType="{x:Type local:EventError}">
 		<StackPanel Orientation="Horizontal">
 			<Rectangle Fill="{DynamicResource error_design}" VerticalAlignment="Center" Width="30" Height="30"/>
 			<StackPanel Margin="10,0,0,0">
-				<TextBlock Foreground="#FFEEA91D" Text="{Binding Path=Title}" />
-				<TextBlock Foreground="#FFE6E6E6" Text="{Binding Path=Text}" />
+				<TextBlock Foreground="#FFEEA91D" Text="{Binding Path=Title}" TextTrimming="CharacterEllipsis" />
+				<TextBlock Foreground="#FFE6E6E6" Text="{Binding Path=Text}" TextTrimming="CharacterEllipsis" />
 			</StackPanel>
 		</StackPanel>
 	  </DataTemplate>	  
 
+	<DataTemplate DataType="{x:Type local:EventInfo}">
+		<StackPanel Orientation="Horizontal">
+			<Rectangle Fill="{DynamicResource info_design}" VerticalAlignment="Center" Width="30" Height="30"/>
+			<StackPanel Margin="10,0,0,0">
+				<TextBlock Foreground="#FFEEA91D" Text="{Binding Path=Title}" TextTrimming="CharacterEllipsis" />
+				<TextBlock Foreground="#FFE6E6E6" Text="{Binding Path=Text}" TextTrimming="CharacterEllipsis" />
+			</StackPanel>
+		</StackPanel>
+	  </DataTemplate>
+	  
   	<DataTemplate DataType="{x:Type local:EventContactStatusChanged}">
 		<StackPanel Orientation="Horizontal">
 			<Image HorizontalAlignment="Stretch" Source="{Binding Path=RosterItem.Image}"
-				       VerticalAlignment="Stretch" Stretch="Uniform" Width="20" Height="20"/>
-			<Button Template="{Binding Path=OldPresenceTemplate}" IsEnabled="False" ToolTip="Previous Status" Width="20" Height="20" Margin="5,0,0,0"/>
+				       VerticalAlignment="Stretch" Stretch="Uniform" Width="25" Height="25"/>
+			<Button Template="{Binding Path=OldPresenceTemplate}" IsEnabled="False" ToolTip="Previous Status" Width="20" Height="20" Margin="10,0,0,0"/>
 			<Button Background="#FFFF1600" Template="{DynamicResource FindNext}" Margin="4,0,4,0" Width="10" Height="10" VerticalAlignment="Center" />			
 			<Button Template="{Binding Path=NewPresenceTemplate}" IsEnabled="False" ToolTip="Current Status" Width="20" Height="20"/>
 			<StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
@@ -59,6 +82,6 @@
 	<Border CornerRadius="3,3,3,3" VerticalAlignment="Bottom" Background="#FF2C2C2C" Margin="5,5,5,5" MinHeight="20" BorderBrush="#FF4E4E4E" BorderThickness="1,1,1,1">
 		<ListBox Style="{DynamicResource ListBoxStyleMessages}"
 		 IsSynchronizedWithCurrentItem="True" x:Name="_listBox"
-		 ItemsSource="{Binding Source={StaticResource _eventsView}}" Margin="5,5,5,5"/>
+		 ItemsSource="{Binding Source={StaticResource _eventsView}}" Margin="5,5,5,5" Focusable="False" IsTextSearchEnabled="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
 	</Border>
 </Window>

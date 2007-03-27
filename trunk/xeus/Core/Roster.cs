@@ -165,7 +165,9 @@ namespace xeus.Core
 
 				rosterItem.Presence = presence ;
 
-				if ( _start.AddSeconds( 5.0 ) < DateTime.Now )
+				if ( rosterItem.Presence != null && presence != null
+					&& rosterItem.Presence.Status != presence.Status
+					&& _start.AddSeconds( 5.0 ) < DateTime.Now )
 				{
 					Client.Instance.Event.AddEvent( new EventContactStatusChanged( rosterItem, oldPresence ) ) ;
 				}
