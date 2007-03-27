@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows ;
 using xeus.Properties ;
 
 namespace xeus.Core

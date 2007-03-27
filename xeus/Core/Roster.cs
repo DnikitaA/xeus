@@ -11,6 +11,7 @@ using agsXMPP.protocol.iq.disco ;
 using agsXMPP.protocol.iq.roster ;
 using agsXMPP.protocol.iq.vcard ;
 using agsXMPP.protocol.stream ;
+using Win32_API ;
 
 namespace xeus.Core
 {
@@ -18,6 +19,8 @@ namespace xeus.Core
 	{
 		private ObservableCollectionDisp< RosterItem > _items =
 			new ObservableCollectionDisp< RosterItem >( App.DispatcherThread ) ;
+
+		private readonly DateTime _start = DateTime.Now ;
 
 		#region delegates
 
@@ -158,9 +161,14 @@ namespace xeus.Core
 
 			if ( rosterItem != null && presence.Error == null )
 			{
+				Presence oldPresence = rosterItem.Presence ;
+
 				rosterItem.Presence = presence ;
 
-				Client.Instance.Event.AddEvent( new EventContactStatusChanged( rosterItem ) );
+				if ( _start.AddSeconds( 5.0 ) < DateTime.Now )
+				{
+					Client.Instance.Event.AddEvent( new EventContactStatusChanged( rosterItem, oldPresence ) ) ;
+				}
 
 				if ( rosterItem.IsService )
 				{

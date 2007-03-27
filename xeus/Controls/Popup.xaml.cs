@@ -19,6 +19,7 @@ namespace xeus.Controls
 
 	public partial class Popup : System.Windows.Window
 	{
+		private bool _isClosed = false ;
 
 		public Popup()
 		{
@@ -27,10 +28,30 @@ namespace xeus.Controls
 			DataContext = Client.Instance ;
 
 			Client.Instance.Event.Items.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( Items_CollectionChanged );
+			
+			SizeChanged += new SizeChangedEventHandler( Popup_SizeChanged );
+		}
+
+		void Popup_SizeChanged( object sender, SizeChangedEventArgs e )
+		{
+			Left = SystemParameters.WorkArea.Right - ActualWidth - 10 ;
+			Top = SystemParameters.WorkArea.Bottom - ActualHeight - 10 ;
+		}
+
+		protected override void OnClosed( EventArgs e )
+		{
+			_isClosed = true ;
+
+			base.OnClosed( e );
 		}
 
 		void Items_CollectionChanged( object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e )
 		{
+			if ( _isClosed )
+			{
+				return ;
+			}
+
 			if ( Client.Instance.Event.Items.Count > 0 )
 			{
 				Show() ;
@@ -39,9 +60,6 @@ namespace xeus.Controls
 			{
 				Hide();
 			}
-
-			Left = System.Windows.SystemParameters.PrimaryScreenWidth - _listBox.Width ;
-			Top = System.Windows.SystemParameters.PrimaryScreenHeight - _listBox.Height ;
 		}
 	}
 }

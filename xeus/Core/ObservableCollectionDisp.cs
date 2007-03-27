@@ -36,7 +36,7 @@ namespace xeus.Core
 			}
 			else
 			{
-				_dispatcherUIThread.BeginInvoke( DispatcherPriority.Send,
+				_dispatcherUIThread.BeginInvoke( DispatcherPriority.Normal,
 				                                new SetItemCallback( SetItem ), index, new object[] { item } ) ;
 			}
 		}
@@ -52,7 +52,7 @@ namespace xeus.Core
 			}
 			else
 			{
-				_dispatcherUIThread.BeginInvoke( DispatcherPriority.Send,
+				_dispatcherUIThread.BeginInvoke( DispatcherPriority.Normal,
 				                                new InsertItemCallback( InsertItem ), index, new object[] { item } ) ;
 			}
 		}
@@ -68,7 +68,7 @@ namespace xeus.Core
 			}
 			else
 			{
-				_dispatcherUIThread.BeginInvoke( DispatcherPriority.Send,
+				_dispatcherUIThread.BeginInvoke( DispatcherPriority.Normal,
 				                                new RemoveItemCallback( RemoveItem ), index, new object[] { } ) ;
 			}
 		}
@@ -84,7 +84,7 @@ namespace xeus.Core
 			}
 			else
 			{
-				_dispatcherUIThread.BeginInvoke( DispatcherPriority.Send,
+				_dispatcherUIThread.BeginInvoke( DispatcherPriority.Normal,
 				                                new MoveItemCallback( MoveItem ), oldIndex, new object[] { newIndex } ) ;
 			}
 		}
@@ -100,7 +100,7 @@ namespace xeus.Core
 			}
 			else
 			{
-				_dispatcherUIThread.BeginInvoke( DispatcherPriority.Send, new ClearItemsCallback( ClearItems ) ) ;
+				_dispatcherUIThread.BeginInvoke( DispatcherPriority.Normal, new ClearItemsCallback( ClearItems ) ) ;
 			}
 		}
 	}
