@@ -36,6 +36,18 @@ namespace xeus.Core
 			return directoryInfo ;
 		}
 
+		public static DirectoryInfo GetRecievedFolder()
+		{
+			DirectoryInfo directoryInfo = new DirectoryInfo( _folder + "\\Files" ) ;
+
+			if ( !directoryInfo.Exists )
+			{
+				directoryInfo.Create() ;
+			}
+
+			return directoryInfo ;
+		}
+
 		private static DirectoryInfo GetCacheFolder()
 		{
 			DirectoryInfo directoryInfo = new DirectoryInfo( _folder + "\\Cache" ) ;

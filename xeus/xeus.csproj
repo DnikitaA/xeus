@@ -87,6 +87,7 @@
     <Page Include="Controls\ContactTyping.xaml" />
     <Page Include="Controls\ControlResources.xaml" />
     <Page Include="Controls\DialogBox.xaml" />
+    <Page Include="Controls\FileTransfer.xaml" />
     <Page Include="Controls\InlineSearch.xaml" />
     <Page Include="Controls\LoginDialog.xaml" />
     <Page Include="Controls\MessageWindow.xaml" />
@@ -96,6 +97,7 @@
     <Page Include="Controls\ServicesWindow.xaml" />
     <Page Include="Controls\SingleValueDialog.xaml" />
     <Page Include="Controls\StatusControl.xaml" />
+    <Page Include="Controls\TransferWindow.xaml" />
     <Page Include="Controls\VCardWindow.xaml" />
     <Page Include="Controls\WindowDecoration.xaml" />
     <Page Include="Controls\XFormData.xaml" />
@@ -123,6 +125,10 @@
     <Compile Include="Controls\DialogBox.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>DialogBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FileTransfer.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>FileTransfer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\InlineSearch.xaml.cs">
       <SubType>Code</SubType>
@@ -161,6 +167,9 @@
     </Compile>
     <Compile Include="Controls\TabMessages.xaml.cs" />
     <Compile Include="Controls\TitleBar.cs" />
+    <Compile Include="Controls\TransferWindow.xaml.cs">
+      <DependentUpon>TransferWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TrayIcon.cs" />
     <Compile Include="Controls\VCardWindow.xaml.cs">
       <SubType>Code</SubType>
@@ -188,6 +197,7 @@
     <Compile Include="Core\HeadlineMessage.cs" />
     <Compile Include="Core\IEvent.cs" />
     <Compile Include="Core\InlineMethod.cs" />
+    <Compile Include="Core\Jep65Socket.cs" />
     <Compile Include="Core\MessageCenter.cs" />
     <Compile Include="Controls\ServicesControl.xaml.cs">
       <SubType>Code</SubType>
