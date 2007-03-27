@@ -8,6 +8,7 @@
     Margin="10,10,10,10" Background="#00282828"
     IsEnabled="True" VerticalAlignment="Bottom" Icon="..\Images\ximple.png" ResizeMode="NoResize" ShowInTaskbar="False" SizeToContent="WidthAndHeight" Topmost="True"
     Opacity="0.8"
+    x:Name="window"
     >
 
   <Window.Resources>
@@ -112,6 +113,13 @@
 		</StackPanel>
 	  </DataTemplate>
 	  
+    	<Storyboard x:Key="OnRequestBringIntoView1">
+    		<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+    			<SplineColorKeyFrame KeyTime="00:00:00" Value="#FF848484"/>
+    			<SplineColorKeyFrame KeyTime="00:00:00.1000000" Value="#FF2C2C2C"/>
+    		</ColorAnimationUsingKeyFrames>
+    	</Storyboard>
+	  
     </ResourceDictionary>
   </Window.Resources>
   	
@@ -119,7 +127,13 @@
 		<DropShadowBitmapEffect ShadowDepth="2"/>
 	</Window.BitmapEffect>
   	
-	<Border CornerRadius="3,3,3,3" VerticalAlignment="Bottom" Background="#FF2C2C2C" Margin="5,5,5,5" MinHeight="20" BorderBrush="#FF4E4E4E" BorderThickness="1,1,1,1" x:Name="border">
+	<Window.Triggers>
+		<EventTrigger RoutedEvent="Selector.SelectionChanged" SourceName="_listBox">
+			<BeginStoryboard Storyboard="{StaticResource OnRequestBringIntoView1}"/>
+		</EventTrigger>
+	</Window.Triggers>
+  	
+	<Border CornerRadius="3,3,3,3" VerticalAlignment="Bottom" Background="#FF2C2C2C" Margin="5,5,5,5" MinHeight="20" BorderBrush="#FF4E4E4E" BorderThickness="1,1,1,1" x:Name="border" RenderTransformOrigin="0.5,0.5">
 		<ListBox Style="{DynamicResource ListBoxStyleMessages}"
 		 IsSynchronizedWithCurrentItem="True" x:Name="_listBox"
 		 ItemsSource="{Binding Source={StaticResource _eventsView}}" Margin="5,5,5,5" Focusable="False" IsTextSearchEnabled="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
