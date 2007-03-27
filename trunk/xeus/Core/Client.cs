@@ -15,6 +15,7 @@ using agsXMPP.protocol.iq.roster ;
 using agsXMPP.protocol.sasl ;
 using agsXMPP.Xml.Dom ;
 using Win32_API ;
+using xeus.Controls ;
 using xeus.Properties ;
 using Timer=System.Timers.Timer;
 
@@ -148,6 +149,26 @@ namespace xeus.Core
 		void _xmppConnection_OnIq( object sender, Node e )
 		{
 			IQ iq = e as IQ;
+
+			if ( iq != null )
+			{
+				// No Iq with query
+				if ( iq.HasTag( typeof ( agsXMPP.protocol.extensions.si.SI ) ) )
+				{
+					if ( iq.Type == IqType.set )
+					{
+						agsXMPP.protocol.extensions.si.SI si =
+							iq.SelectSingleElement( typeof ( agsXMPP.protocol.extensions.si.SI ) ) as agsXMPP.protocol.extensions.si.SI ;
+
+						agsXMPP.protocol.extensions.filetransfer.File file = si.File ;
+
+						if ( file != null )
+						{
+							TransferWindow.Transfer( _xmppConnection, iq ) ;
+						}
+					}
+				}
+			}
 
 			if ( iq != null && iq.Type == IqType.get )
 			{
