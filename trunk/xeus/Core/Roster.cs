@@ -161,12 +161,13 @@ namespace xeus.Core
 
 			if ( rosterItem != null && presence.Error == null )
 			{
+				string oldText = rosterItem.StatusText ;
+
 				Presence oldPresence = rosterItem.Presence ;
 
 				rosterItem.Presence = presence ;
 
-				if ( rosterItem.Presence != null && presence != null
-					&& rosterItem.Presence.Status != presence.Status
+				if ( rosterItem.StatusText != oldText
 					&& _start.AddSeconds( 5.0 ) < DateTime.Now )
 				{
 					Client.Instance.Event.AddEvent( new EventContactStatusChanged( rosterItem, oldPresence ) ) ;
