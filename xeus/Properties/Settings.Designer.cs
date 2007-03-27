@@ -139,5 +139,17 @@ namespace xeus.Properties {
                 this["UI_DefaultEventItemSeconds"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        public double UI_MessageEventItemSeconds {
+            get {
+                return ((double)(this["UI_MessageEventItemSeconds"]));
+            }
+            set {
+                this["UI_MessageEventItemSeconds"] = value;
+            }
+        }
     }
 }

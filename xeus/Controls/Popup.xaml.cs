@@ -34,8 +34,10 @@ namespace xeus.Controls
 
 		void Popup_SizeChanged( object sender, SizeChangedEventArgs e )
 		{
+			BeginInit();
 			Left = SystemParameters.WorkArea.Right - ActualWidth - 10 ;
 			Top = SystemParameters.WorkArea.Bottom - ActualHeight - 10 ;
+			EndInit();
 		}
 
 		protected override void OnClosed( EventArgs e )
@@ -59,6 +61,24 @@ namespace xeus.Controls
 			else
 			{
 				Hide();
+			}
+		}
+
+		protected void OnEventMessageClick( object sender, MouseEventArgs args )
+		{
+			EventMessage eventMessage = ( ( Border )sender ).DataContext as EventMessage ;
+
+			if ( eventMessage != null )
+			{
+				lock ( Client.Instance.Event.Items._syncObject )
+				{
+					Client.Instance.Event.Items.Clear();
+				}
+
+				if ( args.LeftButton == MouseButtonState.Pressed )
+				{
+					MessageWindow.DisplayChatWindow( eventMessage.RosterItem.Key, true ) ;
+				}
 			}
 		}
 	}
