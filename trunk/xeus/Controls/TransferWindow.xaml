@@ -6,13 +6,11 @@
     xmlns:settings="clr-namespace:xeus.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
     x:Class="xeus.Controls.TransferWindow"
-    Title="file transfer" Width="383"
-    settings:WindowSettings.Save="True"
+    Title="file transfer"
+    settings:WindowSettings.Save="False"
 	Style="{StaticResource DarkStyleWindow}"
     Icon="../images/xeus.ico"
     x:Name="filetransfer"
-	Background="{x:Null}" ResizeMode="NoResize" Margin="5,5,5,5" ShowInTaskbar="True" VerticalAlignment="Top" SizeToContent="WidthAndHeight" HorizontalAlignment="Left" >
-	<StackPanel Margin="2,2,2,2" Orientation="Horizontal">
-    <win:FileTransfer x:Name="_transfer" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-  </StackPanel>
+	Background="{x:Null}" Margin="5,5,5,5" ShowInTaskbar="True" AllowsTransparency="True"  Width="300" Height="300" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"  >
+	<ItemsControl Margin="2,2,2,2" x:Name="_list" DockPanel.Dock="Top" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"/>
 </win:WindowBase>

@@ -579,6 +579,7 @@ namespace xeus.Controls
 
 				if ( activateTab )
 				{
+					_instance.Activate() ;
 					_instance._tabs.SelectedItem = tab ;
 				}
 
@@ -595,11 +596,6 @@ namespace xeus.Controls
 
 				_instance._listRefreshTimer.Start() ;
 				_instance._timeRefreshTimer.Start() ;
-
-				if ( MessageTextBox != null )
-				{
-					MessageTextBox.Focus() ;
-				}
 			}
 			else
 			{
@@ -616,6 +612,13 @@ namespace xeus.Controls
 		static void _instance_Activated( object sender, EventArgs e )
 		{
 			_isActivated = true ;
+
+			Client.Instance.Event.MessageWindowActivated() ;
+
+			if ( MessageTextBox != null )
+			{
+				MessageTextBox.Focus() ;
+			}
 		}
 
 		public static void SendChatState( Chatstate chatstate )

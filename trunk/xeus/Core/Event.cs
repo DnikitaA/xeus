@@ -69,5 +69,21 @@ namespace xeus.Core
 				_items.Insert( 0, theEvent ) ;
 			}
 		}
+
+		public void MessageWindowActivated()
+		{
+			lock ( _items._syncObject )
+			{
+				foreach ( IEvent item in _items )
+				{
+					EventMessage message = item as EventMessage ;
+
+					if ( message != null )
+					{
+						message.ResetTime() ;
+					}
+				}
+			}
+		}
 	}
 }
