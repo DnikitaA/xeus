@@ -19,8 +19,12 @@ namespace xeus.Controls
 					_window = new TransferWindow() ;
 				}
 
-				_window._transfer.Transfer( XmppCon, iq ) ;
+				FileTransfer fileTransfer = new FileTransfer();
+				_window._list.Items.Add( fileTransfer ) ;
+				fileTransfer.Transfer( XmppCon, iq ) ;
+
 				_window.Show() ;
+				_window.Activate() ;
 			}
 			else
 			{

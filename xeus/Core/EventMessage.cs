@@ -34,5 +34,10 @@ namespace xeus.Core
 				return _chatMessage ;
 			}
 		}
+
+		public void ResetTime()
+		{
+			_toBeRemoved = DateTime.MinValue ;
+		}
 	}
 }

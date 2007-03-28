@@ -8,6 +8,126 @@
     x:Class="xeus.Controls.ControlResource"
     >
 	
+	<DrawingBrush x:Key="subscribe_to_design" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Geometry="F1 M 27.4775,101.397L 27.4775,152.127L 277.956,152.127L 277.956,147.327L 196.762,56.7238L 186.511,56.7238L 186.511,101.397L 27.4775,101.397 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="10" LineJoin="Round" Brush="#FFFFFFFF"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.482724" RadiusY="1.34041" Center="0.5,0.5" GradientOrigin="0.5,0.5">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FFADCDDD" Offset="0"/>
+									<GradientStop Color="#FF3A97C7" Offset="1"/>
+								</RadialGradientBrush.GradientStops>
+								<RadialGradientBrush.RelativeTransform>
+									<TransformGroup/>
+								</RadialGradientBrush.RelativeTransform>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#FF000000" Geometry="F1 M 277.956,204.978L 277.956,155.312L 27.4775,155.312L 27.4775,160.012L 108.672,248.714L 118.922,248.714L 118.922,204.978L 277.956,204.978 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="10" LineJoin="Round" Brush="#FFFFFFFF"/>
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+		
+	<DrawingBrush x:Key="subscribe_none_design" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FF000000" Geometry="F1 M 27.4775,101.397L 27.4775,152.127L 277.956,152.127L 277.956,147.327L 196.762,56.7238L 186.511,56.7238L 186.511,101.397L 27.4775,101.397 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="10" LineJoin="Round" Brush="#FFFFFFFF"/>
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#FF000000" Geometry="F1 M 277.956,204.978L 277.956,155.312L 27.4775,155.312L 27.4775,160.012L 108.672,248.714L 118.922,248.714L 118.922,204.978L 277.956,204.978 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="10" LineJoin="Round" Brush="#FFFFFFFF"/>
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+		
+	<DrawingBrush x:Key="subscribe_design" Stretch="Uniform">
+			<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Geometry="F1 M 27.4775,101.397L 27.4775,152.127L 277.956,152.127L 277.956,147.327L 196.762,56.7238L 186.511,56.7238L 186.511,101.397L 27.4775,101.397 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="10" LineJoin="Round" Brush="#FFFFFFFF"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.482724" RadiusY="1.34041" Center="0.5,0.5" GradientOrigin="0.5,0.5">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FFADCDDD" Offset="0"/>
+									<GradientStop Color="#FF3A97C7" Offset="1"/>
+								</RadialGradientBrush.GradientStops>
+								<RadialGradientBrush.RelativeTransform>
+									<TransformGroup/>
+								</RadialGradientBrush.RelativeTransform>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Geometry="F1 M 277.956,204.978L 277.956,155.312L 27.4775,155.312L 27.4775,160.012L 108.672,248.714L 118.922,248.714L 118.922,204.978L 277.956,204.978 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="10" LineJoin="Round" Brush="#FFFFFFFF"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.482724" RadiusY="1.33769" Center="0.5,0.5" GradientOrigin="0.5,0.5">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FFEBB5A8" Offset="0.0127119"/>
+									<GradientStop Color="#FFC7503A" Offset="1"/>
+								</RadialGradientBrush.GradientStops>
+								<RadialGradientBrush.RelativeTransform>
+									<TransformGroup/>
+								</RadialGradientBrush.RelativeTransform>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+
+	<DrawingBrush x:Key="subscribe_from_design" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FF000000" Geometry="F1 M 27.4775,101.397L 27.4775,152.127L 277.956,152.127L 277.956,147.327L 196.762,56.7238L 186.511,56.7238L 186.511,101.397L 27.4775,101.397 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="10" LineJoin="Round" Brush="#FFFFFFFF"/>
+						</GeometryDrawing.Pen>
+					</GeometryDrawing>
+					<GeometryDrawing Geometry="F1 M 277.956,204.978L 277.956,155.312L 27.4775,155.312L 27.4775,160.012L 108.672,248.714L 118.922,248.714L 118.922,204.978L 277.956,204.978 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="10" LineJoin="Round" Brush="#FFFFFFFF"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.482724" RadiusY="1.33769" Center="0.5,0.5" GradientOrigin="0.5,0.5">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FFEBB5A8" Offset="0.0127119"/>
+									<GradientStop Color="#FFC7503A" Offset="1"/>
+								</RadialGradientBrush.GradientStops>
+								<RadialGradientBrush.RelativeTransform>
+									<TransformGroup/>
+								</RadialGradientBrush.RelativeTransform>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+			
 	<DrawingBrush x:Key="tv_design" Stretch="Uniform">
 		<DrawingBrush.Drawing>
 			<DrawingGroup>
@@ -299,18 +419,6 @@
 					<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
 					<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0.9"/>
 				</DoubleAnimationUsingKeyFrames>
-				<ThicknessAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="image" Storyboard.TargetProperty="(FrameworkElement.Margin)">
-					<SplineThicknessKeyFrame KeyTime="00:00:00" Value="10,10,0,0"/>
-				</ThicknessAnimationUsingKeyFrames>
-				<ThicknessAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="_displayName" Storyboard.TargetProperty="(FrameworkElement.Margin)">
-					<SplineThicknessKeyFrame KeyTime="00:00:00" Value="75,10,15,0"/>
-				</ThicknessAnimationUsingKeyFrames>
-				<ThicknessAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="_displayKey" Storyboard.TargetProperty="(FrameworkElement.Margin)">
-					<SplineThicknessKeyFrame KeyTime="00:00:00" Value="75,28,15,0"/>
-				</ThicknessAnimationUsingKeyFrames>
-				<ThicknessAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="_subscription" Storyboard.TargetProperty="(FrameworkElement.Margin)">
-					<SplineThicknessKeyFrame KeyTime="00:00:00" Value="75,50,15,0"/>
-				</ThicknessAnimationUsingKeyFrames>
 			</Storyboard>
 		</DataTemplate.Resources>
 			<Grid RenderTransformOrigin="0.5,0.5"
@@ -389,18 +497,15 @@
 				</Border>
 				<Image HorizontalAlignment="Left" Source="{Binding Path=Image}" Grid.Row="0" 
 					VerticalAlignment="Top" Stretch="Uniform" Width="48" Height="48" Margin="10,15,0,0" d:LayoutOverrides="GridBox" Panel.ZIndex="1" SnapsToDevicePixels="True" IsEnabled="False" x:Name="image"/>
-				<TextBlock Margin="76.333,12.393,15,0"
+				<TextBlock Margin="70,12,15,0"
 					TextTrimming="CharacterEllipsis"
 					FontFamily="Calibri" Foreground="#FFACACAC"
 					VerticalAlignment="Top" x:Name="_displayName" FontSize="16" Text="{Binding Path=DisplayName}" />
 				<TextBlock Text="{Binding Path=Key}" HorizontalAlignment="Stretch"
 					TextTrimming="CharacterEllipsis"
 					FontFamily="Calibri" Foreground="#FFB8D9F2"
-					x:Name="_displayKey" Margin="76.333,32.393,15,0" FontSize="14" VerticalAlignment="Top"/>
-				<TextBlock HorizontalAlignment="Stretch"
-					FontFamily="Calibri" Foreground="#FFB97E7A"
-					x:Name="_subscription" Margin="76.333,49.893,15,0" FontSize="14" VerticalAlignment="Top"
-					Text="{Binding Path=SubscriptionTypeText}"/>
+					x:Name="_displayKey" Margin="70,32,15,0" FontSize="14" VerticalAlignment="Top"/>
+				<Rectangle x:Name="_subscription" Width="18" Height="19" Fill="{DynamicResource subscribe_design}" HorizontalAlignment="Left" Margin="43.334,50.665,0,0" VerticalAlignment="Top" IsEnabled="False" IsHitTestVisible="False" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" Panel.ZIndex="10"/>
 			</Grid>
 
 		<DataTemplate.Triggers>
@@ -414,6 +519,18 @@
         	</DataTrigger>			
  			<DataTrigger Binding="{Binding Path=LastMessageFrom}" Value="{x:Null}">
 					<Setter Property="Visibility" Value="Collapsed" TargetName="_gridFrom"/>
+        	</DataTrigger>			
+ 			<DataTrigger Binding="{Binding Path=SubscriptionType}" Value="both">
+					<Setter Property="Fill" Value="{DynamicResource subscribe_design}" TargetName="_subscription"/>
+        	</DataTrigger>			
+ 			<DataTrigger Binding="{Binding Path=SubscriptionType}" Value="none">
+					<Setter Property="Fill" Value="{DynamicResource subscribe_none_design}" TargetName="_subscription"/>
+        	</DataTrigger>			
+ 			<DataTrigger Binding="{Binding Path=SubscriptionType}" Value="from">
+					<Setter Property="Fill" Value="{DynamicResource subscribe_from_design}" TargetName="_subscription"/>
+        	</DataTrigger>			
+ 			<DataTrigger Binding="{Binding Path=SubscriptionType}" Value="to">
+					<Setter Property="Fill" Value="{DynamicResource subscribe_to_design}" TargetName="_subscription"/>
         	</DataTrigger>			
 		</DataTemplate.Triggers>
 	</DataTemplate>	
