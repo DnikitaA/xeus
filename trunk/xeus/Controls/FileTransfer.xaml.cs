@@ -60,6 +60,8 @@ namespace xeus.Controls
 		private SI _si ;
 		private IQ _siIq ;
 
+		private bool _isSending = false ;
+
 		private delegate void ProgressCallback() ;
 
 		public FileTransfer()
@@ -69,27 +71,45 @@ namespace xeus.Controls
 			Unloaded += new RoutedEventHandler( FileTransfer_Unloaded ) ;
 		}
 
+		public bool IsSending
+		{
+			get
+			{
+				return _isSending ;
+			}
+		}
+
 		public void Transfer( XmppClientConnection XmppCon, IQ iq )
 		{
 			InitializeComponent() ;
-			/*cmdSend.Enabled = false;
-            this.Text = "Receive File from " + iq.From.ToString();*/
+
+			_isSending = false ;
+			_send.Visibility = Visibility.Hidden ;
+
+			RosterItem rosterItem = Client.Instance.Roster.FindItem( iq.From.Bare ) ;
+
+			if ( rosterItem != null )
+			{
+				_textBox.Text = string.Format( "Receive File from {0}", rosterItem.DisplayName ) ;
+			}
 
 			_siIq = iq ;
 			_si = iq.SelectSingleElement( typeof ( SI ) ) as SI ;
+
 			// get SID for file transfer
 			_sid = _si.Id ;
 			_from = iq.From ;
-
 			_file = _si.File ;
 
 			if ( _file != null )
 			{
 				_fileLength = _file.Size ;
+
+				_descriptionBox.Text = _file.Description ;
+				_fileNameBox.Text = _file.Name ;
+				_fileSizeBox.Text = HRSize( _fileLength ) ;
+
 				/*
-                this.lblDescription.Text    = file.Description;
-                this.lblFileName.Text       = file.Name;
-                this.lblFileSize.Text       = HRSize(m_lFileLength);
                 this.txtDescription.Visible = false;*/
 			}
 
@@ -587,7 +607,7 @@ namespace xeus.Controls
 
 			_xmppConnection.Send( iq ) ;
 
-			// this.Close();
+			Visibility = Visibility.Collapsed ;
 		}
 
 		private void HandleStreamHost( ByteStream bs, IQ iq )
