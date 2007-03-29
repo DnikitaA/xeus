@@ -761,8 +761,10 @@
 		</Storyboard>
 	</DataTemplate.Resources>
 	<StackPanel Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}" RenderTransformOrigin="0.5,0.5" Margin="3,3,3,3" x:Name="_rosterItemGridOuter" Orientation="Horizontal" ToolTipService.BetweenShowDelay="1500" ToolTipService.InitialShowDelay="1500">
-		<Button x:Name="_unreadMsg" Width="27" Template="{DynamicResource MessageIcon}" Height="27" IsEnabled="False" ToolTip="Unread Messages" Panel.ZIndex="10" />
+		<Grid>
 		<Image Source="{Binding Path=Image}" Stretch="Uniform" Width="30" Height="30" Margin="4,0,0,0"/>
+		<Button x:Name="_unreadMsg" Width="20.333" Template="{DynamicResource MessageIcon}" Height="Auto" IsEnabled="False" ToolTip="Unread Messages" Panel.ZIndex="10" HorizontalAlignment="Right" VerticalAlignment="Stretch" d:LayoutOverrides="Margin" Margin="0,-2.331,-7.333,14.855" />
+		</Grid>
 		<Border
 			CornerRadius="3,3,3,3" x:Name="_displayNameLabel"
 			Visibility="Visible" BorderThickness="1,1,1,1" d:LayoutOverrides="GridBox" Margin="4,0,0,0">
