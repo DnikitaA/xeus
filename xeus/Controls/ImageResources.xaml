@@ -368,6 +368,33 @@
 	</Viewbox>
 </ControlTemplate>
 
+<DrawingBrush x:Key="message_design" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FF000000" Geometry="F1 M 162.498,44.0988C 234.508,44.0988 292.884,78.3754 292.884,120.658C 292.884,162.94 234.508,197.217 162.498,197.217C 148.348,197.217 134.724,195.893 121.967,193.446L 28.6623,284.661L 80.4024,180.139C 50.9403,166.103 32.1112,144.671 32.1112,120.658C 32.1112,78.3754 90.4873,44.0988 162.498,44.0988 Z "/>
+					<GeometryDrawing Geometry="F1 M 148,33.222C 220.011,33.222 278.387,67.4987 278.387,109.781C 278.387,152.063 220.011,186.34 148,186.34C 133.85,186.34 120.226,185.017 107.469,182.569L 14.1644,273.784L 65.9045,169.262C 36.4424,155.226 17.6134,133.795 17.6134,109.781C 17.6134,67.4987 75.9895,33.222 148,33.222 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF4D4D4D"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.5" RadiusY="0.54629" Center="0.5,0.5" GradientOrigin="0.5,0.5">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FFE6FAFA" Offset="0.00847458"/>
+									<GradientStop Color="#FF82D1F3" Offset="1"/>
+								</RadialGradientBrush.GradientStops>
+								<RadialGradientBrush.RelativeTransform>
+									<TransformGroup/>
+								</RadialGradientBrush.RelativeTransform>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#4DFFFFFF" Geometry="F1 M 148.246,40.567C 94.8287,40.567 49.5382,59.9281 33.8022,86.7269C 67.9929,94.1144 107.842,98.3517 150.388,98.3517C 191.359,98.3517 229.829,94.4224 263.153,87.5344C 247.86,60.3179 202.198,40.567 148.246,40.567 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+</DrawingBrush>
+	
 <ControlTemplate x:Key="MessageIcon" TargetType="{x:Type Button}">
 	<ControlTemplate.Resources>
 		<Storyboard x:Key="OnRequestBringIntoView">
@@ -389,26 +416,7 @@
 		</TransformGroup>
 	</Viewbox.RenderTransform>
 	<Grid>
-	<Path Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Stretch" Data="F1 M5.0282145,-6.4830003 C8.1051111,-6.4830003 10.599428,-4.5002933 10.599428,-2.0545003 C10.599428,0.39129266 8.1051111,2.3739996 5.0282145,2.3739996 L4.1343474,2.2548513 0.49999991,4.5000005 1.4259897,1.2588339 C0.20860633,0.49111211 -0.54299998,-0.71192384 -0.54299998,-2.0545003 -0.54299998,-4.5002933 1.9513177,-6.4830003 5.0282145,-6.4830003 z" Width="12" Fill="#FFB1CFE3" Opacity="0.9" RenderTransformOrigin="0.5,0.5" x:Name="path">
-		<Path.RenderTransform>
-			<TransformGroup>
-				<ScaleTransform ScaleX="1" ScaleY="1"/>
-				<SkewTransform AngleX="0" AngleY="0"/>
-				<RotateTransform Angle="0"/>
-				<TranslateTransform X="0" Y="0"/>
-			</TransformGroup>
-		</Path.RenderTransform>
-	</Path>
-		<Path Opacity="0.9" RenderTransformOrigin="0.890339959425268,0.645409726995465" Fill="#FFFFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Left" Margin="0.917,0.667,0,0" x:Name="path2" VerticalAlignment="Top" Width="6.277" Height="6.391" Data="F1 M6,-5.5443206E-09 L6.7389989,0.1101198 C3.408973,0.76805806 1.002,3.040941 1.002,5.7287774 1.002,6.118423 1.0525831,6.4993482 1.1725329,6.8615327 0.39794999,6.2426252 1.6222344E-08,5.3698635 1.6222344E-08,4.4285002 1.6222344E-08,1.982707 2.6862915,0 6,-5.5443206E-09 z">
-			<Path.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform ScaleX="1" ScaleY="1"/>
-					<SkewTransform AngleX="0" AngleY="0"/>
-					<RotateTransform Angle="0"/>
-					<TranslateTransform X="0" Y="0"/>
-				</TransformGroup>
-			</Path.RenderTransform>
-		</Path>
+	<Rectangle Fill="{DynamicResource message_design}" Width="10" Height="10"/>
 	</Grid>
 </Viewbox>
 </ControlTemplate>
