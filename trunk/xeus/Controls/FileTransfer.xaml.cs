@@ -81,16 +81,20 @@ namespace xeus.Controls
 
 		public void Transfer( XmppClientConnection XmppCon, IQ iq )
 		{
-			InitializeComponent() ;
-
 			_isSending = false ;
-			_send.Visibility = Visibility.Hidden ;
+			_send.Visibility = Visibility.Collapsed ;
 
 			RosterItem rosterItem = Client.Instance.Roster.FindItem( iq.From.Bare ) ;
 
 			if ( rosterItem != null )
 			{
 				_textBox.Text = string.Format( "Receive File from {0}", rosterItem.DisplayName ) ;
+				_image.Source = rosterItem.Image ;
+			}
+			else
+			{
+				_textBox.Text = string.Format( "Receive File from {0}", iq.From ) ;
+				_image.Source = Storage.GetDefaultAvatar() ;
 			}
 
 			_siIq = iq ;
@@ -105,12 +109,16 @@ namespace xeus.Controls
 			{
 				_fileLength = _file.Size ;
 
+				if ( string.IsNullOrEmpty( _file.Description ) )
+				{
+					_descriptionBox.Visibility = _descriptionLabel.Visibility = Visibility.Collapsed ;
+				}
+
 				_descriptionBox.Text = _file.Description ;
 				_fileNameBox.Text = _file.Name ;
 				_fileSizeBox.Text = HRSize( _fileLength ) ;
 
-				/*
-                this.txtDescription.Visible = false;*/
+				_descriptionBox.IsReadOnly = true ;
 			}
 
 			_xmppConnection = XmppCon ;
