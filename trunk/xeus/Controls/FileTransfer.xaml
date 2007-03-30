@@ -5,10 +5,74 @@
     x:Class="xeus.Controls.FileTransfer"
     HorizontalAlignment="Left" VerticalAlignment="Top"
     >
+	
+	<UserControl.Resources>
+	<DrawingBrush x:Key="upload_design" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FF000000" Geometry="F1 M 156.72,28.3956C 227.106,28.3956 284.164,85.4544 284.164,155.84C 284.164,226.226 227.106,283.284 156.72,283.284C 86.3343,283.284 29.2755,226.226 29.2755,155.84C 29.2755,85.4544 86.3343,28.3956 156.72,28.3956 Z "/>
+					<GeometryDrawing Geometry="F1 M 149,30.222C 214.047,30.222 266.778,82.953 266.778,148C 266.778,213.047 214.047,265.778 149,265.778C 83.953,265.778 31.222,213.047 31.222,148C 31.222,82.953 83.953,30.222 149,30.222 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF4D4D4D"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.487993" RadiusY="0.487993" Center="0.5,0.5" GradientOrigin="0.5,0.5">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FFD9FEA3" Offset="0"/>
+									<GradientStop Color="#FF10ABC7" Offset="1"/>
+								</RadialGradientBrush.GradientStops>
+								<RadialGradientBrush.RelativeTransform>
+									<TransformGroup/>
+								</RadialGradientBrush.RelativeTransform>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#FF000000" Geometry="F1 M 147.837,76.2183L 216.94,151.21L 216.94,151.919L 181.613,151.919L 181.613,219.209L 114.323,219.209L 114.323,151.919L 78.9962,151.919L 78.9962,151.21L 147.837,76.2183 Z "/>
+					<GeometryDrawing Brush="#3EFFFFFF" Geometry="F1 M 148.319,38.4447C 100.067,38.4447 59.1564,68.2297 44.9421,109.457C 75.8264,120.822 111.822,127.34 150.254,127.34C 187.263,127.34 222.013,121.296 252.115,110.699C 238.3,68.8293 197.054,38.4447 148.319,38.4447 Z "/>
+					<GeometryDrawing Brush="#2C000000" Geometry="F1 M 149.189,257.588C 171.769,257.588 192.827,250.903 210.584,239.359C 191.723,234.294 170.361,231.437 147.729,231.437C 125.927,231.437 105.303,234.088 86.9589,238.81C 104.889,250.692 126.254,257.588 149.189,257.588 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
+		
+	<DrawingBrush x:Key="download_design" Stretch="Uniform">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FF000000" Geometry="F1 M 156.72,28.3956C 227.106,28.3956 284.164,85.4544 284.164,155.84C 284.164,226.226 227.106,283.284 156.72,283.284C 86.3343,283.284 29.2755,226.226 29.2755,155.84C 29.2755,85.4544 86.3343,28.3956 156.72,28.3956 Z "/>
+					<GeometryDrawing Geometry="F1 M 149,30.222C 214.047,30.222 266.778,82.953 266.778,148C 266.778,213.047 214.047,265.778 149,265.778C 83.953,265.778 31.222,213.047 31.222,148C 31.222,82.953 83.953,30.222 149,30.222 Z ">
+						<GeometryDrawing.Pen>
+							<Pen Thickness="15" LineJoin="Round" Brush="#FF4D4D4D"/>
+						</GeometryDrawing.Pen>
+						<GeometryDrawing.Brush>
+							<RadialGradientBrush RadiusX="0.487993" RadiusY="0.487993" Center="0.5,0.5" GradientOrigin="0.5,0.5">
+								<RadialGradientBrush.GradientStops>
+									<GradientStop Color="#FFFECFA3" Offset="0"/>
+									<GradientStop Color="#FFC74610" Offset="1"/>
+								</RadialGradientBrush.GradientStops>
+								<RadialGradientBrush.RelativeTransform>
+									<TransformGroup/>
+								</RadialGradientBrush.RelativeTransform>
+							</RadialGradientBrush>
+						</GeometryDrawing.Brush>
+					</GeometryDrawing>
+					<GeometryDrawing Brush="#FF000000" Geometry="F1 M 148.1,230.209L 78.9962,155.218L 78.9962,154.508L 114.323,154.508L 114.323,87.2183L 181.613,87.2183L 181.613,154.508L 216.94,154.508L 216.94,155.218L 148.1,230.209 Z "/>
+					<GeometryDrawing Brush="#3EFFFFFF" Geometry="F1 M 148.319,38.4447C 100.067,38.4447 59.1564,68.2297 44.9421,109.457C 75.8264,120.822 111.822,127.34 150.254,127.34C 187.263,127.34 222.013,121.296 252.115,110.699C 238.3,68.8293 197.054,38.4447 148.319,38.4447 Z "/>
+					<GeometryDrawing Brush="#2C000000" Geometry="F1 M 149.189,257.588C 171.769,257.588 192.827,250.903 210.584,239.359C 191.723,234.294 170.361,231.437 147.729,231.437C 125.927,231.437 105.303,234.088 86.9589,238.81C 104.889,250.692 126.254,257.588 149.189,257.588 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>	
+	</UserControl.Resources>
+	
 	<StackPanel Margin="5,5,5,5">
 	<StackPanel Orientation="Horizontal">
+		<Grid>
 		<Image HorizontalAlignment="Stretch" x:Name="_image" Grid.Row="1" 
 	       VerticalAlignment="Stretch" Stretch="Uniform" Width="64" Height="64" />
+		<Rectangle x:Name="_icon" Fill="{DynamicResource download_design}" HorizontalAlignment="Right" Margin="0,0,-5,14" VerticalAlignment="Bottom" Width="25" Height="25"/>
+		</Grid>
 		<StackPanel Margin="15,0,0,0">
 	   		<TextBlock x:Name="_textBox" FontSize="14" Foreground="#FF6EC5EA" Text="text" HorizontalAlignment="Left"/>
 			<StackPanel>
