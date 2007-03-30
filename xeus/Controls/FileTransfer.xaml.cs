@@ -7,6 +7,7 @@ using System.Text ;
 using System.Threading ;
 using System.Windows ;
 using System.Windows.Controls ;
+using System.Windows.Media ;
 using System.Windows.Threading ;
 using agsXMPP ;
 using agsXMPP.Collections ;
@@ -55,6 +56,7 @@ namespace xeus.Controls
 		private FileStream _fileStream ;
 		private DateTime _lastProgressUpdate ;
 
+		private Brush _uploadBrush ;
 
 		private File _file ;
 		private SI _si ;
@@ -67,6 +69,8 @@ namespace xeus.Controls
 		public FileTransfer()
 		{
 			InitializeComponent() ;
+
+			_uploadBrush = ( Brush ) FindResource( "upload_design" ) ;
 
 			Unloaded += new RoutedEventHandler( FileTransfer_Unloaded ) ;
 		}
@@ -265,7 +269,7 @@ namespace xeus.Controls
 					switch ( ( int ) err.Code )
 					{
 						case 403:
-							// MessageBox.Show("The file was rejected by the remote user", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+							App.Instance.Window.AlertError( "File Transfer", "The file was rejected by the remote user." ) ;
 							break ;
 					}
 				}
@@ -303,7 +307,7 @@ namespace xeus.Controls
 
 			string hostname = Dns.GetHostName() ;
 
-			IPHostEntry iphe = Dns.Resolve( hostname ) ;
+			IPHostEntry iphe = Dns.GetHostEntry( hostname ) ;
 
 			for ( int i = 0; i < iphe.AddressList.Length; i++ )
 			{
@@ -513,9 +517,9 @@ namespace xeus.Controls
 
 		protected void Ok( object sender, EventArgs e )
 		{
-			/*cmdAccept.Enabled = false;
-            cmdRefuse.Enabled = false;
-		   */
+			_ok.IsEnabled = false ;
+			_deny.IsEnabled = false ;
+
 			FeatureNeg fNeg = _si.FeatureNeg ;
 			if ( fNeg != null )
 			{
