@@ -5,6 +5,7 @@
     xmlns:win="clr-namespace:xeus.Controls"
     xmlns:settings="clr-namespace:xeus.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    xmlns:prop="clr-namespace:xeus.Properties"
     x:Class="xeus.Controls.TransferWindow"
     Title="file transfer"
     settings:WindowSettings.Save="False"
@@ -15,8 +16,14 @@
 	<DockPanel Margin="5,5,5,5">
 		<DockPanel DockPanel.Dock="Top">
 		<Label Content="File Transfer Proxy" Background="#00848282" Foreground="#FFBDBDBD"/>
-		<TextBox Style="{DynamicResource TextBoxStyleInDialog}"/>
-		</DockPanel>
+    <TextBox x:Name="_proxy"
+     Style="{DynamicResource TextBoxStyleInDialog}" MaxLines="1"
+     TabIndex="0" Margin="0,5,0,0">
+      <TextBox.Text>
+        <Binding Path="Client_ProxyUrl" Source="{x:Static prop:Settings.Default}" Mode="TwoWay"/>
+      </TextBox.Text>
+    </TextBox>
+  </DockPanel>
 		<ListBox Margin="2,2,2,2" x:Name="_list" DockPanel.Dock="Bottom" Style="{DynamicResource ListBoxStyleMessages}" />
 	</DockPanel>
 </win:WindowBase>

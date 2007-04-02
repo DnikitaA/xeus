@@ -49,7 +49,6 @@ namespace xeus.Controls
 		private JEP65Socket _p2pSocks5Socket ;
 
 		private XmppClientConnection _xmppConnection ;
-		private bool m_DescriptionChanged = false ;
 
 		private long _fileLength ;
 		private long _bytesTransmitted = 0 ;
@@ -63,6 +62,7 @@ namespace xeus.Controls
 		private IQ _siIq ;
 
 		private bool _isSending = false ;
+		private bool _isCancelled = false ;
 
 		private delegate void ProgressCallback() ;
 
@@ -218,10 +218,9 @@ namespace xeus.Controls
 			File afile ;
 			afile = new File(
 				Path.GetFileName( _fileName ), _fileLength ) ;
-			/* if (m_DescriptionChanged)
-                file.Description = txtDescription.Text;*/
-			afile.Range = new Range() ;
 
+			afile.Description = _textBox.Text ;
+			afile.Range = new Range() ;
 
 			FeatureNeg fNeg = new FeatureNeg() ;
 
@@ -273,8 +272,13 @@ namespace xeus.Controls
 						case 403:
 							App.Instance.Window.AlertError( "File Transfer", "The file was rejected by the remote user." ) ;
 							break ;
+						default:
+							App.Instance.Window.AlertError( "File Transfer", string.Format( "Unexpected Error {0}", err.Code ) ) ;
+							break ;
 					}
 				}
+
+				OnTransferFinish( this, true );
 			}
 		}
 
@@ -463,7 +467,7 @@ namespace xeus.Controls
 			int len = fs.Read( buffer, 0, BUFFERSIZE ) ;
 			_bytesTransmitted += len ;
 
-			if ( len > 0 )
+			if ( len > 0 && !_isCancelled )
 			{
 				_p2pSocks5Socket.Socket.BeginSend( buffer, 0, len, SocketFlags.None, SendFile, fs ) ;
 			}
@@ -478,6 +482,8 @@ namespace xeus.Controls
 				{
 					_p2pSocks5Socket.Disconnect() ;
 				}
+
+				OnTransferFinish( this, _isCancelled ) ;
 			}
 		}
 
@@ -575,6 +581,9 @@ namespace xeus.Controls
 
 		protected void OnCancel( object sender, EventArgs e )
 		{
+			_isCancelled  = true ;
+			
+			OnTransferFinish( this, true );
 		}
 
 		protected void OnDeny( object sender, EventArgs e )
@@ -634,6 +643,15 @@ namespace xeus.Controls
 
 		protected virtual void OnTransferFinish( object sender, bool cancelled )
 		{
+			if ( !cancelled )
+			{
+				App.Instance.Window.AlertInfo( "File Transfer", "File transfer finished." ) ;
+			}
+			else
+			{
+				App.Instance.Window.AlertInfo( "File Transfer", "File transfer was cancelled." ) ;
+			}
+
 			if ( TransferFinish != null )
 			{
 				TransferFinish( sender, cancelled ) ;
@@ -871,10 +889,5 @@ namespace xeus.Controls
 		}
 
 		#endregion
-
-		private void txtDescription_TextChanged( object sender, EventArgs e )
-		{
-			m_DescriptionChanged = true ;
-		}
 	}
 }

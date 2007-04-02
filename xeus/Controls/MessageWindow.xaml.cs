@@ -415,6 +415,7 @@ namespace xeus.Controls
 
 					if ( rosterItem != null )
 					{
+						rosterItem.DraftMessage = _textBox.Text ;
 						ChangeChatState( Chatstate.gone ) ;
 					}
 				}

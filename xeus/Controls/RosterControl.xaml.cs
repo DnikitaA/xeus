@@ -166,7 +166,8 @@ namespace xeus.Controls
 			{
 				RosterItem rosterItem = GetRosterItemFromDrop( e ) ;
 
-				if ( rosterItem != null )
+				if ( rosterItem != null && rosterItem.IsInitialized
+					&& rosterItem.Presence != null )
 				{
 					string[] fileNames = e.Data.GetData( DataFormats.FileDrop, true ) as string[] ;
 
@@ -174,7 +175,7 @@ namespace xeus.Controls
 					{
 						string fileName = fileNames[ 0 ] ;
 
-						TransferWindow.Transfer( Client.Instance.XmppConnection, new Jid( rosterItem.Key ), fileName ) ;
+						TransferWindow.Transfer( Client.Instance.XmppConnection, rosterItem.Presence.From, fileName ) ;
 					}
 				}
 			}
