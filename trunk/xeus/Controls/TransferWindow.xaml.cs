@@ -63,16 +63,13 @@ namespace xeus.Controls
 		{
 			if ( App.DispatcherThread.CheckAccess() )
 			{
-				if ( cancelled )
+				FileTransfer fileTransfer = sender as FileTransfer ;
+
+				_window._list.Items.Remove( fileTransfer ) ;
+
+				if ( _window._list.Items.Count == 0 )
 				{
-					FileTransfer fileTransfer = sender as FileTransfer ;
-
-					_window._list.Items.Remove( fileTransfer ) ;
-
-					if ( _window._list.Items.Count == 0 )
-					{
-						CloseWindow() ;
-					}
+					CloseWindow() ;
 				}
 			}
 			else
