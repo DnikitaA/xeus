@@ -657,10 +657,9 @@ namespace xeus.Controls
 
 				if ( !cancelled )
 				{
-					App.Instance.Window.AlertInfo( "File Transfer", "Download completed." ) ;
-
 					if ( !_isSending )
 					{
+						App.Instance.Window.AlertInfo( "File Transfer", "Download completed." ) ;
 						_open.Visibility = Visibility.Visible ;
 					}
 				}
