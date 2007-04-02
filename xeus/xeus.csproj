@@ -257,9 +257,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\ximple.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\avatar.png" />
   </ItemGroup>
   <ItemGroup>
