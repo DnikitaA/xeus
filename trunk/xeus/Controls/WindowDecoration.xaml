@@ -12,29 +12,7 @@
     <Setter Property="CornerRadius" Value="5" />
   </Style>
 
-	<ImageBrush x:Key="Checkquered"
-      				Viewport="0,0,10,10"
-      				ViewportUnits="Absolute"
-   				TileMode="Tile" Stretch="None">
-		<ImageBrush.ImageSource>/Images/ximple.png</ImageBrush.ImageSource>
-	</ImageBrush>
-
-	<DrawingBrush x:Key="back_design" Stretch="None" TileMode="Tile">
-		<DrawingBrush.Drawing>
-			<DrawingGroup>
-				<DrawingGroup.Children>
-					<GeometryDrawing Brush="#FFA6A6A6" Geometry="F1 M 100,39.7778L 200,39.7778L 200,83.7778L 100,83.7778L 100,39.7778 Z "/>
-					<GeometryDrawing Brush="#FF777777" Geometry="F1 M 100,39.7778L 200,39.7778L 200,45.1111L 100,45.1111L 100,39.7778 Z "/>
-					<GeometryDrawing Brush="#FF777777" Geometry="F1 M 100.222,49.5555L 200.222,49.5555L 200.222,54.8889L 100.222,54.8889L 100.222,49.5555 Z "/>
-					<GeometryDrawing Brush="#FF777777" Geometry="F1 M 100.222,59.5555L 200.222,59.5555L 200.222,64.8889L 100.222,64.8889L 100.222,59.5555 Z "/>
-					<GeometryDrawing Brush="#FF777777" Geometry="F1 M 100.222,69.5555L 200.222,69.5555L 200.222,74.8889L 100.222,74.8889L 100.222,69.5555 Z "/>
-					<GeometryDrawing Brush="#FF777777" Geometry="F1 M 100.222,79.5555L 200.222,79.5555L 200.222,84.8889L 100.222,84.8889L 100.222,79.5555 Z "/>
-				</DrawingGroup.Children>
-			</DrawingGroup>
-		</DrawingBrush.Drawing>
-	</DrawingBrush>
-
-  <Style TargetType="{x:Type win:TitleBar}">
+ <Style TargetType="{x:Type win:TitleBar}">
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type win:TitleBar}">
@@ -67,6 +45,18 @@
       </Setter.Value>
     </Setter>
   </Style>
+
+	<DrawingBrush x:Key="back_design" Viewport="0,0,100,15" 
+        				TileMode="Tile" ViewportUnits="Absolute">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FF282828" Geometry="F1 M 100,39.7778L 200,39.7778L 200,66.0833L 100,66.0833L 100,39.7778 Z "/>
+					<GeometryDrawing Brush="#FF252525" Geometry="F1 M 100,39.7778L 200,39.7778L 200,43.273L 100,43.273L 100,39.7778 Z M 100,46.1858L 200,46.1858L 200,49.681L 100,49.681L 100,46.1858 Z M 100,52.7394L 200,52.7394L 200,56.2347L 100,56.2347L 100,52.7394 Z M 100,59.293L 200,59.293L 200,62.7883L 100,62.7883L 100,59.293 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
   
   <Style x:Key="DarkStyleWindow" TargetType="{x:Type Window}">
     <Setter Property="AllowsTransparency" Value="true" />
