@@ -43,6 +43,8 @@ namespace xeus.Core
 		private bool _hasUnreadMessages = false ;
 		private bool _messagesPreloaded = false ;
 
+		private string _draftMessage = String.Empty ;
+
 		private ChatMessage _lastMessageFrom ;
 		private ChatMessage _lastMessageTo ;
 
@@ -965,6 +967,18 @@ namespace xeus.Core
 				{
 					return true ;// return _disco.HasFeature( agsXMPP.Uri.CHATSTATES ) ;
 				}
+			}
+		}
+
+		public string DraftMessage
+		{
+			get
+			{
+				return _draftMessage ;
+			}
+			set
+			{
+				_draftMessage = value ;
 			}
 		}
 

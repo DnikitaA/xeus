@@ -650,7 +650,7 @@ namespace xeus.Controls
 
 					_instance.ChangeChatState( Chatstate.inactive ) ;
 
-					MessageTextBox.Text = String.Empty ;
+					rosterItem.DraftMessage = MessageTextBox.Text = String.Empty ;
 					_instance._listRefreshTimer.Start() ;
 				}
 			}

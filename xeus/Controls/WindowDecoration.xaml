@@ -6,7 +6,7 @@
 	>
 
   <Style x:Key = "MainBorder" TargetType="{x:Type Border}">
-    <Setter Property="Background" Value="{DynamicResource Checkquered}" />
+    <Setter Property="Background" Value="{DynamicResource back_design}" />
     <Setter Property="BorderBrush" Value="#FF222222" />
     <Setter Property="BorderThickness" Value="2,2,2,2" />
     <Setter Property="CornerRadius" Value="5" />
@@ -18,6 +18,21 @@
    				TileMode="Tile" Stretch="None">
 		<ImageBrush.ImageSource>/Images/ximple.png</ImageBrush.ImageSource>
 	</ImageBrush>
+
+	<DrawingBrush x:Key="back_design" Stretch="None" TileMode="Tile">
+		<DrawingBrush.Drawing>
+			<DrawingGroup>
+				<DrawingGroup.Children>
+					<GeometryDrawing Brush="#FFA6A6A6" Geometry="F1 M 100,39.7778L 200,39.7778L 200,83.7778L 100,83.7778L 100,39.7778 Z "/>
+					<GeometryDrawing Brush="#FF777777" Geometry="F1 M 100,39.7778L 200,39.7778L 200,45.1111L 100,45.1111L 100,39.7778 Z "/>
+					<GeometryDrawing Brush="#FF777777" Geometry="F1 M 100.222,49.5555L 200.222,49.5555L 200.222,54.8889L 100.222,54.8889L 100.222,49.5555 Z "/>
+					<GeometryDrawing Brush="#FF777777" Geometry="F1 M 100.222,59.5555L 200.222,59.5555L 200.222,64.8889L 100.222,64.8889L 100.222,59.5555 Z "/>
+					<GeometryDrawing Brush="#FF777777" Geometry="F1 M 100.222,69.5555L 200.222,69.5555L 200.222,74.8889L 100.222,74.8889L 100.222,69.5555 Z "/>
+					<GeometryDrawing Brush="#FF777777" Geometry="F1 M 100.222,79.5555L 200.222,79.5555L 200.222,84.8889L 100.222,84.8889L 100.222,79.5555 Z "/>
+				</DrawingGroup.Children>
+			</DrawingGroup>
+		</DrawingBrush.Drawing>
+	</DrawingBrush>
 
   <Style TargetType="{x:Type win:TitleBar}">
     <Setter Property="Template">

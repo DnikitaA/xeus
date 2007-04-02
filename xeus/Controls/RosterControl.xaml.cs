@@ -3,11 +3,13 @@ using System.Collections ;
 using System.Collections.Generic ;
 using System.Collections.Specialized ;
 using System.ComponentModel ;
+using System.Diagnostics ;
 using System.Windows ;
 using System.Windows.Controls ;
 using System.Windows.Data ;
 using System.Windows.Input ;
 using System.Windows.Threading ;
+using agsXMPP ;
 using xeus.Core ;
 using xeus.Properties ;
 
@@ -123,6 +125,77 @@ namespace xeus.Controls
 
 			Client.Instance.Roster.Items.CollectionChanged += new NotifyCollectionChangedEventHandler( Items_CollectionChanged ) ;
 			Client.Instance.Roster.ReadRosterFromDb() ;
+
+			_roster.DragOver += new DragEventHandler( _roster_DragOver );
+			_roster.Drop += new DragEventHandler( _roster_Drop );
+		}
+
+		RosterItem GetRosterItemFromDrop( DragEventArgs e )
+		{
+			RosterItem rosterItem = null ;
+
+			e.Effects = DragDropEffects.None ;
+
+			Point pt = e.GetPosition( _roster ) ;
+
+			IInputElement element = _roster.InputHitTest( pt ) ;
+
+			if ( element != null)
+			{
+				Trace.WriteLine( element.ToString() ) ;
+			}
+
+			if ( element is FrameworkElement )
+			{
+				rosterItem = ( ( FrameworkElement )element ).DataContext as RosterItem ;
+
+				if ( rosterItem != null )
+				{
+					e.Effects = DragDropEffects.Copy ;
+				}
+			}
+
+			e.Handled = true ;
+
+			return rosterItem ;
+		}
+
+		void _roster_Drop( object sender, DragEventArgs e )
+		{
+			if ( Client.Instance.IsAvailable )
+			{
+				RosterItem rosterItem = GetRosterItemFromDrop( e ) ;
+
+				if ( rosterItem != null )
+				{
+					string[] fileNames = e.Data.GetData( DataFormats.FileDrop, true ) as string[] ;
+
+					if ( fileNames.Length > 0 )
+					{
+						string fileName = fileNames[ 0 ] ;
+
+						TransferWindow.Transfer( Client.Instance.XmppConnection, new Jid( rosterItem.Key ), fileName ) ;
+					}
+				}
+			}
+			else
+			{
+				e.Effects = DragDropEffects.None ;
+				e.Handled = true ;
+			}
+		}
+
+		void _roster_DragOver( object sender, DragEventArgs e )
+		{
+			if ( Client.Instance.IsAvailable )
+			{
+				GetRosterItemFromDrop( e ) ;
+			}
+			else
+			{
+				e.Effects = DragDropEffects.None ;
+				e.Handled = true ;
+			}
 		}
 
 		private void _inlineSearch_Closed( bool isEnter )
@@ -440,47 +513,6 @@ namespace xeus.Controls
 			{
 				MessageWindow.DisplayChatWindow( rosterItem.Key, true ) ;
 			}
-		}
-
-		private void RosterControl_Drop( object sender, DragEventArgs e )
-		{
-			e.Handled = true ;
-		}
-
-		private void RosterControl_DragOver( object sender, DragEventArgs e )
-		{
-			RosterItem rosterItem = e.Data.GetData( "xeus.RosterItem" ) as RosterItem ;
-
-			if ( rosterItem != null )
-			{
-				e.Effects = DragDropEffects.Move ;
-			}
-			else
-			{
-				e.Effects = DragDropEffects.None ;
-			}
-
-			e.Handled = true ;
-		}
-
-		private void RosterControl_PreviewMouseLeftButtonDown( object sender, MouseButtonEventArgs e )
-		{
-			/*FrameworkElement item = _roster.InputHitTest( e.GetPosition( _roster ) ) as FrameworkElement ;
-
-			if ( item != null && item.DataContext is RosterItem )
-			{
-				DataObject data = new DataObject( "xeus.RosterItem", item.DataContext ) ;
-
-
-				try
-				{
-					DragDropEffects effects = DragDrop.DoDragDrop( _roster, data, DragDropEffects.Move ) ;
-				}
-				catch ( Exception e1 )
-				{
-					Console.WriteLine( e1 ) ;
-				}
-			}*/
 		}
 	}
 }

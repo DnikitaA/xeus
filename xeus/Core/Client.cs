@@ -106,33 +106,33 @@ namespace xeus.Core
 
 			RegisterEvents() ;
 
-			_xmppConnection.UseCompression = true ;
-			_xmppConnection.UseSSL = true ;
-			_xmppConnection.Priority = 10 ;
-			_xmppConnection.AutoResolveConnectServer = true ;
+			XmppConnection.UseCompression = true ;
+			XmppConnection.UseSSL = true ;
+			XmppConnection.Priority = 10 ;
+			XmppConnection.AutoResolveConnectServer = true ;
 
-			_xmppConnection.ConnectServer = null ;
-			_xmppConnection.Resource = "xeus" ;
-			_xmppConnection.SocketConnectionType = SocketConnectionType.Direct ;
-			_xmppConnection.UseStartTLS = true ;
-			_xmppConnection.AutoRoster = true ;
-			_xmppConnection.AutoAgents = true ;
+			XmppConnection.ConnectServer = null ;
+			XmppConnection.Resource = "xeus" ;
+			XmppConnection.SocketConnectionType = SocketConnectionType.Direct ;
+			XmppConnection.UseStartTLS = true ;
+			XmppConnection.AutoRoster = true ;
+			XmppConnection.AutoAgents = true ;
 
-			_xmppConnection.OnRosterEnd += new ObjectHandler( _xmppConnection_OnRosterEnd ) ;
-			_xmppConnection.OnMessage += new XmppClientConnection.MessageHandler( _xmppConnection_OnMessage ) ;
-			_xmppConnection.OnXmppError += new OnXmppErrorHandler( _xmppConnection_OnXmppError ) ;
-			_xmppConnection.OnAuthError += new OnXmppErrorHandler( _xmppConnection_OnAuthError ) ;
-			_xmppConnection.ClientSocket.OnValidateCertificate +=
+			XmppConnection.OnRosterEnd += new ObjectHandler( _xmppConnection_OnRosterEnd ) ;
+			XmppConnection.OnMessage += new XmppClientConnection.MessageHandler( _xmppConnection_OnMessage ) ;
+			XmppConnection.OnXmppError += new OnXmppErrorHandler( _xmppConnection_OnXmppError ) ;
+			XmppConnection.OnAuthError += new OnXmppErrorHandler( _xmppConnection_OnAuthError ) ;
+			XmppConnection.ClientSocket.OnValidateCertificate +=
 				new RemoteCertificateValidationCallback( ClientSocket_OnValidateCertificate ) ;
-			_xmppConnection.OnSocketError += new ErrorHandler( _xmppConnection_OnSocketError ) ;
-			_xmppConnection.OnClose += new ObjectHandler( _xmppConnection_OnClose );
+			XmppConnection.OnSocketError += new ErrorHandler( _xmppConnection_OnSocketError ) ;
+			XmppConnection.OnClose += new ObjectHandler( _xmppConnection_OnClose );
 
-			_xmppConnection.OnXmppConnectionStateChanged +=
+			XmppConnection.OnXmppConnectionStateChanged +=
 				new XmppConnection.XmppConnectionStateHandler( _xmppConnection_OnXmppConnectionStateChanged ) ;
 
-			_xmppConnection.OnRegisterInformation += new RegisterEventHandler( _xmppConnection_OnRegisterInformation );
-			_xmppConnection.OnRegistered += new ObjectHandler( _xmppConnection_OnRegistered );
-			_xmppConnection.OnIq += new agsXMPP.Xml.StreamHandler( _xmppConnection_OnIq );
+			XmppConnection.OnRegisterInformation += new RegisterEventHandler( _xmppConnection_OnRegisterInformation );
+			XmppConnection.OnRegistered += new ObjectHandler( _xmppConnection_OnRegistered );
+			XmppConnection.OnIq += new agsXMPP.Xml.StreamHandler( _xmppConnection_OnIq );
 
 			_messageCenter.RegisterEvent( _instance ) ;
 
@@ -164,7 +164,7 @@ namespace xeus.Core
 
 						if ( file != null )
 						{
-							TransferWindow.Transfer( _xmppConnection, iq ) ;
+							TransferWindow.Transfer( XmppConnection, iq ) ;
 						}
 					}
 				}
@@ -189,7 +189,7 @@ namespace xeus.Core
 						version.Ver = "1.0 alpha";
 						version.Os = Environment.OSVersion.ToString();
 
-						_xmppConnection.Send( iq );
+						XmppConnection.Send( iq );
                     }                	
 					else if ( query.GetType() == typeof( DiscoInfo ) )
                     {
@@ -203,7 +203,7 @@ namespace xeus.Core
 						disco.AddFeature( new DiscoFeature( agsXMPP.Uri.CHATSTATES ) ) ;
 						disco.AddFeature( new DiscoFeature( agsXMPP.Uri.COMMANDS ) ) ;
 						
-						_xmppConnection.Send( iq );
+						XmppConnection.Send( iq );
                     }                	
 
                 }
@@ -286,9 +286,9 @@ namespace xeus.Core
 		{
 			App.Instance.Window.AlertError( "Authorization failure", "Check your user name and password" ) ;
 
-			if ( _xmppConnection.XmppConnectionState != XmppConnectionState.Disconnected )
+			if ( XmppConnection.XmppConnectionState != XmppConnectionState.Disconnected )
 			{
-				_xmppConnection.Close() ;
+				XmppConnection.Close() ;
 			}
 
 			if ( LoginError != null )
@@ -322,29 +322,29 @@ namespace xeus.Core
 
 		public void Connect( bool registerNewAccount )
 		{
-			if ( _xmppConnection.XmppConnectionState == XmppConnectionState.Disconnected )
+			if ( XmppConnection.XmppConnectionState == XmppConnectionState.Disconnected )
 			{
 				Log( "Opening connection" ) ;
 				
-				_xmppConnection.RegisterAccount = registerNewAccount ;
+				XmppConnection.RegisterAccount = registerNewAccount ;
 
-				_xmppConnection.Username = Settings.Default.Client_UserName ;
-				_xmppConnection.Password = Settings.Default.Client_Password ;
-				_xmppConnection.Server = Settings.Default.Client_Server ;
+				XmppConnection.Username = Settings.Default.Client_UserName ;
+				XmppConnection.Password = Settings.Default.Client_Password ;
+				XmppConnection.Server = Settings.Default.Client_Server ;
 
 				Settings.Default.Save();
 
-				_xmppConnection.Open() ;
+				XmppConnection.Open() ;
 			}
 		}
 
 		public void Disconnect()
 		{
-			if ( _xmppConnection.XmppConnectionState != XmppConnectionState.Disconnected )
+			if ( XmppConnection.XmppConnectionState != XmppConnectionState.Disconnected )
 			{
 				Log( "Disconnecting" ) ;
 
-				_xmppConnection.Close() ;
+				XmppConnection.Close() ;
 			}
 		}
 
@@ -361,7 +361,7 @@ namespace xeus.Core
 
 				Trace.WriteLine( message.Thread );
 
-				_xmppConnection.Send( message ) ;
+				XmppConnection.Send( message ) ;
 			}
 		}
 
@@ -395,7 +395,7 @@ namespace xeus.Core
 
 				Trace.WriteLine( message.Thread );
 
-				_xmppConnection.Send( message ) ;
+				XmppConnection.Send( message ) ;
 
 				ChatMessage chatMessage = new ChatMessage( message, rosterItem, DateTime.Now );
 
@@ -418,12 +418,12 @@ namespace xeus.Core
 
 			Connect( false ) ;
 
-			if ( _xmppConnection.Authenticated )
+			if ( XmppConnection.Authenticated )
 			{
 				if ( isIdle && !_isIdle )
 				{
 					// coming to idle state
-					_nonIdlePresence = _xmppConnection.Show ;
+					_nonIdlePresence = XmppConnection.Show ;
 					_isIdle = true ;
 
 					App.Instance.Window.Status( "Coming to Idle State" ) ;
@@ -437,10 +437,10 @@ namespace xeus.Core
 					App.Instance.Window.Status( "Coming from Idle State" ) ;
 				}
 
-				_xmppConnection.Show = showType ;
-				_xmppConnection.SendMyPresence() ;
+				XmppConnection.Show = showType ;
+				XmppConnection.SendMyPresence() ;
 
-				_presence = new Presence( _xmppConnection.Show, _xmppConnection.Status, _xmppConnection.Priority ) ;
+				_presence = new Presence( XmppConnection.Show, XmppConnection.Status, XmppConnection.Priority ) ;
 
 				NotifyPropertyChanged( "MyPresence" ) ;
 				NotifyPropertyChanged( "StatusTemplate" ) ;
@@ -459,7 +459,7 @@ namespace xeus.Core
 		{
 			if ( IsAvailable )
 			{
-				PresenceManager presenceManager = new PresenceManager( _xmppConnection ) ;
+				PresenceManager presenceManager = new PresenceManager( XmppConnection ) ;
 
 				if ( approve )
 				{
@@ -479,8 +479,8 @@ namespace xeus.Core
 				_services.Items.Clear() ;
 			}
 
-			DiscoManager discoManager = new DiscoManager( _xmppConnection ) ;
-			discoManager.DisoverItems( new Jid( _xmppConnection.Server ), new IqCB( OnDiscoServerResult ), null ) ;
+			DiscoManager discoManager = new DiscoManager( XmppConnection ) ;
+			discoManager.DisoverItems( new Jid( XmppConnection.Server ), new IqCB( OnDiscoServerResult ), null ) ;
 		}
 
 		#region disco server events
@@ -560,7 +560,7 @@ namespace xeus.Core
 			RegisterIq registerIq = new RegisterIq( IqType.get, jid ) ;
 			registerIq.Query.AddTag( "remove" ) ;
 
-			_xmppConnection.IqGrabber.SendIq( registerIq, OnUnregisterService, registerIq ) ;
+			XmppConnection.IqGrabber.SendIq( registerIq, OnUnregisterService, registerIq ) ;
 		}
 
 		private string _idRegisterServiceToken = String.Empty ;
@@ -587,12 +587,12 @@ namespace xeus.Core
 
 			if ( _idRegisterServiceToken == String.Empty )
 			{
-				_xmppConnection.IqGrabber.Remove( _idRegisterServiceToken ) ;
+				XmppConnection.IqGrabber.Remove( _idRegisterServiceToken ) ;
 				_idRegisterServiceToken = String.Empty ;
 			}
 
 			_idRegisterServiceToken = registerIq.Id ;
-			_xmppConnection.IqGrabber.SendIq( registerIq, OnRegisterServiceGet, _idRegisterServiceToken ) ;
+			XmppConnection.IqGrabber.SendIq( registerIq, OnRegisterServiceGet, _idRegisterServiceToken ) ;
 		}
 
 		public void FinishRegisterService( Jid jid, string userName, string password )
@@ -601,18 +601,18 @@ namespace xeus.Core
 			registerIq.Query.Username = userName ;
 			registerIq.Query.Password = password ;
 
-			_xmppConnection.IqGrabber.SendIq( registerIq, OnRegisterService, registerIq ) ;
+			XmppConnection.IqGrabber.SendIq( registerIq, OnRegisterService, registerIq ) ;
 		}
 
 		public void DiscoRequest( ServiceItem serviceItem )
 		{
-			DiscoManager dm = new DiscoManager( _xmppConnection ) ;
+			DiscoManager dm = new DiscoManager( XmppConnection ) ;
 			dm.DisoverInformation( serviceItem.Jid, new IqCB( OnDiscoInfoResult ), serviceItem ) ;
 		}
 
 		public void DiscoRequest( RosterItem rosterItem )
 		{
-			DiscoManager dm = new DiscoManager( _xmppConnection ) ;
+			DiscoManager dm = new DiscoManager( XmppConnection ) ;
 			dm.DisoverInformation( new Jid( rosterItem.Key ), new IqCB( OnDiscoInfoResult ), rosterItem ) ;
 		}
 
@@ -633,7 +633,7 @@ namespace xeus.Core
 				_services.Items.CopyTo( serviceItems, 0 ) ;
 			}
 
-			DiscoManager dm = new DiscoManager( _xmppConnection ) ;
+			DiscoManager dm = new DiscoManager( XmppConnection ) ;
 
 			foreach ( ServiceItem itm in serviceItems )
 			{
@@ -709,29 +709,29 @@ namespace xeus.Core
 		{
 			Log( "Registering events" ) ;
 
-			_xmppConnection.OnLogin += new ObjectHandler( _xmppConnecion_OnLogin ) ;
+			XmppConnection.OnLogin += new ObjectHandler( _xmppConnecion_OnLogin ) ;
 
-			_roster.RegisterEvents( _xmppConnection ) ;
+			_roster.RegisterEvents( XmppConnection ) ;
 		}
 
 		public void RequestAgents()
 		{
-			_xmppConnection.RequestAgents() ;
+			XmppConnection.RequestAgents() ;
 		}
 
 		public void Send( IQ iq )
 		{
-			if ( _xmppConnection.Binded )
+			if ( XmppConnection.Binded )
 			{
-				_xmppConnection.Send( iq ) ;
+				XmppConnection.Send( iq ) ;
 			}
 		}
 
 		public void SendIqGrabber( IQ iq, IqCB iqCallback, object cbArgument )
 		{
-			if ( _xmppConnection.Binded )
+			if ( XmppConnection.Binded )
 			{
-				_xmppConnection.IqGrabber.SendIq( iq, iqCallback, cbArgument ) ;
+				XmppConnection.IqGrabber.SendIq( iq, iqCallback, cbArgument ) ;
 			}
 		}
 
@@ -739,7 +739,7 @@ namespace xeus.Core
 		{
 			get
 			{
-				return _xmppConnection.RosterManager ;
+				return XmppConnection.RosterManager ;
 			}
 		}
 
@@ -793,9 +793,9 @@ namespace xeus.Core
 		{
 			get
 			{
-				if ( _xmppConnection != null )
+				if ( XmppConnection != null )
 				{
-					return _xmppConnection.MyJID ;
+					return XmppConnection.MyJID ;
 				}
 
 				return null ;
@@ -816,10 +816,10 @@ namespace xeus.Core
 			{
 				Jid jid = new Jid( name ) ;
 
-				_xmppConnection.RosterManager.AddRosterItem( jid ) ;
+				XmppConnection.RosterManager.AddRosterItem( jid ) ;
 
 				// Ask for subscription now
-				_xmppConnection.PresenceManager.Subcribe( jid ) ;
+				XmppConnection.PresenceManager.Subcribe( jid ) ;
 			}
 		}
 
@@ -827,7 +827,7 @@ namespace xeus.Core
 		{
 			if ( rosterItem.IsInitialized && !rosterItem.IsService )
 			{
-				_xmppConnection.RosterManager.UpdateRosterItem( rosterItem.XmppRosterItem.Jid,
+				XmppConnection.RosterManager.UpdateRosterItem( rosterItem.XmppRosterItem.Jid,
 				                                                rosterItem.NickName, group ) ;
 			}
 		}
@@ -836,7 +836,7 @@ namespace xeus.Core
 		{
 			get
 			{
-				return _xmppConnection.PresenceManager ;
+				return XmppConnection.PresenceManager ;
 			}
 		}
 
@@ -845,6 +845,14 @@ namespace xeus.Core
 			get
 			{
 				return _event ;
+			}
+		}
+
+		public XmppClientConnection XmppConnection
+		{
+			get
+			{
+				return _xmppConnection ;
 			}
 		}
 	}

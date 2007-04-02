@@ -87,6 +87,7 @@ namespace xeus.Controls
 		{
 			_isSending = false ;
 			_send.Visibility = Visibility.Collapsed ;
+			_cancel.Visibility = Visibility.Collapsed ;
 
 			RosterItem rosterItem = Client.Instance.Roster.FindItem( iq.From.Bare ) ;
 
@@ -130,39 +131,40 @@ namespace xeus.Controls
 			XmppCon.OnIq += new StreamHandler( XmppCon_OnIq ) ;
 		}
 
-		public void Transfer( XmppClientConnection XmppCon, Jid to )
+		public void Transfer( XmppClientConnection XmppCon, Jid to, string fileName )
 		{
-			//this.Text = "Send File to " + to.ToString();
+			RosterItem rosterItem = Client.Instance.Roster.FindItem( to.Bare ) ;
+			_icon.Fill = _uploadBrush ;
+
+			if ( rosterItem != null )
+			{
+				_textBox.Text = string.Format( "Send File to {0}", rosterItem.DisplayName ) ;
+				_image.Source = rosterItem.Image ;
+			}
+			else
+			{
+				_textBox.Text = string.Format( "Send File to {0}", to ) ;
+				_image.Source = Storage.GetDefaultAvatar() ;
+			}
+
+			_send.Visibility = Visibility.Visible ;
+			_ok.Visibility = Visibility.Collapsed ;
+			_deny.Visibility = Visibility.Collapsed ;
 
 			_to = to ;
 			_xmppConnection = XmppCon ;
 
-			/*
-            // disable commadn buttons we don't need for sending a file
-            cmdAccept.Enabled = false;
-            cmdRefuse.Enabled = false;
-			*/
-
-			ChooseFileToSend() ;
+			ChooseFileToSend( fileName ) ;
 		}
 
-		private void ChooseFileToSend()
+		private void ChooseFileToSend( string fileName )
 		{
-			OpenFileDialog of = new OpenFileDialog() ;
-			bool? result = of.ShowDialog() ;
+			FileInfo fi = new FileInfo( fileName ) ;
 
-			if ( result != null && result.Value )
-			{
-				_fileName = of.FileName ;
+			_fileNameBox.Text = fi.Name ;
+			_fileSizeBox.Text = HRSize( fi.Length ) ;
 
-				//lblFileName.Text = m_FileName;
-				FileInfo fi = new FileInfo( _fileName ) ;
-				/*lblFileSize.Text = this.HRSize(fi.Length);
-                lblFileName.Text = fi.Name;                
-                lblDescription.Visible  = false;
-
-                cmdSend.Enabled = true;*/
-			}
+			_fileName = fileName ;
 		}
 
 		private void SendSiIq()
@@ -452,8 +454,8 @@ namespace xeus.Controls
 				// We're not in the UI thread, so we need to call BeginInvoke
 				// to udate the progress bar
 				TimeSpan ts = DateTime.Now - _lastProgressUpdate ;
-				if (ts.Seconds >= 1)
-                {
+				if ( ts.Seconds >= 1 )
+				{
 					UpdateProgress() ;
 				}
 			}
@@ -556,6 +558,7 @@ namespace xeus.Controls
 							sIq.SI.FeatureNeg.Data = xdata ;
 
 							_xmppConnection.Send( sIq ) ;
+							_progressDock.Visibility = Visibility.Visible ;
 						}
 					}
 				}
@@ -563,6 +566,14 @@ namespace xeus.Controls
 		}
 
 		protected void OnSend( object sender, EventArgs e )
+		{
+			SendSiIq() ;
+
+			// Disable the Send button, because we can send this file only once
+			_send.IsEnabled = false ;
+		}
+
+		protected void OnCancel( object sender, EventArgs e )
 		{
 		}
 
@@ -616,11 +627,22 @@ namespace xeus.Controls
 			iq.Error.Code = ErrorCode.Forbidden ;
 			iq.Error.Type = ErrorType.cancel ;
 
-
 			_xmppConnection.Send( iq ) ;
 
-			Visibility = Visibility.Collapsed ;
+			OnTransferFinish( this, true ) ;
 		}
+
+		protected virtual void OnTransferFinish( object sender, bool cancelled )
+		{
+			if ( TransferFinish != null )
+			{
+				TransferFinish( sender, cancelled ) ;
+			}
+		}
+
+		public delegate void TransferFinishHandler( object sender, bool cancelled ) ;
+
+		public event TransferFinishHandler TransferFinish ;
 
 		private void HandleStreamHost( ByteStream bs, IQ iq )
 			//private void HandleStreamHost(object obj)
@@ -671,13 +693,18 @@ namespace xeus.Controls
 			if ( _bytesTransmitted == _fileLength )
 			{
 				// completed
-				//tslTransmitted.Text = "completed";
 				// Update Progress when complete
 				UpdateProgress() ;
+
+				App.Instance.Window.AlertError( "File Transfer", "Download completed." ) ;
+
+				TransferFinish( this, false ) ;
 			}
 			else
 			{
 				App.Instance.Window.AlertError( "File Transfer Error", "Connection lost." ) ;
+
+				TransferFinish( this, true ) ;
 			}
 		}
 
@@ -686,7 +713,6 @@ namespace xeus.Controls
 			_fileStream.Write( data, 0, count ) ;
 
 			_bytesTransmitted += count ;
-
 
 			// Windows Forms are not Thread Safe, we need to invoke this :(
 			// We're not in the UI thread, so we need to call BeginInvoke
@@ -706,10 +732,9 @@ namespace xeus.Controls
 				_lastProgressUpdate = DateTime.Now ;
 				double percent = ( double ) _bytesTransmitted / ( double ) _fileLength * 100 ;
 				_progress.Value = percent ;
-				/*
-            tslRate.Text = GetHRByteRateString();
-            tslTransmitted.Text = HRSize(m_bytesTransmitted);
-            tslRemaining.Text = GetHRRemainingTime();*/
+
+				_rate.Text = GetHRByteRateString() ;
+				_remaining.Text = GetHRRemainingTime() ;
 			}
 			else
 			{
@@ -726,8 +751,6 @@ namespace xeus.Controls
 			Directory.CreateDirectory( path ) ;
 
 			_fileStream = new FileStream( Path.Combine( path, _file.Name ), FileMode.Create ) ;
-
-			//throw new Exception("The method or operation is not implemented.");
 		}
 
 		private void SendStreamHostUsedResponse( StreamHost sh, IQ iq )
@@ -763,7 +786,6 @@ namespace xeus.Controls
 
 		private void FileTransfer_Unloaded( object sender, RoutedEventArgs e )
 		{
-
 			_xmppConnection.OnIq -= new StreamHandler( XmppCon_OnIq ) ;
 		}
 
@@ -849,13 +871,6 @@ namespace xeus.Controls
 		}
 
 		#endregion
-
-		private void cmdSend_Click( object sender, EventArgs e )
-		{
-			SendSiIq() ;
-			// Disable the Send button, because we can send this file only once
-			// cmdSend.Enabled = false;
-		}
 
 		private void txtDescription_TextChanged( object sender, EventArgs e )
 		{
