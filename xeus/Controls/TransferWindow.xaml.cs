@@ -26,10 +26,10 @@ namespace xeus.Controls
 
 			_window.Show() ;
 			_window.Activate() ;
-			_window.Closed += new System.EventHandler( _window_Closed );
+			_window.Closed += new System.EventHandler( _window._window_Closed );
 		}
 
-		static void _window_Closed( object sender, System.EventArgs e )
+		void _window_Closed( object sender, System.EventArgs e )
 		{
 			_window = null ;
 		}
@@ -51,6 +51,7 @@ namespace xeus.Controls
 
 				_window.Show() ;
 				_window.Activate() ;
+				_window.Closed += new System.EventHandler( _window._window_Closed );
 			}
 			else
 			{
@@ -65,7 +66,7 @@ namespace xeus.Controls
 			{
 				FileTransfer fileTransfer = sender as FileTransfer ;
 
-				if ( cancelled )
+				if ( cancelled || fileTransfer.IsSending )
 				{
 					_window._list.Items.Remove( fileTransfer ) ;
 
@@ -87,7 +88,6 @@ namespace xeus.Controls
 			if ( _window != null )
 			{
 				_window.Close() ;
-				_window = null ;
 			}
 		}
 

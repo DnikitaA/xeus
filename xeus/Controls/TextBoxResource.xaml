@@ -13,7 +13,6 @@
 		<Setter Property="BorderThickness" Value="1,1,1,1"/>
 		<Setter Property="BorderBrush" Value="#00D6D6D6"/>
 		<Setter Property="Foreground" Value="#FFD6C8A0"/>
-		<Setter Property="Text"/>
 	</Style>
 	
 	<Style x:Key="TextBoxStyleInDialog" TargetType="{x:Type TextBox}">
