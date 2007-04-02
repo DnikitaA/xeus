@@ -65,11 +65,14 @@ namespace xeus.Controls
 			{
 				FileTransfer fileTransfer = sender as FileTransfer ;
 
-				_window._list.Items.Remove( fileTransfer ) ;
-
-				if ( _window._list.Items.Count == 0 )
+				if ( cancelled )
 				{
-					CloseWindow() ;
+					_window._list.Items.Remove( fileTransfer ) ;
+
+					if ( _window._list.Items.Count == 0 )
+					{
+						CloseWindow() ;
+					}
 				}
 			}
 			else

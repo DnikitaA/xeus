@@ -15,10 +15,11 @@
 	Background="{x:Null}" Margin="5,5,5,5" ShowInTaskbar="True" AllowsTransparency="True"  Width="440" Height="300" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen"  MaxWidth="440" MinHeight="50" MinWidth="440"  >
 	<DockPanel Margin="5,5,5,5">
 		<DockPanel DockPanel.Dock="Top">
-		<Label Content="File Transfer Proxy" Background="#00848282" Foreground="#FFBDBDBD"/>
+		<Image Source="../Images/service.png" Width="30" Height="30"/>
+		<Label Content="File Transfer Proxy" Background="#00848282" Foreground="#FFBDBDBD" VerticalAlignment="Center" Margin="5,0,0,0"/>
     <TextBox x:Name="_proxy"
      Style="{DynamicResource TextBoxStyleInDialog}" MaxLines="1"
-     TabIndex="0" Margin="0,5,0,0">
+     TabIndex="0" Template="{DynamicResource TextBoxBaseMessage}">
       <TextBox.Text>
         <Binding Path="Client_ProxyUrl" Source="{x:Static prop:Settings.Default}" Mode="TwoWay"/>
       </TextBox.Text>
