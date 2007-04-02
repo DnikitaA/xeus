@@ -86,6 +86,7 @@ namespace xeus.Controls
 		public void Transfer( XmppClientConnection XmppCon, IQ iq )
 		{
 			_isSending = false ;
+			_open.Visibility = Visibility.Collapsed ;
 			_send.Visibility = Visibility.Collapsed ;
 			_cancel.Visibility = Visibility.Collapsed ;
 
@@ -133,6 +134,7 @@ namespace xeus.Controls
 
 		public void Transfer( XmppClientConnection XmppCon, Jid to, string fileName )
 		{
+			_isSending = true ;
 			RosterItem rosterItem = Client.Instance.Roster.FindItem( to.Bare ) ;
 			_icon.Fill = _uploadBrush ;
 
@@ -148,6 +150,7 @@ namespace xeus.Controls
 			}
 
 			_send.Visibility = Visibility.Visible ;
+			_open.Visibility = Visibility.Collapsed ;
 			_ok.Visibility = Visibility.Collapsed ;
 			_deny.Visibility = Visibility.Collapsed ;
 
@@ -579,10 +582,15 @@ namespace xeus.Controls
 			_send.IsEnabled = false ;
 		}
 
+		protected void OnOpen( object sender, EventArgs e )
+		{
+			Storage.OpenShellFolder( Storage.GetRecievedFolder().ToString() );
+		}
+
 		protected void OnCancel( object sender, EventArgs e )
 		{
-			_isCancelled  = true ;
-			
+			_isCancelled = true ;
+
 			OnTransferFinish( this, true );
 		}
 
@@ -643,18 +651,29 @@ namespace xeus.Controls
 
 		protected virtual void OnTransferFinish( object sender, bool cancelled )
 		{
-			if ( !cancelled )
+			if ( App.DispatcherThread.CheckAccess() )
 			{
-				App.Instance.Window.AlertInfo( "File Transfer", "File transfer finished." ) ;
+				_progressDock.Visibility = Visibility.Collapsed ;
+
+				if ( !cancelled )
+				{
+					App.Instance.Window.AlertInfo( "File Transfer", "Download completed." ) ;
+
+					if ( !_isSending )
+					{
+						_open.Visibility = Visibility.Visible ;
+					}
+				}
+
+				if ( TransferFinish != null )
+				{
+					TransferFinish( sender, cancelled ) ;
+				}
 			}
 			else
 			{
-				App.Instance.Window.AlertInfo( "File Transfer", "File transfer was cancelled." ) ;
-			}
-
-			if ( TransferFinish != null )
-			{
-				TransferFinish( sender, cancelled ) ;
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				                                  new TransferFinishHandler( OnTransferFinish ), sender, cancelled ) ;
 			}
 		}
 
@@ -714,15 +733,13 @@ namespace xeus.Controls
 				// Update Progress when complete
 				UpdateProgress() ;
 
-				App.Instance.Window.AlertError( "File Transfer", "Download completed." ) ;
-
-				TransferFinish( this, false ) ;
+				OnTransferFinish( this, false ) ;
 			}
 			else
 			{
 				App.Instance.Window.AlertError( "File Transfer Error", "Connection lost." ) ;
 
-				TransferFinish( this, true ) ;
+				OnTransferFinish( this, true ) ;
 			}
 		}
 

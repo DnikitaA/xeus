@@ -140,16 +140,11 @@ namespace xeus.Controls
 
 			IInputElement element = _roster.InputHitTest( pt ) ;
 
-			if ( element != null)
-			{
-				Trace.WriteLine( element.ToString() ) ;
-			}
-
 			if ( element is FrameworkElement )
 			{
 				rosterItem = ( ( FrameworkElement )element ).DataContext as RosterItem ;
 
-				if ( rosterItem != null )
+				if ( rosterItem != null && rosterItem.IsInitialized && rosterItem.Presence != null )
 				{
 					e.Effects = DragDropEffects.Copy ;
 				}

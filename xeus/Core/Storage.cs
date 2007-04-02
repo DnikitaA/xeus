@@ -24,6 +24,14 @@ namespace xeus.Core
 			_folder = fileInfo.DirectoryName ;
 		}
 
+		public static void OpenShellFolder( string path )
+		{
+			System.Diagnostics.Process proc = new System.Diagnostics.Process();
+			proc.EnableRaisingEvents = false;
+			proc.StartInfo.FileName = path;
+			proc.Start();			
+		}
+
 		public static DirectoryInfo GetDbFolder()
 		{
 			DirectoryInfo directoryInfo = new DirectoryInfo( _folder + "\\Database" ) ;
