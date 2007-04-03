@@ -80,6 +80,10 @@ namespace xeus.Controls
 				{
 					MessageWindow.DisplayChatWindow( eventMessage.RosterItem.Key, true ) ;
 				}
+				else
+				{
+					Client.Instance.MessageCenter.RemoveMoveUnreadMessages() ;
+				}
 			}
 		}
 	}
