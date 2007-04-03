@@ -420,7 +420,8 @@ namespace xeus.Controls
 			bsIq.Query.Sid = _sid ;
 			bsIq.Query.Activate = new Activate( _to ) ;
 
-			_xmppConnection.IqGrabber.SendIq( bsIq, new IqCB( ActivateBytestreamResult ), null ) ;
+			_xmppConnection.IqGrabber.SendIq( bsIq, new IqCB( ActivateBytestreamResult ), "kreten" ) ;
+			SendFile( null ) ;
 		}
 
 		private void ActivateBytestreamResult( object sender, IQ iq, object dat )

@@ -167,6 +167,10 @@ namespace xeus.Core
 							TransferWindow.Transfer( XmppConnection, iq ) ;
 						}
 					}
+					else if ( iq.Type == IqType.result )
+					{
+						
+					}
 				}
 			}
 
