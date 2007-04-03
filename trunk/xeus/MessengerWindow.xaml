@@ -16,6 +16,7 @@
     x:Name="messenger"
     Icon="images/xeus.ico"
     >
+
   <local:WindowBase.Resources>
     <localcore:CountToVisibilityConverter x:Key="_visibilityConverter" />
 
