@@ -1,17 +1,14 @@
 using System ;
 using System.Collections.Generic ;
+using System.ComponentModel ;
 using System.Drawing ;
 using System.Drawing.Imaging ;
 using System.IO ;
 using System.Timers ;
 using agsXMPP ;
 using agsXMPP.protocol.client ;
-using agsXMPP.protocol.extensions.chatstates ;
-using agsXMPP.protocol.iq.disco ;
 using agsXMPP.protocol.iq.roster ;
 using agsXMPP.protocol.iq.vcard ;
-using agsXMPP.protocol.stream ;
-using Win32_API ;
 
 namespace xeus.Core
 {
@@ -94,34 +91,31 @@ namespace xeus.Core
 		{
 			xmppConnection.OnRosterItem += new XmppClientConnection.RosterHandler( xmppConnecion_OnRosterItem ) ;
 			xmppConnection.OnPresence += new XmppClientConnection.PresenceHandler( xmppConnection_OnPresence ) ;
-			Client.Instance.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler( Instance_PropertyChanged );
+			Client.Instance.PropertyChanged += new PropertyChangedEventHandler( Instance_PropertyChanged ) ;
 		}
 
-		void Instance_PropertyChanged( object sender, System.ComponentModel.PropertyChangedEventArgs e )
+		private void Instance_PropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			if ( e.PropertyName == "IsAvailable" && !Client.Instance.IsAvailable )
 			{
 				lock ( _items._syncObject )
 				{
-					List< RosterItem > items = new List< RosterItem >( _items.Count );
-	
+					List< RosterItem > items = new List< RosterItem >( _items.Count ) ;
+
 					foreach ( RosterItem item in _items )
 					{
 						items.Add( item ) ;
 					}
-					
-					items.Clear();
 
 					foreach ( RosterItem item in items )
 					{
-						item.Presence = null;
-						items.Add( item );
+						item.Presence = null ;
 					}
 				}
 			}
 		}
 
-		public RosterItem ClearMesssages()
+		public void ClearMesssages()
 		{
 			lock ( _items._syncObject )
 			{
@@ -131,14 +125,12 @@ namespace xeus.Core
 					{
 						if ( rosterItem.MessagesPreloaded )
 						{
-							rosterItem.Messages.Clear();
-							rosterItem.MessagesPreloaded = false;
+							rosterItem.Messages.Clear() ;
+							rosterItem.MessagesPreloaded = false ;
 						}
 					}
 				}
 			}
-
-			return null ;
 		}
 
 		public RosterItem FindItem( string bare )
@@ -171,7 +163,7 @@ namespace xeus.Core
 				rosterItem.Presence = presence ;
 
 				if ( rosterItem.StatusText != oldText
-					&& _start.AddSeconds( 5.0 ) < DateTime.Now )
+				     && _start.AddSeconds( 5.0 ) < DateTime.Now )
 				{
 					Client.Instance.Event.AddEvent( new EventContactStatusChanged( rosterItem, oldPresence ) ) ;
 				}
@@ -190,7 +182,7 @@ namespace xeus.Core
 				}
 				else if ( presence.Type == PresenceType.available )
 				{
-					Client.Instance.DiscoRequest( rosterItem );
+					Client.Instance.DiscoRequest( rosterItem ) ;
 				}
 
 				if ( !rosterItem.HasVCardRecivied && presence.Type == PresenceType.available )
@@ -287,12 +279,12 @@ namespace xeus.Core
 		{
 			try
 			{
-				Image img = Image.FromFile( filename );
+				Image img = Image.FromFile( filename ) ;
 				ImageFormat imageFormat = null ;
 
-				vcard.Photo = new Photo( img, imageFormat );
+				vcard.Photo = new Photo( img, imageFormat ) ;
 
-				img.Dispose();
+				img.Dispose() ;
 
 				if ( deleteImage )
 				{
@@ -411,7 +403,7 @@ namespace xeus.Core
 								foreach ( ServiceItem serviceItem in Client.Instance.Services.Items )
 								{
 									if ( rosterItemComing.XmppRosterItem.Jid.Server
-											== serviceItem.Jid.Server )
+									     == serviceItem.Jid.Server )
 									{
 										rosterItemComing.Transport = serviceItem.Type ;
 										break ;
@@ -438,7 +430,7 @@ namespace xeus.Core
 				Client.Instance.UnregisterService( new Jid( rosterItem.Key ) ) ;
 			}
 
-			Database database = new Database();
+			Database database = new Database() ;
 			database.DeleteRosterItem( rosterItem ) ;
 
 			if ( rosterItem.IsInitialized )
