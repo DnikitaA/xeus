@@ -109,10 +109,13 @@ namespace xeus.Core
 					{
 						items.Add( item ) ;
 					}
+					
+					items.Clear();
 
 					foreach ( RosterItem item in items )
 					{
 						item.Presence = null;
+						items.Add( item );
 					}
 				}
 			}
