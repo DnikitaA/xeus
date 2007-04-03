@@ -406,7 +406,7 @@ namespace xeus.Core
             
             m_SocksConnected = false;
 
-            IPHostEntry ipHostInfo = Dns.Resolve(Address);
+            IPHostEntry ipHostInfo = Dns.GetHostEntry(Address);
             //IPHostEntry ipHostInfo = Dns.GetHostByAddress(Address);
             //Dns.GetHostEntry
             IPAddress ipAddress = ipHostInfo.AddressList[0];// IPAddress.Parse(address);
