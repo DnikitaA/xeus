@@ -129,7 +129,7 @@ namespace xeus.Controls
 
 			_xmppConnection = XmppCon ;
 
-			XmppCon.OnIq += new StreamHandler( XmppCon_OnIq ) ;
+			XmppCon.OnIq += new IqHandler( XmppCon_OnIq ) ;
 		}
 
 		public void Transfer( XmppClientConnection XmppCon, Jid to, string fileName )
@@ -420,7 +420,7 @@ namespace xeus.Controls
 			bsIq.Query.Sid = _sid ;
 			bsIq.Query.Activate = new Activate( _to ) ;
 
-			_xmppConnection.IqGrabber.SendIq( bsIq, new IqCB( ActivateBytestreamResult ), "kreten" ) ;
+			_xmppConnection.IqGrabber.SendIq( bsIq, new IqCB( ActivateBytestreamResult ), null ) ;
 			SendFile( null ) ;
 		}
 
@@ -821,7 +821,7 @@ namespace xeus.Controls
 
 		private void FileTransfer_Unloaded( object sender, RoutedEventArgs e )
 		{
-			_xmppConnection.OnIq -= new StreamHandler( XmppCon_OnIq ) ;
+			_xmppConnection.OnIq -= new IqHandler( XmppCon_OnIq ) ;
 		}
 
 		#region << Helper Function >>
