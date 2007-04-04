@@ -90,7 +90,7 @@ namespace xeus.Core
 		public void RegisterEvents( XmppClientConnection xmppConnection )
 		{
 			xmppConnection.OnRosterItem += new XmppClientConnection.RosterHandler( xmppConnecion_OnRosterItem ) ;
-			xmppConnection.OnPresence += new XmppClientConnection.PresenceHandler( xmppConnection_OnPresence ) ;
+			xmppConnection.OnPresence += new PresenceHandler( xmppConnection_OnPresence );
 			Client.Instance.PropertyChanged += new PropertyChangedEventHandler( Instance_PropertyChanged ) ;
 		}
 

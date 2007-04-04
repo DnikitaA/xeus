@@ -119,20 +119,19 @@ namespace xeus.Core
 			XmppConnection.AutoAgents = true ;
 
 			XmppConnection.OnRosterEnd += new ObjectHandler( _xmppConnection_OnRosterEnd ) ;
-			XmppConnection.OnMessage += new XmppClientConnection.MessageHandler( _xmppConnection_OnMessage ) ;
-			XmppConnection.OnXmppError += new OnXmppErrorHandler( _xmppConnection_OnXmppError ) ;
-			XmppConnection.OnAuthError += new OnXmppErrorHandler( _xmppConnection_OnAuthError ) ;
+			XmppConnection.OnMessage += new agsXMPP.protocol.client.MessageHandler( XmppConnection_OnMessage );
+			XmppConnection.OnXmppError += new XmppElementHandler( XmppConnection_OnXmppError );
+			XmppConnection.OnAuthError += new XmppElementHandler( XmppConnection_OnAuthError );
 			XmppConnection.ClientSocket.OnValidateCertificate +=
 				new RemoteCertificateValidationCallback( ClientSocket_OnValidateCertificate ) ;
 			XmppConnection.OnSocketError += new ErrorHandler( _xmppConnection_OnSocketError ) ;
 			XmppConnection.OnClose += new ObjectHandler( _xmppConnection_OnClose );
 
-			XmppConnection.OnXmppConnectionStateChanged +=
-				new XmppConnection.XmppConnectionStateHandler( _xmppConnection_OnXmppConnectionStateChanged ) ;
+			XmppConnection.OnXmppConnectionStateChanged += new XmppConnectionStateHandler( XmppConnection_OnXmppConnectionStateChanged );
 
 			XmppConnection.OnRegisterInformation += new RegisterEventHandler( _xmppConnection_OnRegisterInformation );
 			XmppConnection.OnRegistered += new ObjectHandler( _xmppConnection_OnRegistered );
-			XmppConnection.OnIq += new agsXMPP.Xml.StreamHandler( _xmppConnection_OnIq );
+			XmppConnection.OnIq += new IqHandler( XmppConnection_OnIq );
 
 			_messageCenter.RegisterEvent( _instance ) ;
 
@@ -146,9 +145,8 @@ namespace xeus.Core
 			Log( "Setup finished" ) ;
 		}
 
-		void _xmppConnection_OnIq( object sender, Node e )
+		void XmppConnection_OnIq( object sender, IQ iq )
 		{
-			IQ iq = e as IQ;
 
 			if ( iq != null )
 			{
@@ -262,7 +260,7 @@ namespace xeus.Core
 			NotifyPropertyChanged( "MyRosterItem" ) ;
 		}
 
-		private void _xmppConnection_OnXmppConnectionStateChanged( object sender, XmppConnectionState state )
+		void XmppConnection_OnXmppConnectionStateChanged( object sender, XmppConnectionState state )
 		{
 			App.Instance.Window.Status( state.ToString() ) ;
 		}
@@ -286,7 +284,7 @@ namespace xeus.Core
 			return true ;
 		}
 
-		private void _xmppConnection_OnAuthError( object sender, Element e )
+		void XmppConnection_OnAuthError( object sender, Element e )
 		{
 			App.Instance.Window.AlertError( "Authorization failure", "Check your user name and password" ) ;
 
@@ -301,12 +299,12 @@ namespace xeus.Core
 			}
 		}
 
-		private void _xmppConnection_OnXmppError( object sender, Element e )
+		void XmppConnection_OnXmppError( object sender, Element e )
 		{
 			App.Instance.Window.AlertError( "Protocol error", e.ToString() ) ;
 		}
 
-		private void _xmppConnection_OnMessage( object sender, Message msg )
+		void XmppConnection_OnMessage( object sender, Message msg )
 		{
 			OnMessage( msg ) ;
 		}
