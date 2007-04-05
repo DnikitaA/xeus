@@ -99,8 +99,8 @@
 								</Track.Thumb>
 							</Track>
 							<TickBar Visibility="Collapsed" x:Name="BottomTick" Height="4" Grid.Row="2" Placement="Bottom"/>
-							<Path Stretch="Fill" Stroke="#FF0F0F0F" Margin="0,5.75,0,0" x:Name="path1" VerticalAlignment="Top" Height="1" Grid.Row="1" Panel.ZIndex="-1" Data="M0,10.25 L124.77505,10.25"/>
-							<Path Stretch="Fill" Stroke="#FF444343" Margin="0,7,0,0" x:Name="path" VerticalAlignment="Top" Height="1" Grid.Row="1" Panel.ZIndex="-1" Data="M0,11.5 L124.75401,11.5"/>
+							<Path Stretch="Fill" Stroke="#FF000000" Margin="0,5.75,0,0" x:Name="path1" VerticalAlignment="Top" Height="1" Grid.Row="1" Panel.ZIndex="-1" Data="M0,10.25 L124.77505,10.25" Opacity="0.2"/>
+							<Path Stretch="Fill" Stroke="#FFFFFFFF" Margin="0,7,0,0" x:Name="path" VerticalAlignment="Top" Height="1" Grid.Row="1" Panel.ZIndex="-1" Data="M0,11.5 L124.75401,11.5" Opacity="0.05"/>
 						</Grid>
 					</Border>
 					<ControlTemplate.Triggers>
@@ -118,7 +118,7 @@
 											<Setter.Value>
 												<ControlTemplate TargetType="{x:Type Thumb}">
 													<Canvas SnapsToDevicePixels="True">
-														<Path Stretch="Fill" Stroke="#FF6C6C6C" x:Name="rectangle" Width="11" Height="12.827">
+														<Path Stretch="Fill" Stroke="#FFFFFFFF" x:Name="rectangle" Width="11" Height="12.827" Opacity="0.15">
 															<Path.Fill>
 																<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 																	<GradientStop Color="#FF575757" Offset="0"/>

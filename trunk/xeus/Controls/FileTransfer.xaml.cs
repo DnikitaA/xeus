@@ -364,7 +364,7 @@ namespace xeus.Controls
 						_p2pSocks5Socket.Target = _to ;
 						_p2pSocks5Socket.Initiator = _xmppConnection.MyJID ;
 						_p2pSocks5Socket.SID = _sid ;
-						_p2pSocks5Socket.ConnectTimeout = 5000 ;
+						_p2pSocks5Socket.ConnectTimeout = 50000 ;
 						_p2pSocks5Socket.SyncConnect() ;
 
 						if ( _p2pSocks5Socket.Connected )
@@ -373,6 +373,11 @@ namespace xeus.Controls
 						}
 					}
 				}
+			}
+			else if ( iq.Type == IqType.error )
+			{
+				App.Instance.Window.AlertError( "File Transfer", iq.Error.ToString() ) ;
+				OnTransferFinish( this, true );
 			}
 		}
 
@@ -421,7 +426,10 @@ namespace xeus.Controls
 			bsIq.Query.Activate = new Activate( _to ) ;
 
 			_xmppConnection.IqGrabber.SendIq( bsIq, new IqCB( ActivateBytestreamResult ), null ) ;
-			SendFile( null ) ;
+			/*_xmppConnection.IqGrabber.SendIq( bsIq, 100000 ) ;
+
+			Thread.Sleep( 5000 ) ;
+			SendFile( null ) ;*/
 		}
 
 		private void ActivateBytestreamResult( object sender, IQ iq, object dat )
@@ -568,7 +576,6 @@ namespace xeus.Controls
 							sIq.SI.FeatureNeg.Data = xdata ;
 
 							_xmppConnection.Send( sIq ) ;
-							_progressDock.Visibility = Visibility.Visible ;
 						}
 					}
 				}
@@ -765,6 +772,8 @@ namespace xeus.Controls
 			if ( App.DispatcherThread.CheckAccess() )
 			{
 				_lastProgressUpdate = DateTime.Now ;
+				_progressDock.Visibility = Visibility.Visible ;
+
 				double percent = ( double ) _bytesTransmitted / ( double ) _fileLength * 100 ;
 				_progress.Value = percent ;
 

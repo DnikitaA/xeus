@@ -16,28 +16,28 @@
   
   <Grid>
 	<StackPanel Margin="5,5,5,67">
-		<TextBlock x:Name="_labelServer" Text="Server" Foreground="#FF828282" Height="14.63" Width="301" Margin="0,5,0,0"/>
+		<TextBlock x:Name="_labelServer" Text="Server" Foreground="#FF828282" Margin="0,5,0,0"/>
 		<TextBox x:Name="_server" TextWrapping="Wrap" 
 		 Style="{DynamicResource TextBoxStyleInDialog}" MaxLines="1"
-		 TabIndex="0" Height="20.62" Width="301" Margin="0,5,0,0">
+		 TabIndex="0" Margin="0,5,0,0">
 			 <TextBox.Text>
 	    		    <Binding Path="Client_Server" Source="{x:Static prop:Settings.Default}" Mode="TwoWay"/>
 	         </TextBox.Text>
 		 </TextBox>
-		<TextBlock x:Name="_labelUserName" Text="Login Name" Foreground="#FF828282" Height="14.63" Width="301" Margin="0,5,0,0"/>
+		<TextBlock x:Name="_labelUserName" Text="Login Name" Foreground="#FF828282" Margin="0,5,0,0"/>
 		<TextBox x:Name="_userName" TextWrapping="Wrap" 
 		 Style="{DynamicResource TextBoxStyleInDialog}" MaxLines="1"
-		 TabIndex="0" Height="20.62" Width="301" Margin="0,5,0,0">
+		 TabIndex="0" Margin="0,5,0,0">
 			 <TextBox.Text>
 	    		    <Binding Path="Client_UserName" Source="{x:Static prop:Settings.Default}" Mode="TwoWay"/>
 	         </TextBox.Text>
 		 </TextBox>
-		<TextBlock x:Name="_labelPassword" Text="Password" Foreground="#FF828282" Height="14.63" Width="301" Margin="0,5,0,0"/>
-		<PasswordBox PasswordChanged="OnPasswordCheck" x:Name="_password" TabIndex="0" Height="20" Background="#FF282828" Template="{DynamicResource PasswordBoxControlTemplate}" Width="301" Margin="0,5,0,0"/>
+		<TextBlock x:Name="_labelPassword" Text="Password" Foreground="#FF828282" Margin="0,5,0,0"/>
+		<PasswordBox PasswordChanged="OnPasswordCheck" x:Name="_password" TabIndex="0" Background="#FF414141" Template="{DynamicResource PasswordBoxControlTemplate}" Margin="0,5,0,0" Height="20"/>
 		<Expander Expanded="OnPasswordCheck" Collapsed="OnPasswordCheck" Foreground="#FFFFFFFF" x:Name="_expanderNewAccount" Template="{DynamicResource ExpanderControlTemplate}" Header="Create new Account" Width="291" Margin="0,10,0,0">
 			<StackPanel>
 				<TextBlock x:Name="_labelConfirmPassword" Text="Confirm Password" Foreground="#FF828282" FontSize="11" Margin="0,5,0,0"/>
-				<PasswordBox x:Name="_confirmPassword" PasswordChanged="OnPasswordCheck" TabIndex="0" Height="20" Background="#FF282828" Template="{DynamicResource PasswordBoxControlTemplate}" Margin="0,5,0,0"/>
+				<PasswordBox x:Name="_confirmPassword" PasswordChanged="OnPasswordCheck" TabIndex="0" Height="20" Background="#FF414141" Template="{DynamicResource PasswordBoxControlTemplate}" Margin="0,5,0,0"/>
 			</StackPanel>
 		</Expander>
 	</StackPanel>
