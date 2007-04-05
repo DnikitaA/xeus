@@ -20,11 +20,6 @@
 								<RowDefinition Height="Auto"/>
 							</Grid.RowDefinitions>
 							<TickBar Visibility="Collapsed" x:Name="TopTick" Height="4" TextElement.Foreground="#FF515151" Fill="#FF494949" Placement="Top" TickFrequency="5"/>
-							<Microsoft_Windows_Themes:ClassicBorderDecorator Margin="0,0,0,0" x:Name="TrackBackground" VerticalAlignment="Stretch" Grid.Row="1" BorderStyle="Sunken" BorderThickness="2,2,2,2">
-								<Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
-									<SolidColorBrush/>
-								</Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
-							</Microsoft_Windows_Themes:ClassicBorderDecorator>
 							<Track x:Name="PART_Track" Grid.Row="1" Margin="0,0,0,15.5">
 								<Track.DecreaseRepeatButton>
 									<RepeatButton Command="Slider.DecreaseLarge">
@@ -76,12 +71,7 @@
 												<Setter Property="Template">
 													<Setter.Value>
 														<ControlTemplate TargetType="{x:Type Thumb}">
-															<Microsoft_Windows_Themes:ClassicBorderDecorator Background="{TemplateBinding Background}" BorderStyle="Raised" BorderThickness="3,3,3,3">
-																<Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
-																	<SolidColorBrush/>
-																</Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
 																<Rectangle Opacity="0.5" Fill="{TemplateBinding Foreground}" Margin="-1,-1,-1,-1" x:Name="ForegroundRect"/>
-															</Microsoft_Windows_Themes:ClassicBorderDecorator>
 															<ControlTemplate.Triggers>
 																<Trigger Property="IsDragging" Value="True">
 																	<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
@@ -197,7 +187,6 @@
 									</Style>
 								</Setter.Value>
 							</Setter>
-							<Setter Property="Margin" TargetName="TrackBackground" Value="0,0,0,3"/>
 						</Trigger>
 						<Trigger Property="TickPlacement" Value="Both">
 							<Setter Property="Visibility" TargetName="TopTick" Value="Visible"/>
@@ -224,14 +213,9 @@
 										<RowDefinition Height="*"/>
 									</Grid.RowDefinitions>
 									<TickBar Visibility="Collapsed" x:Name="LeftTick" Width="4" Fill="{TemplateBinding Foreground}" Placement="Left"/>
-									<Microsoft_Windows_Themes:ClassicBorderDecorator Margin="0,0,1,0" x:Name="TrackBackground" Width="4" Grid.Column="1" BorderStyle="Sunken" BorderThickness="2,2,2,2">
-										<Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
-											<SolidColorBrush/>
-										</Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
 										<Canvas Margin="-2,-2,-2,-2">
 											<Rectangle Visibility="Hidden" Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" x:Name="PART_SelectionRange" Width="4"/>
 										</Canvas>
-									</Microsoft_Windows_Themes:ClassicBorderDecorator>
 									<Track x:Name="PART_Track" Grid.Column="1">
 										<Track.DecreaseRepeatButton>
 											<RepeatButton Command="Slider.DecreaseLarge">
@@ -283,12 +267,7 @@
 														<Setter Property="Template">
 															<Setter.Value>
 																<ControlTemplate TargetType="{x:Type Thumb}">
-																	<Microsoft_Windows_Themes:ClassicBorderDecorator Background="{TemplateBinding Background}" BorderStyle="Raised" BorderThickness="3,3,3,3">
-																		<Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
-																			<SolidColorBrush/>
-																		</Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
 																		<Rectangle Opacity="0.5" Fill="{TemplateBinding Foreground}" Margin="-1,-1,-1,-1"/>
-																	</Microsoft_Windows_Themes:ClassicBorderDecorator>
 																	<ControlTemplate.Triggers>
 																		<Trigger Property="IsDragging" Value="True">
 																			<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}"/>
@@ -344,7 +323,6 @@
 											</Style>
 										</Setter.Value>
 									</Setter>
-									<Setter Property="Margin" TargetName="TrackBackground" Value="3,0,0,0"/>
 								</Trigger>
 								<Trigger Property="TickPlacement" Value="BottomRight">
 									<Setter Property="Visibility" TargetName="RightTick" Value="Visible"/>
@@ -382,7 +360,6 @@
 											</Style>
 										</Setter.Value>
 									</Setter>
-									<Setter Property="Margin" TargetName="TrackBackground" Value="0,0,3,0"/>
 								</Trigger>
 								<Trigger Property="TickPlacement" Value="Both">
 									<Setter Property="Visibility" TargetName="LeftTick" Value="Visible"/>

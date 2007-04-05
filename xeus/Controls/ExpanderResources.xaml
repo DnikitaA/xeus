@@ -168,28 +168,18 @@
 													<RowDefinition Height="19"/>
 													<RowDefinition Height="*"/>
 												</Grid.RowDefinitions>
-												<Microsoft_Windows_Themes:ClassicBorderDecorator SnapsToDevicePixels="True" x:Name="Bd" Width="19" Height="19" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderStyle="None" BorderThickness="1,1,1,1">
-													<Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
 														<SolidColorBrush/>
-													</Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
 													<Path SnapsToDevicePixels="False" Stroke="{TemplateBinding Foreground}" StrokeThickness="1.5" HorizontalAlignment="Center" x:Name="arrow" VerticalAlignment="Center" Data="M1,1.5L4.5,5 8,1.5">
 														<Path.LayoutTransform>
 															<RotateTransform Angle="-90"/>
 														</Path.LayoutTransform>
 													</Path>
-												</Microsoft_Windows_Themes:ClassicBorderDecorator>
 												<ContentPresenter SnapsToDevicePixels="True" HorizontalAlignment="Center" Margin="0,4,0,0" VerticalAlignment="Top" Grid.Row="1" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" RecognizesAccessKey="True"/>
 											</Grid>
 										</Border>
 										<ControlTemplate.Triggers>
 											<Trigger Property="IsChecked" Value="True">
 												<Setter Property="Data" TargetName="arrow" Value="M1,4.5L4.5,1 8,4.5"/>
-											</Trigger>
-											<Trigger Property="IsMouseOver" Value="True">
-												<Setter Property="BorderStyle" TargetName="Bd" Value="ThinRaised"/>
-											</Trigger>
-											<Trigger Property="IsPressed" Value="True">
-												<Setter Property="BorderStyle" TargetName="Bd" Value="ThinPressed"/>
 											</Trigger>
 										</ControlTemplate.Triggers>
 									</ControlTemplate>
@@ -214,28 +204,18 @@
 													<ColumnDefinition Width="19"/>
 													<ColumnDefinition Width="*"/>
 												</Grid.ColumnDefinitions>
-												<Microsoft_Windows_Themes:ClassicBorderDecorator SnapsToDevicePixels="True" x:Name="Bd" Width="19" Height="19" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderStyle="None" BorderThickness="1,1,1,1">
-													<Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
 														<SolidColorBrush/>
-													</Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
 													<Path SnapsToDevicePixels="False" Stroke="{TemplateBinding Foreground}" StrokeThickness="1.5" HorizontalAlignment="Center" x:Name="arrow" VerticalAlignment="Center" Data="M1,1.5L4.5,5 8,1.5">
 														<Path.LayoutTransform>
 															<RotateTransform Angle="180"/>
 														</Path.LayoutTransform>
 													</Path>
-												</Microsoft_Windows_Themes:ClassicBorderDecorator>
 												<ContentPresenter SnapsToDevicePixels="True" HorizontalAlignment="Left" Margin="4,0,0,0" VerticalAlignment="Center" Grid.Column="1" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" RecognizesAccessKey="True"/>
 											</Grid>
 										</Border>
 										<ControlTemplate.Triggers>
 											<Trigger Property="IsChecked" Value="True">
 												<Setter Property="Data" TargetName="arrow" Value="M1,4.5L4.5,1 8,4.5"/>
-											</Trigger>
-											<Trigger Property="IsMouseOver" Value="True">
-												<Setter Property="BorderStyle" TargetName="Bd" Value="ThinRaised"/>
-											</Trigger>
-											<Trigger Property="IsPressed" Value="True">
-												<Setter Property="BorderStyle" TargetName="Bd" Value="ThinPressed"/>
 											</Trigger>
 										</ControlTemplate.Triggers>
 									</ControlTemplate>
@@ -260,28 +240,18 @@
 													<RowDefinition Height="19"/>
 													<RowDefinition Height="*"/>
 												</Grid.RowDefinitions>
-												<Microsoft_Windows_Themes:ClassicBorderDecorator SnapsToDevicePixels="True" x:Name="Bd" Width="19" Height="19" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" BorderStyle="None" BorderThickness="1,1,1,1">
-													<Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
 														<SolidColorBrush/>
-													</Microsoft_Windows_Themes:ClassicBorderDecorator.BorderBrush>
 													<Path SnapsToDevicePixels="False" Stroke="{TemplateBinding Foreground}" StrokeThickness="1.5" HorizontalAlignment="Center" x:Name="arrow" VerticalAlignment="Center" Data="M1,1.5L4.5,5 8,1.5">
 														<Path.LayoutTransform>
 															<RotateTransform Angle="90"/>
 														</Path.LayoutTransform>
 													</Path>
-												</Microsoft_Windows_Themes:ClassicBorderDecorator>
 												<ContentPresenter SnapsToDevicePixels="True" HorizontalAlignment="Center" Margin="0,4,0,0" VerticalAlignment="Top" Grid.Row="1" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" RecognizesAccessKey="True"/>
 											</Grid>
 										</Border>
 										<ControlTemplate.Triggers>
 											<Trigger Property="IsChecked" Value="True">
 												<Setter Property="Data" TargetName="arrow" Value="M1,4.5L4.5,1 8,4.5"/>
-											</Trigger>
-											<Trigger Property="IsMouseOver" Value="True">
-												<Setter Property="BorderStyle" TargetName="Bd" Value="ThinRaised"/>
-											</Trigger>
-											<Trigger Property="IsPressed" Value="True">
-												<Setter Property="BorderStyle" TargetName="Bd" Value="ThinPressed"/>
 											</Trigger>
 										</ControlTemplate.Triggers>
 									</ControlTemplate>
