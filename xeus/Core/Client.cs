@@ -147,7 +147,6 @@ namespace xeus.Core
 
 		void XmppConnection_OnIq( object sender, IQ iq )
 		{
-
 			if ( iq != null )
 			{
 				// No Iq with query

@@ -46,18 +46,19 @@
     </Setter>
   </Style>
 
-	<DrawingBrush x:Key="back_design" Viewport="0,0,100,15" 
+	<DrawingBrush x:Key="back_design" Viewport="0,0,2,2" 
         				TileMode="Tile" ViewportUnits="Absolute">
 		<DrawingBrush.Drawing>
 			<DrawingGroup>
 				<DrawingGroup.Children>
-					<GeometryDrawing Brush="#FF282828" Geometry="F1 M 100,39.7778L 200,39.7778L 200,66.0833L 100,66.0833L 100,39.7778 Z "/>
-					<GeometryDrawing Brush="#FF252525" Geometry="F1 M 100,39.7778L 200,39.7778L 200,43.273L 100,43.273L 100,39.7778 Z M 100,46.1858L 200,46.1858L 200,49.681L 100,49.681L 100,46.1858 Z M 100,52.7394L 200,52.7394L 200,56.2347L 100,56.2347L 100,52.7394 Z M 100,59.293L 200,59.293L 200,62.7883L 100,62.7883L 100,59.293 Z "/>
+					<GeometryDrawing Brush="#FF1D1D1D" Geometry="F1 M 0,0L 300,0L 300,300L 0,300L 0,0 Z "/>
+					<GeometryDrawing Brush="#FF3B3B3C" Geometry="F1 M 150,47.5559C 206.578,47.5559 252.444,93.4217 252.444,150C 252.444,206.578 206.578,252.444 150,252.444C 93.4217,252.444 47.5559,206.578 47.5559,150C 47.5559,93.4217 93.4217,47.5559 150,47.5559 Z "/>
 				</DrawingGroup.Children>
 			</DrawingGroup>
 		</DrawingBrush.Drawing>
 	</DrawingBrush>
-  
+
+
   <Style x:Key="DarkStyleWindow" TargetType="{x:Type Window}">
     <Setter Property="AllowsTransparency" Value="true" />
     <Setter Property="WindowStyle" Value="None" />
