@@ -19,6 +19,9 @@
           <Border x:Name="TitleBar" DockPanel.Dock="Top"
                BorderThickness="0,0,0,1"
                CornerRadius="5,5,0,0"  BorderBrush="#FF323232"  Background="#FF202020"  >
+          	<Border.BitmapEffect>
+          		<DropShadowBitmapEffect Direction="270" Opacity="0.5" ShadowDepth="2" Softness="0.8"/>
+          	</Border.BitmapEffect>
             <DockPanel Margin="0,3,0,5">
 			        <Border x:Name="_logo" xmlns:Width="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Width="17" Height="17" Margin="5,2,0,2" Background="{DynamicResource xeus_logo_design}" />
               <Button Grid.Column="4" x:Name="CloseButton"
@@ -38,6 +41,9 @@
             				<TranslateTransform X="0" Y="0"/>
             			</TransformGroup>
             		</Path.RenderTransform>
+            		<Path.BitmapEffect>
+            			<DropShadowBitmapEffect Color="#FF000000" ShadowDepth="1" Softness="0.1"/>
+            		</Path.BitmapEffect>
             	</Path>
             </DockPanel>
           </Border>

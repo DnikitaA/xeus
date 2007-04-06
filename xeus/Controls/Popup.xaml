@@ -7,7 +7,7 @@
     Title="xeus.Controls" MaxHeight="200" MaxWidth="350" AllowsTransparency="True" WindowStyle="None"
     Margin="10,10,10,10" Background="#00282828"
     IsEnabled="True" VerticalAlignment="Bottom" Icon="..\Images\xeus.ico" ResizeMode="NoResize" ShowInTaskbar="False" SizeToContent="WidthAndHeight" Topmost="True"
-    Opacity="0.7"
+    Opacity="0.45"
     x:Name="window"
     >
 
@@ -100,8 +100,8 @@
 		<StackPanel Orientation="Horizontal">
 			<Rectangle Fill="{DynamicResource error_design}" VerticalAlignment="Center" Width="30" Height="30"/>
 			<StackPanel Margin="10,0,0,0">
-				<TextBlock Foreground="#FF424242" Text="{Binding Path=Title}" TextTrimming="CharacterEllipsis" FontWeight="Bold" />
-				<TextBlock Foreground="#FF1C1C1C" Text="{Binding Path=Text}" TextTrimming="CharacterEllipsis" />
+				<TextBlock Foreground="#FF000000" Text="{Binding Path=Title}" TextTrimming="CharacterEllipsis" FontWeight="Bold" />
+				<TextBlock Foreground="#FF000000" Text="{Binding Path=Text}" TextTrimming="CharacterEllipsis" />
 			</StackPanel>
 		</StackPanel>
 	  </DataTemplate>	  
@@ -110,8 +110,8 @@
 		<StackPanel Orientation="Horizontal">
 			<Rectangle Fill="{DynamicResource info_design}" VerticalAlignment="Center" Width="30" Height="30"/>
 			<StackPanel Margin="10,0,0,0">
-				<TextBlock Foreground="#FF424242" Text="{Binding Path=Title}" TextTrimming="CharacterEllipsis" FontWeight="Bold" />
-				<TextBlock Foreground="#FF1C1C1C" Text="{Binding Path=Text}" TextTrimming="CharacterEllipsis" />
+				<TextBlock Foreground="#FF000000" Text="{Binding Path=Title}" TextTrimming="CharacterEllipsis" FontWeight="Bold" />
+				<TextBlock Foreground="#FF000000" Text="{Binding Path=Text}" TextTrimming="CharacterEllipsis" />
 			</StackPanel>
 		</StackPanel>
 	  </DataTemplate>
@@ -125,8 +125,8 @@
 			<Rectangle Fill="{DynamicResource message_design}" VerticalAlignment="Top" Width="15" Height="15" d:LayoutOverrides="HorizontalAlignment" HorizontalAlignment="Right" Margin="0,0,-9,0"/>
 			</Grid>
 			<StackPanel Margin="20,0,0,0">
-				<TextBlock Foreground="#FF424242" Text="{Binding Path=RosterItem.DisplayName}" TextTrimming="CharacterEllipsis" FontWeight="Bold" />
-				<TextBlock Foreground="#FF1C1C1C" Text="{Binding Path=ChatMessage.Body}" TextTrimming="CharacterEllipsis" />
+				<TextBlock Foreground="#FF000000" Text="{Binding Path=RosterItem.DisplayName}" TextTrimming="CharacterEllipsis" FontWeight="Bold" />
+				<TextBlock Foreground="#FF000000" Text="{Binding Path=ChatMessage.Body}" TextTrimming="CharacterEllipsis" />
 			</StackPanel>
 		</StackPanel>
 		</Border>
@@ -144,10 +144,21 @@
 			<Button Template="{Binding Path=OldPresenceTemplate}" IsEnabled="False" ToolTip="Previous Status" Width="15" Height="15" Margin="10,0,0,0"/>			
 			<Button Template="{Binding Path=NewPresenceTemplate}" IsEnabled="False" ToolTip="Current Status" Width="20" Height="20" Margin="3,0,0,0"/>
 			<StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
-				<TextBlock Foreground="#FF1C1C1C" Text="{Binding Path=Text}" VerticalAlignment="Center" TextTrimming="WordEllipsis" />
+				<TextBlock Foreground="#FF000000" Text="{Binding Path=Text}" VerticalAlignment="Center" TextTrimming="WordEllipsis" />
 			</StackPanel>
 		</StackPanel>
 	  </DataTemplate>
+	  
+    	<Storyboard x:Key="OnMouseEnter1">
+    		<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="{x:Null}" Storyboard.TargetProperty="(UIElement.Opacity)">
+    			<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.8"/>
+    		</DoubleAnimationUsingKeyFrames>
+    	</Storyboard>
+    	<Storyboard x:Key="OnMouseLeave1">
+    		<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetName="{x:Null}" Storyboard.TargetProperty="(UIElement.Opacity)">
+    			<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.45"/>
+    		</DoubleAnimationUsingKeyFrames>
+    	</Storyboard>
 	  
     </ResourceDictionary>
   </Window.Resources>
@@ -156,11 +167,20 @@
 		<DropShadowBitmapEffect ShadowDepth="2"/>
 	</Window.BitmapEffect>
   	
+	<Window.Triggers>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter">
+			<BeginStoryboard Storyboard="{StaticResource OnMouseEnter1}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave">
+			<BeginStoryboard x:Name="OnMouseLeave1_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave1}"/>
+		</EventTrigger>
+	</Window.Triggers>
+  	
 	<Border CornerRadius="3,3,3,3" VerticalAlignment="Bottom" Margin="5,5,5,5" MinHeight="20" BorderBrush="#FF4E4E4E" BorderThickness="1,1,1,1" x:Name="border" RenderTransformOrigin="0.5,0.5">
 		<Border.Background>
 			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-				<GradientStop Color="#FF8ECAE5" Offset="0"/>
-				<GradientStop Color="#FFDDD5F0" Offset="1"/>
+				<GradientStop Color="#FF9CE1FE" Offset="0.009"/>
+				<GradientStop Color="#FF80DFFF" Offset="1"/>
 			</LinearGradientBrush>
 		</Border.Background>
 		<ListBox Style="{DynamicResource ListBoxStyleMessages}"
