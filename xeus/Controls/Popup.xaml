@@ -100,8 +100,8 @@
 		<StackPanel Orientation="Horizontal">
 			<Rectangle Fill="{DynamicResource error_design}" VerticalAlignment="Center" Width="30" Height="30"/>
 			<StackPanel Margin="10,0,0,0">
-				<TextBlock Foreground="#FF000000" Text="{Binding Path=Title}" TextTrimming="CharacterEllipsis" FontWeight="Bold" />
-				<TextBlock Foreground="#FF000000" Text="{Binding Path=Text}" TextTrimming="CharacterEllipsis" />
+				<TextBlock Foreground="#FF80CDFF" Text="{Binding Path=Title}" TextTrimming="CharacterEllipsis" FontWeight="Bold" />
+				<TextBlock Foreground="#FFFFFFFF" Text="{Binding Path=Text}" TextTrimming="CharacterEllipsis" />
 			</StackPanel>
 		</StackPanel>
 	  </DataTemplate>	  
@@ -110,8 +110,8 @@
 		<StackPanel Orientation="Horizontal">
 			<Rectangle Fill="{DynamicResource info_design}" VerticalAlignment="Center" Width="30" Height="30"/>
 			<StackPanel Margin="10,0,0,0">
-				<TextBlock Foreground="#FF000000" Text="{Binding Path=Title}" TextTrimming="CharacterEllipsis" FontWeight="Bold" />
-				<TextBlock Foreground="#FF000000" Text="{Binding Path=Text}" TextTrimming="CharacterEllipsis" />
+				<TextBlock Foreground="#FF80CDFF" Text="{Binding Path=Title}" TextTrimming="CharacterEllipsis" FontWeight="Bold" />
+				<TextBlock Foreground="#FFFFFFFF" Text="{Binding Path=Text}" TextTrimming="CharacterEllipsis" />
 			</StackPanel>
 		</StackPanel>
 	  </DataTemplate>
@@ -125,8 +125,8 @@
 			<Rectangle Fill="{DynamicResource message_design}" VerticalAlignment="Top" Width="15" Height="15" d:LayoutOverrides="HorizontalAlignment" HorizontalAlignment="Right" Margin="0,0,-9,0"/>
 			</Grid>
 			<StackPanel Margin="20,0,0,0">
-				<TextBlock Foreground="#FF000000" Text="{Binding Path=RosterItem.DisplayName}" TextTrimming="CharacterEllipsis" FontWeight="Bold" />
-				<TextBlock Foreground="#FF000000" Text="{Binding Path=ChatMessage.Body}" TextTrimming="CharacterEllipsis" />
+				<TextBlock Foreground="#FF80CDFF" Text="{Binding Path=RosterItem.DisplayName}" TextTrimming="CharacterEllipsis" FontWeight="Bold" />
+				<TextBlock Foreground="#FFFFFFFF" Text="{Binding Path=ChatMessage.Body}" TextTrimming="CharacterEllipsis" />
 			</StackPanel>
 		</StackPanel>
 		</Border>
@@ -144,7 +144,7 @@
 			<Button Template="{Binding Path=OldPresenceTemplate}" IsEnabled="False" ToolTip="Previous Status" Width="15" Height="15" Margin="10,0,0,0"/>			
 			<Button Template="{Binding Path=NewPresenceTemplate}" IsEnabled="False" ToolTip="Current Status" Width="20" Height="20" Margin="3,0,0,0"/>
 			<StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
-				<TextBlock Foreground="#FF000000" Text="{Binding Path=Text}" VerticalAlignment="Center" TextTrimming="WordEllipsis" />
+				<TextBlock Foreground="#FFFFFFFF" Text="{Binding Path=Text}" VerticalAlignment="Center" TextTrimming="WordEllipsis" />
 			</StackPanel>
 		</StackPanel>
 	  </DataTemplate>
@@ -175,16 +175,18 @@
 			<BeginStoryboard x:Name="OnMouseLeave1_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave1}"/>
 		</EventTrigger>
 	</Window.Triggers>
-  	
+  	<Grid>
 	<Border CornerRadius="3,3,3,3" VerticalAlignment="Bottom" Margin="5,5,5,5" MinHeight="20" BorderBrush="#FF4E4E4E" BorderThickness="1,1,1,1" x:Name="border" RenderTransformOrigin="0.5,0.5">
 		<Border.Background>
 			<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-				<GradientStop Color="#FF9CE1FE" Offset="0.009"/>
-				<GradientStop Color="#FF80DFFF" Offset="1"/>
+				<GradientStop Color="#FF1C2422" Offset="0.995"/>
+				<GradientStop Color="#FF000000" Offset="0"/>
 			</LinearGradientBrush>
 		</Border.Background>
 		<ListBox Style="{DynamicResource ListBoxStyleMessages}"
 		 IsSynchronizedWithCurrentItem="True" x:Name="_listBox"
 		 ItemsSource="{Binding Source={StaticResource _eventsView}}" Margin="5,5,5,5" IsTextSearchEnabled="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
 	</Border>
+	<Rectangle Opacity="0.2" Fill="#FFFFFFFF" RadiusX="3" RadiusY="4" Margin="5,5,5,5" VerticalAlignment="Top" Height="20" Stroke="#00FFFFFF"/>
+  	</Grid>
 </Window>

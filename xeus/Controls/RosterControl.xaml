@@ -37,7 +37,7 @@
 
   <DockPanel LastChildFill="True">
     <Slider Margin="8,0,8,8" x:Name="_sliderItemSize"
-	 Minimum="50.0" Maximum="200.0" Style="{DynamicResource SliderStyleRoster}"
+	 Minimum="50.0" Maximum="200.0" Style="{StaticResource SliderStyleRoster}"
 	 TickPlacement="TopLeft" LargeChange="20" SmallChange="10" IsSnapToTickEnabled="True" Height="20" DockPanel.Dock="Bottom"
         Focusable="False" IsTabStop="False" IsMoveToPointEnabled="True" IsSelectionRangeEnabled="False"
         >
@@ -48,7 +48,7 @@
         
     </Slider>
   	<ListBox x:Name="_roster" ItemsSource="{Binding Source={StaticResource _rosterView}}"
-             Style="{DynamicResource ListBoxStyleRoster}"  Foreground="Black"
+             Style="{StaticResource ListBoxStyleRoster}"  Foreground="Black"
              MouseDoubleClick="OnDoubleClickRosterItem" AllowDrop="True" DockPanel.Dock="Top"
              PreviewKeyDown="OnKeyDown" 
            	 Margin="0,0,0,10" FontSize="9" IsTextSearchEnabled="False" TabIndex="0" Background="{x:Null}" >
