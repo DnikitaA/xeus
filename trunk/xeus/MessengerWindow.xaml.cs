@@ -194,24 +194,7 @@ namespace xeus
 					{
 						if ( e.Button == MouseButtons.Left )
 						{
-							if ( WindowState == WindowState.Minimized )
-							{
-								if ( !ShowInTaskbar )
-								{
-									Show();
-								}
-
-								WindowState = WindowState.Normal;
-							}
-							else
-							{
-								WindowState = WindowState.Minimized;
-
-								if ( !ShowInTaskbar )
-								{
-									Hide();
-								}
-							}
+							ShowHide() ;
 						}
 
 						break ;
@@ -286,14 +269,23 @@ namespace xeus
 
 		void ShowHide()
 		{
-			if ( IsActive )
+			if ( WindowState == WindowState.Minimized )
 			{
-				Hide() ;
+				if ( !ShowInTaskbar )
+				{
+					Show();
+				}
+
+				WindowState = WindowState.Normal;
 			}
 			else
 			{
-				Show() ;
-				Activate() ;
+				WindowState = WindowState.Minimized;
+
+				if ( !ShowInTaskbar )
+				{
+					Hide();
+				}
 			}
 		}
 

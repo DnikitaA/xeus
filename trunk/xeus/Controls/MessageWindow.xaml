@@ -14,6 +14,13 @@
     Icon="../images/message.ico"
 	>
 
+  <win:WindowBase.Resources>
+  	<ResourceDictionary>
+  		<ResourceDictionary.MergedDictionaries>
+  			<ResourceDictionary Source="ImageResources.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+  	</ResourceDictionary>
+  </win:WindowBase.Resources>
 	
     <DockPanel>
 		<StatusBar DockPanel.Dock="Bottom" Style="{DynamicResource StatusBarStyleBlack}" x:Name="_statusBar">
