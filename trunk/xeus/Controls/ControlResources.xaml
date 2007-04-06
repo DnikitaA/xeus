@@ -847,7 +847,7 @@
 				x:Name="_image" DockPanel.Dock="Right" />
 			<TextBox x:Name="_body" Text="{Binding Path=Body, Mode=OneWay}" FontSize="12" Foreground="#FFC5A581" 
 			 Margin="10,0,10,0" TextWrapping="WrapWithOverflow" 
-			 		DockPanel.Dock="Right" Style="{DynamicResource TextBoxStyleBlack}" IsReadOnly="True" IsUndoEnabled="False" AutoWordSelection="True" IsTabStop="False"/>
+			 		DockPanel.Dock="Right" Style="{DynamicResource TextBoxStyleBlack}" IsReadOnly="True" IsUndoEnabled="False" AutoWordSelection="True" IsTabStop="False" Cursor="IBeam"/>
 	    </DockPanel>
 	</Grid>
 	<DataTemplate.Triggers>
