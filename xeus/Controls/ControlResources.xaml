@@ -419,13 +419,23 @@
 					<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
 					<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0.9"/>
 				</DoubleAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="image" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.5"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="1.1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="image" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.5"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="1.1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
 			</Storyboard>
 		</DataTemplate.Resources>
 			<Grid RenderTransformOrigin="0.5,0.5"
 				Panel.ZIndex="10" x:Name="grid" MinHeight="60" DockPanel.Dock="Top" Opacity="0.9" Margin="5,5,5,5" >
 				<Grid.RenderTransform>
 					<TransformGroup>
-						<ScaleTransform ScaleX="1" ScaleY="1"/>
+						<ScaleTransform/>
 						<SkewTransform AngleX="0" AngleY="0"/>
 						<RotateTransform Angle="0"/>
 						<TranslateTransform X="0" Y="0"/>
@@ -496,7 +506,16 @@
 					</Border>
 				</Border>
 				<Image HorizontalAlignment="Left" Source="{Binding Path=Image}" Grid.Row="0" 
-					VerticalAlignment="Top" Stretch="Uniform" Width="48" Height="48" Margin="10,15,0,0" d:LayoutOverrides="GridBox" Panel.ZIndex="1" SnapsToDevicePixels="True" IsEnabled="False" x:Name="image"/>
+					VerticalAlignment="Top" Stretch="Uniform" Width="48" Height="48" Margin="10,15,0,0" d:LayoutOverrides="GridBox" Panel.ZIndex="1" SnapsToDevicePixels="True" IsEnabled="False" x:Name="image" RenderTransformOrigin="0.5,0.5">
+					<Image.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform ScaleY="1"/>
+							<SkewTransform AngleX="0" AngleY="0"/>
+							<RotateTransform Angle="0"/>
+							<TranslateTransform X="0" Y="0"/>
+						</TransformGroup>
+					</Image.RenderTransform>
+				</Image>
 				<TextBlock Margin="70,12,15,0"
 					TextTrimming="CharacterEllipsis"
 					FontFamily="Calibri" Foreground="#FFACACAC"
@@ -505,10 +524,13 @@
 					TextTrimming="CharacterEllipsis"
 					FontFamily="Calibri" Foreground="#FFB8D9F2"
 					x:Name="_displayKey" Margin="70,32,15,0" FontSize="14" VerticalAlignment="Top"/>
-				<Rectangle x:Name="_subscription" Width="18" Height="19" Fill="{DynamicResource subscribe_design}" HorizontalAlignment="Left" Margin="43.334,50.665,0,0" VerticalAlignment="Top" IsEnabled="False" IsHitTestVisible="False" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" Panel.ZIndex="10"/>
+				<Rectangle x:Name="_subscription" Width="18" Height="19" Fill="{StaticResource subscribe_design}" HorizontalAlignment="Left" Margin="43.334,50.665,0,0" VerticalAlignment="Top" IsEnabled="False" IsHitTestVisible="False" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment" Panel.ZIndex="10"/>
 			</Grid>
 
 		<DataTemplate.Triggers>
+			<EventTrigger RoutedEvent="ToolTipService.ToolTipOpening">
+				<BeginStoryboard Storyboard="{StaticResource Timeline1}"/>
+			</EventTrigger>
 			<Trigger Property="IsVisible" Value="True">
 				<Trigger.EnterActions>
 					<BeginStoryboard Storyboard="{StaticResource Timeline1}"/>
@@ -521,16 +543,16 @@
 					<Setter Property="Visibility" Value="Collapsed" TargetName="_gridFrom"/>
         	</DataTrigger>			
  			<DataTrigger Binding="{Binding Path=SubscriptionType}" Value="both">
-					<Setter Property="Fill" Value="{DynamicResource subscribe_design}" TargetName="_subscription"/>
+					<Setter Property="Fill" Value="{StaticResource subscribe_design}" TargetName="_subscription"/>
         	</DataTrigger>			
  			<DataTrigger Binding="{Binding Path=SubscriptionType}" Value="none">
-					<Setter Property="Fill" Value="{DynamicResource subscribe_none_design}" TargetName="_subscription"/>
+					<Setter Property="Fill" Value="{StaticResource subscribe_none_design}" TargetName="_subscription"/>
         	</DataTrigger>			
  			<DataTrigger Binding="{Binding Path=SubscriptionType}" Value="from">
-					<Setter Property="Fill" Value="{DynamicResource subscribe_from_design}" TargetName="_subscription"/>
+					<Setter Property="Fill" Value="{StaticResource subscribe_from_design}" TargetName="_subscription"/>
         	</DataTrigger>			
  			<DataTrigger Binding="{Binding Path=SubscriptionType}" Value="to">
-					<Setter Property="Fill" Value="{DynamicResource subscribe_to_design}" TargetName="_subscription"/>
+					<Setter Property="Fill" Value="{StaticResource subscribe_to_design}" TargetName="_subscription"/>
         	</DataTrigger>			
 		</DataTemplate.Triggers>
 	</DataTemplate>	
@@ -566,20 +588,8 @@
     			Width="22" Height="22" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" BorderThickness="0,0,0,0" d:LayoutOverrides="GridBox" />
 		
     		<Border
-    			CornerRadius="3,3,3,3" x:Name="_displayNameLabel"
-    			BorderThickness="1,1,1,1" BorderBrush="#FF6E7281" Margin="5,0,0,0">
-    			<Border.Background>
-    				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-    					<GradientStop Color="#FF54687F" Offset="0"/>
-    					<GradientStop Color="#6898AED9" Offset="0.986"/>
-    				</LinearGradientBrush>
-    			</Border.Background>
-    			<Border.OpacityMask>
-    				<RadialGradientBrush>
-    					<GradientStop Color="#FF000000" Offset="0"/>
-    					<GradientStop Color="#C5FFFFFF" Offset="1"/>
-    				</RadialGradientBrush>
-    			</Border.OpacityMask>
+    			CornerRadius="2,2,2,2" x:Name="_displayNameLabel"
+    			BorderThickness="1,1,1,1" Margin="5,0,0,0" Background="#26FFFFFF">
 		
     			<StackPanel Margin="4,2,4,2" MaxWidth="200" MinWidth="100" >     
     				<TextBlock Text="{Binding Path=DisplayName}"
@@ -588,7 +598,7 @@
     					x:Name="_displayName" FontSize="12" d:LayoutOverrides="Height" MaxWidth="100" HorizontalAlignment="Left"/> 
 					<StackPanel Orientation="Horizontal">    
 					<Rectangle x:Name="_transport" Width="10" Height="10"
-						Fill="{DynamicResource jabber_design}" />
+						Fill="{StaticResource jabber_design}" />
     				<TextBlock Text="{Binding Path=StatusDescription}"
     					FontFamily="Calibri" Foreground="#FFB8D9F2"
     					x:Name="_displayStatus" FontSize="10" TextWrapping="Wrap" Margin="5,0,0,0" HorizontalAlignment="Left" MaxWidth="100"/>
@@ -604,16 +614,16 @@
 			<Setter Property="BorderBrush" Value="{x:Null}" TargetName="_displayNameLabel" />
 		</DataTrigger>
 		<DataTrigger Binding="{Binding Path=Transport}" Value="msn">
-			<Setter Property="Fill" Value="{DynamicResource msn_design}" TargetName="_transport" />
+			<Setter Property="Fill" Value="{StaticResource msn_design}" TargetName="_transport" />
 		</DataTrigger>
 		<DataTrigger Binding="{Binding Path=Transport}" Value="icq">
-			<Setter Property="Fill" Value="{DynamicResource icq_design}" TargetName="_transport" />
+			<Setter Property="Fill" Value="{StaticResource icq_design}" TargetName="_transport" />
 		</DataTrigger>
 		<DataTrigger Binding="{Binding Path=Transport}" Value="aim">
-			<Setter Property="Fill" Value="{DynamicResource aim_design}" TargetName="_transport" />
+			<Setter Property="Fill" Value="{StaticResource aim_design}" TargetName="_transport" />
 		</DataTrigger>
 		<DataTrigger Binding="{Binding Path=Transport}" Value="tv">
-			<Setter Property="Fill" Value="{DynamicResource tv_design}" TargetName="_transport" />
+			<Setter Property="Fill" Value="{StaticResource tv_design}" TargetName="_transport" />
 		</DataTrigger>
 	</DataTemplate.Triggers>
   </DataTemplate>
