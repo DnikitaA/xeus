@@ -1034,34 +1034,44 @@ namespace xeus.Core
 
 		public Block GenerateMessage( ChatMessage message, ChatMessage previousMessage )
 		{
+			Table table = new Table();
 			Paragraph paragraph = new Paragraph();
+			table.Margin = new Thickness( 0.0, 0.0, 0.0, 0.0 );
+			table.Padding = new Thickness( 0.0, 0.0, 0.0, 0.0 );
+
+			paragraph.Margin = new Thickness( 0.0, 0.0, 0.0, 0.0 );
+			paragraph.Padding = new Thickness( 0.0, 0.0, 0.0, 0.0 );
+
+			TableCell cell = new TableCell( paragraph );
+			TableRowGroup group = new TableRowGroup();
+			TableRow row = new TableRow();
+			row.Cells.Add( cell );
+			group.Rows.Add( row );
+			table.RowGroups.Add( group );
 
 			if ( previousMessage == null 
 				|| previousMessage.SentByMe != message.SentByMe
 				|| ( message.Time - previousMessage.Time > TimeSpan.FromMinutes( 5 ) ) )
 			{
-				Figure figure = new Figure();
-				/*figure.Width = new FigureLength( 40 );
-				figure.Height = new FigureLength( 40 );*/
+				Floater figure = new Floater();
 
 				Image avatar = new Image() ;
 				avatar.Source = message.Image ;
 				avatar.Width = 40.0 ;
 
-				figure.VerticalAnchor = FigureVerticalAnchor.ParagraphTop ;
-
-				if ( !message.SentByMe )
+				if ( message.SentByMe )
 				{
-					figure.HorizontalAnchor = FigureHorizontalAnchor.PageLeft;
-					figure.WrapDirection = WrapDirection.Right ;
+					figure.HorizontalAlignment = HorizontalAlignment.Right ;
 				}
 				else
 				{
-					figure.HorizontalAnchor = FigureHorizontalAnchor.PageRight;
-					figure.WrapDirection = WrapDirection.Left ;
+					figure.HorizontalAlignment = HorizontalAlignment.Left ;
 				}
 
 				Paragraph paraAvatar = new Paragraph() ;
+				paraAvatar.Margin = new Thickness( 0.0, 0.0, 0.0, 0.0 );
+				paraAvatar.Padding = new Thickness( 0.0, 0.0, 0.0, 0.0 );
+
 				paraAvatar.Inlines.Add( avatar ) ;
 
 				figure.Blocks.Add( paraAvatar ) ;
@@ -1074,9 +1084,8 @@ namespace xeus.Core
 			}
 
 			paragraph.Inlines.Add( new Run( message.Body ) );
-			paragraph.Inlines.Add( new Run( "" ) );
 
-			return paragraph ;
+			return table ;
 		}
 	}
 }
