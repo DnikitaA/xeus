@@ -134,7 +134,7 @@ namespace xeus.Controls
 		{
 			if ( _xeus != null )
 			{
-				_xeus.Fill = Brushes.Black ;
+				//_xeus.Fill = Brushes.Black ;
 				_logo.Opacity = 0.15 ;
 			}
 		}
@@ -143,7 +143,7 @@ namespace xeus.Controls
 		{
 			if ( _xeus != null )
 			{
-				_xeus.Fill = Brushes.Gray ;
+				//_xeus.Fill = Brushes.Gray ;
 				_logo.Opacity = 1.0 ;
 			}
 		}
