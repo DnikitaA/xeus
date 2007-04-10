@@ -1037,13 +1037,35 @@ namespace xeus.Core
 			Paragraph paragraph = new Paragraph();
 
 			if ( previousMessage == null 
-				|| previousMessage.SentByMe != message.SentByMe )
+				|| previousMessage.SentByMe != message.SentByMe
+				|| ( message.Time - previousMessage.Time > TimeSpan.FromMinutes( 5 ) ) )
 			{
-				Image avatar = new Image() ;
-				avatar.Width = 40 ;
+				Figure figure = new Figure();
+				/*figure.Width = new FigureLength( 40 );
+				figure.Height = new FigureLength( 40 );*/
 
+				Image avatar = new Image() ;
 				avatar.Source = message.Image ;
-				paragraph.Inlines.Add( avatar ) ;
+				avatar.Width = 40.0 ;
+
+				figure.VerticalAnchor = FigureVerticalAnchor.ParagraphTop ;
+
+				if ( !message.SentByMe )
+				{
+					figure.HorizontalAnchor = FigureHorizontalAnchor.PageLeft;
+					figure.WrapDirection = WrapDirection.Right ;
+				}
+				else
+				{
+					figure.HorizontalAnchor = FigureHorizontalAnchor.PageRight;
+					figure.WrapDirection = WrapDirection.Left ;
+				}
+
+				Paragraph paraAvatar = new Paragraph() ;
+				paraAvatar.Inlines.Add( avatar ) ;
+
+				figure.Blocks.Add( paraAvatar ) ;
+				paragraph.Inlines.Add( figure ) ;
 			}
 
 			if ( message.SentByMe )
@@ -1051,7 +1073,8 @@ namespace xeus.Core
 				paragraph.Foreground = Brushes.DarkOrange ;
 			}
 
-			paragraph.Inlines.Add( message.Body );
+			paragraph.Inlines.Add( new Run( message.Body ) );
+			paragraph.Inlines.Add( new Run( "" ) );
 
 			return paragraph ;
 		}
