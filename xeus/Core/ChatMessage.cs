@@ -1,6 +1,7 @@
 using System ;
 using System.Collections.Generic ;
 using System.Data.Common ;
+using System.Windows.Documents ;
 using System.Windows.Media.Imaging ;
 using agsXMPP.protocol.client ;
 
@@ -144,5 +145,6 @@ namespace xeus.Core
 				_id = value ;
 			}
 		}
+
 	}
 }

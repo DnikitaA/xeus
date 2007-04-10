@@ -23,9 +23,9 @@ namespace xeus.Controls
 			MessageWindow.MessageTextBox = sender as TextBox ;
 		}
 
-		public void ListBoxInitialized( object sender, EventArgs e )
+		public void MessageViewInitialized( object sender, EventArgs e )
 		{
-			MessageWindow.MessageListBox = sender as ListBox ;
+			MessageWindow.FlowDocumentViewer = sender as FlowDocumentScrollViewer ;
 		}
 	}
 }

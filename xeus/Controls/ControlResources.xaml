@@ -589,7 +589,7 @@
 		
     		<Border
     			CornerRadius="2,2,2,2" x:Name="_displayNameLabel"
-    			BorderThickness="1,1,1,1" Margin="5,0,0,0" Background="#26FFFFFF">
+    			BorderThickness="1,1,1,1" Margin="5,0,0,0" Background="#FF484848">
 		
     			<StackPanel Margin="4,2,4,2" MaxWidth="200" MinWidth="100" >     
     				<TextBlock Text="{Binding Path=DisplayName}"
