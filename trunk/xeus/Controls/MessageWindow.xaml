@@ -27,7 +27,7 @@
       <StatusBarItem HorizontalAlignment="Stretch"
 			    	  x:Name="_statusResize" VerticalAlignment="Stretch" Panel.ZIndex="1">
         <Slider Margin="8,0,8,0" x:Name="_sliderItemSize"
-       VerticalAlignment="Bottom" Minimum="1.0" Maximum="2.0" Style="{DynamicResource SliderStyleRoster}"
+       VerticalAlignment="Bottom" Minimum="0.8" Maximum="2.0" Style="{DynamicResource SliderStyleRoster}"
        TickPlacement="TopLeft" TickFrequency="0.1" LargeChange="0.2" SmallChange="0.1" IsSnapToTickEnabled="True" Height="24"
             Focusable="False" MaxWidth="100" IsTabStop="False" IsMoveToPointEnabled="True" IsSelectionRangeEnabled="False"
 			        >

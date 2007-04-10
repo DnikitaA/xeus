@@ -151,6 +151,8 @@
 									</Style>
 								</Setter.Value>
 							</Setter>
+							<Setter Property="Opacity" TargetName="path1" Value="0.3"/>
+							<Setter Property="Opacity" TargetName="path" Value="0.1"/>
 						</Trigger>
 						<Trigger Property="TickPlacement" Value="BottomRight">
 							<Setter Property="Visibility" TargetName="BottomTick" Value="Visible"/>

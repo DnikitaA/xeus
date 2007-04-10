@@ -19,10 +19,9 @@ namespace xeus.Controls
 	public partial class MessageWindow : WindowBase, IDisposable
 	{
 		private static MessageWindow _instance ;
-		private static ListBox _listBox ;
 		private static TextBox _textBox ;
 
-		private Timer _listRefreshTimer = new Timer( 150 ) ;
+		private Timer _listRefreshTimer = new Timer( 10 ) ;
 		private Timer _timeRefreshTimer = new Timer( 10000 ) ;
 		private Timer _timerNoTyping = new Timer( 5000 ) ;
 		private Timer _timerNoTyping2 = new Timer( 20000 ) ;
@@ -31,7 +30,7 @@ namespace xeus.Controls
 
 		private InlineMethod _inlineMethod = new InlineMethod() ;
 
-		private delegate void ScrollToLastItemCallback( ListBox listBox ) ;
+		private delegate void ScrollToLastItemCallback( FlowDocumentScrollViewer listBox ) ;
 
 		private delegate void DisplayChatCallback( string jid, bool activate ) ;
 
@@ -55,7 +54,6 @@ namespace xeus.Controls
 			_timerNoTyping2.Elapsed += new ElapsedEventHandler( _timerNoTyping2_Elapsed );
 
 			_listRefreshTimer.AutoReset = false ;
-			_listRefreshTimer.Start() ;
 
 			_inlineMethod.Finished += new InlineMethod.InlineResultHandler( _inlineMethod_Finished );
 			_inlineSearch.TextChanged += new TextChangedEventHandler( _inlineSearch_TextChanged );
@@ -184,6 +182,7 @@ namespace xeus.Controls
 				}
 				else
 				{
+					/*
 					_listBox.SelectedItem = item ;
 					_listBox.ScrollIntoView( item ) ;
 					_inlineSearch.NotFound = false ;
@@ -203,7 +202,7 @@ namespace xeus.Controls
 							int selectStart = textBox.Text.IndexOf( _textToSearch ) ;
 							textBox.Select( selectStart, _textToSearch.Length );
 						}
-					}
+					}*/
 				}
 			}
 			else
@@ -365,21 +364,25 @@ namespace xeus.Controls
 			}
 		}
 
-		public static ListBox MessageListBox
+		public static FlowDocumentScrollViewer FlowDocumentViewer
 		{
 			get
 			{
-				return _listBox ;
+				return _flowDocumentViewer ;
 			}
+
 			set
 			{
-				_listBox = value ;
+				_flowDocumentViewer = value ;
+				_scrollViewer = null ;
 
-				if ( _listBox != null )
-				{
-					_listBox.DataContextChanged += new DependencyPropertyChangedEventHandler( _listBox_DataContextChanged ) ;
-				}
+				_flowDocumentViewer.DataContextChanged += new DependencyPropertyChangedEventHandler( _flowDocumentViewer_DataContextChanged );
 			}
+		}
+
+		static void _flowDocumentViewer_DataContextChanged( object sender, DependencyPropertyChangedEventArgs e )
+		{
+			_instance._listRefreshTimer.Start() ;
 		}
 
 		public static TextBox MessageTextBox
@@ -397,11 +400,12 @@ namespace xeus.Controls
 
 		private void _listRefreshTimer_Elapsed( object sender, ElapsedEventArgs e )
 		{
-			ScrollToLastItem( MessageListBox ) ;
+			ScrollToLastItem( FlowDocumentViewer ) ;
 		}
 
 		RosterItem _rosterItem = null ;
 		private static bool _isActivated = false ;
+		private static FlowDocumentScrollViewer _flowDocumentViewer ;
 
 		private void _tabs_SelectionChanged( object sender, SelectionChangedEventArgs e )
 		{
@@ -680,26 +684,34 @@ namespace xeus.Controls
 			}
 		}
 
-		private static void _listBox_DataContextChanged( object sender, DependencyPropertyChangedEventArgs e )
-		{
-			_instance._listRefreshTimer.Start() ;
-		}
+		static ScrollViewer _scrollViewer = null;
 
-		public static void ScrollToLastItem( ListBox listBox )
+		public static void ScrollToLastItem( FlowDocumentScrollViewer flowDocumentView )
 		{
 			if ( App.DispatcherThread.CheckAccess() )
 			{
-				if ( listBox != null && listBox.Items.Count > 0 )
+				if ( _scrollViewer == null )
 				{
-					ChatMessage chatMessage = listBox.Items[ listBox.Items.Count - 1 ] as ChatMessage ;
+					DependencyObject dependencyObject = flowDocumentView ;
 
-					listBox.ScrollIntoView( chatMessage ) ;
+					while ( true )
+					{
+						dependencyObject = VisualTreeHelper.GetChild( dependencyObject, 0 ) ;
+
+						if ( dependencyObject is ScrollViewer )
+						{
+							_scrollViewer = dependencyObject as ScrollViewer ;
+							break ;
+						}
+					}
 				}
+
+				_scrollViewer.ScrollToBottom();
 			}
 			else
 			{
 				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
-				                                  new ScrollToLastItemCallback( ScrollToLastItem ), listBox ) ;
+				                                  new ScrollToLastItemCallback( ScrollToLastItem ), flowDocumentView ) ;
 			}
 		}
 

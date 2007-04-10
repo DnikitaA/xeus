@@ -3,7 +3,10 @@ using System.Collections ;
 using System.Collections.Generic ;
 using System.Collections.Specialized ;
 using System.Data.Common ;
+using System.Windows ;
 using System.Windows.Controls ;
+using System.Windows.Documents ;
+using System.Windows.Media ;
 using System.Windows.Media.Imaging ;
 using System.Windows.Threading ;
 using agsXMPP.protocol.Base ;
@@ -62,6 +65,8 @@ namespace xeus.Core
 		private bool _removeTemporaryImage ;
 
 		private string _transport = String.Empty ;
+
+		private FlowDocument _messagesDocument = null ;
 
 		private RosterItem()
 		{
@@ -182,11 +187,20 @@ namespace xeus.Core
 							HasUnreadMessages = true ;
 						}
 
+						GenerateMessagesDocument( e.NewItems );
+
+						NotifyPropertyChanged( "MessagesDocument" );
+
 						break ;
 					}
 				case NotifyCollectionChangedAction.Reset:
 					{
 						HasUnreadMessages = false ;
+
+						_messagesDocument = null ;
+
+						NotifyPropertyChanged( "MessagesDocument" );
+
 						break ;
 					}
 			}
@@ -985,6 +999,61 @@ namespace xeus.Core
 		public void Dispose()
 		{
 			_messages.CollectionChanged -= _messages_CollectionChanged ;
+		}
+
+		public FlowDocument MessagesDocument
+		{
+			get
+			{
+				return _messagesDocument ;
+			}
+		}
+
+		protected void GenerateMessagesDocument( IList messages )
+		{
+			if ( _messagesDocument == null )
+			{
+				_messagesDocument = new FlowDocument() ;
+				_messagesDocument.Foreground = Brushes.White ;
+			}
+
+			foreach ( ChatMessage message in messages )
+			{
+				int index = Messages.IndexOf( message ) ;
+
+				ChatMessage previousMessage = null ;
+
+				if ( index >= 1 )
+				{
+					previousMessage = Messages[ index - 1 ] ;
+				}
+
+				_messagesDocument.Blocks.Add( GenerateMessage( message, previousMessage ) ) ;
+			}
+		}
+
+		public Block GenerateMessage( ChatMessage message, ChatMessage previousMessage )
+		{
+			Paragraph paragraph = new Paragraph();
+
+			if ( previousMessage == null 
+				|| previousMessage.SentByMe != message.SentByMe )
+			{
+				Image avatar = new Image() ;
+				avatar.Width = 40 ;
+
+				avatar.Source = message.Image ;
+				paragraph.Inlines.Add( avatar ) ;
+			}
+
+			if ( message.SentByMe )
+			{
+				paragraph.Foreground = Brushes.DarkOrange ;
+			}
+
+			paragraph.Inlines.Add( message.Body );
+
+			return paragraph ;
 		}
 	}
 }

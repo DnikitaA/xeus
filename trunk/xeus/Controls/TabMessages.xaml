@@ -4,7 +4,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:prop="clr-namespace:xeus.Properties"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
-  x:Class="xeus.Controls.TabMessages">
+  x:Class="xeus.Controls.TabMessages" xmlns:System_Windows_Automation_Provider="clr-namespace:System.Windows.Automation.Provider;assembly=UIAutomationProvider">
 	<!-- Resource dictionary entries should be defined here. -->
 
 	
@@ -54,13 +54,19 @@
 				</TransformGroup>
 			</TextBox.LayoutTransform>
 		</TextBox>
-    <ListBox
+    <!--<ListBox
       Initialized="ListBoxInitialized"
 			ItemsSource="{Binding Path=Messages}"
 			ItemTemplate="{StaticResource ChatMessageItem}" Style="{StaticResource ListBoxStyleMessages}"
              BorderThickness="1,1,1,1" VerticalContentAlignment="Stretch" ScrollViewer.CanContentScroll="False"
              ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="#00FFFFFF"
-             x:Name="_listMessages" HorizontalAlignment="Stretch" Margin="0,0,0,4" MinHeight="100" DockPanel.Dock="Top" TabIndex="1"/>		
+             x:Name="_listMessages" HorizontalAlignment="Stretch" Margin="0,0,0,4" MinHeight="100" DockPanel.Dock="Top" TabIndex="1"/>
+	-->
+	
+	<FlowDocumentScrollViewer x:Name="_flowViewer" Initialized="MessageViewInitialized" Document="{Binding Path=MessagesDocument}"
+		Zoom="{Binding Source={x:Static prop:Settings.Default}, Path=UI_MessageTextSlider, Mode=TwoWay}" >
+	</FlowDocumentScrollViewer>
+	
     </DockPanel>	
 	<Button Height="30" Content="Button" HorizontalAlignment="Right" Margin="0,0,5,5" 
 			VerticalAlignment="Bottom" Width="30" Template="{DynamicResource SendIcon}"
