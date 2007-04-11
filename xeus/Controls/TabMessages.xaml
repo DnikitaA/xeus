@@ -4,7 +4,8 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:prop="clr-namespace:xeus.Properties"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
-  x:Class="xeus.Controls.TabMessages" xmlns:System_Windows_Automation_Provider="clr-namespace:System.Windows.Automation.Provider;assembly=UIAutomationProvider">
+  xmlns:System_Windows_Automation_Provider="clr-namespace:System.Windows.Automation.Provider;assembly=UIAutomationProvider"
+  x:Class="xeus.Controls.TabMessages">
 	<!-- Resource dictionary entries should be defined here. -->
 
 	
