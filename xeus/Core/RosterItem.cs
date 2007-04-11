@@ -14,6 +14,10 @@ using agsXMPP.protocol.client ;
 using agsXMPP.protocol.iq.disco ;
 using agsXMPP.protocol.iq.roster ;
 using agsXMPP.protocol.iq.vcard ;
+using xeus.Properties ;
+using Brushes=System.Windows.Media.Brushes;
+using Color=System.Drawing.Color;
+using Image=System.Windows.Controls.Image;
 
 namespace xeus.Core
 {
@@ -1009,12 +1013,15 @@ namespace xeus.Core
 			}
 		}
 
+		readonly FontFamily _textFont = new FontFamily( "Segoe" ) ;
+
 		protected void GenerateMessagesDocument( IList messages )
 		{
 			if ( _messagesDocument == null )
 			{
 				_messagesDocument = new FlowDocument() ;
 				_messagesDocument.Foreground = Brushes.White ;
+				_messagesDocument.FontFamily = _textFont ;
 			}
 
 			foreach ( ChatMessage message in messages )
@@ -1032,60 +1039,58 @@ namespace xeus.Core
 			}
 		}
 
+		readonly Brush _alternativeBackground = new SolidColorBrush( System.Windows.Media.Color.FromRgb( 50, 50, 50 ) ) ;
+		readonly Brush _alternativeForeground = new SolidColorBrush( System.Windows.Media.Color.FromRgb( 191, 215, 234 ) ) ;
+
 		public Block GenerateMessage( ChatMessage message, ChatMessage previousMessage )
 		{
-			Table table = new Table();
+			Section groupSection = _messagesDocument.Blocks.LastBlock as Section ;
+
 			Paragraph paragraph = new Paragraph();
-			table.Margin = new Thickness( 0.0, 0.0, 0.0, 0.0 );
-			table.Padding = new Thickness( 0.0, 0.0, 0.0, 0.0 );
 
-			paragraph.Margin = new Thickness( 0.0, 0.0, 0.0, 0.0 );
 			paragraph.Padding = new Thickness( 0.0, 0.0, 0.0, 0.0 );
+			paragraph.Margin = new Thickness( 0.0, 5.0, 0.0, 0.0 );
 
-			TableCell cell = new TableCell( paragraph );
-			TableRowGroup group = new TableRowGroup();
-			TableRow row = new TableRow();
-			row.Cells.Add( cell );
-			group.Rows.Add( row );
-			table.RowGroups.Add( group );
+			bool newSection = ( groupSection == null ) ;
 
 			if ( previousMessage == null 
 				|| previousMessage.SentByMe != message.SentByMe
-				|| ( message.Time - previousMessage.Time > TimeSpan.FromMinutes( 5 ) ) )
+				|| ( message.Time - previousMessage.Time > TimeSpan.FromMinutes( Settings.Default.UI_GroupMessagesByMinutes ) ) )
 			{
-				Floater figure = new Floater();
-
 				Image avatar = new Image() ;
 				avatar.Source = message.Image ;
-				avatar.Width = 40.0 ;
+				avatar.Width = 30.0 ;
 
-				if ( message.SentByMe )
-				{
-					figure.HorizontalAlignment = HorizontalAlignment.Right ;
-				}
-				else
-				{
-					figure.HorizontalAlignment = HorizontalAlignment.Left ;
-				}
+				paragraph.Inlines.Add( avatar );
 
-				Paragraph paraAvatar = new Paragraph() ;
-				paraAvatar.Margin = new Thickness( 0.0, 0.0, 0.0, 0.0 );
-				paraAvatar.Padding = new Thickness( 0.0, 0.0, 0.0, 0.0 );
-
-				paraAvatar.Inlines.Add( avatar ) ;
-
-				figure.Blocks.Add( paraAvatar ) ;
-				paragraph.Inlines.Add( figure ) ;
+				newSection = true ;
 			}
 
 			if ( message.SentByMe )
 			{
-				paragraph.Foreground = Brushes.DarkOrange ;
+				paragraph.Foreground = _alternativeForeground ;
 			}
 
-			paragraph.Inlines.Add( new Run( message.Body ) );
+			paragraph.Inlines.Add( message.Body );
 
-			return table ;
+			if ( newSection )
+			{
+				groupSection = new Section() ;
+
+				if ( message.SentByMe )
+				{
+					groupSection.Background = _alternativeBackground ;
+				}
+
+				groupSection.Blocks.Add( paragraph ) ;
+				groupSection.Margin = new Thickness( 3.0, 10.0, 3.0, 0.0 ) ;
+				groupSection.BorderThickness = new Thickness( 0.0, 2.0, 0.0, 0.0 ) ;
+				groupSection.BorderBrush = _alternativeBackground ;
+			}
+
+			groupSection.Blocks.Add( paragraph );
+
+			return groupSection ;
 		}
 	}
 }

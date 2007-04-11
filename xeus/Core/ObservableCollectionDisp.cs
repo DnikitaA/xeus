@@ -47,7 +47,14 @@ namespace xeus.Core
 			{
 				lock ( _syncObject )
 				{
-					base.InsertItem( index, item ) ;
+					if ( index > Count )
+					{
+						base.InsertItem( Count, item );
+					}
+					else
+					{
+						base.InsertItem( index, item );
+					}
 				}
 			}
 			else
