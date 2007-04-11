@@ -163,5 +163,17 @@ namespace xeus.Properties {
                 this["Client_ProxyUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int UI_GroupMessagesByMinutes {
+            get {
+                return ((int)(this["UI_GroupMessagesByMinutes"]));
+            }
+            set {
+                this["UI_GroupMessagesByMinutes"] = value;
+            }
+        }
     }
 }
