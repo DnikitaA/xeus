@@ -21,6 +21,7 @@ namespace xeus.Controls
 		private static MessageWindow _instance ;
 		private static TextBox _textBox ;
 
+		private Timer _scrollTimer = new Timer( 10 ) ;
 		private Timer _timeRefreshTimer = new Timer( 10000 ) ;
 		private Timer _timerNoTyping = new Timer( 5000 ) ;
 		private Timer _timerNoTyping2 = new Timer( 20000 ) ;
@@ -29,7 +30,7 @@ namespace xeus.Controls
 
 		private InlineMethod _inlineMethod = new InlineMethod() ;
 
-		private delegate void ScrollToLastItemCallback( FlowDocumentScrollViewer listBox ) ;
+		private delegate void ScrollToLastItemCallback() ;
 
 		private delegate void DisplayChatCallback( string jid, bool activate ) ;
 
@@ -51,6 +52,9 @@ namespace xeus.Controls
 			_timerNoTyping.Elapsed += new ElapsedEventHandler( _timerNoTyping_Elapsed );
 			_timerNoTyping2.Elapsed += new ElapsedEventHandler( _timerNoTyping2_Elapsed );
 
+			_scrollTimer.AutoReset = false ;
+			_scrollTimer.Elapsed += new ElapsedEventHandler( _scrollTimer_Elapsed );
+
 			_inlineMethod.Finished += new InlineMethod.InlineResultHandler( _inlineMethod_Finished );
 			_inlineSearch.TextChanged += new TextChangedEventHandler( _inlineSearch_TextChanged );
 			_inlineSearch.Closed += new InlineSearch.ClosedHandler( _inlineSearch_Closed );
@@ -58,6 +62,11 @@ namespace xeus.Controls
 			KeyDown += new KeyEventHandler( MessageWindow_KeyDown );
 
 			_statusBar.Loaded += new RoutedEventHandler( _statusBar_Loaded );
+		}
+
+		void _scrollTimer_Elapsed( object sender, ElapsedEventArgs e )
+		{
+			ScrollToLastItem2() ;
 		}
 
 		void _statusBar_Loaded( object sender, RoutedEventArgs e )
@@ -378,7 +387,7 @@ namespace xeus.Controls
 
 		static void _flowDocumentViewer_DataContextChanged( object sender, DependencyPropertyChangedEventArgs e )
 		{
-			ScrollToLastItem( _flowDocumentViewer );
+			ScrollToLastItem();
 		}
 
 		public static TextBox MessageTextBox
@@ -468,9 +477,10 @@ namespace xeus.Controls
 
 						ChangeChatState( Chatstate.active ) ;
 					}
+
+					ScrollToLastItem();
 				}
 			}
-
 		}
 
 		protected override void OnClosed( EventArgs e )
@@ -590,7 +600,7 @@ namespace xeus.Controls
 					}
 				}
 
-				ScrollToLastItem( FlowDocumentViewer ) ;
+				ScrollToLastItem2() ;
 
 				_instance._timeRefreshTimer.Start() ;
 			}
@@ -649,7 +659,7 @@ namespace xeus.Controls
 
 					rosterItem.DraftMessage = MessageTextBox.Text = String.Empty ;
 
-					ScrollToLastItem( _flowDocumentViewer );
+					ScrollToLastItem2();
 				}
 			}
 		}
@@ -678,14 +688,19 @@ namespace xeus.Controls
 		}
 
 		static ScrollViewer _scrollViewer = null;
+		
+		public static void ScrollToLastItem()
+		{
+			_instance._scrollTimer.Start();
+		}
 
-		public static void ScrollToLastItem( FlowDocumentScrollViewer flowDocumentView )
+		protected static void ScrollToLastItem2()
 		{
 			if ( App.DispatcherThread.CheckAccess() )
 			{
 				if ( _scrollViewer == null )
 				{
-					DependencyObject dependencyObject = flowDocumentView ;
+					DependencyObject dependencyObject = _flowDocumentViewer ;
 
 					while ( true )
 					{
@@ -704,7 +719,7 @@ namespace xeus.Controls
 			else
 			{
 				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
-				                                  new ScrollToLastItemCallback( ScrollToLastItem ), flowDocumentView ) ;
+				                                  new ScrollToLastItemCallback( ScrollToLastItem2 ) ) ;
 			}
 		}
 
