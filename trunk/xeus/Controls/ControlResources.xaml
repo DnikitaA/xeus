@@ -805,6 +805,7 @@
 	</DataTemplate.Triggers>
   </DataTemplate>
   
+  <!--
  <DataTemplate x:Key="ChatMessageItem" DataType="{x:Type local:ChatMessage}">
 		<Grid Background="#05FFFFFF" x:Name="_grid">
 			<Grid.LayoutTransform>
@@ -854,10 +855,6 @@
 		<Trigger Property="IsMouseOver" SourceName="_time" Value="True">
 			<Setter Property="Text" Value="{Binding Path=Time}" TargetName="_time" />
 		</Trigger>
-		<!--
-		<Trigger Property="Selection" SourceName="_body" Value="">
-			<Setter Property="Background" Value="Red" TargetName="_body" />
-		</Trigger>-->
 		<DataTrigger Binding="{Binding Path=SentByMe}" Value="true">
 			<Setter Property="DockPanel.Dock" Value="Left" TargetName="_body" />
 			<Setter Property="DockPanel.Dock" Value="Left" TargetName="_image" />
@@ -868,6 +865,7 @@
 	</DataTemplate.Triggers>
 
 </DataTemplate>
+-->
 
   <DataTemplate x:Key="HeadlineMessageItem" DataType="{x:Type local:HeadlineMessage}">
     <Grid Background="#05FFFFFF" x:Name="_grid">

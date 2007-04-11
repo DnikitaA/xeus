@@ -21,7 +21,6 @@ namespace xeus.Controls
 		private static MessageWindow _instance ;
 		private static TextBox _textBox ;
 
-		private Timer _listRefreshTimer = new Timer( 10 ) ;
 		private Timer _timeRefreshTimer = new Timer( 10000 ) ;
 		private Timer _timerNoTyping = new Timer( 5000 ) ;
 		private Timer _timerNoTyping2 = new Timer( 20000 ) ;
@@ -48,12 +47,9 @@ namespace xeus.Controls
 
 			_tabs.SelectionChanged += new SelectionChangedEventHandler( _tabs_SelectionChanged ) ;
 			_tabs.MouseDoubleClick += new MouseButtonEventHandler( _tabs_MouseDoubleClick );
-			_listRefreshTimer.Elapsed += new ElapsedEventHandler( _listRefreshTimer_Elapsed ) ;
 			_timeRefreshTimer.Elapsed += new ElapsedEventHandler( _timeRefreshTimer_Elapsed ) ;
 			_timerNoTyping.Elapsed += new ElapsedEventHandler( _timerNoTyping_Elapsed );
 			_timerNoTyping2.Elapsed += new ElapsedEventHandler( _timerNoTyping2_Elapsed );
-
-			_listRefreshTimer.AutoReset = false ;
 
 			_inlineMethod.Finished += new InlineMethod.InlineResultHandler( _inlineMethod_Finished );
 			_inlineSearch.TextChanged += new TextChangedEventHandler( _inlineSearch_TextChanged );
@@ -382,7 +378,7 @@ namespace xeus.Controls
 
 		static void _flowDocumentViewer_DataContextChanged( object sender, DependencyPropertyChangedEventArgs e )
 		{
-			_instance._listRefreshTimer.Start() ;
+			ScrollToLastItem( _flowDocumentViewer );
 		}
 
 		public static TextBox MessageTextBox
@@ -396,11 +392,6 @@ namespace xeus.Controls
 			{
 				_textBox = value ;
 			}
-		}
-
-		private void _listRefreshTimer_Elapsed( object sender, ElapsedEventArgs e )
-		{
-			ScrollToLastItem( FlowDocumentViewer ) ;
 		}
 
 		RosterItem _rosterItem = null ;
@@ -488,7 +479,6 @@ namespace xeus.Controls
 			ChangeChatState( Chatstate.gone ) ;
 
 			_timeRefreshTimer.Stop() ;
-			_listRefreshTimer.Stop() ;
 			_timerNoTyping.Stop();
 			_timerNoTyping2.Stop();
 
@@ -496,6 +486,7 @@ namespace xeus.Controls
 
 			Client.Instance.Roster.ClearMesssages() ;
 
+			_timeTextStyle = null ;
 			_instance.Activated -= _instance_Activated ;
 			_instance.Deactivated -= _instance_Deactivated ;
 			_instance.Dispose();
@@ -599,7 +590,8 @@ namespace xeus.Controls
 					}
 				}
 
-				_instance._listRefreshTimer.Start() ;
+				ScrollToLastItem( FlowDocumentViewer ) ;
+
 				_instance._timeRefreshTimer.Start() ;
 			}
 			else
@@ -656,7 +648,8 @@ namespace xeus.Controls
 					_instance.ChangeChatState( Chatstate.inactive ) ;
 
 					rosterItem.DraftMessage = MessageTextBox.Text = String.Empty ;
-					_instance._listRefreshTimer.Start() ;
+
+					ScrollToLastItem( _flowDocumentViewer );
 				}
 			}
 		}
@@ -715,6 +708,18 @@ namespace xeus.Controls
 			}
 		}
 
+		static Style _timeTextStyle = null ;
+
+		public static Style GetTimeTextBlockStyle()
+		{
+			if ( _timeTextStyle == null )
+			{
+				_timeTextStyle = _instance.FindResource( "TimeText" ) as Style ;
+			}
+
+			return _timeTextStyle ;
+		}
+
 		public static void DisplayChatWindow( string activateJid, bool activate )
 		{
 			lock ( Client.Instance.MessageCenter.ChatMessages._syncObject )
@@ -738,7 +743,6 @@ namespace xeus.Controls
 
 		public void Dispose()
 		{
-			_listRefreshTimer.Dispose();
 			_timeRefreshTimer.Dispose();
 			_timerNoTyping.Dispose();
 			_timerNoTyping2.Dispose();

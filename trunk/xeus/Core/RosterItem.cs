@@ -5,6 +5,7 @@ using System.Collections.Specialized ;
 using System.Data.Common ;
 using System.Windows ;
 using System.Windows.Controls ;
+using System.Windows.Data ;
 using System.Windows.Documents ;
 using System.Windows.Media ;
 using System.Windows.Media.Imaging ;
@@ -14,6 +15,7 @@ using agsXMPP.protocol.client ;
 using agsXMPP.protocol.iq.disco ;
 using agsXMPP.protocol.iq.roster ;
 using agsXMPP.protocol.iq.vcard ;
+using xeus.Controls ;
 using xeus.Properties ;
 using Brushes=System.Windows.Media.Brushes;
 using Color=System.Drawing.Color;
@@ -1041,6 +1043,7 @@ namespace xeus.Core
 
 		readonly Brush _alternativeBackground = new SolidColorBrush( System.Windows.Media.Color.FromRgb( 50, 50, 50 ) ) ;
 		readonly Brush _alternativeForeground = new SolidColorBrush( System.Windows.Media.Color.FromRgb( 191, 215, 234 ) ) ;
+		readonly Binding _timeBinding = new Binding( "RelativeTime" ) ;
 
 		public Block GenerateMessage( ChatMessage message, ChatMessage previousMessage )
 		{
@@ -1049,7 +1052,7 @@ namespace xeus.Core
 			Paragraph paragraph = new Paragraph();
 
 			paragraph.Padding = new Thickness( 0.0, 0.0, 0.0, 0.0 );
-			paragraph.Margin = new Thickness( 0.0, 5.0, 0.0, 0.0 );
+			paragraph.Margin = new Thickness( 0.0, 5.0, 0.0, 10.0 );
 
 			bool newSection = ( groupSection == null ) ;
 
@@ -1072,6 +1075,13 @@ namespace xeus.Core
 			}
 
 			paragraph.Inlines.Add( message.Body );
+			paragraph.DataContext = message ;
+
+			TextBlock textBlock = new TextBlock();
+			textBlock.Style = MessageWindow.GetTimeTextBlockStyle() ;
+			textBlock.SetBinding( TextBlock.TextProperty, _timeBinding ) ;
+
+			paragraph.Inlines.Add( textBlock ) ;
 
 			if ( newSection )
 			{
