@@ -3,6 +3,7 @@ using System.Collections ;
 using System.Collections.Generic ;
 using System.Collections.Specialized ;
 using System.Data.Common ;
+using System.Text.RegularExpressions ;
 using System.Windows ;
 using System.Windows.Controls ;
 using System.Windows.Data ;
@@ -10,7 +11,6 @@ using System.Windows.Documents ;
 using System.Windows.Media ;
 using System.Windows.Media.Imaging ;
 using System.Windows.Threading ;
-using agsXMPP.protocol.Base ;
 using agsXMPP.protocol.client ;
 using agsXMPP.protocol.iq.disco ;
 using agsXMPP.protocol.iq.roster ;
@@ -19,6 +19,7 @@ using xeus.Controls ;
 using xeus.Properties ;
 using Brushes=System.Windows.Media.Brushes;
 using Color=System.Drawing.Color;
+using Group=agsXMPP.protocol.Base.Group;
 using Image=System.Windows.Controls.Image;
 
 namespace xeus.Core
@@ -1045,6 +1046,9 @@ namespace xeus.Core
 		readonly Brush _alternativeForeground = new SolidColorBrush( System.Windows.Media.Color.FromRgb( 191, 215, 234 ) ) ;
 		readonly Binding _timeBinding = new Binding( "RelativeTime" ) ;
 
+		readonly Regex _urlregex = new Regex( @"[""'=]?(http://|ftp://|https://|www\.|ftp\.[\w]+)([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])", RegexOptions.IgnoreCase | RegexOptions.Compiled ) ;
+	    readonly Regex _emailregex = new Regex(@"([a-zA-Z_0-9.-]+\@[a-zA-Z_0-9.-]+\.\w+)", RegexOptions.IgnoreCase| RegexOptions.Compiled ) ;
+
 		public Block GenerateMessage( ChatMessage message, ChatMessage previousMessage )
 		{
 			Section groupSection = _messagesDocument.Blocks.LastBlock as Section ;
@@ -1074,7 +1078,35 @@ namespace xeus.Core
 				paragraph.Foreground = _alternativeForeground ;
 			}
 
-			paragraph.Inlines.Add( message.Body );
+			MatchCollection matches = _urlregex.Matches( message.Body ) ;
+
+			if ( matches.Count > 0 )
+			{
+				string[] founds = new string[ matches.Count ];
+
+				for ( int i = 0; i < founds.Length; i++ )
+				{
+					founds[ i ] = matches[ i ].ToString() ;
+				}
+
+				string[] bodies = message.Body.Split( founds, StringSplitOptions.RemoveEmptyEntries ) ;
+
+				for ( int j = 0; j < bodies.Length; j++ )
+				{
+					paragraph.Inlines.Add( bodies[ j ] ) ;
+
+					Hyperlink hyperlink = new Hyperlink( new Run( founds[ j ] ) );
+					hyperlink.Foreground = Brushes.DarkSalmon ;
+					hyperlink.TargetName = "_blank" ;
+					hyperlink.NavigateUri = new Uri( founds[ j ] ) ;
+					paragraph.Inlines.Add( hyperlink ) ;
+				}
+			}
+			else
+			{
+				paragraph.Inlines.Add( message.Body ) ;
+			}
+
 			paragraph.DataContext = message ;
 
 			TextBlock textBlock = new TextBlock();
