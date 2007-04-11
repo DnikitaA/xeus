@@ -10,7 +10,7 @@ namespace xeus.Controls
 		public void OnSendClick( object sender, RoutedEventArgs e )
 		{
 			MessageWindow.SendMessage();
-			e.Handled = true ;
+			// e.Handled = true ;
 		}
 
 		public void OnTextKeyDown( object sender, KeyEventArgs e )

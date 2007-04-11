@@ -8,6 +8,7 @@ using System.Windows ;
 using System.Windows.Controls ;
 using System.Windows.Data ;
 using System.Windows.Documents ;
+using System.Windows.Input ;
 using System.Windows.Media ;
 using System.Windows.Media.Imaging ;
 using System.Windows.Threading ;
@@ -1069,6 +1070,7 @@ namespace xeus.Core
 				avatar.Width = 30.0 ;
 
 				paragraph.Inlines.Add( avatar );
+				paragraph.Inlines.Add( "  " );
 
 				newSection = true ;
 			}
@@ -1097,7 +1099,6 @@ namespace xeus.Core
 
 					Hyperlink hyperlink = new Hyperlink( new Run( founds[ j ] ) );
 					hyperlink.Foreground = Brushes.DarkSalmon ;
-					hyperlink.TargetName = "_blank" ;
 					hyperlink.NavigateUri = new Uri( founds[ j ] ) ;
 					paragraph.Inlines.Add( hyperlink ) ;
 				}
