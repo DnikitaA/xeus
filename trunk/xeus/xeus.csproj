@@ -217,6 +217,7 @@
     <Compile Include="Core\Storage.cs" />
     <Compile Include="Core\TimeUtilities.cs" />
     <Compile Include="Core\WindowState.cs" />
+    <Compile Include="Core\XeusHyperlink.cs" />
     <Compile Include="HtmlToXaml\HtmlCssParser.cs" />
     <Compile Include="HtmlToXaml\HtmlLexicalAnalyzer.cs" />
     <Compile Include="HtmlToXaml\HtmlParser.cs" />
