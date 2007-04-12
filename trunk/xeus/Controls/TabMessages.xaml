@@ -41,6 +41,7 @@
 				    Template="{DynamicResource TextBoxBaseMessage}" Text="{Binding Path=DraftMessage}">
 			<TextBox.LayoutTransform>
 				<TransformGroup>
+					<!--
 					<ScaleTransform>
 						<ScaleTransform.ScaleY>
 	          				<Binding Path="UI_MessageTextSlider" Source="{x:Static prop:Settings.Default}" Mode="OneWay"/>
@@ -48,10 +49,7 @@
 						<ScaleTransform.ScaleX>
 	          				<Binding Path="UI_MessageTextSlider" Source="{x:Static prop:Settings.Default}" Mode="OneWay"/>
 						</ScaleTransform.ScaleX>
-					</ScaleTransform>
-					<SkewTransform AngleX="0" AngleY="0"/>
-					<RotateTransform Angle="0"/>
-					<TranslateTransform X="0" Y="0"/>
+					</ScaleTransform>-->
 				</TransformGroup>
 			</TextBox.LayoutTransform>
 		</TextBox>

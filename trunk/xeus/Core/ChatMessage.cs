@@ -87,7 +87,7 @@ namespace xeus.Core
 				}
 				else if ( SentByMe )
 				{
-					return Client.Instance.MyRosterItem.Image ;
+					return ( Client.Instance.MyRosterItem != null ) ? Client.Instance.MyRosterItem.Image : null ;
 				}
 				else
 				{

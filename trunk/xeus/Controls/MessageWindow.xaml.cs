@@ -492,6 +492,8 @@ namespace xeus.Controls
 			_timerNoTyping.Stop();
 			_timerNoTyping2.Stop();
 
+			_tabs.Items.Clear();
+
 			base.OnClosed( e ) ;
 
 			Client.Instance.Roster.ClearMesssages() ;
