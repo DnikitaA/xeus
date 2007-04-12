@@ -481,11 +481,20 @@ namespace xeus.Core
 				NotifyPropertyChanged( "StatusDescription" ) ;
 				NotifyPropertyChanged( "StatusTemplate" ) ;
 				NotifyPropertyChanged( "HasSpecialStatus" ) ;
+				NotifyPropertyChanged( "IsExnhancedStatusText" ) ;
 
 				if ( group != Group )
 				{
 					NotifyPropertyChanged( "Group" ) ;
 				}
+			}
+		}
+
+		public bool IsExnhancedStatusText
+		{
+			get
+			{
+				return ( _presence != null && _presence.Status != null && _presence.Status != String.Empty ) ;
 			}
 		}
 
