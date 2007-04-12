@@ -21,12 +21,11 @@
       </ResourceDictionary.MergedDictionaries>
 	  
 	  <Style x:Key="TimeText" TargetType="{x:Type TextBlock}" >
-	  	<Setter Property="Background" Value="#FFFFFFFF"/>
+	  	<Setter Property="Background" Value="#FF4F4F4F"/>
 	  	<Setter Property="Margin" Value="10,0,0,0"/>
 	  	<Setter Property="Padding" Value="5,2,5,2"/>
-	  	<Setter Property="Opacity" Value="0.15"/>
 	  	<Setter Property="SnapsToDevicePixels" Value="True"/>
-	  	<Setter Property="Foreground" Value="#FF000000"/>
+	  	<Setter Property="Foreground" Value="#FF191919"/>
 	  	<Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
 	  	<Setter Property="RenderTransform">
 	  		<Setter.Value>
@@ -38,12 +37,8 @@
 	  			</TransformGroup>
 	  		</Setter.Value>
 	  	</Setter>
-	  	<Setter Property="BitmapEffect">
-	  		<Setter.Value>
-	  			<DropShadowBitmapEffect/>
-	  		</Setter.Value>
-	  	</Setter>
 	  	<Setter Property="FontSize" Value="10"/>
+	  	<Setter Property="IsEnabled" Value="False"/>
 	 </Style>
 	  
   	</ResourceDictionary>

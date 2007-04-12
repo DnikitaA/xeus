@@ -4,6 +4,7 @@ using System.Diagnostics ;
 using System.Timers ;
 using System.Windows ;
 using System.Windows.Controls ;
+using System.Windows.Documents ;
 using System.Windows.Input ;
 using System.Windows.Media ;
 using System.Windows.Threading ;
@@ -177,37 +178,86 @@ namespace xeus.Controls
 			SelectItem( rosterItem ) ;
 		}
 
+		private TextRange _previousTextRange = null ;
+
+		void SelectText( Paragraph paragraph, string text )
+		{
+			if ( _previousTextRange != null )
+			{
+				_previousTextRange.ApplyPropertyValue( Inline.BackgroundProperty, null );
+			}
+
+			foreach ( Inline inline in paragraph.Inlines )
+			{
+				Run run = null ;
+
+				Hyperlink hyperlink = inline as Hyperlink ;
+
+				if ( hyperlink != null )
+				{
+					run = hyperlink.Inlines.FirstInline as Run ;
+				}
+				else
+				{
+					run = inline as Run ;
+				}
+
+				if ( run != null )
+				{
+					int start = run.Text.IndexOf( text, StringComparison.InvariantCultureIgnoreCase ) ;
+					int end = start + text.Length ;
+					
+					if ( start >= 0 )
+					{
+						TextRange textRange ;
+
+						textRange = new TextRange( run.ContentStart.GetPositionAtOffset( start ),
+							                           run.ContentStart.GetPositionAtOffset( end ) ) ;
+
+						textRange.ApplyPropertyValue( Run.BackgroundProperty, Brushes.DarkRed );
+
+						_previousTextRange = textRange ;
+
+						break ;
+					}
+				}
+			}
+		}
+
 		private void SelectItem( ChatMessage item )
 		{
 			if ( App.DispatcherThread.CheckAccess() )
 			{
-				if ( item == null )
-				{
-					_inlineSearch.NotFound = true ;
-				}
-				else
-				{
-					/*
-					_listBox.SelectedItem = item ;
-					_listBox.ScrollIntoView( item ) ;
-					_inlineSearch.NotFound = false ;
+				_inlineSearch.NotFound = true ;
 
-					if ( !string.IsNullOrEmpty( _textToSearch ) )
+				if ( item != null )
+				{
+					foreach ( Block block in _flowDocumentViewer.Document.Blocks )
 					{
-						if ( _listBox.SelectedIndex >= 0 )
+						Section section = block as Section ;
+
+						if ( section != null )
 						{
-							ListBoxItem listBoxItem =
-								( ListBoxItem ) ( _listBox.ItemContainerGenerator.ContainerFromIndex( _listBox.SelectedIndex ) ) ;
+							foreach ( Block sectionBlock in section.Blocks )
+							{
+								if ( sectionBlock.DataContext == item )
+								{
+									sectionBlock.BringIntoView();
 
-							Border border = VisualTreeHelper.GetChild( listBoxItem, 0 ) as Border ;
-							ContentPresenter contentPresenter = VisualTreeHelper.GetChild( border, 0 ) as ContentPresenter ;
+									SelectText( sectionBlock as Paragraph, _textToSearch ) ;
 
-							TextBox textBox = _listBox.ItemTemplate.FindName( "_body", contentPresenter ) as TextBox ;
+									_inlineSearch.NotFound = false ;
 
-							int selectStart = textBox.Text.IndexOf( _textToSearch ) ;
-							textBox.Select( selectStart, _textToSearch.Length );
+									break ;
+								}
+							}
 						}
-					}*/
+
+						if ( !_inlineSearch.NotFound )
+						{
+							break ;
+						}
+					}
 				}
 			}
 			else
