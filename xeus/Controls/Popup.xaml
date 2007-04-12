@@ -6,7 +6,7 @@
     x:Class="xeus.Controls.Popup"
     Title="xeus.Controls" MaxHeight="200" MaxWidth="350" AllowsTransparency="True" WindowStyle="None"
     Margin="10,10,10,10" Background="#00282828"
-    IsEnabled="True" VerticalAlignment="Bottom" Icon="..\Images\xeus.ico" ResizeMode="NoResize" ShowInTaskbar="False" SizeToContent="WidthAndHeight" Topmost="True"
+    VerticalAlignment="Bottom" Icon="..\Images\xeus.ico" ResizeMode="NoResize" ShowInTaskbar="False" SizeToContent="WidthAndHeight" Topmost="True"
     Opacity="0.45"
     x:Name="window"
     >
