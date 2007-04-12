@@ -1026,6 +1026,7 @@ namespace xeus.Core
 				_messagesDocument = new FlowDocument() ;
 				_messagesDocument.Foreground = Brushes.White ;
 				_messagesDocument.FontFamily = _textFont ;
+				_messagesDocument.TextAlignment = TextAlignment.Left ;
 			}
 
 			foreach ( ChatMessage message in messages )
@@ -1048,7 +1049,6 @@ namespace xeus.Core
 		readonly Binding _timeBinding = new Binding( "RelativeTime" ) ;
 
 		readonly Regex _urlregex = new Regex( @"[""'=]?(http://|ftp://|https://|www\.|ftp\.[\w]+)([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])", RegexOptions.IgnoreCase | RegexOptions.Compiled ) ;
-	    readonly Regex _emailregex = new Regex(@"([a-zA-Z_0-9.-]+\@[a-zA-Z_0-9.-]+\.\w+)", RegexOptions.IgnoreCase| RegexOptions.Compiled ) ;
 
 		public Block GenerateMessage( ChatMessage message, ChatMessage previousMessage )
 		{
