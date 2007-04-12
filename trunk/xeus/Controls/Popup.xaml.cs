@@ -34,8 +34,16 @@ namespace xeus.Controls
 
 		void Popup_SizeChanged( object sender, SizeChangedEventArgs e )
 		{
+			BeginInit();
 			Left = SystemParameters.WorkArea.Right - ActualWidth - 10 ;
 			Top = SystemParameters.WorkArea.Bottom - ActualHeight - 10 ;
+			EndInit() ;
+		}
+
+		protected override void OnActivated( EventArgs e )
+		{
+			//base.OnActivated( e );
+			// do not steal focus from other windows
 		}
 
 		protected override void OnClosed( EventArgs e )
