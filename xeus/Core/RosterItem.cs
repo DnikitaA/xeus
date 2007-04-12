@@ -1093,14 +1093,48 @@ namespace xeus.Core
 
 				string[] bodies = message.Body.Split( founds, StringSplitOptions.RemoveEmptyEntries ) ;
 
-				for ( int j = 0; j < bodies.Length; j++ )
+				for ( int j = 0; j < bodies.Length || j < founds.Length; j++ )
 				{
-					paragraph.Inlines.Add( bodies[ j ] ) ;
+					bool wrongUri = false ;
 
-					Hyperlink hyperlink = new Hyperlink( new Run( founds[ j ] ) );
-					hyperlink.Foreground = Brushes.DarkSalmon ;
-					hyperlink.NavigateUri = new Uri( founds[ j ] ) ;
-					paragraph.Inlines.Add( hyperlink ) ;
+					if ( bodies.Length > j )
+					{
+						paragraph.Inlines.Add( bodies[ j ] ) ;
+					}
+
+					if ( founds.Length > j )
+					{
+						Run hyperlinkRun = new Run( founds[ j ] ) ;
+						Hyperlink hyperlink = new XeusHyperlink( hyperlinkRun ) ;
+						hyperlink.Foreground = Brushes.DarkSalmon ;
+
+						try
+						{
+							string url = hyperlinkRun.Text ;
+							
+							if ( !url.Contains( ":" ) )
+							{
+								url = string.Format( "http://{0}", url ) ;
+							}
+
+							hyperlink.NavigateUri = new Uri( url ) ;
+						}
+
+						catch
+						{
+							// improper uri format
+							wrongUri = true ;
+						}
+
+						if ( wrongUri )
+						{
+							paragraph.Inlines.Add( hyperlinkRun ) ;
+						}
+						else
+						{
+							paragraph.Inlines.Add( hyperlink ) ;
+						}
+					}
 				}
 			}
 			else
