@@ -659,7 +659,7 @@
 			Fill="{StaticResource jabber_design}" HorizontalAlignment="Left" Margin="9.667,0,0,3.025" VerticalAlignment="Bottom" Height="10" Grid.Row="2" Grid.RowSpan="1" d:LayoutOverrides="VerticalAlignment" />
 	    	
 		<Button Template="{Binding Path=StatusTemplate}" Width="22" Height="22"
-			IsEnabled="False" ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" d:LayoutOverrides="VerticalAlignment, Height" HorizontalAlignment="Right" Margin="0,2.677,3.002,0" VerticalAlignment="Top" />
+			IsEnabled="False" ClipToBounds="False" SnapsToDevicePixels="False" x:Name="_statusButton" Opacity="1" d:LayoutOverrides="VerticalAlignment, Height" HorizontalAlignment="Right" Margin="0,2.677,3.002,0" VerticalAlignment="Top" Panel.ZIndex="1" />
 	    	
   		<Path Opacity="0.215" RenderTransformOrigin="0.499999997872742,0.524966983478661" SnapsToDevicePixels="False" Stretch="Fill" StrokeStartLineCap="Square" StrokeThickness="1" Margin="9.001,6.273,8.999,0" VerticalAlignment="Top" Width="Auto" Height="26.765" Grid.RowSpan="2" Panel.ZIndex="2" Data="M2.050252,-1.7272823 L69.930183,-1.7272823 C71.016823,-1.7272825 71.89772,-1.0236186 71.89772,-0.15560764 L71.89772,0.28742129 72,0.28783017 71.999741,30.631169 C71.951302,30.66849 59.999,27.261103 35.785892,27.334388 11.998007,27.406386 3.0632521E-07,30.586258 3.0632521E-07,30.586258 L0.00012261505,1.8544513E-07 0.082717486,0.00033037047 0.082717486,-0.15560764 C0.082717471,-1.0236186 0.96361244,-1.7272825 2.050252,-1.7272823 z" d:LayoutOverrides="Margin">
   			<Path.Fill>
@@ -705,6 +705,17 @@
   					</LinearGradientBrush>
   				</Path.Fill>
   			</Path>
+  			<Path ToolTipService.InitialShowDelay="100" ToolTip="{Binding Path=StatusDescription}" Stretch="Fill" Stroke="#FF000000" StrokeStartLineCap="Square" StrokeThickness="1" HorizontalAlignment="Left" Margin="8.752,6.043,0,0" VerticalAlignment="Top" Width="23.792" Height="23.875" Data="M19.416689,6.1249976 L8.5,16.75 8.5,29 31.291689,6.1249976 z" Opacity="0.25" x:Name="_ribbon" Panel.ZIndex="3" ForceCursor="True">
+  				<Path.Fill>
+  					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+  						<GradientStop Color="#FFA26565" Offset="0"/>
+  						<GradientStop Color="#FFA63434" Offset="0.986"/>
+  					</LinearGradientBrush>
+  				</Path.Fill>
+  				<Path.BitmapEffect>
+  					<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
+  				</Path.BitmapEffect>
+  			</Path>
   		</Grid>
 	</Grid>
 	    	
@@ -736,6 +747,9 @@
 		</DataTrigger>
 		<DataTrigger Binding="{Binding Path=Transport}" Value="tv">
 			<Setter Property="Fill" Value="{StaticResource tv_design}" TargetName="_transport" />
+		</DataTrigger>
+		<DataTrigger Binding="{Binding Path=IsExnhancedStatusText}" Value="False">
+			<Setter Property="Visibility" Value="Hidden" TargetName="_ribbon" />
 		</DataTrigger>
 	</DataTemplate.Triggers>
   </DataTemplate>
