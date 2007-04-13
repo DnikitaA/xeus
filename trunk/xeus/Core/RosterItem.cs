@@ -8,7 +8,6 @@ using System.Windows ;
 using System.Windows.Controls ;
 using System.Windows.Data ;
 using System.Windows.Documents ;
-using System.Windows.Input ;
 using System.Windows.Media ;
 using System.Windows.Media.Imaging ;
 using System.Windows.Threading ;
@@ -18,10 +17,7 @@ using agsXMPP.protocol.iq.roster ;
 using agsXMPP.protocol.iq.vcard ;
 using xeus.Controls ;
 using xeus.Properties ;
-using Brushes=System.Windows.Media.Brushes;
-using Color=System.Drawing.Color;
 using Group=agsXMPP.protocol.Base.Group;
-using Image=System.Windows.Controls.Image;
 
 namespace xeus.Core
 {
@@ -34,6 +30,7 @@ namespace xeus.Core
 			new ObservableCollectionDisp< string >( App.DispatcherThread ) ;
 
 		public delegate void VcardHandler( Vcard vcard ) ;
+		public delegate void GenerateMessagesHandler( IList list ) ;
 
 		private agsXMPP.protocol.iq.roster.RosterItem _rosterItem ;
 		private string _statusText = "Unavailable" ;
@@ -99,18 +96,18 @@ namespace xeus.Core
 			_nickName = reader[ "NickName" ] as string ;
 			_customName = reader[ "CustomName" ] as string ;
 
-			Database database = new Database();
+			Database database = new Database() ;
 
 			if ( !reader.IsDBNull( reader.GetOrdinal( "IdLastMessageFrom" ) ) )
 			{
-				Int64 idLastMessageFrom = ( Int64 )reader[ "IdLastMessageFrom" ] ;
+				Int64 idLastMessageFrom = ( Int64 ) reader[ "IdLastMessageFrom" ] ;
 
 				_lastMessageFrom = database.GetChatMessage( idLastMessageFrom, this ) ;
 			}
-			
+
 			if ( !reader.IsDBNull( reader.GetOrdinal( "IdLastMessageTo" ) ) )
 			{
-				Int64 idLastMessageTo = ( Int64 )reader[ "IdLastMessageTo" ] ;
+				Int64 idLastMessageTo = ( Int64 ) reader[ "IdLastMessageTo" ] ;
 
 				_lastMessageTo = database.GetChatMessage( idLastMessageTo, this ) ;
 			}
@@ -132,7 +129,7 @@ namespace xeus.Core
 			}
 		}
 
-		Int64 IdLastMessageTo
+		private Int64 IdLastMessageTo
 		{
 			get
 			{
@@ -147,7 +144,7 @@ namespace xeus.Core
 			}
 		}
 
-		Int64 IdLastMessageFrom
+		private Int64 IdLastMessageFrom
 		{
 			get
 			{
@@ -161,9 +158,10 @@ namespace xeus.Core
 				}
 			}
 		}
+
 		public Dictionary< string, object > GetData()
 		{
-			Dictionary< string, object > data = new Dictionary< string, object >();
+			Dictionary< string, object > data = new Dictionary< string, object >() ;
 
 			data.Add( "Key", Key ) ;
 			data.Add( "IdLastMessageFrom", IdLastMessageFrom ) ;
@@ -195,9 +193,9 @@ namespace xeus.Core
 							HasUnreadMessages = true ;
 						}
 
-						GenerateMessagesDocument( e.NewItems );
+						GenerateMessagesDocument( e.NewItems ) ;
 
-						NotifyPropertyChanged( "MessagesDocument" );
+						NotifyPropertyChanged( "MessagesDocument" ) ;
 
 						break ;
 					}
@@ -207,7 +205,7 @@ namespace xeus.Core
 
 						_messagesDocument = null ;
 
-						NotifyPropertyChanged( "MessagesDocument" );
+						NotifyPropertyChanged( "MessagesDocument" ) ;
 
 						break ;
 					}
@@ -992,11 +990,11 @@ namespace xeus.Core
 			{
 				if ( _disco == null )
 				{
-					return true ; 
+					return true ;
 				}
 				else
 				{
-					return true ;// return _disco.HasFeature( agsXMPP.Uri.CHATSTATES ) ;
+					return true ; // return _disco.HasFeature( agsXMPP.Uri.CHATSTATES ) ;
 				}
 			}
 		}
@@ -1025,8 +1023,8 @@ namespace xeus.Core
 				return _messagesDocument ;
 			}
 		}
-
-		readonly FontFamily _textFont = new FontFamily( "Segoe" ) ;
+		
+		private readonly FontFamily _textFont = new FontFamily( "Segoe" ) ;
 
 		protected void GenerateMessagesDocument( IList messages )
 		{
@@ -1053,33 +1051,35 @@ namespace xeus.Core
 			}
 		}
 
-		readonly Brush _alternativeBackground = new SolidColorBrush( System.Windows.Media.Color.FromRgb( 50, 50, 50 ) ) ;
-		readonly Brush _alternativeForeground = new SolidColorBrush( System.Windows.Media.Color.FromRgb( 191, 215, 234 ) ) ;
-		readonly Binding _timeBinding = new Binding( "RelativeTime" ) ;
+		private readonly Brush _alternativeBackground = new SolidColorBrush( Color.FromRgb( 50, 50, 50 ) ) ;
+		private readonly Brush _alternativeForeground = new SolidColorBrush( Color.FromRgb( 191, 215, 234 ) ) ;
+		private readonly Binding _timeBinding = new Binding( "RelativeTime" ) ;
 
-		readonly Regex _urlregex = new Regex( @"[""'=]?(http://|ftp://|https://|www\.|ftp\.[\w]+)([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])", RegexOptions.IgnoreCase | RegexOptions.Compiled ) ;
+		private readonly Regex _urlregex =
+			new Regex( @"[""'=]?(http://|ftp://|https://|www\.|ftp\.[\w]+)([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])",
+			           RegexOptions.IgnoreCase | RegexOptions.Compiled ) ;
 
 		public Block GenerateMessage( ChatMessage message, ChatMessage previousMessage )
 		{
 			Section groupSection = _messagesDocument.Blocks.LastBlock as Section ;
 
-			Paragraph paragraph = new Paragraph();
+			Paragraph paragraph = new Paragraph() ;
 
-			paragraph.Padding = new Thickness( 0.0, 0.0, 0.0, 0.0 );
-			paragraph.Margin = new Thickness( 0.0, 5.0, 0.0, 10.0 );
+			paragraph.Padding = new Thickness( 0.0, 0.0, 0.0, 0.0 ) ;
+			paragraph.Margin = new Thickness( 0.0, 5.0, 0.0, 10.0 ) ;
 
 			bool newSection = ( groupSection == null ) ;
 
-			if ( previousMessage == null 
-				|| previousMessage.SentByMe != message.SentByMe
-				|| ( message.Time - previousMessage.Time > TimeSpan.FromMinutes( Settings.Default.UI_GroupMessagesByMinutes ) ) )
+			if ( previousMessage == null
+			     || previousMessage.SentByMe != message.SentByMe
+			     || ( message.Time - previousMessage.Time > TimeSpan.FromMinutes( Settings.Default.UI_GroupMessagesByMinutes ) ) )
 			{
 				Image avatar = new Image() ;
 				avatar.Source = message.Image ;
 				avatar.Width = 30.0 ;
 
-				paragraph.Inlines.Add( avatar );
-				paragraph.Inlines.Add( "  " );
+				paragraph.Inlines.Add( avatar ) ;
+				paragraph.Inlines.Add( "  " ) ;
 
 				newSection = true ;
 			}
@@ -1093,7 +1093,7 @@ namespace xeus.Core
 
 			if ( matches.Count > 0 )
 			{
-				string[] founds = new string[ matches.Count ];
+				string[] founds = new string[matches.Count] ;
 
 				for ( int i = 0; i < founds.Length; i++ )
 				{
@@ -1120,7 +1120,7 @@ namespace xeus.Core
 						try
 						{
 							string url = hyperlinkRun.Text ;
-							
+
 							if ( !url.Contains( ":" ) )
 							{
 								url = string.Format( "http://{0}", url ) ;
@@ -1153,7 +1153,7 @@ namespace xeus.Core
 
 			paragraph.DataContext = message ;
 
-			TextBlock textBlock = new TextBlock();
+			TextBlock textBlock = new TextBlock() ;
 			textBlock.Style = MessageWindow.GetTimeTextBlockStyle() ;
 			textBlock.SetBinding( TextBlock.TextProperty, _timeBinding ) ;
 
@@ -1174,7 +1174,7 @@ namespace xeus.Core
 				groupSection.BorderBrush = _alternativeBackground ;
 			}
 
-			groupSection.Blocks.Add( paragraph );
+			groupSection.Blocks.Add( paragraph ) ;
 
 			return groupSection ;
 		}

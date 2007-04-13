@@ -57,11 +57,11 @@ namespace xeus
 
 		void MessengerWindow_Initialized( object sender, EventArgs e )
 		{
+			_popup = new Controls.Popup();
+
 			_hotkeyManager = new WPFHotkeyManager( this );
 			_hotkeyManager.HotkeyPressed += new WPFHotkeyManager.HotkeyPressedEvent( _hotkeyManager_HotkeyPressed );
 			_hotkeyShowMainWindow = new Hotkey( ModifierKeys.Windows, Keys.A );
-
-			_popup = new xeus.Controls.Popup();
 
 			Client.Instance.MessageCenter.ChatMessages.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( ChatMessages_CollectionChanged );
 			Client.Instance.MessageCenter.HedlineMessages.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( HedlineMessages_CollectionChanged );

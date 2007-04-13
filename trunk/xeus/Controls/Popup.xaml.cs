@@ -42,7 +42,7 @@ namespace xeus.Controls
 
 		protected override void OnActivated( EventArgs e )
 		{
-			//base.OnActivated( e );
+			base.OnActivated( e );
 			// do not steal focus from other windows
 		}
 
@@ -62,14 +62,13 @@ namespace xeus.Controls
 
 			if ( Client.Instance.Event.Items.Count > 0 )
 			{
-				IsEnabled = false ;
+				//IsEnabled = false ;
 				Show() ;
-				IsEnabled = true ;
+				//IsEnabled = true ;
 			}
 			else
 			{
 				Hide();
-				// IsEnabled = false ;
 			}
 		}
 
