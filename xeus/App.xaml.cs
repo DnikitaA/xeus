@@ -44,10 +44,9 @@ namespace xeus
 
 		protected override void OnStartup( StartupEventArgs e )
 		{
-			_window = new MessengerWindow() ;
-
 			base.OnStartup( e ) ;
 
+			_window = new MessengerWindow() ;
 			_window.Show() ;
 
 			Client.Instance.Setup() ;
