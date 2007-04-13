@@ -164,6 +164,7 @@ namespace xeus.Controls
 			lock ( _textsLock )
 			{
 				_texts = null ;
+				CleanSelection();
 			}
 		}
 
@@ -178,16 +179,23 @@ namespace xeus.Controls
 			SelectItem( rosterItem ) ;
 		}
 
-		private TextRange _previousTextRange = null ;
+		private List< TextRange > _previousTextRanges = new List< TextRange >() ;
+
+		void CleanSelection()
+		{
+			foreach ( TextRange range in _previousTextRanges )
+			{
+				range.ApplyPropertyValue( Inline.BackgroundProperty, null );
+			}
+
+			_previousTextRanges.Clear();
+		}
 
 		void SelectText( Paragraph paragraph, string text )
 		{
-			if ( _previousTextRange != null )
-			{
-				_previousTextRange.ApplyPropertyValue( Inline.BackgroundProperty, null );
-			}
+			CleanSelection();
 
-			foreach ( Inline inline in paragraph.Inlines )
+			for ( Inline inline = paragraph.Inlines.FirstInline; inline != null; inline = inline.NextInline )
 			{
 				Run run = null ;
 
@@ -204,21 +212,36 @@ namespace xeus.Controls
 
 				if ( run != null )
 				{
-					int start = run.Text.IndexOf( text, StringComparison.InvariantCultureIgnoreCase ) ;
-					int end = start + text.Length ;
-					
-					if ( start >= 0 )
-					{
-						TextRange textRange ;
+					int firstStart = 0 ;
 
-						textRange = new TextRange( run.ContentStart.GetPositionAtOffset( start ),
+					while ( true )
+					{
+						if ( firstStart > run.Text.Length - 1 )
+						{
+							break ;
+						}
+
+						int start = run.Text.IndexOf( text, firstStart, StringComparison.InvariantCultureIgnoreCase ) ;
+						int end = start + text.Length ;
+
+						firstStart = start + 1 ;
+
+						if ( start >= 0 )
+						{
+							TextRange textRange ;
+
+							textRange = new TextRange( run.ContentStart.GetPositionAtOffset( start ),
 							                           run.ContentStart.GetPositionAtOffset( end ) ) ;
 
-						textRange.ApplyPropertyValue( Run.BackgroundProperty, Brushes.DarkRed );
+							textRange.ApplyPropertyValue( Run.BackgroundProperty, Brushes.DarkRed ) ;
 
-						_previousTextRange = textRange ;
+							_previousTextRanges.Add( textRange ) ;
+						}
 
-						break ;
+						else
+						{
+							break ;
+						}
 					}
 				}
 			}
@@ -266,6 +289,7 @@ namespace xeus.Controls
 				                                  new SelectItemCallback( SelectItem ), item ) ;
 			}
 		}
+
 
 		void _timerNoTyping2_Elapsed( object sender, ElapsedEventArgs e )
 		{
