@@ -612,10 +612,8 @@ namespace xeus.Controls
 			return null ;
 		}
 
-		private static void DisplayChat( string jid, bool activateTab )
+		private static void Displ( string jid, bool activateTab )
 		{
-			if ( App.DispatcherThread.CheckAccess() )
-			{
 				if ( _instance == null )
 				{
 					_instance = new MessageWindow() ;
@@ -679,12 +677,12 @@ namespace xeus.Controls
 				ScrollToLastItem2() ;
 
 				_instance._timeRefreshTimer.Start() ;
-			}
-			else
-			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
-				                                  new DisplayChatCallback( DisplayChat ), jid, false ) ;
-			}
+		}
+
+		private static void DisplayChat( string jid, bool activateTab )
+		{
+			App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+			                                  new DisplayChatCallback( Displ ), jid, activateTab ) ;
 		}
 
 		static void _instance_Deactivated( object sender, EventArgs e )

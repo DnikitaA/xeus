@@ -116,7 +116,7 @@ namespace xeus.Core
 								rosterItem = new RosterItem( xmppRosterItem ) ;
 
 								Client.Instance.Roster.Items.Add( rosterItem );
-								Client.Instance.Roster.AskForVCard( rosterItem.Key ) ;
+								Client.Instance.Roster.AskForVCard( msg.From.Bare ) ;
 							}
 						}
 
