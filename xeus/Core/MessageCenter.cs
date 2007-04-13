@@ -106,6 +106,20 @@ namespace xeus.Core
 					{
 						RosterItem rosterItem = Client.Instance.Roster.FindItem( msg.From.Bare ) ;
 
+						if ( rosterItem == null )
+						{
+							// not in roster
+							lock ( Client.Instance.Roster.Items._syncObject )
+							{
+								agsXMPP.protocol.iq.roster.RosterItem xmppRosterItem = new agsXMPP.protocol.iq.roster.RosterItem() ;
+								xmppRosterItem.Jid = msg.From ;
+								rosterItem = new RosterItem( xmppRosterItem ) ;
+
+								Client.Instance.Roster.Items.Add( rosterItem );
+								Client.Instance.Roster.AskForVCard( rosterItem.Key ) ;
+							}
+						}
+
 						ChatMessage message = new ChatMessage( msg, rosterItem, DateTime.Now ) ;
 
 						if ( string.IsNullOrEmpty( msg.Body ) )
