@@ -107,7 +107,7 @@ namespace xeus.Core
 			RegisterEvents() ;
 
 			XmppConnection.UseCompression = true ;
-			XmppConnection.UseSSL = true ;
+			// XmppConnection.UseSSL = true ;
 			XmppConnection.Priority = 10 ;
 			XmppConnection.AutoResolveConnectServer = true ;
 
