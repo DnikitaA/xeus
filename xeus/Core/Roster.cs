@@ -314,6 +314,15 @@ namespace xeus.Core
 					rosterItem = Client.Instance.MyRosterItem ;
 				}
 			}
+			else if ( rosterItem == null )
+			{
+				rosterItem = new RosterItem( new agsXMPP.protocol.iq.roster.RosterItem( iq.From ) ) ;
+
+				lock ( _items._syncObject )
+				{
+					_items.Add( rosterItem );
+				}
+			}
 
 			if ( rosterItem != null )
 			{

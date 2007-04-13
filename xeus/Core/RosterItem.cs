@@ -195,8 +195,6 @@ namespace xeus.Core
 
 						GenerateMessagesDocument( e.NewItems ) ;
 
-						NotifyPropertyChanged( "MessagesDocument" ) ;
-
 						break ;
 					}
 				case NotifyCollectionChangedAction.Reset:
@@ -1026,7 +1024,9 @@ namespace xeus.Core
 		
 		private readonly FontFamily _textFont = new FontFamily( "Segoe" ) ;
 
-		protected void GenerateMessagesDocument( IList messages )
+		private delegate void GenerateMessagesDocumentCallback( IList messages ) ;
+
+		protected void GenerateMessagesDocument2( IList messages )
 		{
 			if ( _messagesDocument == null )
 			{
@@ -1049,6 +1049,14 @@ namespace xeus.Core
 
 				_messagesDocument.Blocks.Add( GenerateMessage( message, previousMessage ) ) ;
 			}
+
+			NotifyPropertyChanged( "MessagesDocument" ) ;
+		}
+
+		protected void GenerateMessagesDocument( IList messages )
+		{
+			App.DispatcherThread.BeginInvoke( DispatcherPriority.Send,
+			                                  new GenerateMessagesDocumentCallback( GenerateMessagesDocument2 ), messages ) ;
 		}
 
 		private readonly Brush _alternativeBackground = new SolidColorBrush( Color.FromRgb( 50, 50, 50 ) ) ;

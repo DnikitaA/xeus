@@ -85,7 +85,17 @@ namespace xeus.Controls
 
 				if ( args.LeftButton == MouseButtonState.Pressed )
 				{
-					MessageWindow.DisplayChatWindow( eventMessage.RosterItem.Key, true ) ;
+					if ( eventMessage.RosterItem == null )
+					{
+						RosterItem rosterItem = Client.Instance.Roster.FindItem( eventMessage.ChatMessage.From ) ;
+
+						eventMessage.RosterItem = rosterItem ;
+					}
+
+					if ( eventMessage.RosterItem != null )
+					{
+						MessageWindow.DisplayChatWindow( eventMessage.RosterItem.Key, true ) ;
+					}
 				}
 				else
 				{

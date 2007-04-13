@@ -7,7 +7,7 @@ namespace xeus.Core
 {
 	internal class EventMessage : EventItem
 	{
-		private readonly RosterItem _rosterItem ;
+		private RosterItem _rosterItem ;
 		private readonly ChatMessage _chatMessage ;
 
 		public EventMessage( RosterItem rosterItem, ChatMessage chatMessage )
@@ -24,6 +24,11 @@ namespace xeus.Core
 			get
 			{
 				return _rosterItem ;
+			}
+
+			set
+			{
+				_rosterItem = value ;
 			}
 		}
 
