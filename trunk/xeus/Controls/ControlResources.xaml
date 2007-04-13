@@ -8,6 +8,10 @@
     x:Class="xeus.Controls.ControlResource"
     >
 	
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="ToolTipsResourcexaml.xaml"/>
+	</ResourceDictionary.MergedDictionaries>
+	
 	<DrawingBrush x:Key="subscribe_to_design" Stretch="Uniform">
 		<DrawingBrush.Drawing>
 			<DrawingGroup>
@@ -557,7 +561,7 @@
 		</DataTemplate.Triggers>
 	</DataTemplate>	
 
-  <Style TargetType="{x:Type ToolTip}">
+  <Style TargetType="{x:Type ToolTip}" x:Key="RosterTip">
 	<Setter Property="VerticalOffset" Value="-10" />
 	<Setter Property="HorizontalOffset" Value="-10" />
 	<Setter Property="Placement" Value="RelativePoint" />
@@ -580,7 +584,7 @@
 		 ContextMenu="{DynamicResource _rosterItemContextMenu}">
     	<StackPanel Opacity="{Binding Path=Presence, Converter={StaticResource _opacityStatusConverter}}" RenderTransformOrigin="0.5,0.5" Margin="3,3,3,3" x:Name="_rosterItemGridOuter" ToolTipService.BetweenShowDelay="1500" ToolTipService.InitialShowDelay="1500" Orientation="Horizontal">		
     		<StackPanel.ToolTip>
-    			<ToolTip ContentTemplate="{StaticResource RosterItemTip}" 
+    			<ToolTip ContentTemplate="{StaticResource RosterItemTip}" Style="{StaticResource RosterTip}"
     				Content="{Binding Path=DataContext, RelativeSource={RelativeSource Self}}"/>
     		</StackPanel.ToolTip>
 		
@@ -637,7 +641,7 @@
 			Margin="3,3,3,0" Width="90" ToolTipService.InitialShowDelay="1500" 
 			ToolTipService.BetweenShowDelay="1500" >
 		<Grid.ToolTip>
-			<ToolTip ContentTemplate="{StaticResource RosterItemTip}" 
+			<ToolTip ContentTemplate="{StaticResource RosterItemTip}"  Style="{StaticResource RosterTip}"
 			Content="{Binding Path=DataContext, RelativeSource={RelativeSource Self}}"/>
 		</Grid.ToolTip>
   		<Grid.RenderTransform>
@@ -705,7 +709,7 @@
   					</LinearGradientBrush>
   				</Path.Fill>
   			</Path>
-  			<Path ToolTipService.InitialShowDelay="100" ToolTip="{Binding Path=StatusDescription}" Stretch="Fill" Stroke="#FF000000" StrokeStartLineCap="Square" StrokeThickness="1" HorizontalAlignment="Left" Margin="8.752,6.043,0,0" VerticalAlignment="Top" Width="23.792" Height="23.875" Data="M19.416689,6.1249976 L8.5,16.75 8.5,29 31.291689,6.1249976 z" Opacity="0.25" x:Name="_ribbon" Panel.ZIndex="3" ForceCursor="True">
+  			<Path Stretch="Fill" Stroke="#FF000000" StrokeStartLineCap="Square" StrokeThickness="1" HorizontalAlignment="Left" Margin="8.752,6.043,0,0" VerticalAlignment="Top" Width="23.792" Height="23.875" Data="M19.416689,6.1249976 L8.5,16.75 8.5,29 31.291689,6.1249976 z" Opacity="0.25" x:Name="_ribbon" Panel.ZIndex="3" ForceCursor="True">
   				<Path.Fill>
   					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
   						<GradientStop Color="#FFA26565" Offset="0"/>
@@ -719,9 +723,14 @@
   		</Grid>
 	</Grid>
 	    	
-  		<Border
+  		<Border 
   			CornerRadius="1,1,1,1" x:Name="_displayNameLabel"
   			Visibility="Visible" BorderThickness="1,1,1,1" Margin="0,5,0,0">  
+    		<Border.ToolTip>
+    			<ToolTip 
+    				Content="{Binding Path=StatusDescription}"/>
+    		</Border.ToolTip>
+			
   			<TextBlock Text="{Binding Path=DisplayName}"  				
   				FontFamily="Calibri" Foreground="#FFDCDCDC"
   				x:Name="_displayName" FontSize="12" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center" Margin="2,2,2,2" />
