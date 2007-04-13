@@ -18,6 +18,7 @@
   	<ResourceDictionary>
   		<ResourceDictionary.MergedDictionaries>
   			<ResourceDictionary Source="ImageResources.xaml"/>
+  			<ResourceDictionary Source="ToolTipsResourcexaml.xaml"/>
       </ResourceDictionary.MergedDictionaries>
 	  
 	  <Style x:Key="TimeText" TargetType="{x:Type TextBlock}" >
