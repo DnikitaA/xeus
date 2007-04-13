@@ -1024,9 +1024,7 @@ namespace xeus.Core
 		
 		private readonly FontFamily _textFont = new FontFamily( "Segoe" ) ;
 
-		private delegate void GenerateMessagesDocumentCallback( IList messages ) ;
-
-		protected void GenerateMessagesDocument2( IList messages )
+		protected void GenerateMessagesDocument( IList messages )
 		{
 			if ( _messagesDocument == null )
 			{
@@ -1053,14 +1051,9 @@ namespace xeus.Core
 			NotifyPropertyChanged( "MessagesDocument" ) ;
 		}
 
-		protected void GenerateMessagesDocument( IList messages )
-		{
-			App.DispatcherThread.BeginInvoke( DispatcherPriority.Send,
-			                                  new GenerateMessagesDocumentCallback( GenerateMessagesDocument2 ), messages ) ;
-		}
+		private Brush _alternativeBackground ;
+		private Brush _alternativeForeground ;
 
-		private readonly Brush _alternativeBackground = new SolidColorBrush( Color.FromRgb( 50, 50, 50 ) ) ;
-		private readonly Brush _alternativeForeground = new SolidColorBrush( Color.FromRgb( 191, 215, 234 ) ) ;
 		private readonly Binding _timeBinding = new Binding( "RelativeTime" ) ;
 
 		private readonly Regex _urlregex =
@@ -1069,6 +1062,12 @@ namespace xeus.Core
 
 		public Block GenerateMessage( ChatMessage message, ChatMessage previousMessage )
 		{
+			if ( _alternativeBackground == null )
+			{
+				_alternativeBackground = new SolidColorBrush( Color.FromRgb( 50, 50, 50 ) ) ;
+				_alternativeForeground = new SolidColorBrush( Color.FromRgb( 191, 215, 234 ) ) ;
+				
+			}
 			Section groupSection = _messagesDocument.Blocks.LastBlock as Section ;
 
 			Paragraph paragraph = new Paragraph() ;

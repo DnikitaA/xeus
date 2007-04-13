@@ -64,6 +64,7 @@ namespace xeus.Core
 			}
 		}
 
+
 		protected override void RemoveItem( int index )
 		{
 			if ( _dispatcherUIThread.CheckAccess() )
