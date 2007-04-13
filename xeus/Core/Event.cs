@@ -27,11 +27,14 @@ namespace xeus.Core
 		{
 			if ( App.DispatcherThread.CheckAccess() )
 			{
-				_items.RemoveAt( index ) ;
+				if ( _items.Count > index )
+				{
+					_items.RemoveAt( index ) ;
+				}
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.DispatcherThread.BeginInvoke( DispatcherPriority.Send,
 				                                  new RemoveItemHandler( RemoveItem ), index ) ;
 			}
 		}
