@@ -674,7 +674,7 @@ namespace xeus.Controls
 					}
 				}
 
-				ScrollToLastItem2() ;
+				ScrollToLastItem() ;
 
 				_instance._timeRefreshTimer.Start() ;
 		}
@@ -766,6 +766,9 @@ namespace xeus.Controls
 		public static void ScrollToLastItem()
 		{
 			_instance._scrollTimer.Start();
+
+			_instance._texts = null ;
+			_instance.CleanSelection();
 		}
 
 		protected static void ScrollToLastItem2()
