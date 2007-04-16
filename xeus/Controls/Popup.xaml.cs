@@ -40,6 +40,12 @@ namespace xeus.Controls
 			EndInit() ;
 		}
 
+		protected override void OnGotFocus( RoutedEventArgs e )
+		{
+			e.Handled = true ;
+			//base.OnGotFocus( e );
+		}
+
 		protected override void OnActivated( EventArgs e )
 		{
 			// base.OnActivated( e );
@@ -62,9 +68,9 @@ namespace xeus.Controls
 
 			if ( Client.Instance.Event.Items.Count > 0 )
 			{
-				IsEnabled = false ;
+				//IsEnabled = false ;
 				Show() ;
-				IsEnabled = true ;
+				//IsEnabled = true ;
 			}
 			else
 			{
