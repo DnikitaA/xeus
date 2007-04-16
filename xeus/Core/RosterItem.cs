@@ -1051,8 +1051,8 @@ namespace xeus.Core
 			NotifyPropertyChanged( "MessagesDocument" ) ;
 		}
 
-		private Brush _alternativeBackground ;
-		private Brush _alternativeForeground ;
+		private static Brush _alternativeBackground ;
+		private static Brush _alternativeForeground ;
 
 		private readonly Binding _timeBinding = new Binding( "RelativeTime" ) ;
 
