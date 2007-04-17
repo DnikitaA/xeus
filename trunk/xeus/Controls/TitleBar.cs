@@ -83,13 +83,33 @@ namespace xeus.Controls
 
 				if ( window != null )
 				{
+					if ( System.Environment.OSVersion.Version.Major > 5 )
+					{
+						// Vista supports HW acceleration
+						window.AllowsTransparency = true ;
+					}
+
 					window.Activated += new System.EventHandler( window_Activated ) ;
 					window.Deactivated += new System.EventHandler( window_Deactivated ) ;
 
 					pinButton.IsChecked = window.Topmost ;
 				}
 
-				if ( window != null && window.ResizeMode == ResizeMode.NoResize )
+				ResizeMode resizeMode = ResizeMode.NoResize ;
+
+				if ( window != null )
+				{
+					resizeMode = window.ResizeMode ;
+
+					WindowBase baseWindow = window as WindowBase ;
+
+					if ( baseWindow != null )
+					{
+						resizeMode = baseWindow.OriginalResizeMode ;
+					}
+				}
+
+				if ( window != null && resizeMode == ResizeMode.NoResize )
 				{
 					minButton.Visibility = Visibility.Hidden ;
 					maxButton.Visibility = Visibility.Hidden ;
