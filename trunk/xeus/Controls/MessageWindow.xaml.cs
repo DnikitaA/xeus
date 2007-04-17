@@ -63,6 +63,26 @@ namespace xeus.Controls
 			KeyDown += new KeyEventHandler( MessageWindow_KeyDown );
 
 			_statusBar.Loaded += new RoutedEventHandler( _statusBar_Loaded );
+
+			ChatCommands.BindChatCommands( this );
+		}
+
+		public void DisplaySearch()
+		{
+			_inlineSearch.Visibility = Visibility.Visible ;
+			_inlineSearch.FocusText() ;
+		}
+
+		public void DisplaySearchNext()
+		{
+			if ( _inlineSearch.Visibility != Visibility.Visible )
+			{
+				DisplaySearch() ;
+			}
+			else
+			{
+				_inlineSearch.SearchNext() ;
+			}
 		}
 
 		void _scrollTimer_Elapsed( object sender, ElapsedEventArgs e )
@@ -305,10 +325,10 @@ namespace xeus.Controls
 		{
 			if ( App.DispatcherThread.CheckAccess() )
 			{
-				if ( _instance != null && _instance._statusTyping != null )
+				if ( Instance != null && Instance._statusTyping != null )
 				{
-					_instance._typing.UserName = userName ;
-					_instance._typing.Chatstate = chatstate ;
+					Instance._typing.UserName = userName ;
+					Instance._typing.Chatstate = chatstate ;
 				}
 			}
 			else
@@ -384,7 +404,7 @@ namespace xeus.Controls
 				}
 				else
 				{
-					_instance.RemoveCurrentTab() ;
+					Instance.RemoveCurrentTab() ;
 				}
 			}
 			else if ( _inlineSearch != null && FocusManager.GetFocusedElement( this ) != _textBox )
@@ -395,7 +415,7 @@ namespace xeus.Controls
 
 		void RemoveCurrentTab()
 		{
-			TabItem selectedItem = ( TabItem ) _instance._tabs.SelectedItem ;
+			TabItem selectedItem = ( TabItem ) Instance._tabs.SelectedItem ;
 
 			_tabs.Items.Remove( selectedItem );
 
@@ -419,9 +439,9 @@ namespace xeus.Controls
 		{
 			if ( App.DispatcherThread.CheckAccess() )
 			{
-				if ( _instance != null && _instance._tabs != null )
+				if ( Instance != null && Instance._tabs != null )
 				{
-					TabItem selectedItem = ( TabItem ) _instance._tabs.SelectedItem ;
+					TabItem selectedItem = ( TabItem ) Instance._tabs.SelectedItem ;
 					RosterItem rosterItem = selectedItem.Content as RosterItem ;
 
 					if ( rosterItem != null )
@@ -453,6 +473,8 @@ namespace xeus.Controls
 			set
 			{
 				_flowDocumentViewer = value ;
+				_flowDocumentViewer.IsToolBarVisible = false ;
+
 				_scrollViewer = null ;
 
 				_flowDocumentViewer.DataContextChanged += new DependencyPropertyChangedEventHandler( _flowDocumentViewer_DataContextChanged );
@@ -474,6 +496,14 @@ namespace xeus.Controls
 			set
 			{
 				_textBox = value ;
+			}
+		}
+
+		public static MessageWindow Instance
+		{
+			get
+			{
+				return _instance ;
 			}
 		}
 
@@ -573,33 +603,33 @@ namespace xeus.Controls
 			Client.Instance.Roster.ClearMesssages() ;
 
 			_timeTextStyle = null ;
-			_instance.Activated -= _instance_Activated ;
-			_instance.Deactivated -= _instance_Deactivated ;
-			_instance.Dispose();
+			Instance.Activated -= __instance_Activated ;
+			Instance.Deactivated -= __instance_Deactivated ;
+			Instance.Dispose();
 			_instance = null ;
 		}
 
 		public static bool IsOpen()
 		{
-			return ( _instance != null ) ;
+			return ( Instance != null ) ;
 		}
 
 		public static bool IsChatActive()
 		{
-			return ( _instance != null && _isActivated ) ;
+			return ( Instance != null && _isActivated ) ;
 		}
 
 		public static void CloseWindow()
 		{
-			if ( _instance != null )
+			if ( Instance != null )
 			{
-				_instance.Close() ;
+				Instance.Close() ;
 			}
 		}
 
 		private static TabItem FindTab( string jid )
 		{
-			foreach ( TabItem tab in _instance._tabs.Items )
+			foreach ( TabItem tab in Instance._tabs.Items )
 			{
 				RosterItem item = tab.Content as RosterItem ;
 
@@ -614,13 +644,13 @@ namespace xeus.Controls
 
 		private static void Displ( string jid, bool activateTab )
 		{
-				if ( _instance == null )
+				if ( Instance == null )
 				{
 					_instance = new MessageWindow() ;
 
-					_instance.Activated += new EventHandler( _instance_Activated );
-					_instance.Deactivated += new EventHandler( _instance_Deactivated );
-					_instance.Activate() ;
+					Instance.Activated += new EventHandler( __instance_Activated );
+					Instance.Deactivated += new EventHandler( __instance_Deactivated );
+					Instance.Activate() ;
 				}
 
 				TabItem tab = FindTab( jid ) ;
@@ -640,13 +670,13 @@ namespace xeus.Controls
 					tab.Header = rosterItem ;
 					tab.Content = rosterItem ;
 
-					_instance._tabs.Items.Add( tab ) ;
+					Instance._tabs.Items.Add( tab ) ;
 				}
 				else
 				{
 					rosterItem = tab.Content as RosterItem ;
 
-					TabItem tabItemSelected = ( TabItem ) _instance._tabs.SelectedItem ;
+					TabItem tabItemSelected = ( TabItem ) Instance._tabs.SelectedItem ;
 
 					RosterItem selectedItem = tabItemSelected.Content as RosterItem ;
 
@@ -659,24 +689,24 @@ namespace xeus.Controls
 
 				if ( activateTab )
 				{
-					_instance.Activate() ;
-					_instance._tabs.SelectedItem = tab ;
+					Instance.Activate() ;
+					Instance._tabs.SelectedItem = tab ;
 				}
 
 				if ( rosterItem != null )
 				{
 					Client.Instance.MessageCenter.RemoveMoveUnreadMessages() ;
 
-					if ( !_instance.IsVisible )
+					if ( !Instance.IsVisible )
 					{
-						_instance.Show() ;
-						_instance.Activate() ;
+						Instance.Show() ;
+						Instance.Activate() ;
 					}
 				}
 
 				ScrollToLastItem() ;
 
-				_instance._timeRefreshTimer.Start() ;
+				Instance._timeRefreshTimer.Start() ;
 		}
 
 		private static void DisplayChat( string jid, bool activateTab )
@@ -685,12 +715,12 @@ namespace xeus.Controls
 			                                  new DisplayChatCallback( Displ ), jid, activateTab ) ;
 		}
 
-		static void _instance_Deactivated( object sender, EventArgs e )
+		static void __instance_Deactivated( object sender, EventArgs e )
 		{
 			_isActivated = false ;
 		}
 
-		static void _instance_Activated( object sender, EventArgs e )
+		static void __instance_Activated( object sender, EventArgs e )
 		{
 			_isActivated = true ;
 
@@ -706,10 +736,10 @@ namespace xeus.Controls
 		{
 			if ( Settings.Default.Client_SendTyping )
 			{
-				if ( MessageTextBox != null && _instance != null && _instance._tabs != null
+				if ( MessageTextBox != null && Instance != null && Instance._tabs != null
 				     && Client.Instance != null && Client.Instance.IsAvailable )
 				{
-					RosterItem rosterItem = _instance._tabs.SelectedContent as RosterItem ;
+					RosterItem rosterItem = Instance._tabs.SelectedContent as RosterItem ;
 
 					if ( rosterItem != null )
 					{
@@ -723,13 +753,13 @@ namespace xeus.Controls
 		{
 			if ( MessageTextBox != null )
 			{
-				RosterItem rosterItem = _instance._tabs.SelectedContent as RosterItem ;
+				RosterItem rosterItem = Instance._tabs.SelectedContent as RosterItem ;
 
 				if ( rosterItem != null )
 				{
 					Client.Instance.SendChatMessage( rosterItem, MessageTextBox.Text ) ;
 
-					_instance.ChangeChatState( Chatstate.inactive ) ;
+					Instance.ChangeChatState( Chatstate.inactive ) ;
 
 					rosterItem.DraftMessage = MessageTextBox.Text = String.Empty ;
 
@@ -742,7 +772,7 @@ namespace xeus.Controls
 		{
 			if ( MessageTextBox != null )
 			{
-				RosterItem rosterItem = _instance._tabs.SelectedContent as RosterItem ;
+				RosterItem rosterItem = Instance._tabs.SelectedContent as RosterItem ;
 
 				if ( rosterItem != null )
 				{
@@ -755,7 +785,7 @@ namespace xeus.Controls
 							|| ( e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 ) )
 
 					{
-						_instance.ChangeChatState( Chatstate.composing ) ;
+						Instance.ChangeChatState( Chatstate.composing ) ;
 					}
 				}
 			}
@@ -765,10 +795,10 @@ namespace xeus.Controls
 		
 		public static void ScrollToLastItem()
 		{
-			_instance._scrollTimer.Start();
+			Instance._scrollTimer.Start();
 
-			_instance._texts = null ;
-			_instance.CleanSelection();
+			Instance._texts = null ;
+			Instance.CleanSelection();
 		}
 
 		protected static void ScrollToLastItem2()
@@ -806,7 +836,7 @@ namespace xeus.Controls
 		{
 			if ( _timeTextStyle == null )
 			{
-				_timeTextStyle = _instance.FindResource( "TimeText" ) as Style ;
+				_timeTextStyle = Instance.FindResource( "TimeText" ) as Style ;
 			}
 
 			return _timeTextStyle ;
