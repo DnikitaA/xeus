@@ -40,13 +40,14 @@
 	 Minimum="50.0" Maximum="200.0" Style="{StaticResource SliderStyleRoster}"
 	 TickPlacement="TopLeft" LargeChange="20" SmallChange="10" IsSnapToTickEnabled="True" Height="20" DockPanel.Dock="Bottom"
         Focusable="False" IsTabStop="False" IsMoveToPointEnabled="True" IsSelectionRangeEnabled="False"
+        TickFrequency="10"
         >
 
       <Slider.Value>
         <Binding Path="UI_RosterSlider" Source="{x:Static prop:Settings.Default}" Mode="TwoWay"/>
         </Slider.Value>
-        
     </Slider>
+	
   	<ListBox x:Name="_roster" ItemsSource="{Binding Source={StaticResource _rosterView}}"
              Style="{StaticResource ListBoxStyleRoster}"  Foreground="Black"
              MouseDoubleClick="OnDoubleClickRosterItem" AllowDrop="True" DockPanel.Dock="Top"

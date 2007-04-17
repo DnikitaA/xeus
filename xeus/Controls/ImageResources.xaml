@@ -567,13 +567,10 @@
 </ControlTemplate>
 
 <ControlTemplate x:Key="OpenServices" TargetType="{x:Type Button}">
-<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" >
-	<Grid x:Name="grid">
+<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="False" x:Name="viewbox" >
+	<Grid x:Name="grid" SnapsToDevicePixels="False">
 	<Rectangle Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="18" Height="18" Canvas.Top="0"
-		Canvas.Left="0" x:Name="_circle" RadiusX="2" RadiusY="2" Fill="{TemplateBinding Property=Background}" >
-		<Rectangle.BitmapEffect>
-			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
-		</Rectangle.BitmapEffect>
+		Canvas.Left="0" x:Name="_circle" RadiusX="2" RadiusY="2" Fill="{TemplateBinding Property=Background}" SnapsToDevicePixels="False" >
 		<Rectangle.LayoutTransform>
 			<TransformGroup>
 				<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -584,16 +581,13 @@
 		</Rectangle.LayoutTransform>
 	</Rectangle>
 	<Rectangle Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="18" Height="18" Canvas.Top="0"
-		Canvas.Left="0" x:Name="_circle1" RadiusX="2" RadiusY="2" Opacity="0.605" >
+		Canvas.Left="0" x:Name="_circle1" RadiusX="2" RadiusY="2" Opacity="0.605" SnapsToDevicePixels="False" >
 		<Rectangle.Fill>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 				<GradientStop Color="#FFE3E3E3" Offset="0"/>
 				<GradientStop Color="#7F000000" Offset="1"/>
 			</LinearGradientBrush>
 		</Rectangle.Fill>
-		<Rectangle.BitmapEffect>
-			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
-		</Rectangle.BitmapEffect>
 		<Rectangle.LayoutTransform>
 			<TransformGroup>
 				<ScaleTransform ScaleX="1" ScaleY="1"/>
@@ -602,6 +596,25 @@
 				<TranslateTransform X="0" Y="0"/>
 			</TransformGroup>
 		</Rectangle.LayoutTransform>
+	</Rectangle>
+	<Rectangle StrokeThickness="1" Margin="0,0,0,0" Width="18" Height="18" Canvas.Top="0"
+		Canvas.Left="0" x:Name="_circle2" RadiusX="2" RadiusY="2" Opacity="0.605" RenderTransformOrigin="0.5,0.5" SnapsToDevicePixels="False" Fill="#FF171717" HorizontalAlignment="Center" VerticalAlignment="Center" >
+		<Rectangle.LayoutTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="45"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Rectangle.LayoutTransform>
+		<Rectangle.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="0"/>
+				<TranslateTransform X="0.5" Y="0.5"/>
+			</TransformGroup>
+		</Rectangle.RenderTransform>
 	</Rectangle>
 	<Rectangle Fill="#FFD1D1D1" Margin="11,7,11,7" RadiusX="2" RadiusY="2"/>
 		<Path Fill="#36FFFFFF" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,1.556,0,0" VerticalAlignment="Top" Width="12.929" Height="12.932"

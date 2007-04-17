@@ -47,9 +47,11 @@
 																<GradientStop Color="#FF41423E" Offset="1"/>
 															</LinearGradientBrush>
 														</Ellipse.Fill>
+														<!--
 														<Ellipse.BitmapEffect>
 															<DropShadowBitmapEffect Direction="321" Opacity="0.495" ShadowDepth="2" Softness="0.37"/>
 														</Ellipse.BitmapEffect>
+														-->
 													</Ellipse>
 														<Path SnapsToDevicePixels="False" StrokeThickness="1.5" x:Name="arrow" Data="M1,1.5L4.5,5 8,1.5" Stroke="#FF000000" RenderTransformOrigin="0.5,0.5" d:LayoutOverrides="Width, Height, Margin" HorizontalAlignment="Center" VerticalAlignment="Center">
 															<Path.RenderTransform>
@@ -72,9 +74,11 @@
 															<GradientStop Color="#FF484848" Offset="1"/>
 														</LinearGradientBrush>
 													</Border.Background>
+													<!--
 													<Border.BitmapEffect>
 														<DropShadowBitmapEffect Opacity="0.53" ShadowDepth="1" Softness="0.365"/>
 													</Border.BitmapEffect>
+													-->
 													<Border.OpacityMask>
 														<RadialGradientBrush>
 															<GradientStop Color="#FF000000" Offset="0"/>

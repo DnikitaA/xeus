@@ -226,6 +226,24 @@ namespace xeus
 			Client.Instance.Event.AddEvent( new EventInfo( text, title ) ) ;
 		}
 
+		public void DisplaySearch()
+		{
+			_inlineSearch.Visibility = Visibility.Visible ;
+			_inlineSearch.FocusText() ;
+		}
+
+		public void DisplaySearchNext()
+		{
+			if ( _inlineSearch.Visibility != Visibility.Visible )
+			{
+				DisplaySearch() ;
+			}
+			else
+			{
+				_inlineSearch.SearchNext() ;
+			}
+		}
+
 		protected override void OnInitialized( EventArgs e )
 		{
 			base.OnInitialized( e ) ;

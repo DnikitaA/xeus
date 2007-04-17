@@ -45,6 +45,7 @@
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="PresentationFramework.Classic" />
+    <Reference Include="PresentationUI" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite, Version=1.0.40.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL" />
@@ -181,6 +182,7 @@
       <DependentUpon>XFormItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\AgentItem.cs" />
+    <Compile Include="Core\ChatCommands.cs" />
     <Compile Include="Core\ChatMessage.cs" />
     <Compile Include="Core\CountToVisibilityConverter.cs" />
     <Compile Include="Core\Database.cs" />

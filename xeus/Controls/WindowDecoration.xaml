@@ -6,10 +6,11 @@
 	>
 
   <Style x:Key = "MainBorder" TargetType="{x:Type Border}">
-    <Setter Property="Background" Value="{DynamicResource back_design}" />
+    <!--<Setter Property="Background" Value="{DynamicResource back_design}" />-->
     <Setter Property="BorderBrush" Value="#FF222222" />
     <Setter Property="BorderThickness" Value="2,2,2,2" />
     <Setter Property="CornerRadius" Value="5" />
+  	<Setter Property="Background" Value="#FF2E2E2E"/>
   </Style>
 
  <Style TargetType="{x:Type win:TitleBar}">

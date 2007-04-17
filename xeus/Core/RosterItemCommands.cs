@@ -16,6 +16,8 @@ namespace xeus.Core
 		private static RoutedUICommand _contactDelete = new RoutedUICommand( "Delete Contact", "contactDelete", typeof ( RosterItemCommands ) ) ;
 		private static RoutedUICommand _contactRename = new RoutedUICommand( "Rename Contact", "contactRename", typeof ( RosterItemCommands ) ) ;
 		private static RoutedUICommand _contactVcard = new RoutedUICommand( "Display V-Card", "contactDisplayVCard", typeof ( RosterItemCommands ) ) ;
+		private static RoutedUICommand _contactSearch = new RoutedUICommand( "Search Contact", "contactSearch", typeof ( RosterItemCommands ) ) ;
+		private static RoutedUICommand _contactSearchNext = new RoutedUICommand( "Search Next Contact", "contactSearchNext", typeof ( RosterItemCommands ) ) ;
 
 		public static RoutedUICommand AuthSendTo
 		{
@@ -73,6 +75,22 @@ namespace xeus.Core
 			}
 		}
 
+		public static RoutedUICommand ContactSearch
+		{
+			get
+			{
+				return _contactSearch ;
+			}
+		}
+
+		public static RoutedUICommand ContactSearchNext
+		{
+			get
+			{
+				return _contactSearchNext ;
+			}
+		}
+
 		static RosterItemCommands()
 		{
 			Application.Current.MainWindow.CommandBindings.Add(
@@ -95,6 +113,15 @@ namespace xeus.Core
 
 			Application.Current.MainWindow.CommandBindings.Add(
 				new CommandBinding( _contactVcard, ExecuteContactVcard, CanExecuteContactVcard ) ) ;
+
+			Application.Current.MainWindow.CommandBindings.Add(
+				new CommandBinding( _contactSearch, ExecuteContactSearch, CanExecuteContactSearch ) ) ;
+
+			Application.Current.MainWindow.CommandBindings.Add(
+				new CommandBinding( _contactSearchNext, ExecuteContactSearchNext, CanExecuteContactSearchNext ) ) ;
+
+			Application.Current.MainWindow.InputBindings.Add( new KeyBinding( _contactSearch, Key.F, ModifierKeys.Control ) ) ;
+			Application.Current.MainWindow.InputBindings.Add( new KeyBinding( _contactSearchNext, Key.F3, ModifierKeys.None ) ) ;
 		}
 
 		public static void CanExecuteAuthRemoveFrom( object sender, CanExecuteRoutedEventArgs e )
@@ -155,6 +182,18 @@ namespace xeus.Core
 
 			e.Handled = true ;
 			e.CanExecute = ( rosterItem != null && rosterItem.IsInitialized ) ;
+		}
+
+		public static void CanExecuteContactSearch( object sender, CanExecuteRoutedEventArgs e )
+		{
+			e.Handled = true ;
+			e.CanExecute = true ;
+		}
+
+		public static void CanExecuteContactSearchNext( object sender, CanExecuteRoutedEventArgs e )
+		{
+			e.Handled = true ;
+			e.CanExecute = true ;
 		}
 
 		public static void ExecuteAuthSendTo( object sender, ExecutedRoutedEventArgs e )
@@ -250,6 +289,20 @@ namespace xeus.Core
 
 				VCardWindow.ShowWindow( rosterItem );
 			}
+
+			e.Handled = true ;
+		}
+
+		public static void ExecuteContactSearch( object sender, ExecutedRoutedEventArgs e )
+		{
+			App.Instance.Window.DisplaySearch() ;
+
+			e.Handled = true ;
+		}
+
+		public static void ExecuteContactSearchNext( object sender, ExecutedRoutedEventArgs e )
+		{
+			App.Instance.Window.DisplaySearchNext() ;
 
 			e.Handled = true ;
 		}

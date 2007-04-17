@@ -78,10 +78,7 @@ namespace xeus.Controls
 
 		void OnNext( Object sender, RoutedEventArgs e )
 		{
-			if ( TextChanged != null )
-			{
-				TextChanged( sender, null ) ;
-			}
+			SearchNext();
 		}
 
 		public void SendKey( Key key )
@@ -102,10 +99,6 @@ namespace xeus.Controls
 				{
 					Close( true ) ;
 				}
-				else if ( key == Key.PageDown )
-				{
-					OnNext( this, null ) ;
-				}
 			}
 		}
 
@@ -115,6 +108,11 @@ namespace xeus.Controls
 			{
 				return _text.Text ;
 			}
+		}
+
+		public void FocusText()
+		{
+			_text.Focus() ;
 		}
 
 		public bool NotFound
@@ -127,6 +125,14 @@ namespace xeus.Controls
 			{
 				_notFound = value ;
 				_border.Background = ( value ) ? Brushes.DarkRed : _originalBackground ;
+			}
+		}
+
+		public void SearchNext()
+		{
+			if ( TextChanged != null )
+			{
+				TextChanged( _text, null ) ;
 			}
 		}
 	}
