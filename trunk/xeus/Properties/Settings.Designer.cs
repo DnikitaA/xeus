@@ -175,5 +175,17 @@ namespace xeus.Properties {
                 this["UI_GroupMessagesByMinutes"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UI_Sound {
+            get {
+                return ((bool)(this["UI_Sound"]));
+            }
+            set {
+                this["UI_Sound"] = value;
+            }
+        }
     }
 }

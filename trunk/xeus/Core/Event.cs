@@ -4,6 +4,7 @@ using System.Text;
 using System.Timers ;
 using System.Windows.Threading ;
 using agsXMPP.protocol.client ;
+using xeus.Properties ;
 
 namespace xeus.Core
 {
@@ -70,6 +71,11 @@ namespace xeus.Core
 			lock ( _items._syncObject )
 			{
 				_items.Insert( 0, theEvent ) ;
+			}
+
+			if ( Settings.Default.UI_Sound )
+			{
+				System.Media.SystemSounds.Beep.Play() ;
 			}
 		}
 
