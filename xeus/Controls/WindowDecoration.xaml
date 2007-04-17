@@ -47,9 +47,6 @@
             				<TranslateTransform X="0" Y="0"/>
             			</TransformGroup>
             		</Path.RenderTransform>
-            		<Path.BitmapEffect>
-            			<DropShadowBitmapEffect Color="#FF000000" ShadowDepth="1" Softness="0.1"/>
-            		</Path.BitmapEffect>
             	</Path>
             </DockPanel>
           </Border>

@@ -511,8 +511,8 @@
 </ControlTemplate>
 
 <ControlTemplate x:Key="WindowButton" TargetType="{x:Type Button}">
-<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" >
-	<Grid x:Name="grid">
+<Viewbox Width="Auto" Height="Auto" x:Name="viewbox" >
+	<Grid x:Name="grid" SnapsToDevicePixels="False">
 	<Rectangle StrokeThickness="1" Width="6" Height="14" Canvas.Top="0"
 		Stretch="Fill" Canvas.Left="0" x:Name="_circleBack" Fill="{TemplateBinding Property=Background}" RadiusX="2" RadiusY="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
 	<Rectangle StrokeThickness="1" Width="6" Height="14" Canvas.Top="0"
@@ -548,11 +548,6 @@
 	  				<GradientStop Color="#FF0D0D0D" Offset="0"/>
 	  				<GradientStop Color="#FF868585" Offset="1"/>
 	  			</LinearGradientBrush>
-	  		</Setter.Value>
-	  	</Setter>
-	  	<Setter Property="BitmapEffect" TargetName="_circle">
-	  		<Setter.Value>
-	  			<OuterGlowBitmapEffect GlowColor="#FFFFFFFF" GlowSize="1" Opacity="0.3"/>
 	  		</Setter.Value>
 	  	</Setter>
 	  </Trigger>

@@ -788,7 +788,7 @@
 	  <Setter Property="Template">
 	    <Setter.Value>
 	      <ControlTemplate TargetType="{x:Type ListBox}">
-	          <ScrollViewer HorizontalScrollBarVisibility="Disabled" CanContentScroll="false">
+	          <ScrollViewer HorizontalScrollBarVisibility="Disabled" CanContentScroll="False">
 	            <ItemsPresenter />
 	          </ScrollViewer>
 	      </ControlTemplate>
