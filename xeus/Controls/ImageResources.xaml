@@ -514,9 +514,9 @@
 <Viewbox Width="Auto" Height="Auto" x:Name="viewbox" >
 	<Grid x:Name="grid" SnapsToDevicePixels="False">
 	<Rectangle StrokeThickness="1" Width="6" Height="14" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0" x:Name="_circleBack" Fill="{TemplateBinding Property=Background}" RadiusX="2" RadiusY="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+		Stretch="Fill" Canvas.Left="0" x:Name="_circleBack" Fill="{TemplateBinding Property=Background}" RadiusX="1" RadiusY="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
 	<Rectangle StrokeThickness="1" Width="6" Height="14" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0" x:Name="_circleBack1" Fill="{TemplateBinding Property=Background}" RadiusX="2" RadiusY="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+		Stretch="Fill" Canvas.Left="0" x:Name="_circleBack1" Fill="{TemplateBinding Property=Background}" RadiusX="1" RadiusY="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
 	<Rectangle Stroke="#FF000000" StrokeThickness="1" Margin="0,0,0,0" Width="6" Height="14" Canvas.Top="0"
 		Stretch="Fill" Canvas.Left="0" x:Name="_circle" Opacity="0.65" RadiusX="1" RadiusY="1" HorizontalAlignment="Center" VerticalAlignment="Center">
 		<Rectangle.Fill>
@@ -1055,6 +1055,35 @@
 	</ControlTemplate.Triggers>
 </ControlTemplate>
 
+<ControlTemplate x:Key="Connect" TargetType="{x:Type Button}">
+<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox">
+	<Grid>
+<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
+		Stretch="Fill" Canvas.Left="0" x:Name="_circle1" RenderTransformOrigin="0.5,0.5">
+		<Ellipse.Fill>
+			<RadialGradientBrush>
+				<GradientStop Color="#FFF2C39F" Offset="0"/>
+				<GradientStop Color="#B2DF7B1E" Offset="1"/>
+			</RadialGradientBrush>
+		</Ellipse.Fill>
+		<Ellipse.RenderTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="1" ScaleY="1"/>
+				<SkewTransform AngleX="0" AngleY="0"/>
+				<RotateTransform Angle="0"/>
+				<TranslateTransform X="0" Y="0"/>
+			</TransformGroup>
+		</Ellipse.RenderTransform>
+		<Ellipse.BitmapEffect>
+			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
+		</Ellipse.BitmapEffect>
+	</Ellipse>
+	<Ellipse Fill="#FFCFCFCF" HorizontalAlignment="Stretch" Margin="5.5,5.67,5.834,5.664" VerticalAlignment="Stretch" Width="Auto" Height="Auto"/>
+	<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
+	<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
+	</Grid>
+</Viewbox>
+</ControlTemplate>
 </ResourceDictionary>
 
 
