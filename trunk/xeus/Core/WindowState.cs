@@ -27,7 +27,16 @@ namespace xeus.Core
 				{
 					if ( this[ "Location" ] != null )
 					{
-						return ( ( Rect ) this[ "Location" ] ) ;
+						Rect rect = ( ( Rect ) this[ "Location" ] ) ;
+
+						if ( SystemParameters.WorkArea.IntersectsWith( rect ) )
+						{
+							return rect ;
+						}
+						else
+						{
+							return Rect.Empty ;
+						}
 					}
 					return Rect.Empty ;
 				}
