@@ -90,9 +90,8 @@
 		</StatusBarItem>
     <StatusBarItem
 		    	  x:Name="_statusConnect" VerticalAlignment="Stretch">
-      <Button x:Name="_buttonConnect" Content="Connect" ToolTip="Display Login Dialog"
-        Background="#FF39A960" Template="{DynamicResource AButton}" IsDefault="False"
-        Click="Connect" Foreground="#FFF2F2F2" Height="26" Margin="5,0,5,0" />
+      <Button x:Name="_buttonConnect" Width="26" Height="26" Template="{DynamicResource Connect}"
+      Click="Connect" ToolTip="Display Login Dialog"/>
 
     </StatusBarItem>
     <StatusBarItem HorizontalAlignment="Stretch" 
