@@ -23,6 +23,11 @@ namespace xeus
 		{
 			get
 			{
+				if ( _theApp == null )
+				{
+					return null ;
+				}
+
 				return _theApp.Dispatcher ;
 			}
 		}

@@ -139,6 +139,11 @@ namespace xeus
 			_headlines.Visibility = Visibility.Collapsed ;
 		}
 
+		void Connect( object sender, RoutedEventArgs e )
+		{
+			ManualLogin() ;
+		}
+
 		void ManualLogin()
 		{
 			if ( App.DispatcherThread.CheckAccess() )
