@@ -43,14 +43,14 @@
 		<EventTrigger RoutedEvent="FrameworkElement.SizeChanged" SourceName="_headlines">
 			<BeginStoryboard Storyboard="{StaticResource OnSizeChanged1}"/>
 		</EventTrigger>
-	</local:WindowBase.Triggers>
+  </local:WindowBase.Triggers>
 
     <DockPanel LastChildFill="True">
 	<StatusBar DockPanel.Dock="Bottom" x:Name="_statusBar" Style="{DynamicResource StatusBarStyleBlack}" VerticalAlignment="Bottom" Padding="2,4,2,4">
 		<StatusBarItem HorizontalAlignment="Stretch" Margin="0,0,0,0"
 		    	  x:Name="_statusMyStatus" VerticalAlignment="Stretch">
-		    <Button x:Name="_buttonmyStatus" Width="25" Height="25" Template="{Binding Path=StatusTemplate}" Click="DisplayPopup" MouseRightButtonDown="StatusRightClick"
-                ToolTip="My Status / Right-Click to Login"
+		    <Button x:Name="_buttonmyStatus" Width="25" Height="25" Template="{Binding Path=StatusTemplate}" Click="DisplayPopup" 
+                ToolTip="My Status"
 				>
 			<Popup x:Name="_statusPopup" AllowsTransparency="True" Placement="MousePoint" StaysOpen="False" Width="120" Height="120">
 				<local:StatusControl x:Name="_statusControl" Panel.ZIndex="100"/>
@@ -88,9 +88,16 @@
 		    	  x:Name="_statusInlineSearch" VerticalAlignment="Stretch" Panel.ZIndex="1">
 	    	<local:InlineSearch x:Name="_inlineSearch" Height="25" VerticalAlignment="Bottom" />
 		</StatusBarItem>
-		<StatusBarItem HorizontalAlignment="Stretch" 
+    <StatusBarItem
+		    	  x:Name="_statusConnect" VerticalAlignment="Stretch">
+      <Button x:Name="_buttonConnect" Content="Connect" ToolTip="Display Login Dialog"
+        Background="#FF39A960" Template="{DynamicResource AButton}" IsDefault="False"
+        Click="Connect" Foreground="#FFF2F2F2" Height="26" Margin="5,0,5,0" />
+
+    </StatusBarItem>
+    <StatusBarItem HorizontalAlignment="Stretch" 
 		    	  x:Name="_statusText" VerticalAlignment="Stretch" Margin="3,3,5,3" >
-		<TextBlock x:Name="_statusStatus" Foreground="#FFBBBBBB"/>
+	  	<TextBlock x:Name="_statusStatus" Foreground="#FFBBBBBB"/>
 		</StatusBarItem>
 		</StatusBar>
 	<Grid DockPanel.Dock="Bottom" x:Name="_headlines" Visibility="Collapsed" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,5" >
