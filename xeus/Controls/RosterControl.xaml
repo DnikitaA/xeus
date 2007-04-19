@@ -3,7 +3,7 @@
     xmlns:local="clr-namespace:xeus.Core"
     xmlns:prop="clr-namespace:xeus.Properties"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic" xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="xeus.Controls.RosterControl"
-    Margin="2,2,2,2">
+    Margin="2,2,2,2" FontSize="9">
 
   <UserControl.Resources>
     <ResourceDictionary>
@@ -52,7 +52,7 @@
              Style="{StaticResource ListBoxStyleRoster}"  Foreground="Black"
              MouseDoubleClick="OnDoubleClickRosterItem" AllowDrop="True" DockPanel.Dock="Top"
              PreviewKeyDown="OnKeyDown" 
-           	 Margin="0,0,0,10" FontSize="9" IsTextSearchEnabled="False" TabIndex="0" Background="{x:Null}" >
+           	 Margin="5,5,5,10" FontSize="9" IsTextSearchEnabled="False" TabIndex="0" Background="{x:Null}" >
       <ListBox.GroupStyle>
         <GroupStyle>
         <GroupStyle.ContainerStyle>
