@@ -34,24 +34,17 @@
 										<Border Padding="{TemplateBinding Padding}">
 											<Grid SnapsToDevicePixels="False" Background="#00FFFFFF">
 												<Grid.ColumnDefinitions>
-													<ColumnDefinition Width="19"/>
-													<ColumnDefinition Width="*"/>
+													<ColumnDefinition Width="124"/>
 												</Grid.ColumnDefinitions>										
-													<Viewbox Margin="4,0,4,0">
-													<Grid x:Name="grid">
+													<Grid x:Name="grid" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.ColumnSpan="1">
 													<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
 														Canvas.Left="0" x:Name="_circle">
 														<Ellipse.Fill>
 															<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
-																<GradientStop Color="#FF969696" Offset="0"/>
-																<GradientStop Color="#FF41423E" Offset="1"/>
+																<GradientStop Color="#FF9C9C98" Offset="0"/>
+																<GradientStop Color="#FF4F4F4F" Offset="1"/>
 															</LinearGradientBrush>
 														</Ellipse.Fill>
-														<!--
-														<Ellipse.BitmapEffect>
-															<DropShadowBitmapEffect Direction="321" Opacity="0.495" ShadowDepth="2" Softness="0.37"/>
-														</Ellipse.BitmapEffect>
-														-->
 													</Ellipse>
 														<Path SnapsToDevicePixels="False" StrokeThickness="1.5" x:Name="arrow" Data="M1,1.5L4.5,5 8,1.5" Stroke="#FF000000" RenderTransformOrigin="0.5,0.5" d:LayoutOverrides="Width, Height, Margin" HorizontalAlignment="Center" VerticalAlignment="Center">
 															<Path.RenderTransform>
@@ -64,10 +57,9 @@
 															</Path.RenderTransform>
 														</Path>
 													
-												<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" HorizontalAlignment="Center"/>
+												<Path Stretch="Fill" StrokeThickness="1" Margin="0,9.935,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" HorizontalAlignment="Center"/>
 													</Grid>
-													</Viewbox>
-												<Border Margin="5,3,3,3" Grid.Column="1" HorizontalAlignment="Left" x:Name="border" BorderBrush="#FF202020" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" SnapsToDevicePixels="True">
+												<Border Margin="27.765,3,0,3" Grid.Column="0" HorizontalAlignment="Left" x:Name="border" BorderBrush="#FF202020" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" Grid.ColumnSpan="1">
 													<Border.Background>
 														<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
 															<GradientStop Color="#FF3C4457" Offset="0"/>
@@ -85,6 +77,9 @@
 															<GradientStop Color="#9BFFFFFF" Offset="1"/>
 														</RadialGradientBrush>
 													</Border.OpacityMask>
+													<Border.BitmapEffect>
+														<DropShadowBitmapEffect/>
+													</Border.BitmapEffect>
 													<Grid>
 														<Rectangle Opacity="0.2" Fill="#FFFFFFFF" RadiusX="3" RadiusY="3" Margin="1,1,1,0" VerticalAlignment="Top" Height="12"/>
 														<ContentPresenter SnapsToDevicePixels="True" Grid.Column="1" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" RecognizesAccessKey="True" VerticalAlignment="Center" Margin="8,2,8,2"/>
@@ -172,7 +167,6 @@
 													<RowDefinition Height="19"/>
 													<RowDefinition Height="*"/>
 												</Grid.RowDefinitions>
-														<SolidColorBrush/>
 													<Path SnapsToDevicePixels="False" Stroke="{TemplateBinding Foreground}" StrokeThickness="1.5" HorizontalAlignment="Center" x:Name="arrow" VerticalAlignment="Center" Data="M1,1.5L4.5,5 8,1.5">
 														<Path.LayoutTransform>
 															<RotateTransform Angle="-90"/>
@@ -208,7 +202,6 @@
 													<ColumnDefinition Width="19"/>
 													<ColumnDefinition Width="*"/>
 												</Grid.ColumnDefinitions>
-														<SolidColorBrush/>
 													<Path SnapsToDevicePixels="False" Stroke="{TemplateBinding Foreground}" StrokeThickness="1.5" HorizontalAlignment="Center" x:Name="arrow" VerticalAlignment="Center" Data="M1,1.5L4.5,5 8,1.5">
 														<Path.LayoutTransform>
 															<RotateTransform Angle="180"/>
@@ -244,7 +237,6 @@
 													<RowDefinition Height="19"/>
 													<RowDefinition Height="*"/>
 												</Grid.RowDefinitions>
-														<SolidColorBrush/>
 													<Path SnapsToDevicePixels="False" Stroke="{TemplateBinding Foreground}" StrokeThickness="1.5" HorizontalAlignment="Center" x:Name="arrow" VerticalAlignment="Center" Data="M1,1.5L4.5,5 8,1.5">
 														<Path.LayoutTransform>
 															<RotateTransform Angle="90"/>

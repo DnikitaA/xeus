@@ -66,7 +66,7 @@
 		<StatusBarItem 
 		    	  x:Name="_statusServices" VerticalAlignment="Stretch">
 		    <Button x:Name="_buttonmyServices" Width="27" Height="27" Template="{DynamicResource OpenServices}"
-				Click="OpenServices" ToolTip="Services" Background="Yellow"
+				Click="OpenServices" ToolTip="Services" Background="#FF89A923"
 				IsEnabled="{Binding Path=IsAvailable}"/>
 		</StatusBarItem>
 		<StatusBarItem 
