@@ -12,7 +12,7 @@
 	<ControlTemplate x:Key="ExpanderControlTemplate" TargetType="{x:Type Expander}">
 		<Border SnapsToDevicePixels="True" CornerRadius="3,3,3,3">
 			<DockPanel>
-				<ToggleButton Margin="1,1,1,1" MinHeight="0" MinWidth="0" x:Name="HeaderSite" FontStretch="{TemplateBinding FontStretch}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Header}" DockPanel.Dock="Top" IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent, AncestorType={x:Null}}}" FontSize="10" Foreground="#FFBB9270">
+				<ToggleButton Margin="1,1,1,1" MinHeight="0" MinWidth="0" x:Name="HeaderSite" FontStretch="{TemplateBinding FontStretch}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Header}" DockPanel.Dock="Top" IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent, AncestorType={x:Null}}}" FontSize="11" Foreground="#FFD5EBFB">
 					<ToggleButton.FocusVisualStyle>
 						<Style>
 							<Setter Property="Control.Template">
