@@ -49,7 +49,7 @@
     </Slider>
 	
   	<ListBox x:Name="_roster" ItemsSource="{Binding Source={StaticResource _rosterView}}"
-             Style="{StaticResource ListBoxStyleRoster}"  Foreground="Black"
+             Style="{StaticResource ListBoxStyleRoster}"
              MouseDoubleClick="OnDoubleClickRosterItem" AllowDrop="True" DockPanel.Dock="Top"
              PreviewKeyDown="OnKeyDown" 
            	 Margin="5,5,5,10" FontSize="9" IsTextSearchEnabled="False" TabIndex="0" Background="{x:Null}" >
