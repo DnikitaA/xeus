@@ -83,10 +83,10 @@ namespace xeus.Controls
 
 				if ( window != null )
 				{
-					if ( System.Environment.OSVersion.Version.Major > 5 )
+					//if ( System.Environment.OSVersion.Version.Major > 5 )
 					{
 						// Vista supports HW acceleration
-						window.AllowsTransparency = true ;
+						// window.AllowsTransparency = true ;
 					}
 
 					window.Activated += new System.EventHandler( window_Activated ) ;
