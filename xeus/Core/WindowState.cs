@@ -28,8 +28,9 @@ namespace xeus.Core
 					if ( this[ "Location" ] != null )
 					{
 						Rect rect = ( ( Rect ) this[ "Location" ] ) ;
+						Rect virtualRect = new Rect( 0, 0, SystemParameters.VirtualScreenWidth, SystemParameters.VirtualScreenHeight ) ;
 
-						if ( SystemParameters.WorkArea.IntersectsWith( rect ) )
+						if ( virtualRect.IntersectsWith( rect ) )
 						{
 							return rect ;
 						}

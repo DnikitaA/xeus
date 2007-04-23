@@ -871,49 +871,29 @@
 	</ControlTemplate.Triggers></ControlTemplate>
 
 <ControlTemplate x:Key="PinTemplate" TargetType="{x:Type CheckBox}">
-<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" RenderTransformOrigin="0.498,0.51" >
-	<Ellipse Stroke="#FFACA9A9" StrokeThickness="1" Width="16" Height="16" Canvas.Top="0"
-		Stretch="Fill" Canvas.Left="0" x:Name="_circle" RenderTransformOrigin="0.5,0.5" Opacity="0.75">
-		<Ellipse.Fill>
-			<RadialGradientBrush>
-				<GradientStop Color="#FF171616" Offset="0.028"/>
-				<GradientStop Color="#B27D7C7C" Offset="0.958"/>
-			</RadialGradientBrush>
-		</Ellipse.Fill>
-		<Ellipse.RenderTransform>
-			<TransformGroup>
-				<ScaleTransform ScaleX="1" ScaleY="1"/>
-				<SkewTransform AngleX="0" AngleY="0"/>
-				<RotateTransform Angle="0"/>
-				<TranslateTransform X="0" Y="0"/>
-			</TransformGroup>
-		</Ellipse.RenderTransform>
-	</Ellipse>
-	
-</Viewbox>
+	<Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox">
+		<Border Width="18" Height="5" Background="#FF282828" BorderBrush="#FF555555" BorderThickness="1,1,1,1" CornerRadius="1,1,1,1" x:Name="border">
+			<Grid>
+				<Rectangle Opacity="0.75" Fill="#FF26A21F" RadiusX="0.5" RadiusY="0.5" HorizontalAlignment="Left" x:Name="rectangle" Width="7.5"/>
+				<Rectangle Opacity="0.75" Fill="#FF343434" RadiusX="0.5" RadiusY="0.5" HorizontalAlignment="Stretch" x:Name="rectangle1" Width="Auto" Margin="1,0,1,0" VerticalAlignment="Top" Height="1.488"/>
+			</Grid>
+		</Border>
+	</Viewbox>
 	<ControlTemplate.Triggers>
-		<Trigger Property="IsEnabled" Value="False">
-			<Setter Property="Opacity" TargetName="viewbox" Value="0.5"/>
+		<Trigger Property="IsMouseOver" Value="True">
+			<Setter Property="BitmapEffect" TargetName="border">
+				<Setter.Value>
+					<OuterGlowBitmapEffect GlowColor="#FFF1F1ED" GlowSize="1" Opacity="0.5"/>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="Opacity" TargetName="rectangle" Value="1"/>
 		</Trigger>
 		<Trigger Property="IsChecked" Value="True">
-			<Setter Property="Fill" TargetName="_circle">
-				<Setter.Value>
-					<RadialGradientBrush>
-						<GradientStop Color="#FFF8E9E5" Offset="0"/>
-						<GradientStop Color="#B296200E" Offset="1"/>
-					</RadialGradientBrush>
-				</Setter.Value>
-			</Setter>
-			<Setter Property="BitmapEffect" TargetName="_circle">
-				<Setter.Value>
-					<DropShadowBitmapEffect Opacity="0" ShadowDepth="1" Softness="0.1"/>
-				</Setter.Value>
-			</Setter>
+			<Setter Property="HorizontalAlignment" TargetName="rectangle" Value="Right"/>
+			<Setter Property="Fill" TargetName="rectangle" Value="#FFB33821"/>
 		</Trigger>
-		<Trigger Property="IsMouseOver" Value="True">
-			<Setter Property="Opacity" TargetName="_circle" Value="1"/>
-		</Trigger>
-	</ControlTemplate.Triggers></ControlTemplate>
+	</ControlTemplate.Triggers>
+</ControlTemplate>
 
 <ControlTemplate x:Key="VCard" TargetType="{x:Type Button}">
 <Viewbox Width="Auto" ClipToBounds="False" Height="Auto" SnapsToDevicePixels="True" x:Name="viewbox" >
@@ -1024,7 +1004,9 @@
 			<DropShadowBitmapEffect ShadowDepth="1" Softness="0.1"/>
 		</Ellipse.BitmapEffect>
 	</Ellipse>
-	<Ellipse Fill="#FFCFCFCF" HorizontalAlignment="Stretch" Margin="5.5,5.67,5.834,5.664" VerticalAlignment="Stretch" Width="Auto" Height="Auto"/>
+	<Ellipse Fill="#FFCFCFCF" HorizontalAlignment="Stretch" Margin="5.671,5.749,5.663,5.585" VerticalAlignment="Stretch" Width="Auto" Height="Auto"/>
+	<Ellipse Fill="#FFCFCFCF" HorizontalAlignment="Left" Margin="4.005,4.083,0,0" VerticalAlignment="Top" Width="2" Height="2"/>
+	<Ellipse Fill="#FFCFCFCF" HorizontalAlignment="Right" Margin="0,0,4.206,3.734" VerticalAlignment="Bottom" Width="2" Height="2"/>
 	<Path d:LayoutOverrides="Margin" Fill="#2C000000" Stretch="Fill" StrokeThickness="1" HorizontalAlignment="Center" Margin="0,0,0,0.996" VerticalAlignment="Bottom" Width="7" Height="1.407" Data="F1 M16.799999,0.4999997 C18.471432,0.5 20.084105,0.73569995 21.581478,1.2454783 C20.354053,2.3906071 18.697081,3.029 16.891001,3.0290003 C15.060939,3.029 13.383967,2.3735404 12.145675,1.2084982 C13.606386,0.72266632 15.175438,0.5 16.799999,0.4999997 z" Canvas.Left="0" Canvas.Top="0"/>
 	<Path Stretch="Fill" StrokeThickness="1" Margin="0,0.944,0,0" VerticalAlignment="Top" Width="13.5" Height="6.681" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" d:LayoutOverrides="VerticalAlignment" HorizontalAlignment="Center"/>
 	</Grid>
