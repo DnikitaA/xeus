@@ -10,6 +10,14 @@
 </Style>
 	
 	<ControlTemplate x:Key="ExpanderControlTemplate" TargetType="{x:Type Expander}">
+		<ControlTemplate.Resources>
+			<Storyboard x:Key="OnExpanded1">
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="ExpandSite" Storyboard.TargetProperty="(UIElement.Opacity)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.25"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+			</Storyboard>
+		</ControlTemplate.Resources>
 		<Border SnapsToDevicePixels="True" CornerRadius="3,3,3,3">
 			<DockPanel>
 				<ToggleButton Margin="1,1,1,1" MinHeight="0" MinWidth="0" x:Name="HeaderSite" FontStretch="{TemplateBinding FontStretch}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Header}" DockPanel.Dock="Top" IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent, AncestorType={x:Null}}}" FontSize="11" Foreground="#FFD5EBFB">
@@ -31,10 +39,16 @@
 							<Setter Property="Template">
 								<Setter.Value>
 									<ControlTemplate TargetType="{x:Type ToggleButton}">
-										<Border>
-											<StackPanel Orientation="Horizontal">	
+										<Border BorderBrush="#FF393939" BorderThickness="1,1,1,1" CornerRadius="6,6,6,6" MinHeight="35" HorizontalAlignment="Left" x:Name="border">
+											<Border.Background>
+												<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+													<GradientStop Color="#7F1F1F1F" Offset="0"/>
+													<GradientStop Color="#7F323232" Offset="1"/>
+												</LinearGradientBrush>
+											</Border.Background>
+											<StackPanel Orientation="Horizontal" Margin="5,0,12,0">	
 												<Viewbox>									
-												<Grid x:Name="grid" Width="16" Height="16">
+												<Grid x:Name="grid" Width="16" Height="16" Margin="2,0,0,0">
 													<Ellipse Stroke="#FF4D4D4D" StrokeThickness="1" Margin="0,0,0,0" Width="16" Height="16" Canvas.Top="0"
 														Canvas.Left="0" x:Name="_circle">
 														<Ellipse.Fill>
@@ -58,7 +72,7 @@
 													<Path Stretch="Fill" StrokeThickness="1" Margin="0,1.021,0,0" VerticalAlignment="Top" Data="F1 M22.628,30.472 C26.206762,30.472 29.200083,32.978573 29.803392,36.364162 C27.56975,37.091434 25.14831,37.443001 22.6285,37.443001 C20.108339,37.443001 17.686575,37.091335 15.452658,36.363918 C16.056067,32.978447 19.049328,30.472 22.628,30.472 z" Canvas.Left="0" Canvas.Top="0" Fill="#3DFFFFFF" HorizontalAlignment="Center" d:LayoutOverrides="VerticalAlignment" Width="13.488" Height="6.468"/>
 												</Grid>
 												</Viewbox>
-												<ContentPresenter SnapsToDevicePixels="True" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" RecognizesAccessKey="True" d:LayoutOverrides="GridBox" Margin="5,0,0,0" VerticalAlignment="Center"/>
+												<ContentPresenter SnapsToDevicePixels="True" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" RecognizesAccessKey="True" d:LayoutOverrides="GridBox" Margin="11,0,0,0" VerticalAlignment="Center"/>
 											</StackPanel>
 										</Border>
 										<ControlTemplate.Triggers>
@@ -92,6 +106,14 @@
 														</LinearGradientBrush>
 													</Setter.Value>
 												</Setter>
+												<Setter Property="Background" TargetName="border">
+													<Setter.Value>
+														<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+															<GradientStop Color="#FF1F1F1F" Offset="0"/>
+															<GradientStop Color="#FF323232" Offset="1"/>
+														</LinearGradientBrush>
+													</Setter.Value>
+												</Setter>
 											</Trigger>
 										</ControlTemplate.Triggers>
 									</ControlTemplate>
@@ -100,10 +122,22 @@
 						</Style>
 					</ToggleButton.Style>
 				</ToggleButton>
-				<ContentPresenter Focusable="False" Visibility="Collapsed" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" x:Name="ExpandSite" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" DockPanel.Dock="Bottom" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" Margin="0,0,0,10"/>
+				<ContentPresenter Focusable="False" Visibility="Collapsed" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" x:Name="ExpandSite" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" DockPanel.Dock="Bottom" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" Margin="0,0,0,10" RenderTransformOrigin="0.5,0.5">
+					<ContentPresenter.RenderTransform>
+						<TransformGroup>
+							<ScaleTransform ScaleX="1" ScaleY="1"/>
+							<SkewTransform AngleX="0" AngleY="0"/>
+							<RotateTransform Angle="0"/>
+							<TranslateTransform X="0" Y="0"/>
+						</TransformGroup>
+					</ContentPresenter.RenderTransform>
+				</ContentPresenter>
 			</DockPanel>
 		</Border>
 		<ControlTemplate.Triggers>
+			<EventTrigger RoutedEvent="Expander.Expanded">
+				<BeginStoryboard Storyboard="{StaticResource OnExpanded1}"/>
+			</EventTrigger>
 			<Trigger Property="IsExpanded" Value="True">
 				<Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
 			</Trigger>

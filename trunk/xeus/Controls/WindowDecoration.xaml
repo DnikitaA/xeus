@@ -49,7 +49,7 @@
           			<Button Grid.Column="2" x:Name="MinButton"
           				Width="10" Height="10" Background="#FF5C6602" Foreground="#FFD23636" Template="{DynamicResource WindowButton}" DockPanel.Dock="Right" ToolTip="Minimize" Margin="8,0,0,0" />
           			<CheckBox Grid.Column="1" x:Name="PinButton"
-          				Width="10" Height="10" Background="#FFF4866E" DockPanel.Dock="Right" Margin="10,0,10,0" Template="{DynamicResource PinTemplate}" ToolTip="Always on Top" />
+          				Width="21.328" Height="6" Background="#FFF4866E" DockPanel.Dock="Right" Margin="10,0,10,0" Template="{DynamicResource PinTemplate}" ToolTip="Always on Top" />
           		</DockPanel>
 				<Rectangle Fill="#FF000000" Margin="0,0,0,1.25" VerticalAlignment="Bottom" Height="1"/>
 				<Rectangle Fill="#FF282828" VerticalAlignment="Bottom" Height="1"/>

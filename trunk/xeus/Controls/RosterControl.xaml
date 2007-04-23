@@ -38,9 +38,9 @@
   <DockPanel LastChildFill="True">
     <Slider Margin="8,0,8,8" x:Name="_sliderItemSize"
 	 Minimum="50.0" Maximum="200.0" Style="{StaticResource SliderStyleRoster}"
-	 TickPlacement="TopLeft" LargeChange="20" SmallChange="10" IsSnapToTickEnabled="True" Height="20" DockPanel.Dock="Bottom"
+	 TickPlacement="TopLeft" LargeChange="20" SmallChange="5" IsSnapToTickEnabled="True" Height="20" DockPanel.Dock="Bottom"
         Focusable="False" IsTabStop="False" IsMoveToPointEnabled="True" IsSelectionRangeEnabled="False"
-        TickFrequency="10"
+        TickFrequency="5"
         >
 
       <Slider.Value>
