@@ -832,12 +832,31 @@ namespace xeus.Core
 			}
 		}
 
+		public bool IsSubscriptionFrom
+		{
+			get
+			{
+				return ( _subscriptionType == SubscriptionType.from
+				         || _subscriptionType == SubscriptionType.both ) ;
+			}
+		}
+
+		public bool IsSubscriptionTo
+		{
+			get
+			{
+				return ( _subscriptionType == SubscriptionType.to
+				         || _subscriptionType == SubscriptionType.both ) ;
+			}
+		}
+
 		public SubscriptionType SubscriptionType
 		{
 			get
 			{
 				return _subscriptionType ;
 			}
+
 			set
 			{
 				if ( _subscriptionType != value )
@@ -849,6 +868,8 @@ namespace xeus.Core
 
 				NotifyPropertyChanged( "SubscriptionType" ) ;
 				NotifyPropertyChanged( "SubscriptionTypeText" ) ;
+				NotifyPropertyChanged( "IsSubscriptionFrom" ) ;
+				NotifyPropertyChanged( "IsSubscriptionTo" ) ;
 			}
 		}
 
@@ -1068,7 +1089,12 @@ namespace xeus.Core
 				_alternativeForeground = new SolidColorBrush( Color.FromRgb( 191, 215, 234 ) ) ;
 				
 			}
-			Section groupSection = _messagesDocument.Blocks.LastBlock as Section ;
+			Section groupSection = null ;
+			
+			if ( _messagesDocument != null )
+			{
+				groupSection = _messagesDocument.Blocks.LastBlock as Section ;
+			}
 
 			Paragraph paragraph = new Paragraph() ;
 

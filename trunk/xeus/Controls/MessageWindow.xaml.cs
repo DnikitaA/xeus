@@ -836,7 +836,14 @@ namespace xeus.Controls
 		{
 			if ( _timeTextStyle == null )
 			{
-				_timeTextStyle = Instance.FindResource( "TimeText" ) as Style ;
+				MessageWindow window = Instance ;
+
+				if ( window == null  )
+				{
+					window = new MessageWindow();
+				}
+
+				_timeTextStyle = window.FindResource( "TimeText" ) as Style ;
 			}
 
 			return _timeTextStyle ;
