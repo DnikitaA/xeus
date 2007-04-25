@@ -407,19 +407,24 @@ namespace xeus.Core
 
 						if ( rosterItemComing.IsInitialized && !rosterItemComing.IsService )
 						{
-							lock ( Client.Instance.Services.Items._syncObject )
-							{
-								foreach ( ServiceItem serviceItem in Client.Instance.Services.Items )
-								{
-									if ( rosterItemComing.XmppRosterItem.Jid.Server
-									     == serviceItem.Jid.Server )
-									{
-										rosterItemComing.Transport = serviceItem.Type ;
-										break ;
-									}
-								}
-							}
+							SetServiceType( rosterItemComing ) ;
 						}
+					}
+				}
+			}
+		}
+
+		public static void SetServiceType( RosterItem rosterItem )
+		{
+			lock ( Client.Instance.Services.Items._syncObject )
+			{
+				foreach ( ServiceItem serviceItem in Client.Instance.Services.Items )
+				{
+					if ( rosterItem.XmppRosterItem.Jid.Server
+					     == serviceItem.Jid.Server )
+					{
+						rosterItem.Transport = serviceItem.Type ;
+						break ;
 					}
 				}
 			}
