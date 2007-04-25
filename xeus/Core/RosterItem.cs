@@ -995,6 +995,7 @@ namespace xeus.Core
 			{
 				return _transport ;
 			}
+
 			set
 			{
 				_transport = value ;
