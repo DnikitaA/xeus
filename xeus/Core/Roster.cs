@@ -199,40 +199,45 @@ namespace xeus.Core
 			}
 		}
 
+		private object _lockPresence = new object();
+
 		private void xmppConnection_OnPresence( object sender, Presence pres )
 		{
-			RosterItem rosterItem = FindItem( pres.From.Bare ) ;
-
-			string name = ( rosterItem != null ) ? rosterItem.DisplayName : pres.From.Bare ;
-
-			switch ( pres.Type )
+			lock ( _lockPresence )
 			{
-				case PresenceType.subscribe:
-					{
-						OnSubscribePresence( pres.From ) ;
-						break ;
-					}
-				case PresenceType.subscribed:
-					{
-						App.Instance.Window.AlertInfo( "Authorization", string.Format( "You were authorized by {0}", name ) ) ;
-						AskForVCard( pres.From.Bare ) ;
-						break ;
-					}
-				case PresenceType.unsubscribe:
-					{
-						break ;
-					}
-				case PresenceType.unsubscribed:
-					{
-						App.Instance.Window.AlertInfo( "Authorization",
-						                               string.Format( "{0} removed the authorization from you", name ) ) ;
-						break ;
-					}
-				default:
-					{
-						ChangePresence( pres ) ;
-						break ;
-					}
+				RosterItem rosterItem = FindItem( pres.From.Bare ) ;
+
+				string name = ( rosterItem != null ) ? rosterItem.DisplayName : pres.From.Bare ;
+
+				switch ( pres.Type )
+				{
+					case PresenceType.subscribe:
+						{
+							OnSubscribePresence( pres.From ) ;
+							break ;
+						}
+					case PresenceType.subscribed:
+						{
+							App.Instance.Window.AlertInfo( "Authorization", string.Format( "You were authorized by {0}", name ) ) ;
+							AskForVCard( pres.From.Bare ) ;
+							break ;
+						}
+					case PresenceType.unsubscribe:
+						{
+							break ;
+						}
+					case PresenceType.unsubscribed:
+						{
+							App.Instance.Window.AlertInfo( "Authorization",
+							                               string.Format( "{0} removed the authorization from you", name ) ) ;
+							break ;
+						}
+					default:
+						{
+							ChangePresence( pres ) ;
+							break ;
+						}
+				}
 			}
 		}
 
@@ -343,71 +348,76 @@ namespace xeus.Core
 			}
 		}
 
+		private object _lockRosterItem = new object();
+
 		private void xmppConnecion_OnRosterItem( object sender, agsXMPP.protocol.iq.roster.RosterItem item )
 		{
-			RosterItem existingRosterItem = FindItem( item.Jid.Bare ) ;
-
-			lock ( _items._syncObject )
+			lock ( _lockRosterItem )
 			{
-				Presence presence = null ;
+				RosterItem existingRosterItem = FindItem( item.Jid.Bare ) ;
 
-				lock ( _presences )
+				lock ( _items._syncObject )
 				{
-					if ( _presences.ContainsKey( item.Jid.Bare ) )
+					Presence presence = null ;
+
+					lock ( _presences )
 					{
-						presence = _presences[ item.Jid.Bare ] ;
-						_presences.Remove( item.Jid.Bare ) ;
+						if ( _presences.ContainsKey( item.Jid.Bare ) )
+						{
+							presence = _presences[ item.Jid.Bare ] ;
+							_presences.Remove( item.Jid.Bare ) ;
+						}
 					}
-				}
 
-				if ( item.Subscription == SubscriptionType.remove )
-				{
-					if ( existingRosterItem != null )
+					if ( item.Subscription == SubscriptionType.remove )
 					{
-						_items.Remove( existingRosterItem ) ;
-					}
-				}
-				else
-				{
-					if ( item.Ask == AskType.NONE )
-					{
-						RosterItem rosterItemComing = null ;
-
 						if ( existingRosterItem != null )
 						{
-							existingRosterItem.XmppRosterItem = item ;
+							_items.Remove( existingRosterItem ) ;
+						}
+					}
+					else
+					{
+						if ( item.Ask == AskType.NONE )
+						{
+							RosterItem rosterItemComing = null ;
 
-							if ( presence != null )
+							if ( existingRosterItem != null )
 							{
-								existingRosterItem.Presence = presence ;
+								existingRosterItem.XmppRosterItem = item ;
+
+								if ( presence != null )
+								{
+									existingRosterItem.Presence = presence ;
+								}
+
+								rosterItemComing = existingRosterItem ;
+							}
+							else
+							{
+								RosterItem rosterItem = new RosterItem( item ) ;
+
+								if ( presence != null )
+								{
+									rosterItem.Presence = presence ;
+								}
+
+								_items.Add( rosterItem ) ;
+
+								AskForVCard( rosterItem.Key ) ;
+
+								rosterItemComing = rosterItem ;
 							}
 
-							rosterItemComing = existingRosterItem ;
-						}
-						else
-						{
-							RosterItem rosterItem = new RosterItem( item ) ;
-
-							if ( presence != null )
+							if ( rosterItemComing.Key == Client.Instance.MyJid.Bare )
 							{
-								rosterItem.Presence = presence ;
+								Client.Instance.MyRosterItem = rosterItemComing ;
 							}
 
-							_items.Add( rosterItem ) ;
-
-							AskForVCard( rosterItem.Key ) ;
-
-							rosterItemComing = rosterItem ;
-						}
-
-						if ( rosterItemComing.Key == Client.Instance.MyJid.Bare )
-						{
-							Client.Instance.MyRosterItem = rosterItemComing ;
-						}
-
-						if ( rosterItemComing.IsInitialized && !rosterItemComing.IsService )
-						{
-							SetServiceType( rosterItemComing ) ;
+							if ( rosterItemComing.IsInitialized && !rosterItemComing.IsService )
+							{
+								SetServiceType( rosterItemComing ) ;
+							}
 						}
 					}
 				}

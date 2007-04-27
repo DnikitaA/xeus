@@ -13,34 +13,34 @@
 	</ResourceDictionary.MergedDictionaries>
 	
 	<DrawingBrush x:Key="subscribe_from_design" Stretch="Uniform">
-		<DrawingBrush.Drawing>
-			<DrawingGroup>
-				<DrawingGroup.Children>
-					<GeometryDrawing Brush="#FFBA3F3F" Geometry="F1 M 154.812,82.5079L 223.915,157.499L 223.915,158.209L 188.588,158.209L 188.588,225.499L 121.298,225.499L 121.298,158.209L 85.9711,158.209L 85.9711,157.499L 154.812,82.5079 Z ">
-						<GeometryDrawing.Pen>
-							<Pen Thickness="2" LineJoin="Round" Brush="#FFEDEDED"/>
-						</GeometryDrawing.Pen>
-					</GeometryDrawing>
-					<GeometryDrawing Brush="#3EFFFFFF" Geometry="F1 M 154.837,82.2183L 115.203,125.394C 126.912,126.673 138.958,127.34 151.254,127.34C 165.869,127.34 180.132,126.398 193.895,124.604L 154.837,82.2183 Z "/>
-				</DrawingGroup.Children>
-			</DrawingGroup>
-		</DrawingBrush.Drawing>
-	</DrawingBrush>
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.Children>
+          <GeometryDrawing Brush="#FFBA3F3F" Geometry="F1 M 154.812,82.5079L 223.915,157.499L 223.915,158.209L 188.588,158.209L 188.588,225.499L 121.298,225.499L 121.298,158.209L 85.9711,158.209L 85.9711,157.499L 154.812,82.5079 Z ">
+            <GeometryDrawing.Pen>
+              <Pen Thickness="8" LineJoin="Round" Brush="#FFEDEDED"/>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+          <GeometryDrawing Brush="#3EFFFFFF" Geometry="F1 M 154.837,82.2183L 115.203,125.394C 126.912,126.673 138.958,127.34 151.254,127.34C 165.869,127.34 180.132,126.398 193.895,124.604L 154.837,82.2183 Z "/>
+        </DrawingGroup.Children>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
 	
 	<DrawingBrush x:Key="subscribe_to_design" Stretch="Uniform">
-		<DrawingBrush.Drawing>
-			<DrawingGroup>
-				<DrawingGroup.Children>
-					<GeometryDrawing Brush="#FF3F7CBA" Geometry="F1 M 155.075,225.209L 85.9711,150.218L 85.9711,149.508L 121.298,149.508L 121.298,82.2183L 188.588,82.2183L 188.588,149.508L 223.915,149.508L 223.915,150.218L 155.075,225.209 Z ">
-						<GeometryDrawing.Pen>
-							<Pen Thickness="2" LineJoin="Round" Brush="#FFEDEDED"/>
-						</GeometryDrawing.Pen>
-					</GeometryDrawing>
-					<GeometryDrawing Brush="#3EFFFFFF" Geometry="F1 M 155.049,225.499L 194.683,182.323C 182.974,181.044 170.928,180.376 158.632,180.376C 144.017,180.376 129.755,181.319 115.991,183.113L 155.049,225.499 Z "/>
-				</DrawingGroup.Children>
-			</DrawingGroup>
-		</DrawingBrush.Drawing>
-	</DrawingBrush>
+    <DrawingBrush.Drawing>
+      <DrawingGroup>
+        <DrawingGroup.Children>
+          <GeometryDrawing Brush="#FF3F7CBA" Geometry="F1 M 155.075,225.209L 85.9711,150.218L 85.9711,149.508L 121.298,149.508L 121.298,82.2183L 188.588,82.2183L 188.588,149.508L 223.915,149.508L 223.915,150.218L 155.075,225.209 Z ">
+            <GeometryDrawing.Pen>
+              <Pen Thickness="8" LineJoin="Round" Brush="#FFEDEDED"/>
+            </GeometryDrawing.Pen>
+          </GeometryDrawing>
+          <GeometryDrawing Brush="#3EFFFFFF" Geometry="F1 M 155.049,225.499L 194.683,182.323C 182.974,181.044 170.928,180.376 158.632,180.376C 144.017,180.376 129.755,181.319 115.991,183.113L 155.049,225.499 Z "/>
+        </DrawingGroup.Children>
+      </DrawingGroup>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
 		
 	<DrawingBrush x:Key="tv_design" Stretch="Uniform">
 		<DrawingBrush.Drawing>
@@ -327,7 +327,16 @@
   </CollectionViewSource>
 
   <DataTemplate x:Key="RosterItemTip" DataType="{x:Type local:RosterItem}">
-		<Border MinHeight="65" x:Name="border" BorderBrush="#FF4A4A4A" CornerRadius="3,3,3,3" BorderThickness="1,1,1,1" Opacity="0.8" SnapsToDevicePixels="True">
+  	<DataTemplate.Resources>
+  		<Storyboard x:Key="OnLoaded1">
+  			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.Opacity)">
+  				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.25"/>
+  				<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.6166666666666667"/>
+  				<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0.8"/>
+  			</DoubleAnimationUsingKeyFrames>
+  		</Storyboard>
+  	</DataTemplate.Resources>
+		<Border MinHeight="65" x:Name="border" BorderBrush="#FF4A4A4A" CornerRadius="3,3,3,3" BorderThickness="1,1,1,1" Opacity="0.8" SnapsToDevicePixels="True" RenderTransformOrigin="0.5,0.5">
 			<Border.BitmapEffect>
 				<DropShadowBitmapEffect ShadowDepth="2"/>
 			</Border.BitmapEffect>
@@ -337,6 +346,14 @@
 					<GradientStop Color="#FF7A7A7A" Offset="1"/>
 				</LinearGradientBrush>
 			</Border.Background>
+			<Border.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="1" ScaleY="1"/>
+					<SkewTransform AngleX="0" AngleY="0"/>
+					<RotateTransform Angle="0"/>
+					<TranslateTransform X="0" Y="0"/>
+				</TransformGroup>
+			</Border.RenderTransform>
 			<StackPanel>
 				<Border BorderBrush="#FF4C4C4C" BorderThickness="1,1,1,1" CornerRadius="3,3,3,3" Margin="8,8,8,8" Padding="5,5,5,5">
 					<Border.Background>
@@ -360,8 +377,8 @@
 					</StackPanel>
 				</Border>
 				
-				<TextBlock x:Name="_lastMsgFrom" Text="{Binding Path=LastMessageFrom.Body}" Margin="5,0,5,5" MaxHeight="100" MaxWidth="300" FontFamily="Arial" FontSize="12" Foreground="#FFBFBEBE" TextWrapping="Wrap"/>
-				<TextBlock x:Name="_lastMsgTo" Text="{Binding Path=LastMessageTo.Body}" Margin="5,0,5,5" MaxHeight="100" MaxWidth="300" FontFamily="Arial" FontSize="12" Foreground="#FFECCCA0" TextWrapping="Wrap"/>
+				<TextBlock x:Name="_lastMsgFrom" Text="{Binding Path=LastMessageFrom.Body}" Margin="5,0,5,5" MaxHeight="100" MaxWidth="300" FontFamily="Arial" FontSize="12" Foreground="#FFA5DFEE" TextWrapping="Wrap"/>
+				<TextBlock x:Name="_lastMsgTo" Text="{Binding Path=LastMessageTo.Body}" Margin="5,0,5,5" MaxHeight="100" MaxWidth="300" FontFamily="Arial" FontSize="12" Foreground="#FFE1E1E1" TextWrapping="Wrap"/>
                                   
 				<Border BorderBrush="#FF838383" BorderThickness="0,1,0,0" Margin="0,0,0,2">
 					<StackPanel Orientation="Horizontal">
@@ -383,6 +400,9 @@
 			</StackPanel>
 		</Border>
   	<DataTemplate.Triggers>
+  		<EventTrigger RoutedEvent="FrameworkElement.Loaded" SourceName="border">
+  			<BeginStoryboard Storyboard="{StaticResource OnLoaded1}"/>
+  		</EventTrigger>
 		<DataTrigger Binding="{Binding Path=IsSubscriptionFrom}" Value="false">
 			<Setter Property="Visibility" Value="Hidden" TargetName="_subscriptionFrom" />
 		</DataTrigger>
