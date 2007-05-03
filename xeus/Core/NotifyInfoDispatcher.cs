@@ -11,15 +11,15 @@ namespace xeus.Core
 
 		protected void NotifyPropertyChanged( String info )
 		{
-			if ( PropertyChanged != null )
+			if ( PropertyChanged != null && App.Current != null )
 			{
-				if ( App.DispatcherThread.CheckAccess() )
+				if ( App.Current.Dispatcher.CheckAccess() )
 				{
 					PropertyChanged( this, new PropertyChangedEventArgs( info ) ) ;
 				}
 				else
 				{
-					App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+					App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 					                                  new NotifyPropertyChangedHandler( NotifyPropertyChanged ), info ) ;
 				}
 			}

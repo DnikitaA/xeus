@@ -91,7 +91,7 @@ namespace xeus
 
 		void Roster_PresenceSubscribe( Jid jid )
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			if ( App.Current.Dispatcher.CheckAccess() )
 			{
 				RosterItem rosterItem = Client.Instance.Roster.FindItem( jid.Bare ) ;
 
@@ -106,7 +106,7 @@ namespace xeus
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 				                                  new PresenceSubscribeCallback( Roster_PresenceSubscribe ), jid ) ;
 			}
 		}
@@ -146,7 +146,7 @@ namespace xeus
 
 		void ManualLogin()
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			if ( App.Current.Dispatcher.CheckAccess() )
 			{
 				Client.Instance.Disconnect();
 
@@ -163,7 +163,7 @@ namespace xeus
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 				                                  new ManualLoginCallback( ManualLogin ) ) ;
 			}
 		}
@@ -210,13 +210,18 @@ namespace xeus
 
 		public void Status( string text )
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			if ( App.Current == null )
+			{
+				return ;
+			}
+
+			if ( App.Current.Dispatcher.CheckAccess() )
 			{
 				_statusStatus.Text = text ;
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 				                                  new SetStatusCallback( Status ), text ) ;
 			}
 		}
@@ -314,7 +319,7 @@ namespace xeus
 
 		public void OpenRegisterDialog( IQ iq, Register register )
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			if ( App.Current.Dispatcher.CheckAccess() )
 			{
 				if ( register != null )
 				{
@@ -330,7 +335,7 @@ namespace xeus
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 				                                  new OnRegisterCallback( OpenRegisterDialog ), iq, register ) ;
 			}
 		}

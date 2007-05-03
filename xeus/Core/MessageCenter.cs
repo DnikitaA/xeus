@@ -9,16 +9,16 @@ namespace xeus.Core
 	internal class MessageCenter
 	{
 		private ObservableCollectionDisp< Message > _normalMessages =
-			new ObservableCollectionDisp< Message >( App.DispatcherThread ) ;
+			new ObservableCollectionDisp< Message >( App.Current.Dispatcher ) ;
 
 		private ObservableCollectionDisp< Message > _errorMessages =
-			new ObservableCollectionDisp< Message >( App.DispatcherThread ) ;
+			new ObservableCollectionDisp< Message >( App.Current.Dispatcher ) ;
 
 		private ObservableCollectionDisp< ChatMessage > _chatMessages =
-			new ObservableCollectionDisp< ChatMessage >( App.DispatcherThread ) ;
+			new ObservableCollectionDisp< ChatMessage >( App.Current.Dispatcher ) ;
 
 		private ObservableCollectionDisp< HeadlineMessage > _hedlineMessages =
-			new ObservableCollectionDisp< HeadlineMessage >( App.DispatcherThread ) ;
+			new ObservableCollectionDisp< HeadlineMessage >( App.Current.Dispatcher ) ;
 
 		public void RegisterEvent( Client client )
 		{

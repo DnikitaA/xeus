@@ -4,7 +4,7 @@ namespace xeus.Core
 {
 	internal class Agents
 	{
-		ObservableCollectionDisp< AgentItem > _items = new ObservableCollectionDisp< AgentItem >( App.DispatcherThread );
+		ObservableCollectionDisp< AgentItem > _items = new ObservableCollectionDisp< AgentItem >( App.Current.Dispatcher );
 
 		public void RegisterEvents( XmppClientConnection xmppConnecion )
 		{

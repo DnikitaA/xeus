@@ -19,18 +19,6 @@ namespace xeus
 			}
 		}
 
-		public static Dispatcher DispatcherThread
-		{
-			get
-			{
-				if ( _theApp == null )
-				{
-					return null ;
-				}
-
-				return _theApp.Dispatcher ;
-			}
-		}
 
 		protected static App _theApp ;
 

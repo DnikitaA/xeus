@@ -24,10 +24,10 @@ namespace xeus.Core
 	internal class RosterItem : NotifyInfoDispatcher, IDisposable
 	{
 		private ObservableCollectionDisp< ChatMessage > _messages =
-			new ObservableCollectionDisp< ChatMessage >( App.DispatcherThread ) ;
+			new ObservableCollectionDisp< ChatMessage >( App.Current.Dispatcher ) ;
 
 		private ObservableCollectionDisp< string > _errors =
-			new ObservableCollectionDisp< string >( App.DispatcherThread ) ;
+			new ObservableCollectionDisp< string >( App.Current.Dispatcher ) ;
 
 		public delegate void VcardHandler( Vcard vcard ) ;
 		public delegate void GenerateMessagesHandler( IList list ) ;
@@ -497,7 +497,7 @@ namespace xeus.Core
 		// image has to be always created in Dispatcher thread!!!
 		public void SetVcard( Vcard vcard )
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			if ( App.Current.Dispatcher.CheckAccess() )
 			{
 				if ( vcard != null )
 				{
@@ -546,7 +546,7 @@ namespace xeus.Core
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 				                                  new VcardHandler( SetVcard ), vcard ) ;
 			}
 		}

@@ -659,7 +659,7 @@ namespace xeus.Controls
 
 		protected virtual void OnTransferFinish( object sender, bool cancelled )
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			if ( App.Current.Dispatcher.CheckAccess() )
 			{
 				_progressDock.Visibility = Visibility.Collapsed ;
 
@@ -679,7 +679,7 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 				                                  new TransferFinishHandler( OnTransferFinish ), sender, cancelled ) ;
 			}
 		}
@@ -769,7 +769,7 @@ namespace xeus.Controls
 
 		private void UpdateProgress()
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			if ( App.Current.Dispatcher.CheckAccess() )
 			{
 				_lastProgressUpdate = DateTime.Now ;
 				_progressDock.Visibility = Visibility.Visible ;
@@ -782,7 +782,7 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 				                                  new ProgressCallback( UpdateProgress ) ) ;
 			}
 		}
