@@ -15,7 +15,7 @@ namespace xeus.Core
 	internal class Roster
 	{
 		private ObservableCollectionDisp< RosterItem > _items =
-			new ObservableCollectionDisp< RosterItem >( App.DispatcherThread ) ;
+			new ObservableCollectionDisp< RosterItem >( App.Current.Dispatcher ) ;
 
 		private readonly DateTime _start = DateTime.Now ;
 

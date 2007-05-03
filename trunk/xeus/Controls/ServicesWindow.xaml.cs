@@ -70,7 +70,7 @@ namespace xeus.Controls
 
 		public static void DisplayServices()
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			if ( App.Current.Dispatcher.CheckAccess() )
 			{
 				if ( _instance == null )
 				{
@@ -83,7 +83,7 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 				                                  new DisplayCallback( DisplayServices ) ) ;
 			}
 		}

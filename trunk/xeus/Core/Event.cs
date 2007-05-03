@@ -11,7 +11,7 @@ namespace xeus.Core
 	internal class Event
 	{
 		private ObservableCollectionDisp< IEvent > _items =
-			new ObservableCollectionDisp< IEvent >( App.DispatcherThread ) ;
+			new ObservableCollectionDisp< IEvent >( App.Current.Dispatcher ) ;
 
 		Timer _refreshTimer = new Timer( 1000 ) ;
 
@@ -26,7 +26,7 @@ namespace xeus.Core
 
 		void RemoveItem( int index )
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			if ( App.Current.Dispatcher.CheckAccess() )
 			{
 				if ( _items.Count > index )
 				{
@@ -35,7 +35,7 @@ namespace xeus.Core
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Send,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Background,
 				                                  new RemoveItemHandler( RemoveItem ), index ) ;
 			}
 		}

@@ -269,7 +269,7 @@ namespace xeus.Controls
 
 		private void SelectItem( ChatMessage item )
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			if ( App.Current.Dispatcher.CheckAccess() )
 			{
 				_inlineSearch.NotFound = true ;
 
@@ -305,7 +305,7 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 				                                  new SelectItemCallback( SelectItem ), item ) ;
 			}
 		}
@@ -323,7 +323,7 @@ namespace xeus.Controls
 
 		public static void ContactIsTyping( string userName, Chatstate chatstate )
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			if ( App.Current.Dispatcher.CheckAccess() )
 			{
 				if ( Instance != null && Instance._statusTyping != null )
 				{
@@ -333,14 +333,14 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 												  new ContactIsTypingCallback( ContactIsTyping ), userName, chatstate );
 			}		
 		}
 
 		void ChangeChatState( Chatstate chatstate )
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			if ( App.Current.Dispatcher.CheckAccess() )
 			{
 				if ( chatstate == Chatstate.composing )
 				{
@@ -378,7 +378,7 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 												  new SendChatStateCallback( ChangeChatState ), chatstate );
 			}
 		}
@@ -437,7 +437,7 @@ namespace xeus.Controls
 
 		private void RefreshTime()
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			if ( App.Current.Dispatcher.CheckAccess() )
 			{
 				if ( Instance != null && Instance._tabs != null )
 				{
@@ -458,7 +458,7 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 				                                  new RefreshTimeCallback( RefreshTime ) ) ;
 			}
 		}
@@ -711,7 +711,7 @@ namespace xeus.Controls
 
 		private static void DisplayChat( string jid, bool activateTab )
 		{
-			App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+			App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 			                                  new DisplayChatCallback( Displ ), jid, activateTab ) ;
 		}
 
@@ -803,7 +803,7 @@ namespace xeus.Controls
 
 		protected static void ScrollToLastItem2()
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			if ( App.Current.Dispatcher.CheckAccess() )
 			{
 				if ( _scrollViewer == null )
 				{
@@ -825,7 +825,7 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 				                                  new ScrollToLastItemCallback( ScrollToLastItem2 ) ) ;
 			}
 		}

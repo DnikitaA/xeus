@@ -36,7 +36,7 @@ namespace xeus.Controls
 
 		internal static void Transfer( XmppClientConnection XmppCon, IQ iq )
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			if ( App.Current.Dispatcher.CheckAccess() )
 			{
 				if ( _window == null )
 				{
@@ -55,14 +55,14 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 				                                  new TransferHandler( Transfer ), XmppCon, iq ) ;
 			}
 		}
 
 		static void fileTransfer_TransferFinish( object sender, bool cancelled )
 		{
-			if ( App.DispatcherThread.CheckAccess() )
+			if ( App.Current.Dispatcher.CheckAccess() )
 			{
 				FileTransfer fileTransfer = sender as FileTransfer ;
 
@@ -78,7 +78,7 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.DispatcherThread.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
 				                                  new TransferFinishHandler( fileTransfer_TransferFinish ), sender, cancelled ) ;
 			}
 		}

@@ -13,7 +13,7 @@ namespace xeus.Core
 
 		private bool _isRegistered = false ;
 
-		private ObservableCollectionDisp< DiscoFeature > _features = new ObservableCollectionDisp< DiscoFeature >( App.DispatcherThread ) ;
+		private ObservableCollectionDisp< DiscoFeature > _features = new ObservableCollectionDisp< DiscoFeature >( App.Current.Dispatcher ) ;
 		private string _type = String.Empty ;
 		private string _category = String.Empty ;
 
