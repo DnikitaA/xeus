@@ -30,6 +30,12 @@ namespace xeus.Controls
 			Client.Instance.Event.Items.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( Items_CollectionChanged );
 			
 			SizeChanged += new SizeChangedEventHandler( Popup_SizeChanged );
+			Activated += new EventHandler( Popup_Activated );
+		}
+
+		void Popup_Activated( object sender, EventArgs e )
+		{
+			IsEnabled = true ;
 		}
 
 		void Popup_SizeChanged( object sender, SizeChangedEventArgs e )
@@ -43,13 +49,6 @@ namespace xeus.Controls
 		protected override void OnGotFocus( RoutedEventArgs e )
 		{
 			e.Handled = true ;
-			//base.OnGotFocus( e );
-		}
-
-		protected override void OnActivated( EventArgs e )
-		{
-			// base.OnActivated( e );
-			// do not steal focus from other windows
 		}
 
 		protected override void OnClosed( EventArgs e )
@@ -70,7 +69,6 @@ namespace xeus.Controls
 			{
 				IsEnabled = false ;
 				Show() ;
-				IsEnabled = true ;
 			}
 			else
 			{
