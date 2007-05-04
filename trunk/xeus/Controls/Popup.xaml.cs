@@ -65,9 +65,10 @@ namespace xeus.Controls
 				return ;
 			}
 
+			IsEnabled = false ;
+
 			if ( Client.Instance.Event.Items.Count > 0 )
 			{
-				IsEnabled = false ;
 				Show() ;
 			}
 			else
