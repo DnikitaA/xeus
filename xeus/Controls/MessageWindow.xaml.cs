@@ -305,7 +305,7 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Send,
 				                                  new SelectItemCallback( SelectItem ), item ) ;
 			}
 		}
@@ -333,7 +333,7 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Send,
 												  new ContactIsTypingCallback( ContactIsTyping ), userName, chatstate );
 			}		
 		}
@@ -378,7 +378,7 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Send,
 												  new SendChatStateCallback( ChangeChatState ), chatstate );
 			}
 		}
@@ -458,7 +458,7 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Send,
 				                                  new RefreshTimeCallback( RefreshTime ) ) ;
 			}
 		}
@@ -711,7 +711,7 @@ namespace xeus.Controls
 
 		private static void DisplayChat( string jid, bool activateTab )
 		{
-			App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
+			App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Send,
 			                                  new DisplayChatCallback( Displ ), jid, activateTab ) ;
 		}
 
@@ -825,7 +825,7 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Send,
 				                                  new ScrollToLastItemCallback( ScrollToLastItem2 ) ) ;
 			}
 		}
