@@ -55,7 +55,7 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Send,
 				                                  new TransferHandler( Transfer ), XmppCon, iq ) ;
 			}
 		}
@@ -78,7 +78,7 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Send,
 				                                  new TransferFinishHandler( fileTransfer_TransferFinish ), sender, cancelled ) ;
 			}
 		}

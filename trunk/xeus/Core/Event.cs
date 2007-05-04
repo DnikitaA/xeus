@@ -35,7 +35,7 @@ namespace xeus.Core
 			}
 			else
 			{
-				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Background,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Send,
 				                                  new RemoveItemHandler( RemoveItem ), index ) ;
 			}
 		}

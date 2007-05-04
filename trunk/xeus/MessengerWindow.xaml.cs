@@ -106,7 +106,7 @@ namespace xeus
 			}
 			else
 			{
-				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Send,
 				                                  new PresenceSubscribeCallback( Roster_PresenceSubscribe ), jid ) ;
 			}
 		}
@@ -163,7 +163,7 @@ namespace xeus
 			}
 			else
 			{
-				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Send,
 				                                  new ManualLoginCallback( ManualLogin ) ) ;
 			}
 		}
@@ -221,7 +221,7 @@ namespace xeus
 			}
 			else
 			{
-				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Send,
 				                                  new SetStatusCallback( Status ), text ) ;
 			}
 		}
@@ -335,7 +335,7 @@ namespace xeus
 			}
 			else
 			{
-				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Send,
 				                                  new OnRegisterCallback( OpenRegisterDialog ), iq, register ) ;
 			}
 		}

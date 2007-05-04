@@ -83,7 +83,7 @@ namespace xeus.Controls
 			}
 			else
 			{
-				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Normal,
+				App.Current.Dispatcher.BeginInvoke( DispatcherPriority.Send,
 				                                  new DisplayCallback( DisplayServices ) ) ;
 			}
 		}

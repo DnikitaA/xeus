@@ -30,11 +30,10 @@ namespace xeus.Controls
 			Client.Instance.Event.Items.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler( Items_CollectionChanged );
 			
 			SizeChanged += new SizeChangedEventHandler( Popup_SizeChanged );
-			Activated += new EventHandler( Popup_Activated );
-		}
 
-		void Popup_Activated( object sender, EventArgs e )
-		{
+			IsEnabled = false ;
+			Show() ;
+			Hide() ;
 			IsEnabled = true ;
 		}
 
@@ -44,11 +43,6 @@ namespace xeus.Controls
 			Left = SystemParameters.WorkArea.Right - ActualWidth - 10 ;
 			Top = SystemParameters.WorkArea.Bottom - ActualHeight - 10 ;
 			EndInit() ;
-		}
-
-		protected override void OnGotFocus( RoutedEventArgs e )
-		{
-			e.Handled = true ;
 		}
 
 		protected override void OnClosed( EventArgs e )
@@ -64,8 +58,6 @@ namespace xeus.Controls
 			{
 				return ;
 			}
-
-			IsEnabled = false ;
 
 			if ( Client.Instance.Event.Items.Count > 0 )
 			{
