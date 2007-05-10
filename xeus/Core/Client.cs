@@ -140,7 +140,6 @@ namespace xeus.Core
 
 			_idleTimer.AutoReset = true ;
 			_idleTimer.Elapsed += new ElapsedEventHandler( _idleTimer_Elapsed ) ;
-			_idleTimer.Start() ;
 
 			Log( "Setup finished" ) ;
 		}
@@ -250,6 +249,7 @@ namespace xeus.Core
 
 		void _xmppConnection_OnClose( object sender )
 		{
+			_idleTimer.Stop();
 			_presence = null ;
 			_myRosterItem = null ;
 
@@ -319,6 +319,8 @@ namespace xeus.Core
 		private void _xmppConnection_OnRosterEnd( object sender )
 		{
 			SetMyPresence( ShowType.NONE, false ) ;
+
+			_idleTimer.Start() ;
 		}
 
 		public void Connect( bool registerNewAccount )
