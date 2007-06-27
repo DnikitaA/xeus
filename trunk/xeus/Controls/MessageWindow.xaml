@@ -8,7 +8,6 @@
     x:Class="xeus.Controls.MessageWindow"
     Title="message" Height="300" Width="300"
     settings:WindowSettings.Save="True"
-	  Style="{StaticResource DarkStyleWindow}"
 	  Background="{x:Null}"
     x:Name="message"
     Icon="../images/message.ico"

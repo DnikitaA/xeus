@@ -8,7 +8,6 @@
     x:Class="xeus.Controls.VCardWindow"
     Title="v-card" Height="573" Width="300"
     settings:WindowSettings.Save="False"
-	  Style="{StaticResource DarkStyleWindow}"
     x:Name="vcard"
     Icon="../images/xeus.ico"
 	Background="{x:Null}" Margin="5,5,5,5" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" >
