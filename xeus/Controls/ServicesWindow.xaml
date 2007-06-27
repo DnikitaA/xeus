@@ -7,10 +7,9 @@
     x:Class="xeus.Controls.ServicesWindow"
     Title="disco" Height="300" Width="300"
     settings:WindowSettings.Save="True"
-	Style="{StaticResource DarkStyleWindow}"
     x:Name="services"
     Icon="../images/xeus.ico"
-	Background="{x:Null}" >
+	Background="{x:Null}">
 	
 <win:WindowBase.Resources>
     <ResourceDictionary>

@@ -60,7 +60,7 @@
     </Setter>
   </Style>
 
-
+<!--
   <Style x:Key="DarkStyleWindow" TargetType="{x:Type Window}">
     <Setter Property="AllowsTransparency" Value="True" />
     <Setter Property="WindowStyle" Value="None" />
@@ -103,6 +103,6 @@
       
     </Setter>
   </Style>
-
+-->
 
 </ResourceDictionary>

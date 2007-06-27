@@ -8,7 +8,6 @@
     x:Class="xeus.Controls.AuthorizeWindow"
     Title="add user" Width="383"
     settings:WindowSettings.Save="False"
-	Style="{StaticResource DarkStyleWindow}"
     Icon="../images/xeus.ico"
     x:Name="single"
 	Background="{x:Null}" ResizeMode="NoResize" Margin="5,5,5,5" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" VerticalAlignment="Top" SizeToContent="Manual" Height="125" >
