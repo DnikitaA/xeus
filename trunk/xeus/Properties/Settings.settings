@@ -44,5 +44,17 @@
     <Setting Name="UI_Sound" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="Client_Resource" Type="System.String" Scope="User">
+      <Value Profile="(Default)">home</Value>
+    </Setting>
+    <Setting Name="Client_AutoResoloveServer" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Client_Priority" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="Client_UseTls" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

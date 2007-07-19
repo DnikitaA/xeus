@@ -8,6 +8,7 @@ namespace xeus.Controls
 	/// </summary>
 	public partial class WindowBase : Window
 	{
+
 		private ResizeMode _originalResizeMode = ResizeMode.NoResize ;
 
 		public ResizeMode OriginalResizeMode
@@ -22,7 +23,7 @@ namespace xeus.Controls
 		{
 			_originalResizeMode = ResizeMode ;
 
-			ResizeMode = ResizeMode.NoResize ;
+			//ResizeMode = ResizeMode.NoResize ;
 
 			base.OnInitialized( e );
 		}
