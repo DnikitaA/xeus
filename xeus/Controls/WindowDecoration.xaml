@@ -7,7 +7,7 @@
 	>
 
   <Style x:Key = "MainBorder" TargetType="{x:Type Border}">
-    <!--<Setter Property="Background" Value="{DynamicResource back_design}" />-->
+    <Setter Property="Background" Value="{DynamicResource back_design}" />
     <Setter Property="BorderBrush" Value="#FF222222" />
     <Setter Property="BorderThickness" Value="2,2,2,2" />
   	<Setter Property="Background">

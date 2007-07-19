@@ -11,7 +11,7 @@
     settings:WindowSettings.Save="False"
     x:Name="login"
     Icon="../images/xeus.ico"
-	  Background="{x:Null}" ResizeMode="NoResize" Margin="5,5,5,5" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" Height="339" >
+	  Background="{x:Null}" ResizeMode="NoResize" Margin="5,5,5,5" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" Height="450" >
   
   <Grid>
 	<StackPanel Margin="5,5,5,67">
@@ -39,7 +39,36 @@
 				<PasswordBox x:Name="_confirmPassword" PasswordChanged="OnPasswordCheck" TabIndex="0" Height="20" Background="#FF414141" Template="{DynamicResource PasswordBoxControlTemplate}" Margin="0,5,0,0"/>
 			</StackPanel>
 		</Expander>
-	</StackPanel>
+    
+    <TextBlock Text="Resource" Foreground="#FF828282" Margin="0,5,0,0"/>
+    <TextBox TextWrapping="Wrap" Style="{DynamicResource TextBoxStyleInDialog}" MaxLines="1"
+             Margin="0,5,0,0">
+      <TextBox.Text>
+        <Binding Path="Client_Resource" Source="{x:Static prop:Settings.Default}" Mode="TwoWay"/>
+      </TextBox.Text>
+    </TextBox>
+    
+    <CheckBox Margin="0,5,0,0" Content="Auto Resolve Connect Server" Foreground="#FF888888">
+      <CheckBox.IsChecked>
+        <Binding Path="Client_AutoResoloveServer" Source="{x:Static prop:Settings.Default}" Mode="TwoWay"/>
+      </CheckBox.IsChecked>
+    </CheckBox>
+
+    <TextBlock Foreground="#FF828282" Margin="0,5,0,0">Priority</TextBlock>
+    <TextBox TextWrapping="Wrap" Style="{DynamicResource TextBoxStyleInDialog}" MaxLines="1"
+             Margin="0,5,0,0">
+      <TextBox.Text>
+        <Binding Path="Client_Priority" Source="{x:Static prop:Settings.Default}" Mode="TwoWay"/>
+      </TextBox.Text>
+    </TextBox>
+
+    <CheckBox Margin="0,5,0,0" Content="Use Start TLS" Foreground="#FF888888">
+      <CheckBox.IsChecked>
+        <Binding Path="Client_UseTls" Source="{x:Static prop:Settings.Default}" Mode="TwoWay"/>
+      </CheckBox.IsChecked>
+    </CheckBox>
+    
+  </StackPanel>
   	<StackPanel Orientation="Horizontal" d:LayoutOverrides="Width" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="26" Margin="0,0,0,26">        
   		<Button Width="63.867" Content="Ok" 
   			Background="#FF3980A9" Template="{DynamicResource AButton}" IsDefault="True"

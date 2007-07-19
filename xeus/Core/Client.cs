@@ -334,6 +334,10 @@ namespace xeus.Core
 				XmppConnection.Username = Settings.Default.Client_UserName ;
 				XmppConnection.Password = Settings.Default.Client_Password ;
 				XmppConnection.Server = Settings.Default.Client_Server ;
+                XmppConnection.UseStartTLS = Settings.Default.Client_UseTls;
+                XmppConnection.Priority = Settings.Default.Client_Priority;
+			    XmppConnection.AutoResolveConnectServer = Settings.Default.Client_AutoResoloveServer;
+			    XmppConnection.Resource = Settings.Default.Client_Resource;
 
 				Settings.Default.Save();
 
